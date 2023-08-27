@@ -6,7 +6,7 @@ export default function Home() {
         <div className="max-w-sm rounded overflow-hidden shadow-lg">
         </div>
         <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
-          Hier kannst du unverbindlich einen Hilferuf stellen. Dabei ist es egal, ob du für Bekannte oder für dich selbst einen Anfrage stellst. Wir setzen uns dann mit dir in Verbindung.</p>
+          Hier kannst du unverbindlich einen Hilferuf stellen. Dabei ist es egal, ob du für Bekannte oder für dich selbst eine Anfrage stellst. Wir setzen uns dann mit dir in Verbindung.</p>
         <form action="#" className="space-y-8">
           <div>
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Deine E-Mail Adresse</label>
