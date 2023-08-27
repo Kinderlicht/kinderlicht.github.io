@@ -11,6 +11,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: '#FFA500', // Orange
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
