@@ -1,264 +1,93 @@
 export default function Home() {
   return (
-
-    <div className="flex items-center justify-center py-8 px-4">
-    <div className="max-w-sm w-full shadow-lg">
-        <div className="md:p-8 p-5 dark:bg-gray-800 bg-white rounded-t">
-            <div className="px-4 flex items-center justify-between">
-                <span className="focus:outline-none  text-base font-bold dark:text-gray-100 text-gray-800">October 2020</span>
-                <div className="flex items-center">
-                    <button aria-label="calendar backward" className="focus:text-gray-400 hover:text-gray-400 text-gray-800 dark:text-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <polyline points="15 6 9 12 15 18" />
-                    </svg>
-                </button>
-                <button aria-label="calendar forward" className="focus:text-gray-400 hover:text-gray-400 ml-3 text-gray-800 dark:text-gray-100"> 
-                      <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler  icon-tabler-chevron-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <polyline points="9 6 15 12 9 18" />
-                    </svg>
-                </button>
-
+    <section className="bg-gray-50 dark:bg-gray-900">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              Werde Mitglied
+            </h1>
+            <form className="space-y-4 md:space-y-6" action="#">
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Your email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="name@company.com"
+                  required={false}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="••••••••"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="confirm-password"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Confirm password
+                </label>
+                <input
+                  type="confirm-password"
+                  name="confirm-password"
+                  id="confirm-password"
+                  placeholder="••••••••"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    id="terms"
+                    aria-describedby="terms"
+                    type="checkbox"
+                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                  />
                 </div>
-            </div>
-            <div className="flex items-center justify-between pt-12 overflow-x-auto">
-                <table className="w-full">
-                    <thead>
-                        <tr>
-                            <th>
-                                <div className="w-full flex justify-center">
-                                    <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Mo</p>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="w-full flex justify-center">
-                                    <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Tu</p>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="w-full flex justify-center">
-                                    <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">We</p>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="w-full flex justify-center">
-                                    <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Th</p>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="w-full flex justify-center">
-                                    <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Fr</p>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="w-full flex justify-center">
-                                    <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Sa</p>
-                                </div>
-                            </th>
-                            <th>
-                                <div className="w-full flex justify-center">
-                                    <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Su</p>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td className="pt-6">
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                            </td>
-                            <td className="pt-6">
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                            </td>
-                            <td className="pt-6">
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">1</p>
-                                </div>
-                            </td>
-                            <td className="pt-6">
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">2</p>
-                                </div>
-                            </td>
-                            <td className="pt-6">
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100">3</p>
-                                </div>
-                            </td>
-                            <td className="pt-6">
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100">4</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">5</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">6</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">7</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="w-full h-full">
-                                    <div className="flex items-center justify-center w-full rounded-full cursor-pointer">
-                                        <a  role="link" className="focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:bg-indigo-500 hover:bg-indigo-500 text-base w-8 h-8 flex items-center justify-center font-medium text-white bg-indigo-700 rounded-full">8</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">9</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100">10</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100">11</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">12</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">13</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">14</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">15</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">16</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100">17</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100">18</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">19</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">20</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">21</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">22</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">23</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100">24</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100">25</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">26</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">27</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">28</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">29</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                    <p className="text-base text-gray-500 dark:text-gray-100 font-medium">30</p>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div className="ml-3 text-sm">
+                  <label
+                    htmlFor="terms"
+                    className="font-light text-gray-500 dark:text-gray-300"
+                  >
+                    I accept the{" "}
+                    <a
+                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                      href="#"
+                    >
+                      Terms and Conditions
+                    </a>
+                  </label>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              >
+                Create an account
+              </button>
+            </form>
+          </div>
         </div>
-        <div className="md:py-8 py-5 md:px-16 px-5 dark:bg-gray-700 bg-gray-50 rounded-b">
-            <div className="px-4">
-                <div className="border-b pb-4 border-gray-400 border-dashed">
-                    <p className="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">9:00 AM</p>
-                    <a className="focus:outline-none text-lg font-medium leading-5 text-gray-800 dark:text-gray-100 mt-2">Zoom call with design team</a>
-                    <p className="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">Discussion on UX sprint and Wireframe review</p>
-                </div>
-                <div className="border-b pb-4 border-gray-400 border-dashed pt-5">
-                    <p className="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">10:00 AM</p>
-                    <a className="focus:outline-none text-lg font-medium leading-5 text-gray-800 dark:text-gray-100 mt-2">Orientation session with new hires</a>
-                </div>
-                <div className="border-b pb-4 border-gray-400 border-dashed pt-5">
-                    <p className="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">9:00 AM</p>
-                    <a className="focus:outline-none text-lg font-medium leading-5 text-gray-800 dark:text-gray-100 mt-2">Zoom call with design team</a>
-                    <p className="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">Discussion on UX sprint and Wireframe review</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+      </div>
+    </section>
   );
 }

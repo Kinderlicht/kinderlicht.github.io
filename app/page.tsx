@@ -58,33 +58,25 @@ export default function Home() {
             <div className="w-full">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6" src="/home/start.jpg" alt="Lichterhaus" />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Chichen Itza</h2>
-                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">Die Anfänge</h3>
+                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Das Lichterhaus in Wallersdorf</h2>
+                <p className="leading-relaxed text-base">Schon vor der Grüdung waren viele Mitglieder beim Lichterhaus Wallersdorf aktiv. Dabei wurden Spenden für die Krebshilfe gesammelt.</p>
               </div>
             </div>
             <div className="w-full">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6" src="/home/founding.jpg" alt="Gründung" />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Colosseum Roma</h2>
-                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">Die Grüdung</h3>
+                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Der Kinderlicht Wallersdorf e.V.</h2>
+                <p className="leading-relaxed text-base">Sieben engagierte Mitglieder gründen den Verein.</p>
               </div>
             </div>
             <div className="w-full">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6" src="/home/umbrella.jpg" alt="Schirmherrschaft" />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Great Pyramid of Giza</h2>
-                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
-              </div>
-            </div>
-            <div className="w-full">
-              <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-                <img className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6" src="https://wisatamuda.com/wp-content/uploads/2019/02/1-Golden-Gate-Bridge-Gambar-dan-Foto-Tempat-Wisata-Terbaik-di-San-Fransisco-USA.jpg" alt="Image Size 720x400" />
-                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">San Francisco</h2>
-                <p className="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+                <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">Schirmherrschaft</h3>
+                <h2 className="text-lg text-gray-900 font-medium title-font mb-4">Florian Pronold übernimmt die Schirmherrschaft</h2>
+                <p className="leading-relaxed text-base">Schnell war auch ein Schirmherr gefuden: Florian Pronold.</p>
               </div>
             </div>
           </div>
