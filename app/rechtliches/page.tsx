@@ -111,17 +111,18 @@ export default function Home() {
         Daten in die USA exportiert werden. Zu näheren Erläuterungen und zu
         Möglichkeiten, diesen Datenexport zu verhindern, lesen Sie bitte den
         Gliederungspunkt &quot;Verwendung von Facebook Social Plugins&quot; bzw.
-        &quot;Verwendung von Twitter&quot; bzw. &quot;Verwendung von Instagram Social Plugins&quot;
-        der vorliegenden Datenschutzerklärung. Eine Übermittlung von
-        personenbezogenen Daten an Google im Rahmen der Nutzung von
-        Analyseprogrammen durch die verantwortliche Stelle findet hingegen nicht
-        statt, da Ihre IP-Adresse nur anonymisiert übermittelt wird. Lesen Sie
-        dazu bitte den Punkt &quot;Verwendung von Analyseprogrammen&quot; der vorliegenden
-        Datenschutzerklärung. Soweit Sie sich bei Google eingeloggt haben oder
-        einen Youtube-Account besitzen, können personenbezogene Daten in die USA
-        exportiert werden. Zu näheren Erläuterungen und zu Möglichkeiten, diesen
-        Datenexport zu verhindern, beachten Sie bitte den Gliederungspunkt
-        &quot;Verwendung von YouTube-Plugins&quot;. Die von der verantwortlichen Stelle
+        &quot;Verwendung von Twitter&quot; bzw. &quot;Verwendung von Instagram
+        Social Plugins&quot; der vorliegenden Datenschutzerklärung. Eine
+        Übermittlung von personenbezogenen Daten an Google im Rahmen der Nutzung
+        von Analyseprogrammen durch die verantwortliche Stelle findet hingegen
+        nicht statt, da Ihre IP-Adresse nur anonymisiert übermittelt wird. Lesen
+        Sie dazu bitte den Punkt &quot;Verwendung von Analyseprogrammen&quot;
+        der vorliegenden Datenschutzerklärung. Soweit Sie sich bei Google
+        eingeloggt haben oder einen Youtube-Account besitzen, können
+        personenbezogene Daten in die USA exportiert werden. Zu näheren
+        Erläuterungen und zu Möglichkeiten, diesen Datenexport zu verhindern,
+        beachten Sie bitte den Gliederungspunkt &quot;Verwendung von
+        YouTube-Plugins&quot;. Die von der verantwortlichen Stelle
         eingeschalteten Dienstleister haben ihren Sitz und betreiben ihre
         IT-Infrastruktur ausschließlich innerhalb des EWR. Dies gilt auch für
         eine eventuelle Nutzung von Cloud-basierenden Diensten. Mit den
@@ -160,37 +161,38 @@ export default function Home() {
         Einsatz von Cookies
       </h3>
       <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
-        Die verantwortliche Stelle verwendet sogenannte &quot;Cookies&quot;, um die
-        Online-Erfahrung und Online-Zeit des Kunden individuell auszugestalten
-        und zu optimieren. Ein Cookie ist eine Textdatei, die entweder temporär
-        im Arbeitsspeicher des Computers abgelegt (&quot;Sitzungscookie&quot;) oder auf
-        der Festplatte gespeichert wird (&quot;permanenter&quot; Cookie). Cookies
-        enthalten z.B. Informationen über die bisherigen Zugriffe des Nutzers
-        auf den entsprechenden Server bzw. Informationen darüber, welche
-        Angebote bisher aufgerufen wurden. Cookies werden nicht dazu eingesetzt,
-        um Programme auszuführen oder Viren auf Ihren Computer zu laden.
-        Hauptzweck von Cookies ist vielmehr, ein speziell auf den Kunden
-        zugeschnittenes Angebot bereitzustellen und die Nutzung des Service so
-        komfortabel wie möglich zu gestalten. Die verantwortliche Stelle
-        verwendet Sitzungscookies sowie permanente Cookies.
+        Die verantwortliche Stelle verwendet sogenannte &quot;Cookies&quot;, um
+        die Online-Erfahrung und Online-Zeit des Kunden individuell
+        auszugestalten und zu optimieren. Ein Cookie ist eine Textdatei, die
+        entweder temporär im Arbeitsspeicher des Computers abgelegt
+        (&quot;Sitzungscookie&quot;) oder auf der Festplatte gespeichert wird
+        (&quot;permanenter&quot; Cookie). Cookies enthalten z.B. Informationen
+        über die bisherigen Zugriffe des Nutzers auf den entsprechenden Server
+        bzw. Informationen darüber, welche Angebote bisher aufgerufen wurden.
+        Cookies werden nicht dazu eingesetzt, um Programme auszuführen oder
+        Viren auf Ihren Computer zu laden. Hauptzweck von Cookies ist vielmehr,
+        ein speziell auf den Kunden zugeschnittenes Angebot bereitzustellen und
+        die Nutzung des Service so komfortabel wie möglich zu gestalten. Die
+        verantwortliche Stelle verwendet Sitzungscookies sowie permanente
+        Cookies.
       </p>
       <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
         Sitzungscookies
       </h3>
       <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
-        Die verantwortliche Stelle verwendet überwiegend &quot;Sitzungscookies&quot;, die
-        nicht auf der Festplatte des Kunden gespeichert werden und die mit
-        Verlassen des Browsers gelöscht werden. Sitzungscookies werden hierbei
-        zur Login-Authentifizierung und zum Load-Balancing (Ausgleich der
-        System-Belastung) verwendet.
+        Die verantwortliche Stelle verwendet überwiegend
+        &quot;Sitzungscookies&quot;, die nicht auf der Festplatte des Kunden
+        gespeichert werden und die mit Verlassen des Browsers gelöscht werden.
+        Sitzungscookies werden hierbei zur Login-Authentifizierung und zum
+        Load-Balancing (Ausgleich der System-Belastung) verwendet.
       </p>
       <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
         Permanente Cookies
       </h3>
       <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
         Darüber hinaus verwendet die verantwortliche Stelle &quot;permanente
-        Cookies&quot;, um die persönlichen Nutzungseinstellungen, die ein Kunde bei
-        der Nutzung der Services der verantwortlichen Stelle eingibt, zu
+        Cookies&quot;, um die persönlichen Nutzungseinstellungen, die ein Kunde
+        bei der Nutzung der Services der verantwortlichen Stelle eingibt, zu
         speichern und so eine Personalisierung und Verbesserung des Services
         vornehmen zu können. Durch die permanenten Cookies wird sichergestellt,
         dass der Kunde bei einem erneuten Besuch der Webseiten der
@@ -225,12 +227,12 @@ export default function Home() {
         dem alleinigen Zweck, den Service der verantwortlichen Stelle ständig zu
         verbessern. Die verantwortliche Stelle verwendet im Rahmen der
         Web-Analyse auch Google Analytics, einen Web-Analysedienst der Google
-        Inc. (&quot;Google&quot;), den die verantwortliche Stelle Google Analytics mit der
-        Erweiterung &quot;_anonymizeIp()&quot; nutzt. Dadurch werden die IP-Adressen nur
-        gekürzt verarbeitet, um eine direkte Personenbeziehbarkeit
-        auszuschließen. Der in diesem Zusammenhang stattfindenden Datenerhebung
-        und -speicherung kann jederzeit mit Wirkung für die Zukunft
-        widersprochen werden. Bitte wenden Sie sich dazu
+        Inc. (&quot;Google&quot;), den die verantwortliche Stelle Google
+        Analytics mit der Erweiterung &quot;_anonymizeIp()&quot; nutzt. Dadurch
+        werden die IP-Adressen nur gekürzt verarbeitet, um eine direkte
+        Personenbeziehbarkeit auszuschließen. Der in diesem Zusammenhang
+        stattfindenden Datenerhebung und -speicherung kann jederzeit mit Wirkung
+        für die Zukunft widersprochen werden. Bitte wenden Sie sich dazu
         <a
           href="http://tools.google.com/dlpage/gaoptout?hl=de"
           target="_blank"
@@ -243,27 +245,27 @@ export default function Home() {
         zu verwenden. Dieser Aufforderung kommt der&nbsp;Kinderlicht Wallersdorf
         e. V. &nbsp;mit der Wiedergabe des folgenden Textes nach:
         <em>
-          &quot;Google Analytics verwendet sog. &quot;Cookies&quot;, Textdateien, die auf Ihrem
-          Computer gespeichert werden und die eine Analyse der Benutzung der
-          Website durch Sie ermöglichen. Die durch den Cookie erzeugten
-          Informationen über Ihre Benutzung dieser Website (einschließlich Ihrer
-          IP-Adresse) werden an einen Server von Google in den USA übertragen
-          und dort gespeichert. Google wird diese Informationen benutzen, um
-          Ihre Nutzung der Website auszuwerten, um Reports über die
-          Websiteaktivitäten für die Websitebetreiber zusammenzustellen und um
-          weitere mit der Websitenutzung und der Internetnutzung verbundene
-          Dienstleistungen zu erbringen. Auch wird Google diese Informationen
-          gegebenenfalls an Dritte übertragen, sofern dies gesetzlich
-          vorgeschrieben oder soweit Dritte diese Daten im Auftrag von Google
-          verarbeiten. Google wird in keinem Fall Ihre IP-Adresse mit anderen
-          Daten von Google in Verbindung bringen. Sie können die Installation
-          der Cookies durch eine entsprechende Einstellung Ihrer Browser
-          Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in
-          diesem Fall gegebenenfalls nicht sämtliche Funktionen dieser Website
-          vollumfänglich nutzen können. Durch die Nutzung dieser Website
-          erklären Sie sich mit der Bearbeitung der über Sie erhobenen Daten
-          durch Google in der zuvor beschriebenen Art und Weise und zu dem zuvor
-          benannten Zweck einverstanden.”
+          &quot;Google Analytics verwendet sog. &quot;Cookies&quot;,
+          Textdateien, die auf Ihrem Computer gespeichert werden und die eine
+          Analyse der Benutzung der Website durch Sie ermöglichen. Die durch den
+          Cookie erzeugten Informationen über Ihre Benutzung dieser Website
+          (einschließlich Ihrer IP-Adresse) werden an einen Server von Google in
+          den USA übertragen und dort gespeichert. Google wird diese
+          Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um
+          Reports über die Websiteaktivitäten für die Websitebetreiber
+          zusammenzustellen und um weitere mit der Websitenutzung und der
+          Internetnutzung verbundene Dienstleistungen zu erbringen. Auch wird
+          Google diese Informationen gegebenenfalls an Dritte übertragen, sofern
+          dies gesetzlich vorgeschrieben oder soweit Dritte diese Daten im
+          Auftrag von Google verarbeiten. Google wird in keinem Fall Ihre
+          IP-Adresse mit anderen Daten von Google in Verbindung bringen. Sie
+          können die Installation der Cookies durch eine entsprechende
+          Einstellung Ihrer Browser Software verhindern; wir weisen Sie jedoch
+          darauf hin, dass Sie in diesem Fall gegebenenfalls nicht sämtliche
+          Funktionen dieser Website vollumfänglich nutzen können. Durch die
+          Nutzung dieser Website erklären Sie sich mit der Bearbeitung der über
+          Sie erhobenen Daten durch Google in der zuvor beschriebenen Art und
+          Weise und zu dem zuvor benannten Zweck einverstanden.”
         </em>
       </p>
       <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
@@ -271,20 +273,21 @@ export default function Home() {
       </h3>
       <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
         Die verantwortliche Stelle verwendet auf ihrer Website Social Plugins
-        (&quot;Plugins&quot;) des sozialen Netzwerkes facebook.com, welches von der
-        Facebook Inc., 1601 S. California Ave, Palo Alto, CA 94304, USA
-        betrieben wird (&quot;Facebook&quot;). Die Plugins sind mit einem Facebook Logo
-        gekennzeichnet. Wenn der Kunde eine Webseite der verantwortlichen Stelle
-        aufruft, die ein solches Plugin enthält, baut der Browser des Kunden
-        eine direkte Verbindung mit den Servern von Facebook auf. Der Inhalt des
-        Plugins wird von Facebook direkt an den Browser des Kunden übermittelt
-        und von diesem in die Webseite eingebunden. Durch die Einbindung der
-        Plugins erhält Facebook die Information, dass der Kunde die
-        entsprechende Seite des Internetauftritts der verantwortlichen Stelle
-        aufgerufen hat. Ist der Kunde bei Facebook eingeloggt, kann Facebook den
-        Besuch des Kunden seinem Facebook-Konto zuordnen. Wenn der Kunde mit den
-        Plugins interagiert, zum Beispiel den &quot;Gefällt mir&quot;-Button betätigt oder
-        einen Kommentar abgibt, wird die entsprechende Information von dem
+        (&quot;Plugins&quot;) des sozialen Netzwerkes facebook.com, welches von
+        der Facebook Inc., 1601 S. California Ave, Palo Alto, CA 94304, USA
+        betrieben wird (&quot;Facebook&quot;). Die Plugins sind mit einem
+        Facebook Logo gekennzeichnet. Wenn der Kunde eine Webseite der
+        verantwortlichen Stelle aufruft, die ein solches Plugin enthält, baut
+        der Browser des Kunden eine direkte Verbindung mit den Servern von
+        Facebook auf. Der Inhalt des Plugins wird von Facebook direkt an den
+        Browser des Kunden übermittelt und von diesem in die Webseite
+        eingebunden. Durch die Einbindung der Plugins erhält Facebook die
+        Information, dass der Kunde die entsprechende Seite des
+        Internetauftritts der verantwortlichen Stelle aufgerufen hat. Ist der
+        Kunde bei Facebook eingeloggt, kann Facebook den Besuch des Kunden
+        seinem Facebook-Konto zuordnen. Wenn der Kunde mit den Plugins
+        interagiert, zum Beispiel den &quot;Gefällt mir&quot;-Button betätigt
+        oder einen Kommentar abgibt, wird die entsprechende Information von dem
         Browser des Kunden direkt an Facebook übermittelt und dort gespeichert.
         Zweck und Umfang der Datenerhebung und die weitere Verarbeitung und
         Nutzung der Daten durch Facebook sowie diesbezügliche Rechte und
@@ -301,13 +304,13 @@ export default function Home() {
         Die verantwortliche Stelle verwendet auf ihrer Website Funktionen des
         Dienstes Twitter. Diese Funktionen werden angeboten durch die Twitter
         Inc., Twitter, Inc. 1355 Market St, Suite 900, San Francisco, CA 94103,
-        USA. Durch das Benutzen von Twitter und der Funktion &quot;Re-Tweet&quot; werden
-        die von Ihnen besuchten Webseiten mit Ihrem Twitter-Account verknüpft
-        und anderen Nutzern bekannt gegeben. Dabei werden auch Daten an Twitter
-        übertragen. Wir weisen darauf hin, dass wir als Anbieter der Seiten
-        keine Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung
-        durch Twitter erhalten. Weitere Informationen hierzu finden Sie in der
-        Datenschutzerklärung von Twitter unter:
+        USA. Durch das Benutzen von Twitter und der Funktion
+        &quot;Re-Tweet&quot; werden die von Ihnen besuchten Webseiten mit Ihrem
+        Twitter-Account verknüpft und anderen Nutzern bekannt gegeben. Dabei
+        werden auch Daten an Twitter übertragen. Wir weisen darauf hin, dass wir
+        als Anbieter der Seiten keine Kenntnis vom Inhalt der übermittelten
+        Daten sowie deren Nutzung durch Twitter erhalten. Weitere Informationen
+        hierzu finden Sie in der Datenschutzerklärung von Twitter unter:
         <a
           href="http://www.twitter.com/privacy"
           target="_blank"
@@ -331,11 +334,12 @@ export default function Home() {
       </h3>
       <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
         Die verantwortliche Stelle verwendet auf ihrer Website Social Plugins
-        (&quot;Plugins&quot;) von Instagram, das von der Instagram LLC<em>., </em>1601
-        Willow Road, Menlo Park, CA 94025, USA (&quot;Instagram&quot;) betrieben wird. Die
-        Plugins sind mit einem Instagram-Logo beispielsweise in Form einer
-        &quot;Instagram-Kamera&quot; gekennzeichnet. Eine Übersicht über die Instagram
-        Plugins und deren Aussehen finden Sie hier:
+        (&quot;Plugins&quot;) von Instagram, das von der Instagram LLC
+        <em>., </em>1601 Willow Road, Menlo Park, CA 94025, USA
+        (&quot;Instagram&quot;) betrieben wird. Die Plugins sind mit einem
+        Instagram-Logo beispielsweise in Form einer &quot;Instagram-Kamera&quot;
+        gekennzeichnet. Eine Übersicht über die Instagram Plugins und deren
+        Aussehen finden Sie hier:
         <a
           href="http://blog.instagram.com/post/36222022872/introducing-instagram-badges"
           target="_blank"
@@ -355,9 +359,9 @@ export default function Home() {
         übermittelt und dort gespeichert. Sind Sie bei Instagram eingeloggt,
         kann Instagram den Besuch unserer Website Ihrem Instagram-Account
         unmittelbar zuordnen. Wenn Sie mit den Plugins interagieren, zum
-        Beispiel den &quot;Instagram&quot;-Button betätigen, wird diese Information
-        ebenfalls direkt an einen Server von Instagram übermittelt und dort
-        gespeichert. Die Informationen werden außerdem auf Ihrem
+        Beispiel den &quot;Instagram&quot;-Button betätigen, wird diese
+        Information ebenfalls direkt an einen Server von Instagram übermittelt
+        und dort gespeichert. Die Informationen werden außerdem auf Ihrem
         Instagram-Account veröffentlicht und dort Ihren Kontakten angezeigt.
         Zweck und Umfang der Datenerhebung und die weitere Verarbeitung und
         Nutzung der Daten durch Instagram sowie Ihre diesbezüglichen Rechte und
@@ -374,7 +378,8 @@ export default function Home() {
         gesammelten Daten unmittelbar Ihrem Instagram-Account zuordnet, müssen
         Sie sich vor Ihrem Besuch unserer Website bei Instagram ausloggen. Sie
         können das Laden der Instagram Plugins auch mit Add-Ons für Ihren
-        Browser komplett verhindern, z.B. mit dem Skript-Blocker &quot;NoScript&quot; (
+        Browser komplett verhindern, z.B. mit dem Skript-Blocker
+        &quot;NoScript&quot; (
         <a
           href="http://noscript.net/"
           target="_blank"
@@ -406,7 +411,7 @@ export default function Home() {
         Benutzerkonten der Firmen YouTube LLC und Google Inc. abmelden und die
         entsprechenden Cookies der Firmen löschen. Weitere Informationen zur
         Datenverarbeitung und Hinweise zum Datenschutz durch YouTube (Google)
-        finden Sie unter 
+        finden Sie unter
         <a
           href="http://www.google.de/intl/de/policies/privacy/"
           target="_blank"
@@ -420,13 +425,13 @@ export default function Home() {
         Weitere Informationen und Kontakte
       </h3>
       <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
-        Wenn Sie weitere Fragen zum Thema &quot;Datenschutz bei der verantwortlichen
-        Stelle&quot; haben, wenden Sie sich an den Datenschutzbeauftragten des
-        Kinderlicht Wallersdorf e. V. Sie können erfragen, welche Ihrer Daten
-        bei uns gespeichert sind. Darüber hinaus können Sie Auskünfte,
-        Löschungs- und Berichtigungswünsche zu Ihren Daten und gerne auch
-        Anregungen jederzeit per Brief oder E-Mail an die Adresse unten im
-        Impressum senden.
+        Wenn Sie weitere Fragen zum Thema &quot;Datenschutz bei der
+        verantwortlichen Stelle&quot; haben, wenden Sie sich an den
+        Datenschutzbeauftragten des Kinderlicht Wallersdorf e. V. Sie können
+        erfragen, welche Ihrer Daten bei uns gespeichert sind. Darüber hinaus
+        können Sie Auskünfte, Löschungs- und Berichtigungswünsche zu Ihren Daten
+        und gerne auch Anregungen jederzeit per Brief oder E-Mail an die Adresse
+        unten im Impressum senden.
       </p>
       <div className="w-full grid place-items-center">
         <div className="w-fit p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
