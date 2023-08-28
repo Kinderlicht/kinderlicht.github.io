@@ -110,18 +110,18 @@ export default function Home() {
         Twitter-Account oder einen Instagram-Account besitzen, personenbezogene
         Daten in die USA exportiert werden. Zu näheren Erläuterungen und zu
         Möglichkeiten, diesen Datenexport zu verhindern, lesen Sie bitte den
-        Gliederungspunkt „Verwendung von Facebook Social Plugins“ bzw.
-        „Verwendung von Twitter“ bzw. „Verwendung von Instagram Social Plugins“
+        Gliederungspunkt &quot;Verwendung von Facebook Social Plugins&quot; bzw.
+        &quot;Verwendung von Twitter&quot; bzw. &quot;Verwendung von Instagram Social Plugins&quot;
         der vorliegenden Datenschutzerklärung. Eine Übermittlung von
         personenbezogenen Daten an Google im Rahmen der Nutzung von
         Analyseprogrammen durch die verantwortliche Stelle findet hingegen nicht
         statt, da Ihre IP-Adresse nur anonymisiert übermittelt wird. Lesen Sie
-        dazu bitte den Punkt „Verwendung von Analyseprogrammen“ der vorliegenden
+        dazu bitte den Punkt &quot;Verwendung von Analyseprogrammen&quot; der vorliegenden
         Datenschutzerklärung. Soweit Sie sich bei Google eingeloggt haben oder
         einen Youtube-Account besitzen, können personenbezogene Daten in die USA
         exportiert werden. Zu näheren Erläuterungen und zu Möglichkeiten, diesen
         Datenexport zu verhindern, beachten Sie bitte den Gliederungspunkt
-        „Verwendung von YouTube-Plugins“. Die von der verantwortlichen Stelle
+        &quot;Verwendung von YouTube-Plugins&quot;. Die von der verantwortlichen Stelle
         eingeschalteten Dienstleister haben ihren Sitz und betreiben ihre
         IT-Infrastruktur ausschließlich innerhalb des EWR. Dies gilt auch für
         eine eventuelle Nutzung von Cloud-basierenden Diensten. Mit den
@@ -188,8 +188,8 @@ export default function Home() {
         Permanente Cookies
       </h3>
       <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
-        Darüber hinaus verwendet die verantwortliche Stelle „permanente
-        Cookies“, um die persönlichen Nutzungseinstellungen, die ein Kunde bei
+        Darüber hinaus verwendet die verantwortliche Stelle &quot;permanente
+        Cookies&quot;, um die persönlichen Nutzungseinstellungen, die ein Kunde bei
         der Nutzung der Services der verantwortlichen Stelle eingibt, zu
         speichern und so eine Personalisierung und Verbesserung des Services
         vornehmen zu können. Durch die permanenten Cookies wird sichergestellt,
@@ -225,8 +225,8 @@ export default function Home() {
         dem alleinigen Zweck, den Service der verantwortlichen Stelle ständig zu
         verbessern. Die verantwortliche Stelle verwendet im Rahmen der
         Web-Analyse auch Google Analytics, einen Web-Analysedienst der Google
-        Inc. ("Google"), den die verantwortliche Stelle Google Analytics mit der
-        Erweiterung „_anonymizeIp()“ nutzt. Dadurch werden die IP-Adressen nur
+        Inc. (&quot;Google&quot;), den die verantwortliche Stelle Google Analytics mit der
+        Erweiterung &quot;_anonymizeIp()&quot; nutzt. Dadurch werden die IP-Adressen nur
         gekürzt verarbeitet, um eine direkte Personenbeziehbarkeit
         auszuschließen. Der in diesem Zusammenhang stattfindenden Datenerhebung
         und -speicherung kann jederzeit mit Wirkung für die Zukunft
@@ -243,7 +243,7 @@ export default function Home() {
         zu verwenden. Dieser Aufforderung kommt der&nbsp;Kinderlicht Wallersdorf
         e. V. &nbsp;mit der Wiedergabe des folgenden Textes nach:
         <em>
-          “Google Analytics verwendet sog. &quot;Cookies&quot;, Textdateien, die auf Ihrem
+          &quot;Google Analytics verwendet sog. &quot;Cookies&quot;, Textdateien, die auf Ihrem
           Computer gespeichert werden und die eine Analyse der Benutzung der
           Website durch Sie ermöglichen. Die durch den Cookie erzeugten
           Informationen über Ihre Benutzung dieser Website (einschließlich Ihrer
@@ -331,10 +331,10 @@ export default function Home() {
       </h3>
       <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
         Die verantwortliche Stelle verwendet auf ihrer Website Social Plugins
-        („Plugins“) von Instagram, das von der Instagram LLC<em>., </em>1601
-        Willow Road, Menlo Park, CA 94025, USA („Instagram“) betrieben wird. Die
+        (&quot;Plugins&quot;) von Instagram, das von der Instagram LLC<em>., </em>1601
+        Willow Road, Menlo Park, CA 94025, USA (&quot;Instagram&quot;) betrieben wird. Die
         Plugins sind mit einem Instagram-Logo beispielsweise in Form einer
-        „Instagram-Kamera“ gekennzeichnet. Eine Übersicht über die Instagram
+        &quot;Instagram-Kamera&quot; gekennzeichnet. Eine Übersicht über die Instagram
         Plugins und deren Aussehen finden Sie hier:
         <a
           href="http://blog.instagram.com/post/36222022872/introducing-instagram-badges"
@@ -355,7 +355,7 @@ export default function Home() {
         übermittelt und dort gespeichert. Sind Sie bei Instagram eingeloggt,
         kann Instagram den Besuch unserer Website Ihrem Instagram-Account
         unmittelbar zuordnen. Wenn Sie mit den Plugins interagieren, zum
-        Beispiel den „Instagram“-Button betätigen, wird diese Information
+        Beispiel den &quot;Instagram&quot;-Button betätigen, wird diese Information
         ebenfalls direkt an einen Server von Instagram übermittelt und dort
         gespeichert. Die Informationen werden außerdem auf Ihrem
         Instagram-Account veröffentlicht und dort Ihren Kontakten angezeigt.
@@ -420,7 +420,7 @@ export default function Home() {
         Weitere Informationen und Kontakte
       </h3>
       <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
-        Wenn Sie weitere Fragen zum Thema "Datenschutz bei der verantwortlichen
+        Wenn Sie weitere Fragen zum Thema &quot;Datenschutz bei der verantwortlichen
         Stelle&quot; haben, wenden Sie sich an den Datenschutzbeauftragten des
         Kinderlicht Wallersdorf e. V. Sie können erfragen, welche Ihrer Daten
         bei uns gespeichert sind. Darüber hinaus können Sie Auskünfte,
