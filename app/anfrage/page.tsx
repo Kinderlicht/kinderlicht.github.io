@@ -3,13 +3,34 @@ export default function Home() {
     <section className="bg-white dark:bg-gray-900">
       <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
-          Hilfe anfragen
+          Anfrage stellen
         </h2>
         <div className="max-w-sm rounded overflow-hidden shadow-lg"></div>
         <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
-          Hier kannst du unverbindlich einen Hilferuf stellen. Dabei ist es
+          Hier kannst du unverbindlich eine Anfrage stellen oder einfach mit uns in Kontakt treten. Dabei ist es
           egal, ob du für Bekannte oder für dich selbst eine Anfrage stellst.
-          Wir setzen uns dann mit dir in Verbindung.
+          Wir setzen uns umgehend mit dir in Verbindung.
+          <a
+            href="/quittung"
+            className="py-3 inline-flex items-center text-blue-600 hover:underline"
+          >
+            Klicke hier um eine Spendenbescheinigung anzufordern
+            <svg
+              className="w-3 h-3 ml-2.5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 18 18"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"
+              />
+            </svg>
+          </a>
         </p>
         <form action="#" className="space-y-8">
           <div>

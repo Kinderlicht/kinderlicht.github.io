@@ -30,14 +30,14 @@ export default function Home() {
                   </h2>
                   <p className="leading-relaxed text-base">
                     Der Kinderlicht Wallersdorf e.V. konnte bereits vielen
-                    Familien erfolgreich helfen.{" "}
+                    Familien erfolgreich helfen.
                   </p>
                 </a>
               </div>
             </div>
             <div className="xl:w-1/3 md:w-1/2 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-                <a href="/helfen">
+                <a href="/beitreten">
                   <img
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="/home/donate.png"
