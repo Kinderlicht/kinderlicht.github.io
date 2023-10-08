@@ -1,94 +1,73 @@
 export default function Home() {
   return (
-    <section className="text-gray-600 body-font">
-      <div className="container px-5 py-24 mx-auto max-w-7x1">
-        <div className="flex flex-wrap w-full mb-4 p-4">
-          <div className="w-full mb-6 lg:mb-0">
-            <h1 className="sm:text-4xl text-5xl font-bold title-font mb-2 text-gray-900">
-              Unsere Berichte
-            </h1>
-            <div className="h-1 w-20 bg-indigo-500 rounded"></div>
-          </div>
-        </div>
-        <div className="flex flex-wrap -m-4">
-          <div className="w-full">
-            <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-              <img
-                className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
-                src="/home/start.jpg"
-                alt="Lichterhaus"
-              />
-              <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                SUBTITLE
-              </h3>
-              <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                Chichen Itza
-              </h2>
-              <p className="leading-relaxed text-base">
-                Fingerstache flexitarian street art 8-bit waistcoat. Distillery
-                hexagon disrupt edison bulbche.
-              </p>
-            </div>
-          </div>
-          <div className="w-full">
-            <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-              <img
-                className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                src="/home/founding.jpg"
-                alt="Gründung"
-              />
-              <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                SUBTITLE
-              </h3>
-              <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                Colosseum Roma
-              </h2>
-              <p className="leading-relaxed text-base">
-                Fingerstache flexitarian street art 8-bit waistcoat. Distillery
-                hexagon disrupt edison bulbche.
-              </p>
-            </div>
-          </div>
-          <div className="w-full">
-            <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-              <img
-                className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                src="/home/umbrella.jpg"
-                alt="Schirmherrschaft"
-              />
-              <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                SUBTITLE
-              </h3>
-              <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                Great Pyramid of Giza
-              </h2>
-              <p className="leading-relaxed text-base">
-                Fingerstache flexitarian street art 8-bit waistcoat. Distillery
-                hexagon disrupt edison bulbche.
-              </p>
-            </div>
-          </div>
-          <div className="w-full">
-            <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-              <img
-                className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                src="https://wisatamuda.com/wp-content/uploads/2019/02/1-Golden-Gate-Bridge-Gambar-dan-Foto-Tempat-Wisata-Terbaik-di-San-Fransisco-USA.jpg"
-                alt="Image Size 720x400"
-              />
-              <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                SUBTITLE
-              </h3>
-              <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-                San Francisco
-              </h2>
-              <p className="leading-relaxed text-base">
-                Fingerstache flexitarian street art 8-bit waistcoat. Distillery
-                hexagon disrupt edison bulbche.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<section className="dark:bg-gray-800 dark:text-gray-100 my-24">
+	<div className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
+  <h2 className="mb-16 text-3xl font-bold text-center">
+          Unsere{" "}
+          <u className="text-primary dark:text-primary-40">Neuigkeiten</u>
+        </h2>
+		<a rel="noopener noreferrer" href="#" className="block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 dark:bg-gray-900">
+			<img src="https://source.unsplash.com/random/480x360" alt="" className="object-cover w-full h-64 rounded sm:h-96 lg:col-span-7 dark:bg-gray-500" />
+			<div className="p-6 space-y-2 lg:col-span-5">
+				<h3 className="text-2xl font-semibold sm:text-4xl group-hover:underline group-focus:underline">Noster tincidunt reprimique ad pro</h3>
+				<span className="text-xs dark:text-gray-400">February 19, 2021</span>
+				<p>Ei delenit sensibus liberavisse pri. Quod suscipit no nam. Est in graece fuisset, eos affert putent doctus id.</p>
+			</div>
+		</a>
+		<div className="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			<a rel="noopener noreferrer" href="#" className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900">
+				<img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="https://source.unsplash.com/random/480x360?1" />
+				<div className="p-6 space-y-2">
+					<h3 className="text-2xl font-semibold group-hover:underline group-focus:underline">In usu laoreet repudiare legendos</h3>
+					<span className="text-xs dark:text-gray-400">January 21, 2021</span>
+					<p>Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
+				</div>
+			</a>
+			<a rel="noopener noreferrer" href="#" className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900">
+				<img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="https://source.unsplash.com/random/480x360?2" />
+				<div className="p-6 space-y-2">
+					<h3 className="text-2xl font-semibold group-hover:underline group-focus:underline">In usu laoreet repudiare legendos</h3>
+					<span className="text-xs dark:text-gray-400">January 22, 2021</span>
+					<p>Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
+				</div>
+			</a>
+			<a rel="noopener noreferrer" href="#" className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900">
+				<img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="https://source.unsplash.com/random/480x360?3" />
+				<div className="p-6 space-y-2">
+					<h3 className="text-2xl font-semibold group-hover:underline group-focus:underline">In usu laoreet repudiare legendos</h3>
+					<span className="text-xs dark:text-gray-400">January 23, 2021</span>
+					<p>Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
+				</div>
+			</a>
+			<a rel="noopener noreferrer" href="#" className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900 hidden sm:block">
+				<img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="https://source.unsplash.com/random/480x360?4" />
+				<div className="p-6 space-y-2">
+					<h3 className="text-2xl font-semibold group-hover:underline group-focus:underline">In usu laoreet repudiare legendos</h3>
+					<span className="text-xs dark:text-gray-400">January 24, 2021</span>
+					<p>Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
+				</div>
+			</a>
+			<a rel="noopener noreferrer" href="#" className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900 hidden sm:block">
+				<img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="https://source.unsplash.com/random/480x360?5" />
+				<div className="p-6 space-y-2">
+					<h3 className="text-2xl font-semibold group-hover:underline group-focus:underline">In usu laoreet repudiare legendos</h3>
+					<span className="text-xs dark:text-gray-400">January 25, 2021</span>
+					<p>Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
+				</div>
+			</a>
+			<a rel="noopener noreferrer" href="#" className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900 hidden sm:block">
+				<img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="https://source.unsplash.com/random/480x360?6" />
+				<div className="p-6 space-y-2">
+					<h3 className="text-2xl font-semibold group-hover:underline group-focus:underline">In usu laoreet repudiare legendos</h3>
+					<span className="text-xs dark:text-gray-400">January 26, 2021</span>
+					<p>Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
+				</div>
+			</a>
+		</div>
+		<div className="flex justify-center">
+			<button type="button" className="px-6 py-3 text-sm rounded-md hover:underline dark:bg-gray-900 dark:text-gray-400">Load more posts...</button>
+		</div>
+	</div>
+</section>
   );
 }
