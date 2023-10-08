@@ -1,105 +1,16 @@
+import Script from "next/script";
+
 export default function Home() {
   return (
-    <section className="bg-white dark:bg-gray-900">
-      <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
-          Anfrage stellen
-        </h2>
-        <div className="max-w-sm rounded overflow-hidden shadow-lg"></div>
-        <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
-          Hier kannst du unverbindlich eine Anfrage stellen oder einfach mit uns in Kontakt treten. Dabei ist es
-          egal, ob du für Bekannte oder für dich selbst eine Anfrage stellst.
-          Wir setzen uns umgehend mit dir in Verbindung.
-          <a
-            href="/quittung"
-            className="py-3 inline-flex items-center text-blue-600 hover:underline"
-          >
-            Klicke hier um eine Spendenbescheinigung anzufordern
-            <svg
-              className="w-3 h-3 ml-2.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 18 18"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"
-              />
-            </svg>
-          </a>
-        </p>
-        <form action="#" className="space-y-8">
-          <div>
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Deine E-Mail Adresse
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-              placeholder="hilfe@kinderlicht.de"
-              required
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="subject"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Betreff
-            </label>
-            <input
-              type="text"
-              id="subject"
-              className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-              placeholder="Wie können wir dir helfen?"
-              required
-            />
-          </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="message"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-            >
-              Deine Nachricht
-            </label>
-            <textarea
-              id="message"
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Bitte beschreibe uns deine Situation ausführlich..."
-            ></textarea>
-          </div>
-          <div>
-            <label
-              htmlFor="phone"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Deine Telefonnummer
-            </label>
-            <input
-              type="tel"
-              pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-              id="phone"
-              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-              placeholder="(optional)"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Nachricht unverbindlich abschicken
-          </button>
-        </form>
-      </div>
-    </section>
+    <div className="px-0.5">
+      <Script src="https://app.campai.com/lib/web-form.js"></Script>
+      <web-form
+        zone="campai"
+        organisation="64e88fabfb6cef3375134031"
+        form="65228c088027e5517c174547"
+        css=".sd-root-modern{--base-unit: 8px;--primary: #484848;--primary-foreground: #ffa726;--foreground: #000000;--background: #ffffff;--background-dim: #f3f3f3;--background-dim-light: #f9f9f9;--font-family: initial;flex: 1;}.sv-tagbox__item, .sd-tagbox_clean-button{box-sizing: content-box;}"
+        model="base64;eyJsb2NhbGUiOiJkZSIsInRpdGxlIjp7ImRlIjoiS29udGFrdGZvcm11bGFyIn0sImxvZ28iOnsiZGUiOiJodHRwczovL2FwaS5jYW1wYWkuY29tL3N0b3JhZ2UvZG93bmxvYWQvb3JnYW5pc2F0aW9uLzY0ZTg4ZmFiZmI2Y2VmMzM3NTEzNDAzMS9vcmdhbmlzYXRpb24vZXIzbmJscnpBUmVBQnF2VXUxMXNULnBuZyJ9LCJsb2dvV2lkdGgiOiIxMDBweCIsImxvZ29IZWlnaHQiOiIxMDBweCIsImxvZ29Qb3NpdGlvbiI6InJpZ2h0IiwiY29tcGxldGVkSHRtbCI6eyJkZSI6IjxoMT5WaWVsZW4gZGFuayBmw7xyIGRhcyBBdXNmw7xsbGVuPC9oMT5cbjxwPldpciB3ZXJkZW4gdW5zIHVtZ2VoZW5kIG1pdCBEaXIgaW4gVmVyYmluZHVuZyBzZXR6ZW4uPC9wPlxuIn0sInBhZ2VzIjpbeyJuYW1lIjoiU2VpdGUxIiwiZWxlbWVudHMiOlt7InR5cGUiOiJ0ZXh0IiwibmFtZSI6IkZyYWdlMSIsInRpdGxlIjp7ImRlIjoiVm9ybmFtZSJ9LCJpc1JlcXVpcmVkIjp0cnVlLCJmb3JtYXQiOiJ0ZXh0In0seyJ0eXBlIjoidGV4dCIsIm5hbWUiOiJGcmFnZTIiLCJzdGFydFdpdGhOZXdMaW5lIjpmYWxzZSwidGl0bGUiOnsiZGUiOiJOYWNobmFtZSJ9LCJpc1JlcXVpcmVkIjp0cnVlLCJmb3JtYXQiOiJ0ZXh0In0seyJ0eXBlIjoidGV4dCIsIm5hbWUiOiJGcmFnZTYiLCJ0aXRsZSI6eyJkZSI6Ik1vYmlsbnVtbWVyIn0sInZhbGlkYXRvcnMiOlt7InR5cGUiOiJtb2JpbGVfcGhvbmUifV0sImlucHV0VHlwZSI6InRlbCIsImZvcm1hdCI6Im1vYmlsZSJ9LHsidHlwZSI6InRleHQiLCJuYW1lIjoiRnJhZ2U3Iiwic3RhcnRXaXRoTmV3TGluZSI6ZmFsc2UsInRpdGxlIjp7ImRlIjoiRS1NYWlsLUFkcmVzc2UifSwiaXNSZXF1aXJlZCI6dHJ1ZSwidmFsaWRhdG9ycyI6W3sidHlwZSI6ImVtYWlsIn1dLCJpbnB1dFR5cGUiOiJlbWFpbCIsInBsYWNlaG9sZGVyIjp7ImRlIjoibWF4QG11c3Rlcm1hbm4uZGUifSwiZm9ybWF0IjoiZW1haWwifSx7InR5cGUiOiJ0ZXh0IiwibmFtZSI6IkZyYWdlMTIiLCJ0aXRsZSI6eyJkZSI6IkJldHJlZmYifSwiaXNSZXF1aXJlZCI6dHJ1ZSwiZm9ybWF0IjoidGV4dCJ9LHsidHlwZSI6ImNvbW1lbnQiLCJuYW1lIjoiRnJhZ2UxMSIsInRpdGxlIjp7ImRlIjoiQW5tZXJrdW5nZW4sIEZyYWdlKG4pIn0sImlzUmVxdWlyZWQiOnRydWV9LHsidHlwZSI6ImNoZWNrYm94IiwibmFtZSI6IkZyYWdlMTMiLCJ0aXRsZSI6eyJkZSI6IkRhdGVuc2NodXR6In0sImlzUmVxdWlyZWQiOnRydWUsImNob2ljZXMiOlt7InZhbHVlIjoiSXRlbSAxIiwidGV4dCI6eyJkZSI6IkphLCBpY2ggaGFiZSBkaWUgRGF0ZW5zY2h1dHplcmtsw6RydW5nIHp1ciBLZW5udG5pcyBnZW5vbW1lbiB1bmQgYmluIGRhbWl0IGVpbnZlcnN0YW5kZW4sIGRhc3MgZGllIHZvbiBtaXIgYW5nZWdlYmVuZW4gRGF0ZW4gendlY2tnZWJ1bmRlbiB6dXIgQmVhcmJlaXR1bmcgdW5kIEJlYW50d29ydHVuZyBtZWluZXIgQW5mcmFnZSBlbGVrdHJvbmlzY2ggZXJob2JlbiB1bmQgZ2VzcGVpY2hlcnQgd2VyZGVuLiBNaXQgZGVtIEFic2VuZGVuIGRlcyBLb250YWt0Zm9ybXVsYXJzIGVya2zDpHJlIGljaCBtaWNoIG1pdCBkZXIgVmVyYXJiZWl0dW5nIGVpbnZlcnN0YW5kZW4uIn19XX1dLCJ0aXRsZSI6eyJkZSI6IkJlc2NocmVpYmUgdW5zIGRlaW4gQW5saWVnZW4ifSwiZGVzY3JpcHRpb24iOnsiZGUiOiJIaWVyIGthbm5zdCBkdSB1bnZlcmJpbmRsaWNoIGVpbmUgQW5mcmFnZSBzdGVsbGVuIG9kZXIgZWluZmFjaCBtaXQgdW5zIGluIEtvbnRha3QgdHJldGVuLiBEYWJlaSBpc3QgZXMgZWdhbCwgb2IgZHUgZsO8ciBCZWthbm50ZSBvZGVyIGbDvHIgZGljaCBzZWxic3QgZWluZSBBbmZyYWdlIHN0ZWxsc3QuIFdpciBzZXR6ZW4gdW5zIHVtZ2VoZW5kIG1pdCBkaXIgaW4gVmVyYmluZHVuZy4ifX1dLCJ3aWR0aE1vZGUiOiJzdGF0aWMiLCJ3aWR0aCI6IjgwMHB4In0="
+      ></web-form>
+    </div>
   );
 }
