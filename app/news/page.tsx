@@ -2,10 +2,11 @@ import data from "./news.json";
 import ReactHtmlParser from 'react-html-parser'; 
 
 function NewsEntry(news: JSON) {
+	let link = "/news/beitrag?id=" + news["date"].replace(" ", "-") + "-" + news["heading"].replace(" ", "-");
   return (
     <a
       rel="noopener noreferrer"
-      href="#"
+      href={link}
       className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900"
     >
       <img
@@ -25,10 +26,11 @@ function NewsEntry(news: JSON) {
 }
 
 function TopEntry(news: JSON) {
+	let link = "/news/beitrag?id=" + news["date"].replace(" ", "-") + "-" + news["heading"].replace(" ", "-");
   return (
     <a
       rel="noopener noreferrer"
-      href="#"
+      href={link}
       className="block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 dark:bg-gray-900"
     >
       <img
@@ -41,7 +43,7 @@ function TopEntry(news: JSON) {
           {news["heading"]}
         </h3>
         <span className="text-xs dark:text-gray-400">{news["date"]}</span>
-        <p>{news["short"]}</p>
+        <p>{ReactHtmlParser(news["short"])}</p>
       </div>
     </a>
   );
@@ -59,7 +61,7 @@ export default function Home() {
         </h2>
         {TopEntry(recent)}
         <div className="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {remaining.map((entry) => NewsEntry(entry))}
+          {remaining.map((entry, index) => NewsEntry(entry, index))}
         </div>
         <div className="flex justify-center">
           <button

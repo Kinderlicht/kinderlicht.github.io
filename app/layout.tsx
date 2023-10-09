@@ -22,7 +22,7 @@ export default function RootLayout({
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
               <a href="/" className="flex items-center">
                 <img
-                  src="icon.png"
+                  src="/icon.png"
                   className="mr-3 h-6 sm:h-9"
                   alt="Kinderlicht Logo"
                 />
@@ -221,7 +221,7 @@ export default function RootLayout({
           <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div className="md:flex md:justify-between">
               <div className="mb-6 md:mb-0">
-                <a href="https://flowbite.com/" className="flex items-center">
+                <a href="/" className="flex items-center">
                   <img
                     src="/icon.png"
                     className="h-8 mr-3"
