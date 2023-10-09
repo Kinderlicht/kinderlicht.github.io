@@ -1,0 +1,16 @@
+[
+    {
+        "date": "2022-03-03",
+        "heading": "Neue Webseite",
+        "short": "<strong>test</strong>",
+        "content": "hallo erstmal",
+        "image": "/news/webseite.jpg"
+    },
+    {
+        "date": "2022-03-03",
+        "heading": "Neue Webseite",
+        "short": "hallo erstmal",
+        "content": "hallo erstmal",
+        "image": "/news/webseite.jpg"
+    }
+]
