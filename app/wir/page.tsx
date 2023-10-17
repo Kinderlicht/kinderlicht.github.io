@@ -241,7 +241,9 @@ export default function Home() {
           Unsere{" "}
           <u className="text-primary dark:text-primary-400">Unterstützer</u>
         </h2>
-        <p className="mb-16 text-center">Die Sortierung der Unterstützer erfolgte rein zufällig.</p>
+        <p className="mb-16 text-center">
+          Die Sortierung der Unterstützer erfolgte rein zufällig.
+        </p>
 
         <div className="grid gap-6 lg:grid-cols-3">
           <a href="https://www.digitaldruck-fabrik.de" className="mb-6 lg:mb-0">
@@ -385,7 +387,7 @@ export default function Home() {
                     />
                   </div>
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Aster's Holunderhof</h5>
+                    <h5 className="mb-4 font-bold">Aster&apos;s Holunderhof</h5>
                     aus 94522 Ettling{" "}
                   </div>
                 </div>
@@ -393,10 +395,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://www.music-station.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://www.music-station.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -416,10 +415,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://develey.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://develey.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -439,10 +435,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="http://www.weig-online.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="http://www.weig-online.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -462,10 +455,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://eventbar-woibadinga.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://eventbar-woibadinga.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -531,10 +521,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://www.weiss-grunert.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://www.weiss-grunert.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -546,7 +533,9 @@ export default function Home() {
                     />
                   </div>
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Rechtsanwälte Weiss & Grunert</h5>
+                    <h5 className="mb-4 font-bold">
+                      Rechtsanwälte Weiss & Grunert
+                    </h5>
                     aus 84028 Landshut{" "}
                   </div>
                 </div>
@@ -554,10 +543,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://ortmaier-druck.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://ortmaier-druck.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -577,10 +563,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://www.teba-kreditbank.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://www.teba-kreditbank.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -623,10 +606,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://fahrschule-eder.net/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://fahrschule-eder.net/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -669,10 +649,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://sp-ast.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://sp-ast.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -715,10 +692,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://www.andrea-herzig.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://www.andrea-herzig.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -748,12 +722,12 @@ export default function Home() {
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
                     <img
                       src="https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/293155048_740134597322979_4071837228414404162_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=2LOzisTJJkoAX8BSx_n&_nc_ht=scontent-muc2-1.xx&oh=00_AfCaCbgOnGx5jtvGN8_MxOueXZtJvK20iVfrc2UAZ9s7Wg&oe=6527F00F"
-                      alt="TeacherMen's Friends"
+                      alt="TeacherMen&apos;s Friends"
                       className="mb-6 dark:brightness-150 lg:mb-0"
                     />
                   </div>
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">TeacherMen's Friends</h5>
+                    <h5 className="mb-4 font-bold">TeacherMen&apos;s Friends</h5>
                     aus 94405 Landau a. d. Isar{" "}
                   </div>
                 </div>
@@ -784,10 +758,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://www.voices-music.com/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://www.voices-music.com/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -807,10 +778,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://www.picantos.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://www.picantos.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -853,10 +821,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://www.sixty-up.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://www.sixty-up.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -876,10 +841,7 @@ export default function Home() {
             </div>
           </a>
 
-          <a
-            href="https://www.vswallersdorf.de/"
-            className="mb-6 lg:mb-0"
-          >
+          <a href="https://www.vswallersdorf.de/" className="mb-6 lg:mb-0">
             <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
@@ -891,7 +853,9 @@ export default function Home() {
                     />
                   </div>
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Bischof-Riccabona Mittelschule</h5>
+                    <h5 className="mb-4 font-bold">
+                      Bischof-Riccabona Mittelschule
+                    </h5>
                     aus 94522 Wallersdorf{" "}
                   </div>
                 </div>

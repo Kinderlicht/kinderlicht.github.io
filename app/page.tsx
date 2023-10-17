@@ -356,7 +356,7 @@ export default function Home() {
                   Die vier Jahreszeiten
                 </h2>
                 <p className="leading-relaxed text-base">
-                  Auch unsere FilmemacherInnen haben nicht geschlafen und einen Kinofilm produziert. Kann der Weihnachtswichtel die "4 Jahreszeiten" von der bösen Hexe befreien?
+                  Auch unsere FilmemacherInnen haben nicht geschlafen und einen Kinofilm produziert. Kann der Weihnachtswichtel die &quot;4 Jahreszeiten&quot; von der bösen Hexe befreien?
                 </p>
               </div>
             </div>
