@@ -12,7 +12,7 @@ export default function Home() {
         <div className="grid gap-y-8 md:grid-rows-2 lg:gap-y-32">
           <div className="grid gap-x-6 md:grid-cols-3 lg:gap-x-12">
             <div className="mb-24 md:mb-0">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -48,7 +48,7 @@ export default function Home() {
             </div>
 
             <div className="mb-24 md:mb-0">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -84,7 +84,7 @@ export default function Home() {
             </div>
 
             <div className="">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -122,7 +122,7 @@ export default function Home() {
 
           <div className="grid gap-x-6 md:grid-cols-3 lg:gap-x-12">
             <div className="mb-24 md:mb-0">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -158,7 +158,7 @@ export default function Home() {
             </div>
 
             <div className="mb-24 md:mb-0">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -196,7 +196,7 @@ export default function Home() {
             </div>
 
             <div className="">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -247,7 +247,7 @@ export default function Home() {
 
         <div className="grid gap-6 lg:grid-cols-3">
           <a href="https://www.digitaldruck-fabrik.de" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="h-30 flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -267,7 +267,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.partymat.de/TRIXX" className="mb-6 lg:mb-0">
-            <div className="h-30 block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="h-30 block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="h-30 flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -287,7 +287,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.lebensmittel-leeb.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -310,7 +310,7 @@ export default function Home() {
             href="https://www.baeckerei-dischinger.de/"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -333,7 +333,7 @@ export default function Home() {
             href="https://www.facebook.com/MetzgereiDonhauser/?locale=de_DE"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -353,7 +353,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.metzgerei-frisch.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -376,7 +376,7 @@ export default function Home() {
             href="https://www.mein-bauernhof.de/verkaufstelle/asters-holunderhof-705559/"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -396,7 +396,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.music-station.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -416,7 +416,7 @@ export default function Home() {
           </a>
 
           <a href="https://develey.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -436,7 +436,7 @@ export default function Home() {
           </a>
 
           <a href="http://www.weig-online.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -456,7 +456,7 @@ export default function Home() {
           </a>
 
           <a href="https://eventbar-woibadinga.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -479,7 +479,7 @@ export default function Home() {
             href="https://www.ziegler-isolierungen.de/"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -502,7 +502,7 @@ export default function Home() {
             href="https://www.wallersdorfer-backhaus.de/"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -522,7 +522,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.weiss-grunert.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -544,7 +544,7 @@ export default function Home() {
           </a>
 
           <a href="https://ortmaier-druck.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -564,7 +564,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.teba-kreditbank.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -587,7 +587,7 @@ export default function Home() {
             href="https://www.csu.de/verbaende/ov/wallersdorf/"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -607,7 +607,7 @@ export default function Home() {
           </a>
 
           <a href="https://fahrschule-eder.net/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -630,7 +630,7 @@ export default function Home() {
             href="https://wallersdorf.dahoam-in-niederbayern.de/vereine/verein/theatergruppe-st-johannes-991/"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -650,7 +650,7 @@ export default function Home() {
           </a>
 
           <a href="https://sp-ast.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -673,7 +673,7 @@ export default function Home() {
             href="https://www.markt-wallersdorf.de/verzeichnis/mandat.php?mandat=34059&kategorie=128"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -693,7 +693,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.andrea-herzig.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -716,7 +716,7 @@ export default function Home() {
             href="https://www.facebook.com/profile.php?id=100039793366614"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -739,7 +739,7 @@ export default function Home() {
             href="https://www.musikschule-temel.de/cms/cms/front_content.php?idcat=3"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -759,7 +759,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.voices-music.com/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -779,7 +779,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.picantos.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -802,7 +802,7 @@ export default function Home() {
             href="https://www.veranstaltungsmanagementreflex.com/"
             className="mb-6 lg:mb-0"
           >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -822,7 +822,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.sixty-up.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
@@ -842,7 +842,7 @@ export default function Home() {
           </a>
 
           <a href="https://www.vswallersdorf.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
               <div className="p-6">
                 <div className="flex flex-wrap items-center">
                   <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
