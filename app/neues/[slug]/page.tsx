@@ -9,8 +9,31 @@ import {
 } from "@/app/_data/news";
 import { Author, authors } from "@/app/_data/authors";
 
-function countWords(str: string) {
+function CountWords(str: string) {
   return str.trim().split(/\s+/).length;
+}
+
+function RecommendArticle(item: NewsItem | undefined) {
+  if (item === undefined) {
+    return [];
+  }
+  let entries = [];
+   for (let i = 0; i < news_data.length; i++) {
+     let entry = news_data[i];
+     if (entry == item) {
+       continue;
+     }
+     const intersection = item["keywords"].filter((value) =>
+       entry["keywords"].includes(value)
+     );
+     entries.push([i, intersection.length]);
+   }
+   entries.sort((a, b) => b[1] - a[1]);
+   let recommended = [];
+   for (let i = 0; i < Math.min(4, entries.length); i++) {
+     recommended.push(news_data[entries[i][0]]);
+   }
+   return recommended;
 }
 
 function RecommendedArticle(recommended: NewsItem) {
@@ -18,7 +41,7 @@ function RecommendedArticle(recommended: NewsItem) {
 
   let minutes = Math.max(
     1,
-    Math.floor(countWords(recommended["content"]) / 220)
+    Math.floor(CountWords(recommended["content"]) / 220)
   );
   let minutesText = "Minute";
   if (minutes > 1) {
@@ -53,7 +76,8 @@ function RecommendedArticle(recommended: NewsItem) {
 const Home = ({ params: { slug } }: { params: { slug: string } }) => {
   const item = news_data.find((e) => e.slug == slug);
   const author = item ? authors[item["author"]] : undefined;
-
+  const recommended = RecommendArticle(item);
+  console.log(recommended)
   return (
     <>
       {item === undefined ? (
@@ -108,7 +132,7 @@ const Home = ({ params: { slug } }: { params: { slug: string } }) => {
               </div>
             </main>
 
-            {/* <aside
+            <aside
               aria-label="Empfohlene Artikel"
               className="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800"
             >
@@ -120,7 +144,7 @@ const Home = ({ params: { slug } }: { params: { slug: string } }) => {
                   {recommended.map((entry) => RecommendedArticle(entry))}
                 </div>
               </div>
-            </aside> */}
+            </aside>
           </section>
         </>
       )}

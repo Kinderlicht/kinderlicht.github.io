@@ -59,13 +59,14 @@ function ConvertDateObject(date: number[]): Date {
 
 function Event(event: Event, index: number) {
   const icsFile = createEvent(event);
-  let content : string | undefined = "Ups, da ist etwas schief gelaufen...";
+  let content: string | undefined = "Ups, da ist etwas schief gelaufen...";
   if (icsFile["error"] == null) {
     content = icsFile["value"];
   } else {
     console.log(icsFile["error"]);
   }
-  const loc = event["geo"] &&
+  const loc =
+    event["geo"] &&
     `https://www.google.com/maps/search/?api=1&query=${event["geo"]["lat"]},${event["geo"]["lon"]}`;
   let eventDate = ConvertDateObject(event["start"]);
   let currentDate = new Date();
@@ -74,7 +75,10 @@ function Event(event: Event, index: number) {
     additional = " (abgeschlossen)";
   }
   return (
-    <div key={index} className="flex flex-col md:flex-row md:justify-between my-8">
+    <div
+      key={index}
+      className="flex flex-col md:flex-row md:justify-between my-8"
+    >
       <div className="mb-4 md:mb-0 w-5/12">
         <h3 className="text-xl font-bold mb-2 ">
           {event["title"] + additional}
@@ -112,10 +116,39 @@ function Event(event: Event, index: number) {
           {event["location"]}
         </a>
       </div>
-      <p
-        className="text-gray-700 w-7/12"
-        dangerouslySetInnerHTML={{ __html: event["description"] || "" }}
+      <p className="w-7/12 flex-col">
+      <span
+        dangerouslySetInnerHTML={{
+          __html: event["htmlContent"] || event["description"] || "Es liegt keine Beschreibung vor.",
+        }}
       />
+      {event["url"] ? (
+        <>
+      <br></br>
+        <Link href={event["url"]} className="text-blue-500 float-right">
+          Hier anmelden{" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="inline-block bi bi-box-arrow-up-right"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"
+            />
+          </svg>
+        </Link></>
+      ) : (
+        <></>
+      )}
+      </p>
     </div>
   );
 }
@@ -234,7 +267,6 @@ export default function Home() {
         </div>
       </div>
       <div className="border-l-2 border-gray-500 pl-8">
-        {/* {startDate} bis {endDate} */}
         {filtered.map((e, index) => Event(e, index))}
       </div>
     </div>
