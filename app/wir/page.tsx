@@ -1,5 +1,210 @@
 // Initialization for ES Users
 
+const sponsors = [
+  {
+    name: 'Digitaldruck Fabrik',
+    location: 'aus 84109 Wörth a.d. Isar',
+    image: 'https://www.digitaldruck-fabrik.de/images/main/logo.png',
+    link: 'https://www.digitaldruck-fabrik.de',
+  },
+  {
+    name: 'Band TRIXX',
+    location: 'aus 94034 Passau',
+    image: 'https://i.ytimg.com/vi/TNYGhFMvlJ8/mqdefault.jpg',
+    link: 'https://www.partymat.de/TRIXX',
+  },
+  {
+    name: 'Edeka Leeb',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://www.lebensmittel-leeb.de/images/logo.png',
+    link: 'https://www.lebensmittel-leeb.de/',
+  },
+  {
+    name: 'Bäckerei Dischinger',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://media.cylex.de/companies/7348/716/logo/logo.jpg',
+    link: 'https://www.baeckerei-dischinger.de/',
+  },
+  {
+    name: 'Metzgerei Donhauser',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/295073543_584717056387620_23634260024951184_n.png?stp=dst-png_s960x960&_nc_cat=110&ccb=1-7&_nc_sid=52f669&_nc_ohc=3cVeF-DTOLYAX_sfePv&_nc_ht=scontent-muc2-1.xx&oh=00_AfA87TXlAgYAVxFr279Ifczd68SKwp7wmWUQY5PDI6uNqA&oe=6527D80D',
+    link: 'https://www.facebook.com/MetzgereiDonhauser/?locale=de_DE',
+  },
+  {
+    name: 'Metzgerei Frisch',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://www.metzgerei-frisch.de/wp-content/uploads/frisch-001.png',
+    link: 'https://www.metzgerei-frisch.de/',
+  },
+  {
+    name: 'Aster\'s Holunderhof',
+    location: 'aus 94522 Ettling',
+    image: '/supporter/aster.jpg',
+    link: 'https://www.mein-bauernhof.de/verkaufstelle/asters-holunderhof-705559/',
+  },
+  {
+    name: 'Music Station',
+    location: 'aus 94330 Aiterhofen',
+    image: 'https://www.music-station.de/media/7d/g0/00/1625557432/music-station-logo.png',
+    link: 'https://www.music-station.de/',
+  },
+  {
+    name: 'Develey',
+    location: 'aus 84130 Dingolfing',
+    image: 'https://develey.de/Marken/Brand/Kanaele/brand/logo/develey-logo-brand-marke-markenname.png',
+    link: 'https://develey.de/',
+  },
+  {
+    name: 'Ingenieurbüro Peter Weig',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://www.weig-online.de/s/misc/logo.jpg?t=1691560016',
+    link: 'http://www.weig-online.de/',
+  },
+  {
+    name: 'Eventbar Woibadinga',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://eventbar-woibadinga.de/wp-content/uploads/2021/05/Logo.png',
+    link: 'https://eventbar-woibadinga.de/',
+  },
+  {
+    name: 'Ziegler Isolierung',
+    location: 'aus 94428 Eichendorf',
+    image: 'https://image.jimcdn.com/app/cms/image/transf/dimension=216x10000:format=png/path/s4e5bb772c21e79fb/image/i53150231242c47b9/version/1576410612/image.png',
+    link: 'https://www.ziegler-isolierungen.de/',
+  },
+  {
+    name: 'Bäckerei Weinzierl',
+    location: 'aus 94522 Wallersdorf',
+    image: '/supporter/weinzierl.jpg',
+    link: 'https://www.wallersdorfer-backhaus.de/',
+  },
+  {
+    name: 'Rechtsanwälte Weiss & Grunert',
+    location: 'aus 84028 Landshut',
+    image: 'https://www.weiss-grunert.de/wp-content/themes/weissgrunert/img/logo-black.png',
+    link: 'https://www.weiss-grunert.de/',
+  },
+  {
+    name: 'Ortmaier Druck',
+    location: 'aus 84160 Frontenhausen',
+    image: 'https://ortmaier-druck.de/wp-content/uploads/2014/07/ortmaier_header_logo.png',
+    link: 'https://ortmaier-druck.de/',
+  },
+  {
+    name: 'TEBA Kreditbank',
+    location: 'aus 94405 Landau a. d. Isar',
+    image: 'https://www.teba-kreditbank.de/fileadmin/templates/img/TEBA_Logo_2018.svg',
+    link: 'https://www.teba-kreditbank.de/',
+  },
+  {
+    name: 'CSU & Frauen Union',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://www.csu.de/assets/img/logos/csu-logo-tw.gif',
+    link: 'https://www.csu.de/verbaende/ov/wallersdorf/',
+  },
+  {
+    name: 'Fahrschule Eder',
+    location: 'aus 94431 Pilsting',
+    image: 'https://fahrschule-eder.net/images/page/Eder-FS-logo.png',
+    link: 'https://fahrschule-eder.net/',
+  },
+  {
+    name: 'Theatergruppe St. Johannes',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://layout.verwaltungsportal.de/1580/img/logo.png',
+    link: 'https://wallersdorf.dahoam-in-niederbayern.de/vereine/verein/theatergruppe-st-johannes-991/',
+  },
+  {
+    name: 'Spedition Ast',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://sp-ast.de/wp-content/themes/servicepartner/images/logos/sp-ast.jpg',
+    link: 'https://sp-ast.de/',
+  },
+  {
+    name: 'Boxclub Wallersdorf',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://layout.verwaltungsportal.de/1580/img/logo.png',
+    link: 'https://www.markt-wallersdorf.de/verzeichnis/mandat.php?mandat=34059&kategorie=128',
+  },
+  {
+    name: 'Andrea Herzig',
+    location: 'aus 93444 Bad Kötzting',
+    image: 'https://le-cdn.website-editor.net/s/3b38257c5abf4d51a57e2b0dd0fa8f6e/dms3rep/multi/opt/LOGOHPA-216w.png?Expires=1698627149&Signature=ag5uf5kY3yLbZ-ntUXNHOLO6rPKOxFUPoeK8Ja6WDGWbqjITdRV2Uqyfc45V7BvTP7DZt3iKP-pWEiM4kGd-4d80iiDkX6zGhgUFKEpm7pnD~Mjc7spc8LRIdlIAtRxyr4F20yRauJ7Wy14GfJSkCT4IXu5Z569Eltn66wUb0N9kyomiaxoDSPhZXau6y7p8N~De4bb0Yt7K6OBIJidpAtVRr~Q2Dxe2lGh~FEzX4SzNEdwbdSVs2wLonRpVG5GLr4n6crByLyW4Z6Y309RVyRdEOVJLQ1JLWXFTe6ZOvpERJ3HqblgDPNa3bU3fKbwBvW7g8ShCZ~x-oeyqbya4Pg__&Key-Pair-Id=K2NXBXLF010TJW',
+    link: 'https://www.andrea-herzig.de/',
+  },
+  {
+    name: "TeacherMen's Friends",
+    location: 'aus 94405 Landau a. d. Isar',
+    image: 'https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/293155048_740134597322979_4071837228414404162_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=2LOzisTJJkoAX8BSx_n&_nc_ht=scontent-muc2-1.xx&oh=00_AfCaCbgOnGx5jtvGN8_MxOueXZtJvK20iVfrc2UAZ9s7Wg&oe=6527F00F',
+    link: 'https://www.facebook.com/profile.php?id=100039793366614',
+  },
+  {
+    name: 'Musikschule Temel',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://www.musikschule-temel.de/cms/cms/upload/logos/Logo_MusikstudiofrHomepage.jpg',
+    link: 'https://www.musikschule-temel.de/cms/cms/front_content.php?idcat=3',
+  },
+  {
+    name: 'Voices',
+    location: 'aus 84160 Frontenhausen',
+    image: 'https://www.voices-music.com/s/img/emotionheader.png?1513805912.940px.120px',
+    link: 'https://www.voices-music.com/',
+  },
+  {
+    name: 'Picantos',
+    location: 'aus 94121 Straßkirchen',
+    image: '/supporter/picantos.png',
+    link: 'https://www.picantos.de/',
+  },
+  {
+    name: 'DJ Reflex',
+    location: 'aus 92421 Schwandorf',
+    image: 'https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/281231493_5309948829062540_830823864974889683_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=5mcrZDru5N4AX8zLUF5&_nc_ht=scontent-muc2-1.xx&oh=00_AfCC2X6WIn36PPFURdroFShIrOH3UL-BEo_zXc_K46g96Q&oe=652777A6',
+    link: 'https://www.veranstaltungsmanagementreflex.com/',
+  },
+  {
+    name: 'SIXTY-UP',
+    location: 'aus 94431 Pilsting',
+    image: 'https://www.sixty-up.de/images/headers/BANDLOGO_2012_small.png',
+    link: 'https://www.sixty-up.de/',
+  },
+  {
+    name: 'Bischof-Riccabona Mittelschule',
+    location: 'aus 94522 Wallersdorf',
+    image: 'https://layout.verwaltungsportal.de/1580/img/logo.png',
+    link: 'https://www.vswallersdorf.de/',
+  },  
+];
+
+function SponsorList() {
+  return (
+    <div className="grid gap-6 lg:grid-cols-3">
+      {sponsors.map((sponsor, index) => (
+        <a key={index} href={sponsor.link} className="mb-6 lg:mb-0">
+          <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
+            <div className="p-6">
+              <div className="flex flex-wrap items-center">
+                <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
+                  <img
+                    src={sponsor.image}
+                    alt={sponsor.name}
+                    className="mb-6 dark:brightness-150 lg:mb-0"
+                  />
+                </div>
+                <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
+                  <h5 className="mb-4 font-bold">{sponsor.name}</h5>
+                  {sponsor.location}
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <div className="container my-24 mx-auto md:px-6">
@@ -245,624 +450,7 @@ export default function Home() {
           Die Sortierung der Unterstützer erfolgte rein zufällig.
         </p>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <a href="https://www.digitaldruck-fabrik.de" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="h-30 flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.digitaldruck-fabrik.de/images/main/logo.png"
-                      alt="Digitaldruck Fabrik"
-                      className="mb-6 dark:brightness-150 lg:mb-0 h-fit w-auto"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Digitaldruck Fabrik</h5>
-                    aus 84109 Wörth a.d. Isar{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.partymat.de/TRIXX" className="mb-6 lg:mb-0">
-            <div className="h-30 block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="h-30 flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://i.ytimg.com/vi/TNYGhFMvlJ8/mqdefault.jpg"
-                      alt="Band TRIXX"
-                      className="mb-6 dark:brightness-150 lg:mb-0 h-fit w-auto"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Band TRIXX</h5>
-                    aus 94034 Passau{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.lebensmittel-leeb.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.lebensmittel-leeb.de/images/logo.png"
-                      alt="Edeka Leeb"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Edeka Leeb</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.baeckerei-dischinger.de/"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://media.cylex.de/companies/7348/716/logo/logo.jpg"
-                      alt="Bäckerei Dischinger"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Bäckerei Dischinger</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.facebook.com/MetzgereiDonhauser/?locale=de_DE"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/295073543_584717056387620_23634260024951184_n.png?stp=dst-png_s960x960&_nc_cat=110&ccb=1-7&_nc_sid=52f669&_nc_ohc=3cVeF-DTOLYAX_sfePv&_nc_ht=scontent-muc2-1.xx&oh=00_AfA87TXlAgYAVxFr279Ifczd68SKwp7wmWUQY5PDI6uNqA&oe=6527D80D"
-                      alt="Metzgerei Donhauser"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Metzgerei Donhauser</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.metzgerei-frisch.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.metzgerei-frisch.de/wp-content/uploads/frisch-001.png"
-                      alt="Metzgerei Frisch"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Metzgerei Frisch</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.mein-bauernhof.de/verkaufstelle/asters-holunderhof-705559/"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="/supporter/aster.jpg"
-                      alt="Asters Holunderhof"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Aster&apos;s Holunderhof</h5>
-                    aus 94522 Ettling{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.music-station.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.music-station.de/media/7d/g0/00/1625557432/music-station-logo.png"
-                      alt="Music Station"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Music Station</h5>
-                    aus 94330 Aiterhofen{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://develey.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://develey.de/Marken/Brand/Kanaele/brand/logo/develey-logo-brand-marke-markenname.png"
-                      alt="Develey Senf"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Develey</h5>
-                    aus 84130 Dingolfing{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="http://www.weig-online.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.weig-online.de/s/misc/logo.jpg?t=1691560016"
-                      alt="Peter Weig"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Ingenieurbüro Peter Weig</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://eventbar-woibadinga.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://eventbar-woibadinga.de/wp-content/uploads/2021/05/Logo.png"
-                      alt="Eventbar Woibadinga"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Eventbar Woibadinga</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.ziegler-isolierungen.de/"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://image.jimcdn.com/app/cms/image/transf/dimension=216x10000:format=png/path/s4e5bb772c21e79fb/image/i53150231242c47b9/version/1576410612/image.png"
-                      alt="Ziegler Isolierung"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Ziegler Isolierung</h5>
-                    aus 94428 Eichendorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.wallersdorfer-backhaus.de/"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="/supporter/weinzierl.jpg"
-                      alt="Bäckerei Weinzierl"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Bäckerei Weinzierl</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.weiss-grunert.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.weiss-grunert.de/wp-content/themes/weissgrunert/img/logo-black.png"
-                      alt="Rechtsanwälte Weiss & Grunert"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">
-                      Rechtsanwälte Weiss & Grunert
-                    </h5>
-                    aus 84028 Landshut{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://ortmaier-druck.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://ortmaier-druck.de/wp-content/uploads/2014/07/ortmaier_header_logo.png"
-                      alt="Ortmaier Druck"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Ortmaier Druck</h5>
-                    aus 84160 Frontenhausen{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.teba-kreditbank.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.teba-kreditbank.de/fileadmin/templates/img/TEBA_Logo_2018.svg"
-                      alt="TEBA Kreditbank"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">TEBA Kreditbank</h5>
-                    aus 94405 Landau a. d. Isar{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.csu.de/verbaende/ov/wallersdorf/"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.csu.de/assets/img/logos/csu-logo-tw.gif"
-                      alt="CSU & Frauen Union"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">CSU & Frauen Union</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://fahrschule-eder.net/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://fahrschule-eder.net/images/page/Eder-FS-logo.png"
-                      alt="Fahrschule Eder"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Fahrschule Eder</h5>
-                    aus 94431 Pilsting{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://wallersdorf.dahoam-in-niederbayern.de/vereine/verein/theatergruppe-st-johannes-991/"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://layout.verwaltungsportal.de/1580/img/logo.png"
-                      alt="Theatergruppe St. Johannes"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Theatergr. St. Johannes</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://sp-ast.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://sp-ast.de/wp-content/themes/servicepartner/images/logos/sp-ast.jpg"
-                      alt="Spedition Ast"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Spedition Ast</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.markt-wallersdorf.de/verzeichnis/mandat.php?mandat=34059&kategorie=128"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://layout.verwaltungsportal.de/1580/img/logo.png"
-                      alt="Boxclub Wallersdorf"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Boxclub Wallersdorf</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.andrea-herzig.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://le-cdn.website-editor.net/s/3b38257c5abf4d51a57e2b0dd0fa8f6e/dms3rep/multi/opt/LOGOHPA-216w.png?Expires=1698627149&Signature=ag5uf5kY3yLbZ-ntUXNHOLO6rPKOxFUPoeK8Ja6WDGWbqjITdRV2Uqyfc45V7BvTP7DZt3iKP-pWEiM4kGd-4d80iiDkX6zGhgUFKEpm7pnD~Mjc7spc8LRIdlIAtRxyr4F20yRauJ7Wy14GfJSkCT4IXu5Z569Eltn66wUb0N9kyomiaxoDSPhZXau6y7p8N~De4bb0Yt7K6OBIJidpAtVRr~Q2Dxe2lGh~FEzX4SzNEdwbdSVs2wLonRpVG5GLr4n6crByLyW4Z6Y309RVyRdEOVJLQ1JLWXFTe6ZOvpERJ3HqblgDPNa3bU3fKbwBvW7g8ShCZ~x-oeyqbya4Pg__&Key-Pair-Id=K2NXBXLF010TJW"
-                      alt="Andrea Herzig"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Andrea Herzig</h5>
-                    aus 93444 Bad Kötzting{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.facebook.com/profile.php?id=100039793366614"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/293155048_740134597322979_4071837228414404162_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=2LOzisTJJkoAX8BSx_n&_nc_ht=scontent-muc2-1.xx&oh=00_AfCaCbgOnGx5jtvGN8_MxOueXZtJvK20iVfrc2UAZ9s7Wg&oe=6527F00F"
-                      alt="TeacherMen&apos;s Friends"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">TeacherMen&apos;s Friends</h5>
-                    aus 94405 Landau a. d. Isar{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.musikschule-temel.de/cms/cms/front_content.php?idcat=3"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.musikschule-temel.de/cms/cms/upload/logos/Logo_MusikstudiofrHomepage.jpg"
-                      alt="Musikschule Temel"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Musikschule Temel</h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.voices-music.com/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.voices-music.com/s/img/emotionheader.png?1513805912.940px.120px"
-                      alt="Voices"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Voices</h5>
-                    aus 84160 Frontenhausen{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.picantos.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="/supporter/picantos.png"
-                      alt="Picantos"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">Picantos</h5>
-                    aus 94121 Straßkirchen{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a
-            href="https://www.veranstaltungsmanagementreflex.com/"
-            className="mb-6 lg:mb-0"
-          >
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/281231493_5309948829062540_830823864974889683_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=5mcrZDru5N4AX8zLUF5&_nc_ht=scontent-muc2-1.xx&oh=00_AfCC2X6WIn36PPFURdroFShIrOH3UL-BEo_zXc_K46g96Q&oe=652777A6"
-                      alt="DJ Reflec"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">DJ Reflex</h5>
-                    aus 92421 Schwandorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.sixty-up.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://www.sixty-up.de/images/headers/BANDLOGO_2012_small.png"
-                      alt="SIXTY UP"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">SIXTY-UP</h5>
-                    aus 94431 Pilsting{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://www.vswallersdorf.de/" className="mb-6 lg:mb-0">
-            <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-              <div className="p-6">
-                <div className="flex flex-wrap items-center">
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-5/12">
-                    <img
-                      src="https://layout.verwaltungsportal.de/1580/img/logo.png"
-                      alt="Bischof-Riccabona Mittelschule"
-                      className="mb-6 dark:brightness-150 lg:mb-0"
-                    />
-                  </div>
-                  <div className="flex-basis w-full shrink-0 grow-0 px-3 lg:w-7/12">
-                    <h5 className="mb-4 font-bold">
-                      Bischof-Riccabona Mittelschule
-                    </h5>
-                    aus 94522 Wallersdorf{" "}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
+        <SponsorList />
       </div>
     </div>
   );
