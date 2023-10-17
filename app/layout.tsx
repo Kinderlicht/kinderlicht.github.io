@@ -97,10 +97,10 @@ export default function RootLayout({
                   </li>
                   <li>
                     <a
-                      href="/news"
+                      href="/neues"
                       className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                     >
-                      News
+                      Neues
                     </a>
                   </li>
                   <li>
@@ -204,15 +204,7 @@ export default function RootLayout({
               type="button"
               className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
             >
-              <span className="sr-only">Dismiss</span>
-              <svg
-                className="h-5 w-5 text-gray-900"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-              </svg>
+              <span className="sr-only">Abbrechen</span>
             </button>
           </div>
         </div>
@@ -256,7 +248,7 @@ export default function RootLayout({
                   </h2>
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
                     <li className="mb-4">
-                      <a href="/news" className="hover:underline ">
+                      <a href="/neues" className="hover:underline ">
                         Neuigkeiten
                       </a>
                     </li>
