@@ -3,7 +3,7 @@ import Script from "next/script";
 export default function Home() {
   return (
     <div className="px-0.5">
-      <Script src="https://app.campai.com/lib/web-form.js"></Script>
+      <Script src="https://app.campai.com/lib/web-form.js" />
       <web-form
         zone="campai"
         organisation="64e88fabfb6cef3375134031"
