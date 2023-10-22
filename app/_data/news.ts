@@ -542,6 +542,23 @@ export const news_data: NewsItem[] = [
     ]
 },
 {
+    "heading": "Die vier Jahreszeiten",
+    "date": new Date("2023-04-05"),
+    "content": "Stolz präsentieren wir hier unseren ersten Kinofilm.",
+    "short": "Unser erster Kinofilm.",
+    "author": "Kinderlicht",
+    "image": "https://www.youtube.com/embed/ZRj34XeuHCY?si=AELGeu81yqElL_45",
+    "slug": "vier-jahreszeiten",
+    "keywords": [
+        "Aktion",
+        "Gemeinwohl",
+        "Spass",
+        "Kino",
+        "Film",
+        "Musik"
+    ]
+},
+{
     "heading": "Valentinsaktion an Berufsschule",
     "date": new Date("2023-04-05"),
     "content": "Manchmal hat Liebe mit Geld zu tun. Und mit Einsatzbereitschaft, Kreativit\u00e4t und Spa\u00df. Unter dem Motto \u201eUns wird`s warm ums Herz\u201c f\u00fchrte die Kaufm\u00e4nnischen Berufsschule eine besondere Benefizveranstaltung durch. <br><br>Der traditionelle Punschverkauf vor Weihnachten musste wegen der defekten Heizanlage im Schulzentrum auf den Valentinstag verschoben werden. Da auch noch der Unsinnige Donnerstag in diese Woche fiel, wurden an mehreren Tagen selbstgebackene Kuchen, Muffins und Punsch verkauft. Aber den Sch\u00fclerinnen und Sch\u00fclern wurde nicht nur durch den hei\u00dfen Punsch recht warm ums Herz, spontan wurden auch Rosen und Herzluftballons verkauft. Zu verdanken war der sch\u00f6ne Erfolg dem Engagement und dem Ideenreichtum der Klassensprecher und der SMV, die zusammen mit Frau Sabine Hundt diese Valentinsaktion organisierten. <br><br>Alle Sch\u00fclerinnen und Sch\u00fcler stimmten zuvor gemeinsam ab, dass die erzielten Einnahmen dem \u00f6rtlichen Tierheim und dem Verein Kinderlicht aus Wallersdorf zugutekommen sollten. Frau Marion Schuhbaum nahm den Scheck \u00fcber 350 \u20ac f\u00fcr das Deggendorfer Tierheim dankbar entgegen und erkl\u00e4rte den Klassensprechern, wof\u00fcr das Geld ausgegeben wird. Ber\u00fchrt von der Not der Tiere, wissen die Sch\u00fclerinnen und Sch\u00fcler das Geld in guten H\u00e4nden.<br><br>Der ehemalige Sch\u00fcler der KBS, Herr Enrico Koch, arbeitet ehrenamtlich im Verein Kinderlicht in Wallersdorf. Dieser Verein unterst\u00fctzt sozial benachteiligte, insbesondere an Krebs erkrankte Kinder in unserer Region. Auch er vermittelte den Klassensprechern seinen Dank und zeigte viele Aktionen seines Vereins, der versucht die schwierige Situation einiger Notleidenden etwas finanziell abzusichern.<br><br>Leider ereignete sich zwischenzeitlich das schwere Erdbeben in der T\u00fcrkei und Syrien, so dass zus\u00e4tzlich noch ein Teil der Einnahmen an das Rote Kreuz f\u00fcr die Internationale Hilfe im Erdbebengebiet gespendet wurde. <br><br>Freude und Spa\u00df standen bei der Durchf\u00fchrung im Mittelpunkt, Menschlichkeit und Hilfsbereitschaft im Vordergrund der gesamten Aktion.",

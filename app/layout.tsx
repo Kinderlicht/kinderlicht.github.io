@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { news_data } from "./_data/news";
+import { events } from "./_data/events";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +16,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const weekAgo = new Date();
+  weekAgo.setDate(weekAgo.getDate() - 7);
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -38,7 +42,7 @@ export default function RootLayout({
                   aria-controls="mobile-menu-2"
                   aria-expanded="false"
                 >
-                  <span className="sr-only">Open main menu</span>
+                  <span className="sr-only">Hauptmenü</span>
                   <svg
                     className="w-6 h-6"
                     fill="currentColor"
@@ -98,17 +102,36 @@ export default function RootLayout({
                   <li>
                     <a
                       href="/neues"
-                      className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                      className="relative inline-flex items-center py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                     >
                       Neues
+                      {news_data.filter((news) => news.date > weekAgo)
+                        .length > 0 ? (
+                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-6 dark:border-gray-900">
+                          {news_data
+                            .filter((news) => news.date > weekAgo)
+                            .length.toString()}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </a>
                   </li>
                   <li>
                     <a
                       href="/events"
-                      className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                      className="relative inline-flex py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                     >
                       Events
+                      {events.filter((event) => new Date(event["start"].slice(0, 3).map(a => a.toString()).join("-")) > new Date()).length > 0 ? (
+                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-6 dark:border-gray-900">
+                          {events
+                            .filter((event) => new Date(event["start"].slice(0, 3).join("-")) > new Date())
+                            .length.toString()}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </a>
                   </li>
                   <li>
@@ -244,7 +267,7 @@ export default function RootLayout({
                 </div>
                 <div>
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                    Nichts mehr verpassen
+                    Aktuell
                   </h2>
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
                     <li className="mb-4">

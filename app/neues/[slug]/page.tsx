@@ -79,7 +79,7 @@ function RecommendedArticle(recommended: NewsItem) {
     <article className="max-w-xs">
       <Link href={link} className="hover:underline">
       {GetImageOrVideo(recommended, true)}
-      <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
+      <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white mt-4">
         <a href="#">{recommended["heading"]}</a>
       </h2>
       <p

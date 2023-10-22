@@ -1,12 +1,13 @@
 export default function Home() {
   return (
-    <div className="px-0.5">
+    <div className="container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
       <section className="bg-white dark:bg-gray-900">
-        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-          Datenschutz
+      <h2 className="mb-2 text-3xl font-bold text-center">
+          Unsere{" "}
+          <u className="text-primary dark:text-primary-400 no-underline">Datenschutzbestimmungen</u>
         </h2>
 
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           <strong>Website / Datenschutzerklärung / Privacy Policy</strong>
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -39,7 +40,7 @@ export default function Home() {
           V., als verantwortlicher Stelle, und dem Besucher, als Betroffenem,
           erforderlich ist.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Zweckänderungen der Verarbeitung und Datennutzung
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -63,7 +64,7 @@ export default function Home() {
           handelsrechtlicher oder steuerrechtlicher Aufbewahrungspflichten,
           gespeichert werden, verlangen.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Anonyme Datenerhebung
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -74,7 +75,7 @@ export default function Home() {
           Informationen werden zu statistischen Zwecken ausgewertet. Sie bleiben
           als einzelner Nutzer hierbei anonym.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Erhebung und Verarbeitung personenbezogener Daten
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -102,7 +103,7 @@ export default function Home() {
           und Nutzung Ihrer personenbezogenen Daten erfolgt nach den Vorgaben
           des BDSG bzw., ab 25.05.2018, der EU-DSGVO.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Export und Verarbeitung der Daten in Staaten außerhalb des
           Europäischen Wirtschaftsraumes
         </h3>
@@ -137,7 +138,7 @@ export default function Home() {
           Wallersdorf e. V.&nbsp; die für die Verarbeitung verantwortliche
           Stelle.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Nutzung und Weitergabe personenbezogener Daten
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -150,7 +151,7 @@ export default function Home() {
           sonstige Dritte statt. Ihre jeweilige Einwilligung können Sie
           selbstverständlich jederzeit mit Wirkung für die Zukunft widerrufen.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Externe Links
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -162,7 +163,7 @@ export default function Home() {
           Garantien dieser Datenschutzerklärung gelten daher für externe
           Anbieter nicht.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Einsatz von Cookies
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -181,7 +182,7 @@ export default function Home() {
           zu gestalten. Die verantwortliche Stelle verwendet Sitzungscookies
           sowie permanente Cookies.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Sitzungscookies
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -191,7 +192,7 @@ export default function Home() {
           Sitzungscookies werden hierbei zur Login-Authentifizierung und zum
           Load-Balancing (Ausgleich der System-Belastung) verwendet.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Permanente Cookies
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -209,7 +210,7 @@ export default function Home() {
           ausschließlich anonym ab. Eine Zuordnung zur IP-Adresse des Kunden
           wird nicht vorgehalten.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Vermeidung von Cookies
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -222,7 +223,7 @@ export default function Home() {
           mindern und sich bei der Nutzung der Dienste der verantwortlichen
           Stelle negativ bemerkbar machen.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Verwendung von Analyseprogrammen
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -275,7 +276,7 @@ export default function Home() {
             und Weise und zu dem zuvor benannten Zweck einverstanden.”
           </em>
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Verwendung von Facebook Social Plugins
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -304,7 +305,7 @@ export default function Home() {
           Weise Daten sammelt, muss der Kunde sich vor seinem Besuch des
           Internetauftritts der verantwortlichen Stelle bei Facebook ausloggen.
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Verwendung von Twitter
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -337,7 +338,7 @@ export default function Home() {
           </a>
           .
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Verwendung von Instagram Social Plugins
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -398,7 +399,7 @@ export default function Home() {
           </a>
           ).
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Verwendung von YouTube-Plugins
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
@@ -430,7 +431,7 @@ export default function Home() {
           </a>
           .
         </p>
-        <h3 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-2xl font-bold mt-8">
           Weitere Informationen und Kontakte
         </h3>
         <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">

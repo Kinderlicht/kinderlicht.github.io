@@ -1,7 +1,7 @@
-import Script from "next/script";
+import { IFrameComponent } from "../components/IFrameComponent";
 
 export default function Home() {
   return (
-      <object className="w-full h-screen overflow-hidden border-none m-0 mt-8 stroke-none" data="https://form.campai.com/AuG6AHFMR5wK" />
+    <IFrameComponent src="https://form.campai.com/AuG6AHFMR5wK" size="1100px"/>
   );
 }

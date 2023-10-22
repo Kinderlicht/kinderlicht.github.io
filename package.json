@@ -17,6 +17,7 @@
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.5.0",
     "ics": "^3.5.0",
+    "iframe-resizer": "^4.3.7",
     "next": "13.4.19",
     "next-intl": "^3.0.0-beta.19",
     "postcss": "8.4.28",
@@ -27,6 +28,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
+    "@types/iframe-resizer": "^3.5.11",
     "@types/node": "^20.8.4"
   },
   "browser": {

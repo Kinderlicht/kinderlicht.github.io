@@ -16,7 +16,7 @@ function NewsEntry(news: NewsItem, index: number) {
     <Link
       rel="noopener noreferrer"
       href={link}
-      className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900"
+      className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900 bg-gray-200 rounded-xl w-full"
       key={index}
     >
       {GetImageOrVideo(news, false)}
@@ -66,7 +66,7 @@ function TopEntry(news: NewsItem) {
     <Link
       rel="noopener noreferrer"
       href={link}
-      className="block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 dark:bg-gray-900"
+      className="block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 dark:bg-gray-900 bg-gray-200 rounded-xl"
     >
       {GetImageOrVideo(news, true)}
       <div className="p-6 space-y-2 lg:col-span-5">
