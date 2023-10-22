@@ -33,7 +33,7 @@ export const sponsors: Sponsor[] = [
     {
       name: 'Metzgerei Donhauser',
       location: 'aus 94522 Wallersdorf',
-      image: 'https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/295073543_584717056387620_23634260024951184_n.png?stp=dst-png_s960x960&_nc_cat=110&ccb=1-7&_nc_sid=52f669&_nc_ohc=3cVeF-DTOLYAX_sfePv&_nc_ht=scontent-muc2-1.xx&oh=00_AfA87TXlAgYAVxFr279Ifczd68SKwp7wmWUQY5PDI6uNqA&oe=6527D80D',
+      image: '/supporter/donhauser.png',
       link: 'https://www.facebook.com/MetzgereiDonhauser/?locale=de_DE',
     },
     {
@@ -77,12 +77,6 @@ export const sponsors: Sponsor[] = [
       location: 'aus 94428 Eichendorf',
       image: 'https://image.jimcdn.com/app/cms/image/transf/dimension=216x10000:format=png/path/s4e5bb772c21e79fb/image/i53150231242c47b9/version/1576410612/image.png',
       link: 'https://www.ziegler-isolierungen.de/',
-    },
-    {
-      name: 'Bäckerei Weinzierl',
-      location: 'aus 94522 Wallersdorf',
-      image: '/supporter/weinzierl.jpg',
-      link: 'https://www.wallersdorfer-backhaus.de/',
     },
     {
       name: 'Rechtsanwälte Weiss & Grunert',
@@ -131,6 +125,18 @@ export const sponsors: Sponsor[] = [
       location: 'aus 94522 Wallersdorf',
       image: 'https://layout.verwaltungsportal.de/1580/img/logo.png',
       link: 'https://www.markt-wallersdorf.de/verzeichnis/mandat.php?mandat=34059&kategorie=128',
+    },    
+    {
+      name: 'Musikschule Temel',
+      location: 'aus 94522 Wallersdorf',
+      image: 'https://www.musikschule-temel.de/cms/cms/upload/logos/Logo_MusikstudiofrHomepage.jpg',
+      link: 'https://www.musikschule-temel.de/cms/cms/front_content.php?idcat=3',
+    },
+    {
+      name: 'Bäckerei Weinzierl',
+      location: 'aus 94522 Wallersdorf',
+      image: '/supporter/weinzierl.jpg',
+      link: 'https://www.wallersdorfer-backhaus.de/',
     },
     {
       name: 'Andrea Herzig',
@@ -141,14 +147,8 @@ export const sponsors: Sponsor[] = [
     {
       name: "TeacherMen's Friends",
       location: 'aus 94405 Landau a. d. Isar',
-      image: 'https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/293155048_740134597322979_4071837228414404162_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=2LOzisTJJkoAX8BSx_n&_nc_ht=scontent-muc2-1.xx&oh=00_AfCaCbgOnGx5jtvGN8_MxOueXZtJvK20iVfrc2UAZ9s7Wg&oe=6527F00F',
+      image: '/supporter/tmf.jpg',
       link: 'https://www.facebook.com/profile.php?id=100039793366614',
-    },
-    {
-      name: 'Musikschule Temel',
-      location: 'aus 94522 Wallersdorf',
-      image: 'https://www.musikschule-temel.de/cms/cms/upload/logos/Logo_MusikstudiofrHomepage.jpg',
-      link: 'https://www.musikschule-temel.de/cms/cms/front_content.php?idcat=3',
     },
     {
       name: 'Voices',
@@ -165,7 +165,7 @@ export const sponsors: Sponsor[] = [
     {
       name: 'DJ Reflex',
       location: 'aus 92421 Schwandorf',
-      image: 'https://scontent-muc2-1.xx.fbcdn.net/v/t39.30808-6/281231493_5309948829062540_830823864974889683_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=5mcrZDru5N4AX8zLUF5&_nc_ht=scontent-muc2-1.xx&oh=00_AfCC2X6WIn36PPFURdroFShIrOH3UL-BEo_zXc_K46g96Q&oe=652777A6',
+      image: '/supporter/dj-reflex.png',
       link: 'https://www.veranstaltungsmanagementreflex.com/',
     },
     {

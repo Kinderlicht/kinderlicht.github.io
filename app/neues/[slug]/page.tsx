@@ -13,6 +13,34 @@ function CountWords(str: string) {
   return str.trim().split(/\s+/).length;
 }
 
+function GetImageOrVideo(news: NewsItem, isRecommended: boolean = false) {
+  let recommended = isRecommended ? "object-cover w-full rounded h-44 dark:bg-gray-500" : "object-cover w-full mb-8 rounded lg:col-span-7 dark:bg-gray-500";
+  if (!isRecommended) {
+    recommended += " h-64 sm:h-96";
+  } 
+  const isYoutube = news["image"].includes("youtub");
+  return (
+    <>
+      {isYoutube ? (
+        <iframe
+          className={recommended}
+          src={news["image"]}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          title={news["heading"]}
+        />
+      ) : (
+        <img
+          role="presentation"
+          className={recommended}
+          src={news["image"]}
+          alt={news["heading"]}
+        />
+      )}
+    </>
+  );
+}
+
 function RecommendArticle(item: NewsItem | undefined) {
   if (item === undefined) {
     return [];
@@ -41,7 +69,7 @@ function RecommendedArticle(recommended: NewsItem) {
 
   let minutes = Math.max(
     1,
-    Math.floor(CountWords(recommended["content"]) / 220)
+    Math.floor(CountWords(recommended["content"]) / 180)
   );
   let minutesText = "Minute";
   if (minutes > 1) {
@@ -49,13 +77,8 @@ function RecommendedArticle(recommended: NewsItem) {
   }
   return (
     <article className="max-w-xs">
-      <Link href={link}>
-        <img
-          src={recommended["image"]}
-          className="mb-5 rounded-lg"
-          alt={recommended["heading"]}
-        ></img>
-      </Link>
+      <Link href={link} className="hover:underline">
+      {GetImageOrVideo(recommended, true)}
       <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
         <a href="#">{recommended["heading"]}</a>
       </h2>
@@ -65,10 +88,11 @@ function RecommendedArticle(recommended: NewsItem) {
       />
       <a
         href="#"
-        className="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline"
+        className="inline-flex items-center font-medium underline-offset-4 text-primary-600 dark:text-primary-500"
       >
         {minutes} {minutesText} Lesezeit
       </a>
+      </Link>
     </article>
   );
 }
@@ -77,11 +101,10 @@ const Home = ({ params: { slug } }: { params: { slug: string } }) => {
   const item = news_data.find((e) => e.slug == slug);
   const author = item ? authors[item["author"]] : undefined;
   const recommended = RecommendArticle(item);
-  console.log(recommended)
   return (
     <>
       {item === undefined ? (
-        <p>404</p>
+        <p>Artikel wurde nicht gefunden</p>
       ) : (
         <>
           <section>
@@ -119,11 +142,7 @@ const Home = ({ params: { slug } }: { params: { slug: string } }) => {
                       {item["heading"]}
                     </h1>
                   </header>
-                  <img
-                    src={item["image"]}
-                    alt=""
-                    className="object-cover w-full h-64 mb-8 rounded sm:h-96 lg:col-span-7 dark:bg-gray-500"
-                  />
+                  {GetImageOrVideo(item)}
                   <p
                     className="text-justify"
                     dangerouslySetInnerHTML={{ __html: item["content"] }}
@@ -153,65 +172,3 @@ const Home = ({ params: { slug } }: { params: { slug: string } }) => {
 };
 
 export default Home;
-
-// export default function Home() {
-//   const router = useRouter();
-//   const id = router.query.slug;
-
-//   let show = null;
-//   let error = [];
-//   for (let entry of news_data) {
-//     let entry_id =
-//       entry["date"].join("-") +
-//       "-" +
-//       entry["heading"].replace(" ", "-");
-//     if (entry_id == id) {
-//       show = entry;
-//       break;
-//     }
-//     if (error.length < 4) {
-//       error.push(entry);
-//     }
-//   }
-//   if (show == null) {
-//     return (
-//       <div>
-//         <aside
-//           aria-label="Empfohlene Artikel"
-//           className="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800"
-//         >
-//           <div className="px-4 mx-auto max-w-screen-xl">
-//             <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-white">
-//               Wir haben den Artikel leider nicht gefunden, versuchs doch mal
-//               mit...
-//             </h2>
-//             <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
-//               {error.map((entry) => RecommendedArticle(entry))}
-//             </div>
-//           </div>
-//         </aside>
-//       </div>
-//     );
-//   }
-//   let author = authors[show["author"]];
-//   let entries = [];
-//   for (let i = 0; i < data.length; i++) {
-//     let entry = data[i];
-//     if (entry == show) {
-//       continue;
-//     }
-//     const intersection = show["keywords"].filter((value) =>
-//       entry["keywords"].includes(value)
-//     );
-//     entries.push([i, intersection.length]);
-//   }
-//   entries.sort((a, b) => b[1] - a[1]);
-//   let recommended = [];
-//   for (let i = 0; i < Math.min(4, entries.length); i++) {
-//     recommended.push(data[entries[i][0]]);
-//   }
-
-//   return (
-//
-//   );
-// }

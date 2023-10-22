@@ -30,17 +30,17 @@ function SponsorList() {
 
 export default function Home() {
   return (
-    <div className="container my-24 mx-auto md:px-6">
+    <div className="container  mb-8 mt-32 mx-auto">
       <section className="mb-32 text-center">
         <h2 className="mb-32 text-3xl font-bold">
           Unsere{" "}
-          <u className="text-primary dark:text-primary-400">Vorstandschaft</u>
+          <u className="text-primary dark:text-primary-400 no-underline">Vorstandschaft</u>
         </h2>
 
         <div className="grid gap-y-8 md:grid-rows-2 lg:gap-y-32">
           <div className="grid gap-x-6 md:grid-cols-3 lg:gap-x-12">
             <div className="mb-24 md:mb-0">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -76,7 +76,7 @@ export default function Home() {
             </div>
 
             <div className="mb-24 md:mb-0">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -112,7 +112,7 @@ export default function Home() {
             </div>
 
             <div className="">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -150,7 +150,7 @@ export default function Home() {
 
           <div className="grid gap-x-6 md:grid-cols-3 lg:gap-x-12">
             <div className="mb-24 md:mb-0">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -186,7 +186,7 @@ export default function Home() {
             </div>
 
             <div className="mb-24 md:mb-0">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -224,7 +224,7 @@ export default function Home() {
             </div>
 
             <div className="">
-              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700">
+              <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full  dark:bg-neutral-700">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
                     <img
@@ -267,7 +267,7 @@ export default function Home() {
       <div className="container my-24 mx-auto md:px-6">
         <h2 className="mb-2 text-3xl font-bold text-center">
           Unsere{" "}
-          <u className="text-primary dark:text-primary-400">Unterstützer</u>
+          <u className="text-primary dark:text-primary-400 no-underline">Unterstützer</u>
         </h2>
         <p className="mb-16 text-center">
           Die Sortierung der Unterstützer erfolgte rein zufällig.

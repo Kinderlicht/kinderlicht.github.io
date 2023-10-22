@@ -4,6 +4,7 @@ import Link from "next/link";
 import { events, Event } from "@/app/_data/events";
 import React, { useState } from "react";
 import { createEvent } from "ics";
+import { ConvertDate, ConvertDateObject } from "../_data/de_date";
 
 function download(filename: string, text: string) {
   const blob = new Blob([text], { type: "text/plain" });
@@ -14,47 +15,6 @@ function download(filename: string, text: string) {
   a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
-}
-
-function ConvertDate(date: number[]) {
-  const d = ConvertDateObject(date);
-  return (
-    d.toLocaleDateString("de", {
-      timeZone: "CET",
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    }) +
-    " um " +
-    d.toLocaleTimeString("de", {
-      timeZone: "CET",
-      hour: "2-digit",
-      minute: "2-digit",
-    }) +
-    " Uhr"
-  );
-}
-
-function ConvertDateObject(date: number[]): Date {
-  let mapped = date.map((num: number) => {
-    if (num < 10) {
-      return "0" + num;
-    }
-    return num + "";
-  });
-
-  return new Date(
-    mapped[0] +
-      "-" +
-      mapped[1] +
-      "-" +
-      mapped[2] +
-      "T" +
-      mapped[3] +
-      ":" +
-      mapped[4] +
-      ":00"
-  );
 }
 
 function Event(event: Event, index: number) {
@@ -160,7 +120,7 @@ export default function Home() {
 
   let filtered = events.filter((e) => {
     if (searchTerm !== "") {
-      if (!e.description?.includes(searchTerm)) return false;
+      if (!e.description?.includes(searchTerm) && e.title?.includes(searchTerm)) return false;
     }
 
     if (startDate !== "") {
@@ -184,7 +144,7 @@ export default function Home() {
     <div className="max-w-5xl mx-auto mb-8 mt-32">
       <h2 className="mb-16 text-3xl font-bold text-center">
         Unsere{" "}
-        <u className="text-primary dark:text-primary-400">Veranstaltungen</u>
+        <u className="text-primary dark:text-primary-400 no-underline">Veranstaltungen</u>
       </h2>
       <div className="flex content-center grid-cols-3 mb-8">
         <div className="w-6/12 mr-8">
