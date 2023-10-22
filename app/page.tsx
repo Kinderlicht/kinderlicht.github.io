@@ -15,7 +15,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-wrap -m-4">
-            <div className="xl:w-1/3 md:w-1/2 p-4">
+            <div className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <a href="/anfrage">
                   <img
@@ -36,7 +36,7 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <div className="xl:w-1/3 md:w-1/2 p-4">
+            <div className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <a href="/beitreten">
                   <img
@@ -57,7 +57,7 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <div className="xl:w-1/3 md:w-1/2 p-4">
+            <div className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <a href="/neues">
                   <img
@@ -97,7 +97,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-            <div className="w-1/2">
+            <div className="w-full xl:w-1/2 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -117,7 +117,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-full xl:w-1/2 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -143,7 +143,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-            <div className="w-1/3">
+            <div className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -162,7 +162,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="w-1/3">
+            <div className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <iframe
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -184,7 +184,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="w-1/3">
+            <div className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -211,7 +211,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-            <div className="w-1/2">
+            <div className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -231,7 +231,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -258,7 +258,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-          <div className="w-1/3">
+          <div className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -276,7 +276,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="w-1/3">
+            <div className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <iframe
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -297,7 +297,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="w-1/3">
+            <div className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <iframe
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -324,7 +324,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-          <div className="w-1/2">
+          <div className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -342,7 +342,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <iframe
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"

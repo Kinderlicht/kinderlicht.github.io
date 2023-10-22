@@ -9,6 +9,8 @@ export type NewsItem = {
   keywords: string[];
 };
 
+export const articleIsNew = 1000 * 60 * 60 * 24 * 7;
+
 export const news_data: NewsItem[] = [
   {
     "heading": "Auf ihn mit Gebr\u00fcll - Denn auch Helden brauchen manchmal Hilfe!",

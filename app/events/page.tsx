@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { events, Event } from "@/app/_data/events";
+import { events, Event, eventIsSoon } from "@/app/_data/events";
 import React, { useState } from "react";
 import { createEvent } from "ics";
 import { ConvertDate, ConvertDateObject } from "../_data/de_date";
@@ -30,9 +30,11 @@ function Event(event: Event, index: number) {
     `https://www.google.com/maps/search/?api=1&query=${event["geo"]["lat"]},${event["geo"]["lon"]}`;
   let eventDate = ConvertDateObject(event["start"]);
   let currentDate = new Date();
-  let additional = "";
+  let additional = <></>;
   if (eventDate < currentDate) {
-    additional = " (abgeschlossen)";
+    additional = <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Abgeschlossen</span>
+  } else if (eventDate > currentDate && eventDate.getTime() - currentDate.getTime() < eventIsSoon) {
+    additional = <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Bevorstehend</span>
   }
   return (
     <div
@@ -41,7 +43,7 @@ function Event(event: Event, index: number) {
     >
       <div className="mb-4 md:mb-0 w-5/12">
         <h3 className="text-xl font-bold mb-2 ">
-          {event["title"] + additional}
+          {event["title"]} {additional}
         </h3>
         <p>
           <Link

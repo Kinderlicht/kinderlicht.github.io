@@ -6,11 +6,13 @@ import {
   news_data,
   NewsItemLink,
   ConvertDate,
+  articleIsNew,
 } from "@/app/_data/news";
 import { useState } from "react";
 
 function NewsEntry(news: NewsItem, index: number) {
   const link = NewsItemLink(news);
+  const isNew = new Date().getTime() - news["date"].getTime() < articleIsNew;
 
   return (
     <Link
@@ -27,6 +29,7 @@ function NewsEntry(news: NewsItem, index: number) {
         <span className="text-xs dark:text-gray-400">
           {ConvertDate(news["date"])}
         </span>
+        {isNew && <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Neu</span>}
         <p dangerouslySetInnerHTML={{ __html: news["short"] }} />
       </div>
     </Link>
@@ -61,7 +64,8 @@ function GetImageOrVideo(news: NewsItem, isTop: boolean) {
 }
 
 function TopEntry(news: NewsItem) {
-  let link = NewsItemLink(news);
+  const link = NewsItemLink(news);
+  const isNew = new Date().getTime() - news["date"].getTime() < articleIsNew;
   return (
     <Link
       rel="noopener noreferrer"
@@ -76,6 +80,7 @@ function TopEntry(news: NewsItem) {
         <span className="text-xs dark:text-gray-400">
           {ConvertDate(news["date"])}
         </span>
+        {isNew && <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Neu</span>}
         <p dangerouslySetInnerHTML={{ __html: news["short"] }} />
         <p className="text-justify text-ellipsis overflow-hidden whitespace-nowrap">
           {news["content"].replace(/<[^>]*>/g, "")}

@@ -2,6 +2,8 @@ import { EventAttributes } from "ics";
 
 export type Event = EventAttributes;
 
+export const eventIsSoon = 1000 * 60 * 60 * 24 * 30;
+
 export const events: Event[] = [
     {
         "start": [2023, 11, 18, 19, 0],
