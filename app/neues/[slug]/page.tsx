@@ -64,7 +64,7 @@ function RecommendArticle(item: NewsItem | undefined) {
    return recommended;
 }
 
-function RecommendedArticle(recommended: NewsItem) {
+function RecommendedArticle(recommended: NewsItem, index: number) {
   let link = NewsItemLink(recommended);
 
   let minutes = Math.max(
@@ -76,7 +76,7 @@ function RecommendedArticle(recommended: NewsItem) {
     minutesText += "n";
   }
   return (
-    <article className="max-w-xs">
+    <article key={index} className="max-w-xs">
       <Link href={link} className="hover:underline">
       {GetImageOrVideo(recommended, true)}
       <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white mt-4">
@@ -160,7 +160,7 @@ const Home = ({ params: { slug } }: { params: { slug: string } }) => {
                   Empfohlene Artikel basierend auf diesem Artikel
                 </h2>
                 <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
-                  {recommended.map((entry) => RecommendedArticle(entry))}
+                  {recommended.map((entry, index) => RecommendedArticle(entry, index))}
                 </div>
               </div>
             </aside>

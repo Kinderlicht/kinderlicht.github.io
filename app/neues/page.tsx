@@ -63,13 +63,14 @@ function GetImageOrVideo(news: NewsItem, isTop: boolean) {
   );
 }
 
-function TopEntry(news: NewsItem) {
+function TopEntry(news: NewsItem, key: number = 0) {
   const link = NewsItemLink(news);
   const isNew = new Date().getTime() - news["date"].getTime() < articleIsNew;
   return (
     <Link
       rel="noopener noreferrer"
       href={link}
+      key={key}
       className="block max-w-sm gap-3 mx-auto sm:max-w-full group hover:no-underline focus:no-underline lg:grid lg:grid-cols-12 dark:bg-gray-900 bg-gray-200 rounded-xl"
     >
       {GetImageOrVideo(news, true)}
@@ -219,7 +220,7 @@ export default function Home() {
           </div>
         </div>
         {recent ? (
-          TopEntry(recent)
+          TopEntry(recent, 0)
         ) : (
           <div
             className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3"
@@ -233,7 +234,7 @@ export default function Home() {
           </div>
         )}
         <div className="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {remaining.map((entry, index) => NewsEntry(entry, index))}
+          {remaining.map((entry, index) => NewsEntry(entry, index + 1))}
         </div>
         {removeButton ? (
           <></>
