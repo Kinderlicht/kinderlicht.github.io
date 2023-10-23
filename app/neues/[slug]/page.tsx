@@ -80,18 +80,17 @@ function RecommendedArticle(recommended: NewsItem, index: number) {
       <Link href={link} className="hover:underline">
       {GetImageOrVideo(recommended, true)}
       <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white mt-4">
-        <a href="#">{recommended["heading"]}</a>
+        <p>{recommended["heading"]}</p>
       </h2>
       <p
         className="mb-4  text-gray-500 dark:text-gray-400"
         dangerouslySetInnerHTML={{ __html: recommended["short"] }}
       />
-      <a
-        href="#"
+      <p
         className="inline-flex items-center font-medium underline-offset-4 text-primary-600 dark:text-primary-500"
       >
         {minutes} {minutesText} Lesezeit
-      </a>
+      </p>
       </Link>
     </article>
   );
@@ -121,13 +120,12 @@ const Home = ({ params: { slug } }: { params: { slug: string } }) => {
                             alt={author.name}
                           ></img>
                           <div>
-                            <a
-                              href="#"
+                            <p
                               rel="author"
                               className="text-xl font-bold text-gray-900 dark:text-white"
                             >
                               {author.name}
-                            </a>
+                            </p>
                             <p className="text-base text-gray-500 dark:text-gray-400">
                               {author.description}
                             </p>

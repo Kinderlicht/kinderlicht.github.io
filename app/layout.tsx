@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const dateFromArray = (date: number[]) => new Date(date.join("-"));
-  
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -105,11 +105,18 @@ export default function RootLayout({
                       className="relative inline-flex items-center py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                     >
                       Neues
-                      {news_data.filter((news) => new Date().getTime() - news.date.getTime() < articleIsNew)
-                        .length > 0 ? (
+                      {news_data.filter(
+                        (news) =>
+                          new Date().getTime() - news.date.getTime() <
+                          articleIsNew
+                      ).length > 0 ? (
                         <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-6 dark:border-gray-900">
                           {news_data
-                            .filter((news) => new Date().getTime() - news.date.getTime() < articleIsNew)
+                            .filter(
+                              (news) =>
+                                new Date().getTime() - news.date.getTime() <
+                                articleIsNew
+                            )
                             .length.toString()}
                         </div>
                       ) : (
@@ -123,10 +130,26 @@ export default function RootLayout({
                       className="relative inline-flex py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                     >
                       Events
-                      {events.filter((evt) => dateFromArray(evt["start"].slice(0, 3)) > new Date() && dateFromArray(evt["start"].slice(0, 3)).getTime() - new Date().getTime() < eventIsSoon).length > 0 ? (
+                      {events.filter(
+                        (evt) =>
+                          dateFromArray(evt["start"].slice(0, 3)) >
+                            new Date() &&
+                          dateFromArray(evt["start"].slice(0, 3)).getTime() -
+                            new Date().getTime() <
+                            eventIsSoon
+                      ).length > 0 ? (
                         <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-6 dark:border-gray-900">
                           {events
-                            .filter((evt) => dateFromArray(evt["start"].slice(0, 3)) > new Date() && dateFromArray(evt["start"].slice(0, 3)).getTime() - new Date().getTime() < eventIsSoon)
+                            .filter(
+                              (evt) =>
+                                dateFromArray(evt["start"].slice(0, 3)) >
+                                  new Date() &&
+                                dateFromArray(
+                                  evt["start"].slice(0, 3)
+                                ).getTime() -
+                                  new Date().getTime() <
+                                  eventIsSoon
+                            )
                             .length.toString()}
                         </div>
                       ) : (
@@ -161,7 +184,51 @@ export default function RootLayout({
             <div className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ffd890] to-[#f8f6ff] opacity-30"></div>
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <p className="text-sm leading-6 text-gray-900">
+            <p className="text-sm leading-6 text-gray-900 md:hidden">
+            <a
+                href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=B3F4DENU62RRN&ssrt=1693131246739"
+                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+              >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="inline-block bi bi-piggy-bank-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M7.964 1.527c-2.977 0-5.571 1.704-6.32 4.125h-.55A1 1 0 0 0 .11 6.824l.254 1.46a1.5 1.5 0 0 0 1.478 1.243h.263c.3.513.688.978 1.145 1.382l-.729 2.477a.5.5 0 0 0 .48.641h2a.5.5 0 0 0 .471-.332l.482-1.351c.635.173 1.31.267 2.011.267.707 0 1.388-.095 2.028-.272l.543 1.372a.5.5 0 0 0 .465.316h2a.5.5 0 0 0 .478-.645l-.761-2.506C13.81 9.895 14.5 8.559 14.5 7.069c0-.145-.007-.29-.02-.431.261-.11.508-.266.705-.444.315.306.815.306.815-.417 0 .223-.5.223-.461-.026a.95.95 0 0 0 .09-.255.7.7 0 0 0-.202-.645.58.58 0 0 0-.707-.098.735.735 0 0 0-.375.562c-.024.243.082.48.32.654a2.112 2.112 0 0 1-.259.153c-.534-2.664-3.284-4.595-6.442-4.595Zm7.173 3.876a.565.565 0 0 1-.098.21.704.704 0 0 1-.044-.025c-.146-.09-.157-.175-.152-.223a.236.236 0 0 1 .117-.173c.049-.027.08-.021.113.012a.202.202 0 0 1 .064.199Zm-8.999-.65a.5.5 0 1 1-.276-.96A7.613 7.613 0 0 1 7.964 3.5c.763 0 1.497.11 2.18.315a.5.5 0 1 1-.287.958A6.602 6.602 0 0 0 7.964 4.5c-.64 0-1.255.09-1.826.254ZM5 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+              </svg>
+              </a>
+              <svg
+                viewBox="0 0 2 2"
+                className="mx-2 inline h-0.5 w-0.5 fill-current"
+                aria-hidden="true"
+              >
+                <circle cx="1" cy="1" r="1" />
+              </svg>
+              <a
+                href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=B3F4DENU62RRN&ssrt=1693131246739"
+                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+              >
+                <span title="PayPal Spende">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="inline-block bi bi-paypal"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M14.06 3.713c.12-1.071-.093-1.832-.702-2.526C12.628.356 11.312 0 9.626 0H4.734a.7.7 0 0 0-.691.59L2.005 13.509a.42.42 0 0 0 .415.486h2.756l-.202 1.28a.628.628 0 0 0 .62.726H8.14c.429 0 .793-.31.862-.731l.025-.13.48-3.043.03-.164.001-.007a.351.351 0 0 1 .348-.297h.38c1.266 0 2.425-.256 3.345-.91.379-.27.712-.603.993-1.005a4.942 4.942 0 0 0 .88-2.195c.242-1.246.13-2.356-.57-3.154a2.687 2.687 0 0 0-.76-.59l-.094-.061ZM6.543 8.82a.695.695 0 0 1 .321-.079H8.3c2.82 0 5.027-1.144 5.672-4.456l.003-.016c.217.124.4.27.548.438.546.623.679 1.535.45 2.71-.272 1.397-.866 2.307-1.663 2.874-.802.57-1.842.815-3.043.815h-.38a.873.873 0 0 0-.863.734l-.03.164-.48 3.043-.024.13-.001.004a.352.352 0 0 1-.348.296H5.595a.106.106 0 0 1-.105-.123l.208-1.32.845-5.214Z" />
+                  </svg>
+                </span>
+                <span title="PayPal Spende" className="sr-only">
+                  Paypal Spende
+                </span>
+              </a>
+            </p>
+            <p className="text-sm leading-6 text-gray-900 hidden md:block">
               <strong className="font-semibold">Spendenkonto </strong>
               <svg
                 viewBox="0 0 2 2"
