@@ -139,15 +139,14 @@ export default function Home() {
         Unsere{" "}
         <u className="text-primary dark:text-primary-400 no-underline">Neuigkeiten</u>
       </h2>
-        <div className="flex content-center grid-cols-3 mb-8">
-          <div className="w-6/12 mr-8">
+          <div className="w-full">
             <label
               htmlFor="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
             >
               Suchen
             </label>
-            <div className="relative">
+            <div className="relative w-full mb-4">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg
                   className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -176,9 +175,8 @@ export default function Home() {
                 placeholder="Gib einen Begriff ein..."
               />
             </div>
-          </div>
-          <div className="flex items-center w-5/12">
-            <div className="relative max-w-sm">
+          <div className="flex items-center w-full">
+            <div className="relative w-1/2">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                 <svg
                   className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -197,8 +195,8 @@ export default function Home() {
                 onChange={(e) => setStartDate(e.target.value)}
               />
             </div>
-            <span className="mx-4 text-gray-500">bis</span>
-            <div className="relative max-w-sm">
+            <span className="mx-4 text-gray-500 text-center">bis</span>
+            <div className="relative w-1/2">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                 <svg
                   className="w-4 h-4 text-gray-500 dark:text-gray-400"
