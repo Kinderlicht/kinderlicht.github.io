@@ -311,7 +311,7 @@ export const news_data: NewsItem[] = [
     "content": "W\u00e4hrend des Sommerfestes der Firma AGC INTERPANE Architectural Glass GmbH Plattling am 23.06.2023 wurden von den Auszubildenden Aktionen zugunsten des Kinderlicht Wallersdorf e. V. organisiert. Die Mitarbeiter haben sich an diversen Gewinnspielstationen rege beteiligt und es konnte dem Kinderlicht Wallersdorf e. V.  am 06.09.2023 ein stattlicher Betrag in H\u00f6he von 1.614,00 Euro \u00fcbergeben werden. Im Rahmen der Spenden\u00fcbergabe durch die Auszubildenden der Firma und der Ausbildungsleitung, Frau R\u00f6ckl, bedankten sich Enrico Koch und Christina Weig vom Kinderlicht Wallersdorf e. V. herzlich f\u00fcr die finanzielle Unterst\u00fctzung.",
     "short": "1600€ für den guten Zweck.",
     "author": "Kinderlicht",
-    "image": "/news/donation.jpg",
+    "image": "/news/SpendenuebergabeAGC.jpg",
     "slug": "spendenuebergabe-durch-agc-interpane-architectural-glass-gmbh-plattling",
     "keywords": [
         "Spende",

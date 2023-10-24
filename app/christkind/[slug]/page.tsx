@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { MouseEvent } from "react";
 
@@ -15,7 +16,7 @@ const Home = ({ params: { slug } }: { params: { slug: number } }) => {
     fetch("https://api.campai.com/formSubmissions/6536c50d26e1924cfba8d412", {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
       },
       body: JSON.stringify({
         formData: { wunsch: "" + slug, erklaerung: message, mail: email },
@@ -43,11 +44,41 @@ const Home = ({ params: { slug } }: { params: { slug: number } }) => {
           {slug}
         </u>
       </h2>
-      <p className="mb-2 text-2xl font-bold mt-8">
-        {valid
-          ? "Herzlichen Dank für deine Mithilfe in unserer gemeinsamen Weihnachtsaktion! Bitte fülle die untenstehenden Felder aus."
-          : "Diese Nummer existiert leider nicht."}
-      </p>
+
+      {!valid ? (
+        <div className="container  mb-8 mt-32 mx-auto">
+          <section className="mb-32 text-center">
+            <h2 className="mb-4 text-3xl font-bold">
+              Diese Wunsch-ID existiert leider{" "}
+              <u className="text-primary dark:text-primary-400 no-underline">
+                nicht.
+              </u>
+            </h2>
+            <Link className="text-primary hover:underline" href="/christkind">
+              {" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="inline-block bi bi-arrow-left-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+                />
+              </svg>{" "}
+              Zurück zur manuellen Eingabe.
+            </Link>
+          </section>
+        </div>
+      ) : (
+        <p className="mb-2 text-1xl text-center font-bold mt-8">
+          Herzlichen Dank für deine Mithilfe in unserer gemeinsamen
+          Weihnachtsaktion! Bitte fülle die untenstehenden Felder aus.
+        </p>
+      )}
       <form className={valid && err == -1 ? "" : "hidden"}>
         <div className="mb-6">
           <label
