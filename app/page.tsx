@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -7,17 +7,18 @@ export default function Home() {
         <div className="container px-5 py-24 mx-auto max-w-7x1">
           <div className="flex flex-wrap w-full mb-4 p-4">
             <div className="w-full mb-6 lg:mb-0">
-            <h2 className="text-3xl font-bold">
-          Kinderlicht Wallersdorf{" "}
-          <u className="text-primary dark:text-primary-400 no-underline">e. V.</u>
-        </h2>
+              <h2 className="text-3xl font-bold">
+                Kinderlicht Wallersdorf{" "}
+                <u className="text-primary dark:text-primary-400 no-underline">
+                  e. V.
+                </u>
+              </h2>
               <div className="h-1 w-20 bg-primary rounded"></div>
             </div>
           </div>
           <div className="flex flex-wrap -m-4">
-            <div className="w-full xl:w-1/3 p-4">
+            <Link href="/anfrage" className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-                <a href="/anfrage">
                   <img
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
                     src="/home/help.png"
@@ -33,12 +34,11 @@ export default function Home() {
                     Der Kinderlicht Wallersdorf e.V. konnte bereits vielen
                     Familien erfolgreich helfen.
                   </p>
-                </a>
               </div>
-            </div>
-            <div className="w-full xl:w-1/3 p-4">
+            </Link>
+            <Link href="/beitreten" className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-                <a href="/beitreten">
+        
                   <img
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="/home/donate.png"
@@ -54,12 +54,12 @@ export default function Home() {
                     Für Menschen, die sich engagieren oder uns einfach
                     finanziell unterstützen wollen!
                   </p>
-                </a>
+
               </div>
-            </div>
-            <div className="w-full xl:w-1/3 p-4">
+            </Link>
+            <Link href="/neues" className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-                <a href="/neues">
+             
                   <img
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="/home/news.png"
@@ -74,9 +74,8 @@ export default function Home() {
                   <p className="leading-relaxed text-base">
                     Hier kannst du jeden unserer Schritte verfolgen!
                   </p>
-                </a>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -84,10 +83,12 @@ export default function Home() {
         <div className="container px-5 py-24 mx-auto max-w-7x1">
           <div className="flex flex-wrap w-full mb-4 p-4">
             <div className="w-full mb-6 lg:mb-0">
-            <h2 className="text-3xl font-bold">
-          Unsere{" "}
-          <u className="text-primary dark:text-primary-400 no-underline">Geschichte</u>
-        </h2>
+              <h2 className="text-3xl font-bold">
+                Unsere{" "}
+                <u className="text-primary dark:text-primary-400 no-underline">
+                  Geschichte
+                </u>
+              </h2>
               <div className="h-1 w-20 bg-primary rounded"></div>
             </div>
           </div>
@@ -97,7 +98,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-            <div className="w-full xl:w-1/2 p-4">
+            <Link href="/neues/wie-alles-begann" className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -116,8 +117,8 @@ export default function Home() {
                   gesammelt.
                 </p>
               </div>
-            </div>
-            <div className="w-full xl:w-1/2 p-4">
+            </Link>
+            <Link href="/neues/wie-alles-begann" className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -135,7 +136,7 @@ export default function Home() {
                   2018.
                 </p>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="relative flex py-5 items-center">
             <div className="flex-grow border-t border-gray-400"></div>
@@ -143,7 +144,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-            <div className="w-full xl:w-1/3 p-4">
+            <Link href="/neues/schirmherrschaft" className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -161,8 +162,8 @@ export default function Home() {
                   gefunden: Florian Pronold.
                 </p>
               </div>
-            </div>
-            <div className="w-full xl:w-1/3 p-4">
+            </Link>
+            <Link href="https://www.youtube.com/embed/FjgCtdiizUY?si=fIZhSdl5d-02NIQv&amp;controls=0" className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <iframe
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -183,8 +184,8 @@ export default function Home() {
                   Nürburgring ermöglichen.
                 </p>
               </div>
-            </div>
-            <div className="w-full xl:w-1/3 p-4">
+            </Link>
+            <Link href="/neues/lasershow-premiere-in-wallersdorf" className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -203,7 +204,7 @@ export default function Home() {
                   umweltschonende Lasershow organisieren.
                 </p>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="relative flex py-5 items-center">
             <div className="flex-grow border-t border-gray-400"></div>
@@ -211,7 +212,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-            <div className="w-full xl:w-1/2">
+            <Link href="/neues/eine-musikalische-reise-durch-die-welt-der-filmmusik" className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -230,8 +231,8 @@ export default function Home() {
                   Konzert der Filmmusik mit 80 MusikerInnen.
                 </p>
               </div>
-            </div>
-            <div className="w-full xl:w-1/2">
+            </Link>
+            <Link href="/neues/einen-beitrag-zum-auto-geleistet" className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -250,7 +251,7 @@ export default function Home() {
                   mitfinanziert.
                 </p>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="relative flex py-5 items-center">
             <div className="flex-grow border-t border-gray-400"></div>
@@ -258,7 +259,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-          <div className="w-full xl:w-1/3 p-4">
+            <Link href="/neues/masken-fuer-ein-kinderlaecheln" className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -272,11 +273,12 @@ export default function Home() {
                   Kinderlicht in Krisenzeiten
                 </h2>
                 <p className="leading-relaxed text-base">
-                  Auch während der Kirsenzeiten konnten wir einige Spenden sammeln und so weiterhelfen.
+                  Auch während der Kirsenzeiten konnten wir einige Spenden
+                  sammeln und so weiterhelfen.
                 </p>
               </div>
-            </div>
-            <div className="w-full xl:w-1/3 p-4">
+            </Link>
+            <Link href="https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0" className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <iframe
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -292,12 +294,13 @@ export default function Home() {
                   3 Tage im Mittelalter
                 </h2>
                 <p className="leading-relaxed text-base">
-                  In unserem zweiten Ferienprogramm, nahmen wir die TeilnehmerInnen auf eine
-                  dreitägige Reise durch die Zeit ins Mittelalter mit.
+                  In unserem zweiten Ferienprogramm, nahmen wir die
+                  TeilnehmerInnen auf eine dreitägige Reise durch die Zeit ins
+                  Mittelalter mit.
                 </p>
               </div>
-            </div>
-            <div className="w-full xl:w-1/3 p-4">
+            </Link>
+            <Link href="https://www.youtube.com/embed/bGR75Cy2BrU?si=CN-bjRy-gWQdhQ9Y&amp;controls=0" className="w-full xl:w-1/3 p-4">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <iframe
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -313,10 +316,12 @@ export default function Home() {
                   24 Tage Livestreams
                 </h2>
                 <p className="leading-relaxed text-base">
-                  Für eine großangelegte Spendenaktion haben wir an 24 Tagen in Folge eigens produzierte Inhlate gestreamt. Es konnten 3346€ gesammelt werden.
+                  Für eine großangelegte Spendenaktion haben wir an 24 Tagen in
+                  Folge eigens produzierte Inhlate gestreamt. Es konnten 3346€
+                  gesammelt werden.
                 </p>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="relative flex py-5 items-center">
             <div className="flex-grow border-t border-gray-400"></div>
@@ -324,7 +329,7 @@ export default function Home() {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <div className="flex flex-wrap -m-4">
-          <div className="w-full xl:w-1/2">
+            <Link href="/neues/ab-ins-beet" className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <img
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
@@ -338,11 +343,13 @@ export default function Home() {
                   Mehr Spenden und Renovierungen
                 </h2>
                 <p className="leading-relaxed text-base">
-                  Auch in 2022 konnten wir viele Spenden verteilen und haben neben einer Wohnungsrenovierung auch ein Hochbeet für einen Kindergarten gebaut.
+                  Auch in 2022 konnten wir viele Spenden verteilen und haben
+                  neben einer Wohnungsrenovierung auch ein Hochbeet für einen
+                  Kindergarten gebaut.
                 </p>
               </div>
-            </div>
-            <div className="w-full xl:w-1/2">
+            </Link>
+            <Link href="https://www.youtube.com/embed/ZRj34XeuHCY?si=-6323dPZhhbgEPjS&amp;controls=0" className="w-full xl:w-1/2">
               <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                 <iframe
                   className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -358,10 +365,12 @@ export default function Home() {
                   Die vier Jahreszeiten
                 </h2>
                 <p className="leading-relaxed text-base">
-                  Auch unsere FilmemacherInnen haben nicht geschlafen und einen Kinofilm produziert. Kann der Weihnachtswichtel die &quot;4 Jahreszeiten&quot; von der bösen Hexe befreien?
+                  Auch unsere FilmemacherInnen haben nicht geschlafen und einen
+                  Kinofilm produziert. Kann der Weihnachtswichtel die &quot;4
+                  Jahreszeiten&quot; von der bösen Hexe befreien?
                 </p>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
