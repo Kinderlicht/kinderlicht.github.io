@@ -20,7 +20,7 @@ function GetImageOrVideo(news: NewsItem, isRecommended: boolean = false) {
   if (!isRecommended) {
     recommended += " h-64 sm:h-96";
   }
-  const isYoutube = news["image"].includes("youtub");
+  const isYoutube = news["image"].indexOf("youtub") !== -1;
   return (
     <>
       {isYoutube ? (
@@ -54,7 +54,7 @@ function RecommendArticle(item: NewsItem | undefined) {
       continue;
     }
     const intersection = item["keywords"].filter((value) =>
-      entry["keywords"].includes(value)
+      entry["keywords"].indexOf(value) !== -1
     );
     entries.push([i, intersection.length]);
   }

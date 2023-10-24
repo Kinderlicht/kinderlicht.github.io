@@ -37,7 +37,7 @@ function NewsEntry(news: NewsItem, index: number) {
 }
 
 function GetImageOrVideo(news: NewsItem, isTop: boolean) {
-  let isYoutube = news["image"].includes("youtub");
+  let isYoutube = news["image"].indexOf("youtub") !== -1;
   const className = isTop
     ? "object-cover w-full h-64 rounded sm:h-96 lg:col-span-7 dark:bg-gray-500"
     : "object-cover w-full rounded h-44 dark:bg-gray-500";
@@ -104,9 +104,9 @@ export default function Home() {
   let filtered = news_data.filter((e) => {
     if (searchTerm !== "") {
       if (
-        !e.content?.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        !e.short?.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        !e.keywords?.join(" ").includes(searchTerm.toLowerCase())
+        e.content?.toLowerCase().indexOf(searchTerm.toLowerCase()) === -1 &&
+        e.short?.toLowerCase().indexOf(searchTerm.toLowerCase()) === -1 &&
+        e.keywords?.join(" ").indexOf(searchTerm.toLowerCase()) === -1
       )
         return false;
     }

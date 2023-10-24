@@ -137,7 +137,10 @@ export default function Home() {
 
   let filtered = events.filter((e) => {
     if (searchTerm !== "") {
-      if (!e.description?.includes(searchTerm) && e.title?.includes(searchTerm))
+      let text = e.title || "";
+      text += " ";
+      text += e.description || "";
+      if (text.toLowerCase().indexOf(searchTerm.toLowerCase()) === -1)
         return false;
     }
 
@@ -193,8 +196,8 @@ export default function Home() {
           </div>
           <input
             type="search"
-            onChange={(str) => {
-              setSearchTerm(str.target.value);
+            onChange={e => {
+              setSearchTerm(e.target.value);
             }}
             value={searchTerm}
             id="default-search"
