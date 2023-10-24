@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MouseEvent } from "react";
 
 const Home = ({ params: { slug } }: { params: { slug: number } }) => {
@@ -15,8 +15,7 @@ const Home = ({ params: { slug } }: { params: { slug: number } }) => {
     fetch("https://api.campai.com/formSubmissions/6536c50d26e1924cfba8d412", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
-        // add expires
+        "content-type": "application/json"
       },
       body: JSON.stringify({
         formData: { wunsch: "" + slug, erklaerung: message, mail: email },
