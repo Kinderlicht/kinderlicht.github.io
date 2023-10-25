@@ -13,14 +13,15 @@ function CountWords(str: string) {
   return str.trim().split(/\s+/).length;
 }
 
-function GetImageOrVideo(news: NewsItem, isRecommended: boolean = false) {
+//function GetImageOrVideo(news: NewsItem, isRecommended: boolean = false) {
+const GetImageOrVideo = ({news, isRecommended}: {news: NewsItem, isRecommended?: boolean}) => {
   let recommended = isRecommended
     ? "object-cover w-full rounded h-44 dark:bg-gray-500"
     : "object-cover w-full mb-8 rounded lg:col-span-7 dark:bg-gray-500";
   if (!isRecommended) {
     recommended += " h-64 sm:h-96";
   }
-  const isYoutube = news["image"].indexOf("youtub") !== -1;
+  const isYoutube = news["image"].indexOf("youtube") !== -1;
   return (
     <>
       {isYoutube ? (
@@ -77,7 +78,8 @@ function RecommendedArticle(recommended: NewsItem, index: number) {
   return (
     <article key={index} className="max-w-xs">
       <Link href={link} className="hover:underline">
-        {GetImageOrVideo(recommended, true)}
+        {/*GetImageOrVideo(recommended, true)*/}
+        <GetImageOrVideo news={recommended} recommended={true} />
         <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white mt-4">
           <p>{recommended["heading"]}</p>
         </h2>
@@ -163,7 +165,8 @@ const Home = ({ params: { slug } }: { params: { slug: string } }) => {
                       {item["heading"]}
                     </h1>
                   </header>
-                  {GetImageOrVideo(item)}
+                  {/*GetImageOrVideo(item)*/}
+                  <GetImageOrVideo news={item} />
                   <p
                     className="text-justify"
                     dangerouslySetInnerHTML={{ __html: item["content"] }}
