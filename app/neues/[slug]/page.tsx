@@ -14,7 +14,7 @@ function CountWords(str: string) {
 }
 
 //function GetImageOrVideo(news: NewsItem, isRecommended: boolean = false) {
-const GetImageOrVideo = ({news, isRecommended: recommended}: {news: NewsItem, recommended?: boolean}) => {
+const GetImageOrVideo = ({news, recommended: isRecommended}: {news: NewsItem, recommended?: boolean}) => {
   let recommended = isRecommended
     ? "object-cover w-full rounded h-44 dark:bg-gray-500"
     : "object-cover w-full mb-8 rounded lg:col-span-7 dark:bg-gray-500";
