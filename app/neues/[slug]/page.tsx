@@ -110,7 +110,7 @@ export const getStaticPaths = (async () => {
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
   return { paths, fallback: false }
-} satisfies GetStaticPaths;
+}) satisfies GetStaticPaths;
 
 const Home = ({ params: { slug } }: { params: { slug: string } }) => {
   const item = news_data.find((e) => e.slug == slug);
