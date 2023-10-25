@@ -112,7 +112,13 @@ export const getStaticPaths = (async () => {
   return { paths, fallback: false }
 }) satisfies GetStaticPaths;
 
-const Home = ({ params: { slug } }: { params: { slug: string } }) => {
+export const getStaticProps = (async ({ params: { slug } }: { params: { slug: string } }) => {
+  return { props: { slug } };
+}) satisfies GetStaticProps<{
+  slug: string
+}>;
+
+const Home = ({ slug }: { slug: string }) : InferGetStaticPropsType<typeof getStaticProps>) => {
   const item = news_data.find((e) => e.slug == slug);
   const author = item ? authors[item["author"]] : undefined;
   const recommended = RecommendArticle(item);
