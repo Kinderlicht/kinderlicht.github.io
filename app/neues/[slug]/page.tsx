@@ -197,4 +197,16 @@ const Home = ({ params: { slug } }: { params: { slug: string } }) => {
   );
 };
 
+// This function gets called at build time
+export async function getStaticPaths() { 
+  // Get the paths we want to pre-render based on posts
+  const paths = news_data.map((post) => ({
+    params: { slug: post.slug },
+  }))
+ 
+  // We'll pre-render only these paths at build time.
+  // { fallback: false } means other routes should 404.
+  return { paths, fallback: false }
+}
+
 export default Home;
