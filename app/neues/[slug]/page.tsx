@@ -118,7 +118,7 @@ export const getStaticProps = (async ({ params: { slug } }: { params: { slug: st
   slug: string
 }>;
 
-const Home = ({ slug }: { slug: string }) : InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const item = news_data.find((e) => e.slug == slug);
   const author = item ? authors[item["author"]] : undefined;
   const recommended = RecommendArticle(item);
