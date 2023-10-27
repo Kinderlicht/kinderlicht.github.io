@@ -8,10 +8,10 @@ const Home = () => {
 
   return (
     <div className="container text-center max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
-      <span className="mb-8 text-3xl font-bold text-center mr-2">
+      <span className="mb-8 text-3xl font-bold text-center mr-4">
         Gib deine Wunsch-ID ein{" "}
       </span>
-      <span className="inline-block">
+      <span className="inline-block w-full p-8 xl:w-1/4 xl:p-1">
         <form onSubmit={e => e.preventDefault()}>
           <label
             htmlFor="search"
@@ -39,13 +39,13 @@ const Home = () => {
             <input
               type="search"
               id="search"
-              onChange={(t) => setText(t.target.value)}
-              className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="1234"
+              onChange={(t) => setText(t.target.value.toUpperCase())}
+              className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-orange-300 focus:border-orange-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+              placeholder="ABCDEFGH"
               required
             />
             <Link href={`/christkind/${text}`}
-              className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white absolute right-2.5 bottom-2.5 bg-primary hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
             >
               Wunsch erfüllen
             </Link>

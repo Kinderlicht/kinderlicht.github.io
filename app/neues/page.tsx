@@ -10,6 +10,13 @@ import {
 } from "@/app/_data/news";
 import { useState } from "react";
 
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+  return news_data.map((n) => ({
+    slug: n.slug,
+  }));
+}
+
 function NewsEntry(news: NewsItem, index: number) {
   const link = NewsItemLink(news);
   const isNew = new Date().getTime() - news["date"].getTime() < articleIsNew;

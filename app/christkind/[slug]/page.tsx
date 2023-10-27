@@ -1,15 +1,15 @@
 "use client";
 
+import { valid_ids } from "@/app/_data/christkind_ids";
 import Link from "next/link";
 import { useState } from "react";
 import { MouseEvent } from "react";
 
-const Home = ({ params: { slug } }: { params: { slug: number } }) => {
+const Home = ({ params: { slug } }: { params: { slug: string } }) => {
   let [email, setEmail] = useState<string>("");
   let [message, setText] = useState<string>("");
   let [err, setErr] = useState<number>(-1);
-
-  const valid = slug == 1 || slug == 14389;
+  const valid = valid_ids.findIndex((e) => e == slug) !== -1;
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ const Home = ({ params: { slug } }: { params: { slug: number } }) => {
   return (
     <div className="container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
       <h2 className="mb-16 text-3xl font-bold text-center">
-        Deine Wunschnummer ist{" "}
+        Deine Wunsch-ID ist{" "}
         <u className="text-primary dark:text-primary-400 no-underline">
           {slug}
         </u>

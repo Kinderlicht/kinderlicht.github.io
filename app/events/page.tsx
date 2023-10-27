@@ -31,51 +31,80 @@ function Event(event: Event, index: number) {
   let eventDate = ConvertDateObject(event["start"]);
   let currentDate = new Date();
   let additional = <></>;
+  let finished = false;
   if (eventDate < currentDate) {
     additional = (
       <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
         Abgeschlossen
       </span>
     );
+    finished = true;
   } else if (
     eventDate > currentDate &&
     eventDate.getTime() - currentDate.getTime() < eventIsSoon
   ) {
     additional = (
-      <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-        Bevorstehend
-      </span>
-    );
-  }
-  return (
-    <div
-      key={index}
-      className="flex flex-col md:flex-row md:justify-between my-8"
-    >
-      <div className="mb-4 md:mb-0 w-5/12">
-        <h3 className="text-xl font-bold mb-2 ">
-          {event["title"]} {additional}
-        </h3>
-        <p>
+      <>
+        <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+          Bevorstehend
+        </span>
+        {event["url"] && (
           <Link
-            className="text-sm text-blue-600"
-            onClick={() => download("event.ics", content || "")}
-            href="#"
+            href={event["url"]}
+            className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
           >
+            Anmelden{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
               fill="currentColor"
-              className="inline-block bi bi-calendar2-plus-fill"
+              className="inline-block bi bi-box-arrow-up-right ml-1"
               viewBox="0 0 16 16"
             >
-              <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 3.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5H2.545c-.3 0-.545.224-.545.5zm6.5 5a.5.5 0 0 0-1 0V10H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V11H10a.5.5 0 0 0 0-1H8.5V8.5z" />
-            </svg>{" "}
-            {ConvertDate(event["start"])}{" "}
+              <path
+                fillRule="evenodd"
+                d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"
+              />
+              <path
+                fillRule="evenodd"
+                d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"
+              />
+            </svg>
           </Link>
-        </p>
-        <Link href={loc || "#"} className="text-blue-600 text-sm hover:no-underline">
+        )}
+      </>
+    );
+  }
+  return (
+    <div key={index} className={(finished ? "bg-gray-200 text-gray-500 child:text-gray-200 child:select-none" : "bg-white dark:bg-neutral-700 hover:bg-gray-100") + " block rounded-lg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-ful p-8"}>
+      <h3 className="text-xl font-bold mb-2 w-full">
+        {event["title"]} {additional}
+      </h3>
+      <p>
+        <Link
+          className="text-sm text-blue-600"
+          onClick={() => download("event.ics", content || "")}
+          href="#"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="inline-block bi bi-calendar2-plus-fill"
+            viewBox="0 0 16 16"
+          >
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 3.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5H2.545c-.3 0-.545.224-.545.5zm6.5 5a.5.5 0 0 0-1 0V10H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V11H10a.5.5 0 0 0 0-1H8.5V8.5z" />
+          </svg>{" "}
+          {ConvertDate(event["start"])}{" "}
+        </Link>
+      </p>
+      <p>
+        <Link
+          href={loc || "#"}
+          className="text-blue-600 text-sm hover:no-underline w-full"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -88,8 +117,8 @@ function Event(event: Event, index: number) {
           </svg>{" "}
           {event["location"]}
         </Link>
-      </div>
-      <p className="w-7/12 flex-col">
+      </p>
+      <p className="flex-col mt-2">
         <span
           dangerouslySetInnerHTML={{
             __html:
@@ -98,33 +127,6 @@ function Event(event: Event, index: number) {
               "Es liegt keine Beschreibung vor.",
           }}
         />
-        {event["url"] ? (
-          <>
-            <br></br>
-            <Link href={event["url"]} className="text-blue-500 float-right">
-              Hier anmelden{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="inline-block bi bi-box-arrow-up-right"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"
-                />
-                <path
-                  fillRule="evenodd"
-                  d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"
-                />
-              </svg>
-            </Link>
-          </>
-        ) : (
-          <></>
-        )}
       </p>
     </div>
   );
@@ -162,7 +164,7 @@ export default function Home() {
   });
 
   return (
-    <div className="max-w-5xl mx-auto mb-8 mt-32">
+    <div className="max-w-5xl mx-auto mb-8 mt-32 p-4">
       <h2 className="mb-16 text-3xl font-bold text-center">
         Unsere{" "}
         <u className="text-primary dark:text-primary-400 no-underline">
@@ -196,7 +198,7 @@ export default function Home() {
           </div>
           <input
             type="search"
-            onChange={e => {
+            onChange={(e) => {
               setSearchTerm(e.target.value);
             }}
             value={searchTerm}
@@ -247,7 +249,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="border-l-2 border-gray-500 pl-8">
+      <div className="border-l-2 border-gray-500 pl-8 mt-8 space-y-2">
         {filtered.map((e, index) => Event(e, index))}
       </div>
     </div>
