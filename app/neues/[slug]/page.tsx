@@ -8,18 +8,26 @@ import {
   NewsItemLink,
 } from "@/app/_data/news";
 import { authors } from "@/app/_data/authors";
-import type {
-  InferGetStaticPropsType,
-  GetStaticProps,
-  GetStaticPaths,
-} from 'next';
 
 function CountWords(str: string) {
   return str.trim().split(/\s+/).length;
 }
 
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+  return news_data.map((n) => ({
+    slug: n.slug,
+  }));
+}
+
 //function GetImageOrVideo(news: NewsItem, isRecommended: boolean = false) {
-const GetImageOrVideo = ({news, recommended: isRecommended}: {news: NewsItem, recommended?: boolean}) => {
+const GetImageOrVideo = ({
+  news,
+  recommended: isRecommended,
+}: {
+  news: NewsItem;
+  recommended?: boolean;
+}) => {
   let recommended = isRecommended
     ? "object-cover w-full rounded h-44 dark:bg-gray-500"
     : "object-cover w-full mb-8 rounded lg:col-span-7 dark:bg-gray-500";
@@ -47,7 +55,7 @@ const GetImageOrVideo = ({news, recommended: isRecommended}: {news: NewsItem, re
       )}
     </>
   );
-}
+};
 
 function RecommendArticle(item: NewsItem | undefined) {
   if (item === undefined) {
@@ -59,8 +67,8 @@ function RecommendArticle(item: NewsItem | undefined) {
     if (entry == item) {
       continue;
     }
-    const intersection = item["keywords"].filter((value) =>
-      entry["keywords"].indexOf(value) !== -1
+    const intersection = item["keywords"].filter(
+      (value) => entry["keywords"].indexOf(value) !== -1
     );
     entries.push([i, intersection.length]);
   }
@@ -100,25 +108,8 @@ function RecommendedArticle(recommended: NewsItem, index: number) {
   );
 }
 
-// This function gets called at build time
-export const getStaticPaths = (async () => {
-  // Get the paths we want to pre-render based on posts
-  const paths = news_data.map((post) => ({
-    params: { slug: post.slug },
-  }))
- 
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: false }
-}) satisfies GetStaticPaths;
-
-export const getStaticProps = (async ({ params: { slug } }: { params: { slug: string } }) => {
-  return { props: { slug } };
-}) satisfies GetStaticProps<{
-  slug: string
-}>;
-
-const Home = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
+export default function Page({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const item = news_data.find((e) => e.slug == slug);
   const author = item ? authors[item["author"]] : undefined;
   const recommended = RecommendArticle(item);
@@ -218,6 +209,4 @@ const Home = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
       )}
     </>
   );
-};
-
-export default Home;
+}
