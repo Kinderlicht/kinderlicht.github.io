@@ -2,8 +2,6 @@ import { EventAttributes } from "ics";
 
 export type Event = EventAttributes;
 
-export const eventIsSoon = 1000 * 60 * 60 * 24 * 30;
-
 export const events: Event[] = [
     {
         "start": [2023, 11, 18, 19, 0],
@@ -25,3 +23,14 @@ export const events: Event[] = [
         "htmlContent": "Der dritte Schneeball des Kinderlicht Wallersdorf e.V. gemeinsam mit Kolping. Reservierungen bitte über den Anmeldebutton oben.",
     },
 ];
+
+const dateFromArray = (date: number[]) => new Date(date.join("-"));
+export const eventIsSoon = 1000 * 60 * 60 * 24 * 30;
+export const numberOfUpcomingEvents = events.filter(
+  (evt) =>
+    dateFromArray(evt["start"].slice(0, 3)) >
+      new Date() &&
+    dateFromArray(evt["start"].slice(0, 3)).getTime() -
+      new Date().getTime() <
+      eventIsSoon
+).length;

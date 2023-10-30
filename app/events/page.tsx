@@ -164,7 +164,7 @@ export default function Home() {
   });
 
   return (
-    <div className="max-w-5xl mx-auto mb-8 mt-32 p-4">
+    <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
       <h2 className="mb-16 text-3xl font-bold text-center">
         Unsere{" "}
         <u className="text-primary dark:text-primary-400 no-underline">

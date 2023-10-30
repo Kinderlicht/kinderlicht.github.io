@@ -141,7 +141,7 @@ export const sponsors: Sponsor[] = [
     {
       name: 'Andrea Herzig',
       location: 'aus 93444 Bad Kötzting',
-      image: 'https://le-cdn.website-editor.net/s/3b38257c5abf4d51a57e2b0dd0fa8f6e/dms3rep/multi/opt/LOGOHPA-216w.png?Expires=1698627149&Signature=ag5uf5kY3yLbZ-ntUXNHOLO6rPKOxFUPoeK8Ja6WDGWbqjITdRV2Uqyfc45V7BvTP7DZt3iKP-pWEiM4kGd-4d80iiDkX6zGhgUFKEpm7pnD~Mjc7spc8LRIdlIAtRxyr4F20yRauJ7Wy14GfJSkCT4IXu5Z569Eltn66wUb0N9kyomiaxoDSPhZXau6y7p8N~De4bb0Yt7K6OBIJidpAtVRr~Q2Dxe2lGh~FEzX4SzNEdwbdSVs2wLonRpVG5GLr4n6crByLyW4Z6Y309RVyRdEOVJLQ1JLWXFTe6ZOvpERJ3HqblgDPNa3bU3fKbwBvW7g8ShCZ~x-oeyqbya4Pg__&Key-Pair-Id=K2NXBXLF010TJW',
+      image: '/supporter/andrea-herzig.webp',
       link: 'https://www.andrea-herzig.de/',
     },
     {

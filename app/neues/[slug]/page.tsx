@@ -179,7 +179,6 @@ export default function Page({ params }: { params: { slug: string } }) {
                       {item["heading"]}
                     </h1>
                   </header>
-                  {/*GetImageOrVideo(item)*/}
                   <GetImageOrVideo news={item} />
                   <p
                     className="text-justify"

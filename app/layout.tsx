@@ -1,11 +1,25 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { articleIsNew, news_data } from "./_data/news";
-import { eventIsSoon, events } from "./_data/events";
+import { latestArticles } from "./_data/news";
+import { numberOfUpcomingEvents } from "./_data/events";
 import Link from "next/link";
+import DonationAccountModal from "./components/Modal";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
+
+function showNotifications(notifications: number) {
+  return (
+    <>
+      {notifications > 0 && (
+        <div className="inline-flex items-center -mt-2 justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">
+          {notifications.toString()}
+        </div>
+      )}
+    </>
+  );
+}
 
 export const metadata: Metadata = {
   title: "Kinderlicht Wallersdorf e.V.",
@@ -17,8 +31,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const dateFromArray = (date: number[]) => new Date(date.join("-"));
-
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -35,53 +47,51 @@ export default function RootLayout({
                   Kinderlicht Wallersdorf e.V.
                 </span>
               </Link>
-              <div className="flex items-center lg:order-2">
-                <button
-                  data-collapse-toggle="mobile-menu-2"
-                  type="button"
-                  className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                  aria-controls="mobile-menu-2"
-                  aria-expanded="false"
-                >
-                  <span className="sr-only">Hauptmenü</span>
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                  <svg
-                    className="hidden w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
-              <div
-                className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-                id="mobile-menu-2"
+              <button
+                data-collapse-toggle="mobile-menu"
+                type="button"
+                className="md:hidden ml-3 text-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg inline-flex items-center justify-center"
+                aria-controls="mobile-menu-2"
+                aria-expanded="false"
               >
-                <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                <span className="sr-only">Hauptmenü</span>
+                <svg
+                  className="w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+                <svg
+                  className="hidden w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+              <div
+                className="hidden md:block w-full md:w-auto"
+                id="mobile-menu"
+              >
+                <ul className="flex-col md:flex-row flex md:space-x-8 mt-4 md:mt-0 md:text-sm md:font-medium">
                   <li>
                     <Link
                       href="#"
                       className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
                       aria-current="page"
                     >
-                      Home
+                      Kinderlicht
                     </Link>
                   </li>
                   <li>
@@ -106,23 +116,7 @@ export default function RootLayout({
                       className="relative inline-flex items-center py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                     >
                       Neues
-                      {news_data.filter(
-                        (news) =>
-                          new Date().getTime() - news.date.getTime() <
-                          articleIsNew
-                      ).length > 0 ? (
-                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-6 dark:border-gray-900">
-                          {news_data
-                            .filter(
-                              (news) =>
-                                new Date().getTime() - news.date.getTime() <
-                                articleIsNew
-                            )
-                            .length.toString()}
-                        </div>
-                      ) : (
-                        <></>
-                      )}
+                      {showNotifications(latestArticles)}
                     </Link>
                   </li>
                   <li>
@@ -131,31 +125,7 @@ export default function RootLayout({
                       className="relative inline-flex py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                     >
                       Events
-                      {events.filter(
-                        (evt) =>
-                          dateFromArray(evt["start"].slice(0, 3)) >
-                            new Date() &&
-                          dateFromArray(evt["start"].slice(0, 3)).getTime() -
-                            new Date().getTime() <
-                            eventIsSoon
-                      ).length > 0 ? (
-                        <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-6 dark:border-gray-900">
-                          {events
-                            .filter(
-                              (evt) =>
-                                dateFromArray(evt["start"].slice(0, 3)) >
-                                  new Date() &&
-                                dateFromArray(
-                                  evt["start"].slice(0, 3)
-                                ).getTime() -
-                                  new Date().getTime() <
-                                  eventIsSoon
-                            )
-                            .length.toString()}
-                        </div>
-                      ) : (
-                        <></>
-                      )}
+                      {showNotifications(numberOfUpcomingEvents)}
                     </Link>
                   </li>
                   <li>
@@ -185,22 +155,8 @@ export default function RootLayout({
             <div className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ffd890] to-[#f8f6ff] opacity-30"></div>
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <p className="text-sm leading-6 text-gray-900 md:hidden">
-            <Link
-                href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=B3F4DENU62RRN&ssrt=1693131246739"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="inline-block bi bi-piggy-bank-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M7.964 1.527c-2.977 0-5.571 1.704-6.32 4.125h-.55A1 1 0 0 0 .11 6.824l.254 1.46a1.5 1.5 0 0 0 1.478 1.243h.263c.3.513.688.978 1.145 1.382l-.729 2.477a.5.5 0 0 0 .48.641h2a.5.5 0 0 0 .471-.332l.482-1.351c.635.173 1.31.267 2.011.267.707 0 1.388-.095 2.028-.272l.543 1.372a.5.5 0 0 0 .465.316h2a.5.5 0 0 0 .478-.645l-.761-2.506C13.81 9.895 14.5 8.559 14.5 7.069c0-.145-.007-.29-.02-.431.261-.11.508-.266.705-.444.315.306.815.306.815-.417 0 .223-.5.223-.461-.026a.95.95 0 0 0 .09-.255.7.7 0 0 0-.202-.645.58.58 0 0 0-.707-.098.735.735 0 0 0-.375.562c-.024.243.082.48.32.654a2.112 2.112 0 0 1-.259.153c-.534-2.664-3.284-4.595-6.442-4.595Zm7.173 3.876a.565.565 0 0 1-.098.21.704.704 0 0 1-.044-.025c-.146-.09-.157-.175-.152-.223a.236.236 0 0 1 .117-.173c.049-.027.08-.021.113.012a.202.202 0 0 1 .064.199Zm-8.999-.65a.5.5 0 1 1-.276-.96A7.613 7.613 0 0 1 7.964 3.5c.763 0 1.497.11 2.18.315a.5.5 0 1 1-.287.958A6.602 6.602 0 0 0 7.964 4.5c-.64 0-1.255.09-1.826.254ZM5 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-              </svg>
-              </Link>
+            <div className="text-sm leading-6 text-gray-900 md:hidden">
+              <DonationAccountModal />
               <svg
                 viewBox="0 0 2 2"
                 className="mx-2 inline h-0.5 w-0.5 fill-current"
@@ -228,7 +184,7 @@ export default function RootLayout({
                   Paypal Spende
                 </span>
               </Link>
-            </p>
+            </div>
             <p className="text-sm leading-6 text-gray-900 hidden md:block">
               <strong className="font-semibold">Spendenkonto </strong>
               <svg
@@ -454,6 +410,7 @@ export default function RootLayout({
           </div>
         </footer>
       </body>
+      <Script src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js" />
     </html>
   );
 }

@@ -44,7 +44,7 @@ function NewsEntry(news: NewsItem, index: number) {
 }
 
 function GetImageOrVideo(news: NewsItem, isTop: boolean) {
-  let isYoutube = news["image"].indexOf("youtub") !== -1;
+  let isYoutube = news["image"].indexOf("youtube") !== -1;
   const className = isTop
     ? "object-cover w-full h-64 rounded sm:h-96 lg:col-span-7 dark:bg-gray-500"
     : "object-cover w-full rounded h-44 dark:bg-gray-500";
@@ -141,7 +141,7 @@ export default function Home() {
   let recent = filtered[0];
 
   return (
-      <div className="container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
+      <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
       <h2 className="mb-16 text-3xl font-bold text-center">
         Unsere{" "}
         <u className="text-primary dark:text-primary-400 no-underline">Neuigkeiten</u>
