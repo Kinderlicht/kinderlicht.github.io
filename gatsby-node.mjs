@@ -68,6 +68,7 @@ export async function createSchemaCustomization({ actions }) {
 	  type Frontmatter {
 		tags: [String!]
 		title: String!
+		short: String!
 		author: String!
 		date: Date!
 		featuredImage: ImageSharp
