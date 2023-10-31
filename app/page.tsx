@@ -10,7 +10,7 @@ function HistoryLink(
   size: number
 ) {
   return (
-    <Link href={link} className={`w-full xl:w-1/${size} p-4`}>
+    <Link href={link} className={`w-full md:w-1/${size} p-4`}>
       <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
         {visual.indexOf("youtube") > -1 ? (
           <iframe
