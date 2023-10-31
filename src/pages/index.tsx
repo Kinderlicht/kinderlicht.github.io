@@ -1,193 +1,252 @@
-import * as React from "react"
-import type { HeadFC, PageProps } from "gatsby"
+import * as React from "react";
+import { HeadFC, PageProps, Link } from "gatsby";
+import Layout from "../components/layout";
+import { GatsbyImage, StaticImage, getImage } from "gatsby-plugin-image";
 
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-const headingAccentStyles = {
-  color: "#663399",
-}
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0,
-}
-const doclistStyles = {
-  paddingLeft: 0,
-}
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30,
-}
-
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
-}
-
-const docLinkStyle = {
-  ...linkStyle,
-  listStyleType: "none",
-  display: `inline-block`,
-  marginBottom: 24,
-  marginRight: 12,
-}
-
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25,
-}
-
-const docLinks = [
-  {
-    text: "TypeScript Documentation",
-    url: "https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/",
-    color: "#8954A8",
-  },
-  {
-    text: "GraphQL Typegen Documentation",
-    url: "https://www.gatsbyjs.com/docs/how-to/local-development/graphql-typegen/",
-    color: "#8954A8",
-  }
-]
-
-const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
-  fontSize: 11,
-  fontWeight: "bold",
-  letterSpacing: 1,
-  borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative" as "relative",
-  top: -2,
-  marginLeft: 10,
-  lineHeight: 1,
-}
-
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/getting-started/",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
-  },
-  {
-    text: "How to Guides",
-    url: "https://www.gatsbyjs.com/docs/how-to/",
-    description:
-      "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-    color: "#1099A8",
-  },
-  {
-    text: "Reference Guides",
-    url: "https://www.gatsbyjs.com/docs/reference/",
-    description:
-      "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-    color: "#BC027F",
-  },
-  {
-    text: "Conceptual Guides",
-    url: "https://www.gatsbyjs.com/docs/conceptual/",
-    description:
-      "Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.",
-    color: "#0D96F2",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    badge: true,
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
-  },
-]
-
-const IndexPage: React.FC<PageProps> = () => {
+// component for links
+function HistoryLink({
+  title,
+  short,
+  description,
+  link,
+  visual,
+  size,
+}: {
+  title: string;
+  short: string;
+  description: string;
+  link: string;
+  visual: string | React.ReactNode;
+  size: number;
+}) {
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>
-        Congratulations
-        <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
-      </h1>
-      <p style={paragraphStyles}>
-        Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this page
-        update in real-time. 😎
-      </p>
-      <ul style={doclistStyles}>
-        {docLinks.map(doc => (
-          <li key={doc.url} style={docLinkStyle}>
-            <a
-              style={linkStyle}
-              href={`${doc.url}?utm_source=starter&utm_medium=ts-docs&utm_campaign=minimal-starter-ts`}
-            >
-              {doc.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <ul style={listStyles}>
-        {links.map(link => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
-              <a
-                style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter-ts`}
-              >
-                {link.text}
-              </a>
-              {link.badge && (
-                <span style={badgeStyle} aria-label="New Badge">
-                  NEW!
-                </span>
-              )}
-              <p style={descriptionStyle}>{link.description}</p>
-            </span>
-          </li>
-        ))}
-      </ul>
-      <img
-        alt="Gatsby G Logo"
-        src="data:image/svg+xml,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a10 10 0 110 20 10 10 0 010-20zm0 2c-3.73 0-6.86 2.55-7.75 6L14 19.75c3.45-.89 6-4.02 6-7.75h-5.25v1.5h3.45a6.37 6.37 0 01-3.89 4.44L6.06 9.69C7 7.31 9.3 5.63 12 5.63c2.13 0 4 1.04 5.18 2.65l1.23-1.06A7.959 7.959 0 0012 4zm-8 8a8 8 0 008 8c.04 0 .09 0-8-8z' fill='%23639'/%3E%3C/svg%3E"
-      />
-    </main>
-  )
+    <Link to={link} className={`w-full md:w-1/${size} p-4`}>
+      <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
+        {typeof visual === "string" ? (
+          <iframe
+            className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+            src={visual}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={short}
+          />
+        ) : (
+          <>{visual}</>
+          //
+          // />
+        )}
+        <h3 className="tracking-widest text-primary text-xs font-medium title-font">
+          {short}
+        </h3>
+        <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
+          {title}
+        </h2>
+        <p className="leading-relaxed text-base">{description}</p>
+      </div>
+    </Link>
+  );
 }
 
-export default IndexPage
+export default function IndexPage() {
+  return (
+    <Layout>
+      <div>
+        <section className="text-gray-600 body-font">
+          <div className="container px-5 py-24 mx-auto max-w-7x1">
+            <div className="flex flex-wrap w-full mb-4 p-4">
+              <div className="w-full mb-6 lg:mb-0">
+                <h2 className="text-3xl font-bold">
+                  Kinderlicht Wallersdorf{" "}
+                  <u className="text-primary dark:text-primary-400 no-underline">
+                    e. V.
+                  </u>
+                </h2>
+                <div className="h-1 w-20 bg-primary rounded"></div>
+              </div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              <HistoryLink
+                title="Ich suche Hilfe!"
+                description="Der Kinderlicht Wallersdorf e.V. konnte bereits vielen Familien erfolgreich helfen."
+                short="Melde dich bei uns, wir helfen gerne!"
+                link="/anfrage"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src={"../images/home/help.png"}
+                    alt={"Melde dich bei uns, wir helfen gerne!"}
+                  />
+                }
+                size={3}
+              />
+              {/* {HistoryLink(
+                "Ich möchte helfen!",
+                "Spenden oder Beitreten",
+                "Für Menschen, die sich engagieren oder uns einfach finanziell unterstützen wollen!",
+                "/beitreten",
+                "../images/home/donate.png",
+                3
+              )}
+              {HistoryLink(
+                "Ankündigungen und Neuigkeiten",
+                "Unsere News",
+                "Hier kannst du jeden unserer Schritte verfolgen!",
+                "/neues",
+                "../images/home/news.png",
+                3
+              )} */}
+            </div>
+          </div>
+        </section>
+        <section className="text-gray-600 body-font">
+          <div className="container px-5 py-24 mx-auto max-w-7x1">
+            <div className="flex flex-wrap w-full mb-4 p-4">
+              <div className="w-full mb-6 lg:mb-0">
+                <h2 className="text-3xl font-bold">
+                  Unsere{" "}
+                  <u className="text-primary dark:text-primary-400 no-underline">
+                    Geschichte
+                  </u>
+                </h2>
+                <div className="h-1 w-20 bg-primary rounded"></div>
+              </div>
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2018</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              {/* {HistoryLink(
+                "Die Anfänge",
+                "Wie alles begann",
+                "Schon vor der Grüdung waren viele Mitglieder beim Lichterhaus Wallersdorf aktiv. Dabei wurden Spenden für die Krebshilfe gesammelt.",
+                "/neues/wie-alles-begann",
+                "../images/home/start.jpg",
+                2
+              )}
+              {HistoryLink(
+                "Der Kinderlicht Wallersdorf e.V.",
+                "Die Grüdung",
+                "Sieben engagierte Mitglieder gründen den Verein im Oktober 2018.",
+                "/neues/wie-alles-begann",
+                "../images/home/founding.jpg",
+                2
+              )} */}
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2019</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              {/* {HistoryLink(
+                "Florian Pronold übernimmt die Schirmherrschaft",
+                "Schirmherrschaft",
+                "Schnell war auch ein prominenter Schirmherr aus dem Bundestag gefunden: Florian Pronold.",
+                "/neues/schirmherrschaft",
+                "../images/home/umbrella.jpg",
+                3
+              )}
+              {HistoryLink(
+                "Rennen auf dem Nürburgring",
+                "Gemeinsam ans Ziel",
+                "Innerhalb eines Jahres konnten wir mehreren betroffenen Familien gemeinsam mit der VKKK ein Wochenende auf dem Nürburgring ermöglichen.",
+                "https://www.youtube.com/embed/FjgCtdiizUY?si=fIZhSdl5d-02NIQv&amp;controls=0",
+                "https://www.youtube.com/embed/FjgCtdiizUY?si=fIZhSdl5d-02NIQv&amp;controls=0",
+                3
+              )}
+              {HistoryLink(
+                "Lasershow durch Crowdfunding",
+                "Lasershow",
+                "Wenig später gab es schon das nächste - im wahrsten Sinne des Wortes - Highlight: Durch Crowdfunding konnten wir eine umweltschonende Lasershow organisieren.",
+                "/neues/lasershow-premiere-in-wallersdorf",
+                "../images/home/fireworks.jpg",
+                3
+              )} */}
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2020</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              {/* {HistoryLink(
+                "Konzert der Filmmusik",
+                "Unterhaltung",
+                "Auch kulturell kann der Kinderlicht Wallersdorf e.V. einiges bieten: noch vor der Pandemie organisiert der Verein ein Konzert der Filmmusik mit 80 MusikerInnen.",
+                "/neues/eine-musikalische-reise-durch-die-welt-der-filmmusik",
+                "../images/home/music.jpg",
+                2
+              )}
+              {HistoryLink(
+                "Spenden an zwei Familien",
+                "Hohe Spenden",
+                "Der Kinderlicht Wallersdorf. e.V. spendet in diesem Jahr insgesamt 4000€ an zwei Familien. Unter anderem wird ein Auto mitfinanziert.",
+                "/neues/einen-beitrag-zum-auto-geleistet",
+                "../images/home/car.jpg",
+                2
+              )} */}
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2021</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              {/* {HistoryLink(
+                "Kinderlicht in Krisenzeiten",
+                "Corona Krise",
+                "Auch während der Kirsenzeiten konnten wir einige Spenden sammeln und so weiterhelfen.",
+                "/neues/masken-fuer-ein-kinderlaecheln",
+                "../images/home/corona.jpg",
+                3
+              )}
+              {HistoryLink(
+                "Ferienprogramm",
+                "3 Tage im Mittelalter",
+                "In unserem zweiten Ferienprogramm, nahmen wir die TeilnehmerInnen auf eine dreitägige Reise durch die Zeit ins Mittelalter mit.",
+                "https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0",
+                "https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0",
+                3
+              )}
+              {HistoryLink(
+                "24 Tage Livestreams",
+                "#Krippalkalender",
+                "Für eine großangelegte Spendenaktion haben wir an 24 Tagen in Folge eigens produzierte Inhlate gestreamt. Es konnten 3346€ gesammelt werden.",
+                "https://www.youtube.com/embed/bGR75Cy2BrU?si=CN-bjRy-gWQdhQ9Y&amp;controls=0",
+                "https://www.youtube.com/embed/bGR75Cy2BrU?si=CN-bjRy-gWQdhQ9Y&amp;controls=0",
+                3
+              )} */}
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2022</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              {/* {HistoryLink(
+                "Mehr Spenden und Renovierungen",
+                "Anpacken!",
+                "Auch in 2022 konnten wir viele Spenden verteilen und haben neben einer Wohnungsrenovierung auch ein Hochbeet für einen Kindergarten gebaut.",
+                "/neues/ab-ins-beet",
+                "../images/home/hochbeet.jpg",
+                2
+              )}
+              {HistoryLink(
+                "Die vier Jahreszeiten",
+                "Kinofilm",
+                "Auch unsere FilmemacherInnen haben nicht geschlafen und einen Kinofilm produziert. Kann der Weihnachtswichtel die &quot;4 Jahreszeiten&quot; von der bösen Hexe befreien?",
+                "https://www.youtube.com/embed/ZRj34XeuHCY?si=-6323dPZhhbgEPjS&amp;controls=0",
+                "https://www.youtube.com/embed/ZRj34XeuHCY?si=-6323dPZhhbgEPjS&amp;controls=0",
+                2
+              )} */}
+            </div>
+          </div>
+        </section>
+      </div>
+    </Layout>
+  );
+}
 
-export const Head: HeadFC = () => <title>Home Page</title>
+export const Head: HeadFC = () => <title>Home Page</title>;
