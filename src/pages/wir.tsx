@@ -1,40 +1,45 @@
-import { sponsors } from "../content/wir/sponsors";
+import { Sponsor } from "../content/wir/sponsors";
 import { BoardMember, board_members } from "../content/wir/board";
 import React from "react";
-import { Link } from "gatsby";
+import { Link, graphql } from "gatsby";
 import Layout from "../components/layout";
+import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
 
-function SponsorList() {
+function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-3">
-      {sponsors.map((sponsor, index) => (
-        <Link key={index} to={sponsor.link} className="mb-6 lg:mb-0">
-          <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
-            <div className="p-6">
-              <div className="flex flex-wrap items-center">
-                <div className="flex-basis shrink-0 grow-0 px-3 w-5/12">
-                  <img
-                    src={sponsor.image}
-                    alt={sponsor.name}
-                    className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
-                  />
-                </div>
-                <div className="flex-basis shrink-0 grow-0 px-3 w-7/12">
-                  <h5 className="mb-4 font-bold">{sponsor.name}</h5>
-                  {sponsor.location}
-                </div>
+    <div>
+      <a href={sponsor.link} className="mb-6 lg:mb-0">
+        <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
+          <div className="p-6">
+            <div className="flex flex-wrap items-center">
+              <div className="flex-basis shrink-0 grow-0 px-3 w-5/12">
+                {sponsor.image && <GatsbyImage
+                  className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
+                  image={sponsor.image.childImageSharp.gatsbyImageData}
+                  alt={sponsor.name}
+                  objectFit="contain"
+                />}
+                {sponsor.externalImage && <img
+                  src={sponsor.externalImage}
+                  alt={sponsor.name}
+                  className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
+                />}
+              </div>
+              <div className="flex-basis shrink-0 grow-0 px-3 w-7/12">
+                <h5 className="mb-4 font-bold">{sponsor.name}</h5>
+                {sponsor.location}
               </div>
             </div>
           </div>
-        </Link>
-      ))}
+        </div>
+      </a>
     </div>
   );
 }
 
-function BoardMemberCard(member: BoardMember, key: number) {
+function BoardMemberCard({ member }: { member: BoardMember }) {
   return (
-    <div key={key} className="mb-24 md:mb-0">
+    <div className="mb-24 md:mb-0">
       <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full  dark:bg-neutral-700">
         <div className="flex justify-center">
           <div className="flex justify-center -mt-[75px]">
@@ -74,37 +79,56 @@ function BoardMemberCard(member: BoardMember, key: number) {
   );
 }
 
-export default function Home() {
+export default function Home({ data: { sponsors } }: { data: { sponsors: { nodes: Sponsor[] } } }) {
   return (
     <Layout>
-    <div className="p-4 container max-w-8xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
-      <section className="mb-32 text-center">
-        <h2 className="mb-32 text-3xl font-bold">
-          Unsere{" "}
-          <u className="text-primary dark:text-primary-400 no-underline">
-            Vorstandschaft
-          </u>
-        </h2>
+      <div className="p-4 container max-w-8xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
+        <section className="mb-32 text-center">
+          <h2 className="mb-32 text-3xl font-bold">
+            Unsere{" "}
+            <span className="text-primary dark:text-primary-400 no-underline">
+              Vorstandschaft
+            </span>
+          </h2>
 
-        <div className="grid md:grid-rows-3 md:grid-cols-2 xl:grid-rows-2 xl:grid-cols-3 gap-y-24 gap-x-8">
-          {board_members.map((member, index) => BoardMemberCard(member, index))}
+          <div className="grid md:grid-rows-3 md:grid-cols-2 xl:grid-rows-2 xl:grid-cols-3 gap-y-24 gap-x-8">
+            {board_members.map((member, index) => <BoardMemberCard member={member} key={index} />)}
+          </div>
+        </section>
+
+        <div className="container my-24 mx-auto md:px-6">
+          <h2 className="mb-2 text-3xl font-bold text-center">
+            Unsere{" "}
+            <span className="text-primary dark:text-primary-400 no-underline">
+              Unterstützer
+            </span>
+          </h2>
+          <p className="mb-16 text-center">
+            Die Sortierung der Unterstützer erfolgte rein zufällig.
+          </p>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            {sponsors.nodes.map((sponsor, index) => <SponsorCard sponsor={sponsor} key={index} />)}
+          </div>
         </div>
-      </section>
-
-      <div className="container my-24 mx-auto md:px-6">
-        <h2 className="mb-2 text-3xl font-bold text-center">
-          Unsere{" "}
-          <u className="text-primary dark:text-primary-400 no-underline">
-            Unterstützer
-          </u>
-        </h2>
-        <p className="mb-16 text-center">
-          Die Sortierung der Unterstützer erfolgte rein zufällig.
-        </p>
-
-        <SponsorList />
       </div>
-    </div>
     </Layout>
   );
 }
+
+export const indexQuery = graphql`
+query SponsorQuery {
+  sponsors: allSponsor {
+    nodes {
+      name
+      location
+      externalImage
+      image {
+        childImageSharp {
+          gatsbyImageData(placeholder: BLURRED, formats: [AUTO, WEBP], layout: FULL_WIDTH)
+        }
+      }
+    }
+  }
+}
+`;

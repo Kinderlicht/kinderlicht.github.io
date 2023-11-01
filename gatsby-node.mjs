@@ -3,6 +3,7 @@ import _ from "lodash";
 import { createFilePath } from "gatsby-source-filesystem";
 import { reporter } from "gatsby-cli/lib/reporter/reporter.js";
 import authorsData from './src/content/authors.json' assert { type: 'json' };
+import sponsorsData from './src/content/sponsors.json' assert { type: 'json' };
 
 
 export async function onCreateNode({ node, getNode, actions }) {
@@ -28,18 +29,24 @@ export const sourceNodes = async ({ actions, getNodesByType, createNodeId, creat
     }
 
     type Frontmatter {
-      author: AuthorJson @link(from: "author", by: "id")
+      author: Author @link(from: "author", by: "id")
     }
 
-    type AuthorJson implements Node {
+    type Author implements Node {
 		id: String!
 		name: String!
 		description: String!
 		image: File @link(by: "relativePath")
     }
-  `);
 
-	const imageNodes = getNodesByType('File');
+	type Sponsor implements Node {
+		name: String!
+		location: String!
+		image: File @link(by: "relativePath")
+		externalImage: String
+		link: String!
+	}
+  `);
 
 	Object.keys(authorsData).forEach(authorId => {
 		const author = authorsData[authorId];
@@ -58,6 +65,20 @@ export const sourceNodes = async ({ actions, getNodesByType, createNodeId, creat
 		};
 
 		createNode(node);
+	});
+
+	sponsorsData.forEach((sponsor, index) => {
+		const nodeId = createNodeId(`Sponsor-${index}`);
+		createNode({
+			...sponsor,
+			id: nodeId,
+			parent: null,
+			children: [],
+			internal: {
+				type: 'Sponsor',
+				contentDigest: createContentDigest(sponsor),
+			},
+		});
 	});
 };
 
