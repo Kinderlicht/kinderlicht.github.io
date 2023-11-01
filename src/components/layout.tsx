@@ -1,10 +1,9 @@
 import React from "react"
-import { Link, Script } from "gatsby"
+import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image";
 import DonationAccountModal from "./modals";
+import { numberOfUpcomingEvents } from "../content/events/events";
 // import { Helmet } from "react-helmet";
-
-// const inter = Inter({ subsets: ["latin"] });
 
 function showNotifications(notifications: number) {
   return (
@@ -29,7 +28,6 @@ export default function Layout({
   children: React.ReactNode;
 }) {
   return (<>
-  <Script src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js" />
         <header>
           <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
@@ -112,7 +110,7 @@ export default function Layout({
                       className="relative inline-flex items-center py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                     >
                       Neues
-                      {/* {showNotifications(latestArticles)} */}
+                      {showNotifications(0)}
                     </Link>
                   </li>
                   <li>
@@ -121,7 +119,7 @@ export default function Layout({
                       className="relative inline-flex py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                     >
                       Events
-                      {/* {showNotifications(numberOfUpcomingEvents)} */}
+                      {showNotifications(numberOfUpcomingEvents)}
                     </Link>
                   </li>
                   <li>
@@ -151,7 +149,7 @@ export default function Layout({
             <div className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ffd890] to-[#f8f6ff] opacity-30"></div>
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <div className="text-sm leading-6 text-gray-900 md:hidden">
+            <div className="text-sm leading-6 text-gray-900 lg:hidden">
               <DonationAccountModal />
               <svg
                 viewBox="0 0 2 2"
@@ -181,7 +179,7 @@ export default function Layout({
                 </span>
               </Link>
             </div>
-            <p className="text-sm leading-6 text-gray-900 hidden md:block">
+            <p className="text-sm leading-6 text-gray-900 hidden lg:block">
               <strong className="font-semibold">Spendenkonto </strong>
               <svg
                 viewBox="0 0 2 2"

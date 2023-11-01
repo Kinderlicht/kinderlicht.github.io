@@ -19,8 +19,9 @@ function HistoryLink({
   visual: string | React.ReactNode;
   size: number;
 }) {
+  const width = size === 1 ? "w-full" : size === 2 ? "w-1/2" : "w-1/3";
   return (
-    <Link to={link} className={`w-full md:w-1/${size.toString()} p-4`}>
+    <Link to={link} className={`w-full md:${width} p-4`}>
       <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
         {typeof visual === "string" ? (
           <iframe
