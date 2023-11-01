@@ -1,11 +1,51 @@
-import { Link } from "gatsby";
 import React from "react";
-import { useForm, Resolver } from "react-hook-form";
+import { useForm, Resolver, SubmitHandler, FieldError } from "react-hook-form";
+
+function ErrorMessage({field, error}: {field: FieldError | undefined, error: string}) {
+  return <>{field && <div className="text-sm text-red-500">{error}</div>}</>;
+}
+
+interface Member {
+  firstName: string;
+  lastName: string;
+  birthday: Date;
+  email: string;
+  street: string;
+  postalCode: string;
+  city: string;
+  state: string;
+  country: string;
+  iban: string;
+  bic: string;
+  join: Date;
+  donation: number;
+  confirmDonationDocument: boolean;
+  confirmPayment: boolean;
+  contactEmail: boolean;
+  contactPost: boolean;
+  confirmDataProtection: boolean;
+}
+
+function calculateAge(birthDate: Date) {
+    const today = new Date();
+    let age_now = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age_now--;
+    }
+    return age_now;
+  }
 
 export default function ContactForm() {
   let [sum, setSum] = React.useState(24);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<Member>({mode: "onChange"});
+  const onSubmit: SubmitHandler<Member> = (data) => console.log(data);
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -17,7 +57,7 @@ export default function ContactForm() {
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-2 col-span-2">
+            <div className="col-span-2">
               <label
                 htmlFor="gender"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -27,8 +67,7 @@ export default function ContactForm() {
               <div className="mt-2">
                 <select
                   id="gender"
-                  name="gender"
-                  autoComplete="gender"
+                  autoComplete="honorific-prefix"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>Frau</option>
@@ -38,7 +77,7 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="sm:col-span-2">
+            <div className="col-span-2">
               <label
                 htmlFor="first-name"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -47,16 +86,17 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                  {...register("firstName", { required: true })}
                   type="text"
-                  name="first-name"
                   id="first-name"
                   autoComplete="given-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.firstName} error="Vorname wird benötigt"></ErrorMessage>
               </div>
             </div>
 
-            <div className="sm:col-span-2">
+            <div className="col-span-2">
               <label
                 htmlFor="last-name"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -65,16 +105,17 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                  {...register("lastName", { required: true })}
                   type="text"
-                  name="last-name"
                   id="last-name"
                   autoComplete="family-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.lastName} error="Nachname wird benötigt"></ErrorMessage>
               </div>
             </div>
 
-            <div className="sm:col-span-3">
+            <div className="col-span-3">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -83,16 +124,17 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                  {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
                   id="email"
-                  name="email"
                   type="email"
                   autoComplete="email"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.email} error={errors.email?.ref?.value ? (errors.email.ref.value.toString() + " ist keine gültige E-Mail") : "E-Mail wird benötigt"}></ErrorMessage>
               </div>
             </div>
 
-            <div className="sm:col-span-3">
+            <div className="col-span-3">
               <label
                 htmlFor="birth"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -102,10 +144,14 @@ export default function ContactForm() {
               <div className="mt-2">
                 <input
                   id="birth"
-                  name="birth"
                   type="date"
+                  {...register("birthday", { required: true, valueAsDate: true, validate: {
+                    is_eighteen: v => calculateAge(v) >= 18 || 'Du musst mindestens 18 Jahre alt sein.',
+                    is_too_old: v => calculateAge(v) <= 150 || 'Ich denke nicht, dass du schon 150 Jahre alt bist.',
+                  } })}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.birthday} error={errors.birthday?.message? errors.birthday?.message : "Bitte gib dein Geburtsdatum an."}></ErrorMessage>
               </div>
             </div>
 
@@ -118,16 +164,17 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                {...register("street", { required: true })}
                   type="text"
-                  name="street-address"
                   id="street-address"
                   autoComplete="street-address"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.street} error="Adresse wird benötigt"></ErrorMessage>
               </div>
             </div>
 
-            <div className="sm:col-span-3 col-span-3">
+            <div className="col-span-3">
               <label
                 htmlFor="postal-code"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -136,16 +183,17 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                {...register("postalCode", { required: true })}
                   type="text"
-                  name="postal-code"
                   id="postal-code"
                   autoComplete="postal-code"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.postalCode} error="Postleitzahl / ZIP wird benötigt"></ErrorMessage>
               </div>
             </div>
 
-            <div className="sm:col-span-3 col-span-3">
+            <div className="col-span-3">
               <label
                 htmlFor="city"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -154,12 +202,13 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                {...register("city", { required: true })}
                   type="text"
-                  name="city"
                   id="city"
                   autoComplete="address-level2"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.city} error="Ort wird benötigt"></ErrorMessage>
               </div>
             </div>
 
@@ -172,13 +221,13 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                {...register("state", { required: true })}
                   type="text"
-                  name="region"
                   id="region"
-                  value={"Bayern"}
                   autoComplete="address-level1"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.state} error="Bundesland / Kanton wird benötigt"></ErrorMessage>
               </div>
             </div>
 
@@ -191,8 +240,8 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <select
+                {...register("country", { required: true })}
                   id="country"
-                  name="country"
                   autoComplete="country-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
@@ -200,6 +249,7 @@ export default function ContactForm() {
                   <option>Österreich</option>
                   <option>Schweiz</option>
                 </select>
+                <ErrorMessage field={errors.country} error="Land wird benötigt"></ErrorMessage>
               </div>
             </div>
           </div>
@@ -224,12 +274,12 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                 {...register("iban", { required: true })}
                   type="text"
-                  name="iban"
                   id="iban"
-                  autoComplete="iban-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.iban} error="IBAN wird benötigt"></ErrorMessage>
               </div>
             </div>
 
@@ -242,12 +292,12 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                 {...register("bic", { required: true })}
                   type="text"
-                  name="bic"
                   id="bic"
-                  autoComplete="bic-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.bic} error="BIC wird benötigt"></ErrorMessage>
               </div>
             </div>
 
@@ -259,8 +309,8 @@ export default function ContactForm() {
                 <div className="relative flex gap-x-3">
                   <div className="flex h-6 items-center">
                     <input
+                      {...register("confirmPayment", { required: true })}
                       id="bank-yes"
-                      name="bank-yes"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
@@ -270,7 +320,8 @@ export default function ContactForm() {
                       htmlFor="bank-yes"
                       className="font-medium text-gray-900"
                     >
-                      Ermächtigung erteilen.
+                      Ermächtigung erteilen. 
+            <ErrorMessage field={errors.confirmPayment} error="Die Einzugsermächtigung muss erteilt werden."></ErrorMessage>
                     </label>
                     <p className="text-gray-500">
                       Ich ermächtige hiermit den Kinderlicht Wallerdrof e.V.,
@@ -298,6 +349,7 @@ export default function ContactForm() {
             Spenden, Mitgliedsbeiträge und sonstige Zuwendungen an den Verein.
             Wir erheben einen Mitgliedsbeitrag von 24 € pro Jahr. Die
             Mitgliedschaft ist jederzeit kündbar.
+            Du hast angegeben, dass du inklusive Mitgliedsbeitrag jährlich {sum} € spenden möchtest.
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -310,12 +362,15 @@ export default function ContactForm() {
               </label>
               <div className="mt-2">
                 <input
+                 {...register("join", { required: true, valueAsDate: true, validate: {
+                    is_past: v => v >= new Date() || 'Das Datum kann nicht in der Vergangenheit liegen.',
+                  } })}
                   id="join"
-                  name="join"
                   type="date"
                   defaultValue={new Date().toISOString().split("T")[0]}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <ErrorMessage field={errors.join} error={errors.join?.message? errors.join.message : "Das Eintrittdatum muss angegeben sein."}></ErrorMessage>
               </div>
             </div>
 
@@ -324,31 +379,28 @@ export default function ContactForm() {
                 htmlFor="donation"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Frewillige Spende
+                Freiwillige Spende
               </label>
               <div className="mt-2">
                 <input
+                  {...register("donation", {required: false, min: 0, max: 1000000})}
                   id="donation"
-                  name="donation"
                   type="number"
                   defaultValue={0}
-                  onChange={(e) => setSum(24 + parseInt(e.target.value))}
+                  min={0}
+                  max={10000000}
+                  onChange={(e) => isNaN(parseInt(e.target.value)) ? setSum(24) : setSum(24 + parseInt(e.target.value))}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
             <fieldset className="col-span-full">
-              <legend className="text-sm font-semibold leading-6 text-gray-900">
-                Möchstest du eine Spendenbescheinigung über den Mitgliedsbeitrag
-                und die frewillige Spende zum Ende jedes Geschäftsjahres
-                erhalten?
-              </legend>
-              <div className="mt-6 space-y-6">
+              <div className="space-y-6">
                 <div className="relative flex gap-x-3">
                   <div className="flex h-6 items-center">
                     <input
+                    {...register("confirmDonationDocument", {required: false})}
                       id="confirmation-yes"
-                      name="confirmation-yes"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
@@ -358,35 +410,9 @@ export default function ContactForm() {
                       htmlFor="confirmation-yes"
                       className="font-medium text-gray-900"
                     >
-                      Ja
-                    </label>
-                    <p className="text-gray-500">
                       Ich möchte eine Spendenbescheinigung über {sum} € zum
                       Endes des Geschäftsjahres erhalten.
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="confirmation-no"
-                      name="confirmation-no"
-                      type="checkbox"
-                      defaultChecked={true}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label
-                      htmlFor="confirmation-no"
-                      className="font-medium text-gray-900"
-                    >
-                      Nein
                     </label>
-                    <p className="text-gray-500">
-                      Ich möchte keine Spendenbescheinigung über {sum} € zum
-                      Endes des Geschäftsjahres erhalten.
-                    </p>
                   </div>
                 </div>
               </div>
@@ -400,6 +426,7 @@ export default function ContactForm() {
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             Lasse dich über unsere bevorstehenden Aktionen informieren.
+            Falls du nichts auswählst, kontaktieren wir dich ausschließlich per Post und nur dann, wenn es von Amtes wegen erforderlich ist.
           </p>
           <div className="mt-10 space-y-10">
             <fieldset>
@@ -410,67 +437,42 @@ export default function ContactForm() {
                 <div className="relative flex gap-x-3">
                   <div className="flex h-6 items-center">
                     <input
-                      id="comments"
-                      name="comments"
+                    {...register("contactEmail", { required: false })}
+                      id="contact-email"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
                   </div>
                   <div className="text-sm leading-6">
                     <label
-                      htmlFor="comments"
+                      htmlFor="contact-email"
                       className="font-medium text-gray-900"
                     >
                       E-Mail
                     </label>
                     <p className="text-gray-500">
-                      Wir schicken dir einen Newsletter, wann immer es etwas{" "}
-                      <strong>Wichtiges</strong> zu berichten gibt.
+                      Wir schicken dir wichtige Nachrichten per E-Mail.
                     </p>
                   </div>
                 </div>
                 <div className="relative flex gap-x-3">
                   <div className="flex h-6 items-center">
                     <input
-                      id="candidates"
-                      name="candidates"
+                    {...register("contactPost", { required: false })}
+                      id="contact-post"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
                   </div>
                   <div className="text-sm leading-6">
                     <label
-                      htmlFor="candidates"
+                      htmlFor="contact-post"
                       className="font-medium text-gray-900"
                     >
                       Post
                     </label>
                     <p className="text-gray-500">
                       Wir schicken dir wichtige Nachrichten per Post.
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="offers"
-                      name="offers"
-                      type="checkbox"
-                      defaultChecked={true}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label
-                      htmlFor="offers"
-                      className="font-medium text-gray-900"
-                    >
-                      Keine Kontaktaufname
-                    </label>
-                    <p className="text-gray-500">
-                      Es ist keine Kontaktaufnahme gewünscht. Für wichtige
-                      bürokratische/organisatorische Angelegenheiten wird der
-                      postalische Weg gewählt.
                     </p>
                   </div>
                 </div>
@@ -483,19 +485,24 @@ export default function ContactForm() {
             Datenschutz
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
-          Die angegebenen Daten werden unter Berücksichtigung des BundesDatenschutz-Gesetzes (BDSG) erhoben und ausschließlich für Zwecke der Mitgliederverwaltung gespeichert und genutzt.
-          Die Bestimmungen findest du <a className="text-indigo-600" href="/rechtliches" target="_blank">hier</a>.
+            Die angegebenen Daten werden unter Berücksichtigung des
+            BundesDatenschutz-Gesetzes (BDSG) erhoben und ausschließlich für
+            Zwecke der Mitgliederverwaltung gespeichert und genutzt. Die
+            Bestimmungen findest du{" "}
+            <a className="text-indigo-600" href="/rechtliches" target="_blank">
+              hier
+            </a>
+            .
           </p>
 
           <div className="mt-2 grid grid-cols-1 gap-x-6 sm:grid-cols-6">
-
             <fieldset className="col-span-full">
               <div className="mt-6 space-y-6">
                 <div className="relative flex gap-x-3">
                   <div className="flex h-6 items-center">
                     <input
+                    {...register("confirmDataProtection", { required: true })}
                       id="data-yes"
-                      name="data-yes"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     />
@@ -505,10 +512,16 @@ export default function ContactForm() {
                       htmlFor="data-yes"
                       className="font-medium text-gray-900"
                     >
-                      Ich habe die Datenschutzbestimmungen gelesen, verstanden und akzeptiert.
+                      Ich habe die Datenschutzbestimmungen gelesen, verstanden
+                      und akzeptiert.
                     </label>
+                    <ErrorMessage field={errors.confirmDataProtection} error="Du musst den Datenschutzbestimmungen zustimmen."></ErrorMessage>
                     <p className="text-gray-500">
-                    Du erklärst Dich damit einverstanden, dass Deine Daten zur Bearbeitung Deiner Anfrageverwendet werden. Weitere Informationen und Widerrufshinweise findest Du inunserer Datenschutzerklärung und in den Hinweisen zur Verarbeitung Deiner Daten.
+                      Du erklärst Dich damit einverstanden, dass Deine Daten zur
+                      Bearbeitung Deiner Anfrageverwendet werden. Weitere
+                      Informationen und Widerrufshinweise findest Du inunserer
+                      Datenschutzerklärung und in den Hinweisen zur Verarbeitung
+                      Deiner Daten.
                     </p>
                   </div>
                 </div>
@@ -517,8 +530,6 @@ export default function ContactForm() {
           </div>
         </div>
       </div>
-
-      
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
         <button
