@@ -53,7 +53,7 @@ export default function IndexPage() {
     <Layout>
       <div>
         <section className="text-gray-600 body-font">
-          <div className="container px-5 py-24 mx-auto max-w-7x1">
+          <div className="container px-5 mt-24 mx-auto max-w-7x1">
             <div className="flex flex-wrap w-full mb-4 p-4">
               <div className="w-full mb-6 lg:mb-0">
                 <h2 className="text-3xl font-bold">
