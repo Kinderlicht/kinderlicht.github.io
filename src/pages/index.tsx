@@ -58,9 +58,9 @@ export default function IndexPage() {
               <div className="w-full mb-6 lg:mb-0">
                 <h2 className="text-3xl font-bold">
                   Kinderlicht Wallersdorf{" "}
-                  <u className="text-primary dark:text-primary-400 no-underline">
+                  <span className="text-primary dark:text-primary-400 no-underline">
                     e. V.
-                  </u>
+                  </span>
                 </h2>
                 <div className="h-1 w-20 bg-primary rounded"></div>
               </div>
@@ -117,9 +117,9 @@ export default function IndexPage() {
               <div className="w-full mb-6 lg:mb-0">
                 <h2 className="text-3xl font-bold">
                   Unsere{" "}
-                  <u className="text-primary dark:text-primary-400 no-underline">
+                  <span className="text-primary dark:text-primary-400 no-underline">
                     Geschichte
-                  </u>
+                  </span>
                 </h2>
                 <div className="h-1 w-20 bg-primary rounded"></div>
               </div>

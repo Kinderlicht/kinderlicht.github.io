@@ -8,9 +8,9 @@ export default function Rechtliches() {
         <section className="bg-white dark:bg-gray-900">
           <h2 className="mb-2 text-3xl font-bold text-center">
             Unsere{" "}
-            <u className="text-primary dark:text-primary-400 no-underline">
+            <span className="text-primary dark:text-primary-400 no-underline">
               Datenschutzbestimmungen
-            </u>
+            </span>
           </h2>
 
           <h3 className="mb-2 text-2xl font-bold mt-8">
