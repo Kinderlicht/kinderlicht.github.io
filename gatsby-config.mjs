@@ -35,8 +35,6 @@ const config = {
         ],
       },
     },
-    "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -45,6 +43,16 @@ const config = {
       },
       __key: "images",
     },
+    "gatsby-plugin-sharp",
+    {
+			resolve: "gatsby-transformer-sharp",
+			options: {
+				defaults: {
+					stripMetadata: true,
+					breakpoints: [400, 750, 1080, 1366, 1920]
+				}
+			}
+		},
     {
       resolve: "gatsby-source-filesystem",
       options: {
