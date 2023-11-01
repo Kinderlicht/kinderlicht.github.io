@@ -1,4 +1,6 @@
-// import type { GatsbyConfig } from "gatsby";
+import remarkGfm from "remark-gfm";
+import rehypeAccessibleEmojis from "rehype-accessible-emojis";
+import remarkSmartypants from "remark-smartypants";
 
 const config = {
   trailingSlash: "always",
@@ -16,25 +18,33 @@ const config = {
     "gatsby-plugin-sitemap",
     `gatsby-remark-images`,
     {
-      resolve: "gatsby-plugin-mdx",
-      options: {
-        mdxOptions: {
-          // remarkPlugins: [remarkGfm, remarkSmartypants],
-        },
-        gatsbyRemarkPlugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 1200,
-              withWebp: true,
-              withAvif: true,
-              quality: 100,
-              showCaptions: true,
-            },
-          },
-        ],
-      },
-    },
+			resolve: "gatsby-plugin-mdx",
+			options: {
+				mdxOptions: {
+					remarkPlugins: [
+						remarkGfm,
+						remarkSmartypants,
+					],
+					rehypePlugins: [
+						rehypeAccessibleEmojis,
+						// rehypePrism,
+					]
+				},
+				gatsbyRemarkPlugins: [
+					{
+						resolve: `gatsby-remark-images`,
+						options: {
+							maxWidth: 1200,
+							wrapperStyle: () => "margin: 5 -40px",
+							withWebp: true,
+							withAvif: true,
+							quality: 100,
+							showCaptions: true
+						},
+					},
+				]
+			}
+		},
     {
       resolve: "gatsby-source-filesystem",
       options: {

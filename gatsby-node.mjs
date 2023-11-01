@@ -18,22 +18,43 @@ export async function onCreateNode({ node, getNode, actions }) {
 	}
 }
 
-// export async function createSchemaCustomization({ actions }) {
-// 	const { createTypes } = actions
-// 	const typeDefs = `
-// 	  type Mdx implements Node {
-// 		frontmatter: Frontmatter
-// 	  }
+export async function createPages({ graphql, actions }) {
+	const { createPage } = actions;
+	const result = await graphql(`
+      query {
+        allMdx(filter: {frontmatter: {draft: {ne: true}}}) {
+          edges {
+            node {
+				fields {
+                	slug
+				}
+				internal {
+					contentFilePath
+				}
+            }
+          }
+        }
+      }
+    `);
 
-// 	  type Frontmatter {
-// 		tags: [String!]
-// 		title: String!
-// 		short: String!
-// 		author: String!
-// 		date: Date!
-// 		featuredImage: ImageSharp
-// 		draft: Boolean
-// 	  }
-// 	`
-// 	createTypes(typeDefs)
-// }
+	if (result.errors) {
+		reporter.panicOnBuild(`Error while running GraphQL query.`)
+		return
+	}
+
+	createPosts(result.data.allMdx.edges, createPage);
+}
+
+function createPosts(posts, createPage) {
+	posts.forEach(({ node }) => {
+		let context = { slug: node.fields.slug }
+
+		const postTemplate = path.resolve(`./src/templates/blog-post.tsx`);
+
+		createPage({
+			path: node.fields.slug,
+			component: `${postTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
+			context: context
+		});
+	});
+}

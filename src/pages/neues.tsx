@@ -2,54 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import Layout from "../components/layout";
 import { Link, graphql } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
-
-type BlogPost = {
-  excerpt: string;
-  fields: {
-    slug: string;
-  };
-  body: string;
-  frontmatter: {
-    title: string;
-    author: string;
-    date: string;
-    short: string;
-    
-    featuredImage?: any;
-    youtube?: string;
-
-    tags: [string];
-    draft: boolean;
-  }
-}
-
-// function GetImageOrVideo(news: NewsItem, isTop: boolean) {
-//   let isYoutube = news["image"].indexOf("youtube") !== -1;
-//   const className = isTop
-//     ? "object-cover w-full h-64 rounded sm:h-96 lg:col-span-7 dark:bg-gray-500"
-//     : "object-cover w-full rounded h-44 dark:bg-gray-500";
-//   return (
-//     <>
-//       {isYoutube ? (
-//         <iframe
-//           className={className}
-//           src={news["image"]}
-//           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-//           allowFullScreen
-//           title={news["heading"]}
-//         />
-//       ) : (
-//         <img
-//           role="presentation"
-//           className={className}
-//           src={news["image"]}
-//           alt={news["heading"]}
-//         />
-//       )}
-//     </>
-//   );
-// }
-
+import type { BlogPost } from "../types/";
 
 const NewsEntry: React.FC<{ post: BlogPost}> = ({ post }) => {
   const className = "object-cover w-full rounded h-44 dark:bg-gray-500";
