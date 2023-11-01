@@ -331,6 +331,7 @@ export default function Layout({
                 </Link>{" "}
                 Alle Rechte vorbehalten.
               </span>
+              <p className="text-sm text-gray-500">Created with ❤️ by Matthias Kettl and <a href="https://fschoenberger.dev">Frederic Schönberger</a></p>
               <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
                 <Link
                   to="https://www.facebook.com/KinderlichtWallersdorf/"
