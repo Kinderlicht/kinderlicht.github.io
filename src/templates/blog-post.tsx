@@ -16,7 +16,7 @@ const HeroImage = ({ post, recommended: isRecommended }: { post: BlogPost, recom
 
     return (
         <>
-            {post.frontmatter.youtube !== null ? (
+            {post.frontmatter.youtube ? (
                 <iframe
                     className={className}
                     src={post.frontmatter.youtube}
