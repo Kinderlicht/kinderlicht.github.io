@@ -1018,7 +1018,7 @@ function SuccessPage({ slug }: { slug: string }) {
         "content-type": "application/json"
       },
       body: JSON.stringify({
-        formData: { name: completeName, erklaerung: message, wunsch: "" + slug, mail: email },
+        formData: { name: completeName, erklaerung: message, wunsch: slug, mail: email },
         confirmationMail: email
       }),
     })
