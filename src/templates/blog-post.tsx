@@ -16,7 +16,7 @@ const HeroImage = ({ post, recommended: isRecommended }: { post: BlogPost, recom
 
     return (
         <>
-            {post.frontmatter.youtube ? (
+            {post.frontmatter.youtube !== null ? (
                 <iframe
                     className={className}
                     src={post.frontmatter.youtube}
@@ -27,7 +27,7 @@ const HeroImage = ({ post, recommended: isRecommended }: { post: BlogPost, recom
             ) : (
                 <GatsbyImage
                     role="presentation"
-                    image={post.frontmatter.featuredImage.childImageSharp.gatsbyImageData}
+                    image={post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData}
                     alt={post.frontmatter.title}
                     className={className} />
             )}
