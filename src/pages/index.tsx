@@ -19,7 +19,7 @@ function HistoryLink({
   visual: string | React.ReactNode;
   size: number;
 }) {
-  const width = size === 1 ? "w-full" : size === 2 ? "w-1/2" : "w-1/3";
+  const width = size === 1 ? "w-full" : (size === 2 ? "w-1/2" : "w-1/3");
   return (
     <Link to={link} className={`w-full md:${width} p-4`}>
       <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
@@ -98,7 +98,7 @@ export default function IndexPage() {
                 title="Ankündigungen und Neuigkeiten"
                 description="Hier kannst du jeden unserer Schritte verfolgen!"
                 short="Unsere News"
-                link="/neues"
+                link=""
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -134,7 +134,7 @@ export default function IndexPage() {
                 title="Die Anfänge"
                 description="Schon vor der Gründung waren viele Mitglieder beim Lichterhaus Wallersdorf aktiv. Dabei wurden Spenden für die Krebshilfe gesammelt."
                 short="Wie alles begann"
-                link="/neues/wie-alles-begann"
+                link="/wie-alles-begann"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -148,7 +148,7 @@ export default function IndexPage() {
                 title="Der Kinderlicht Wallersdorf e.V."
                 description="Sieben engagierte Mitglieder gründen den Verein im Oktober 2018."
                 short="Die Gründung"
-                link="/neues/die-gruendung"
+                link="/die-gruendung"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -169,7 +169,7 @@ export default function IndexPage() {
                 title="Florian Pronold übernimmt die Schirmherrschaft"
                 description="Schnell war auch ein prominenter Schirmherr aus dem Bundestag gefunden: Florian Pronold."
                 short="Schirmherrschaft"
-                link="/neues/schirmherrschaft"
+                link="/schirmherrschaft"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -191,7 +191,7 @@ export default function IndexPage() {
                 title="Lasershow durch Crowdfunding"
                 description="Wenig später gab es schon das nächste - im wahrsten Sinne des Wortes - Highlight: Durch Crowdfunding konnten wir eine umweltschonende Lasershow organisieren."
                 short="Lasershow"
-                link="/neues/lasershow-premiere-in-wallersdorf"
+                link="/lasershow-premiere-in-wallersdorf"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -212,7 +212,7 @@ export default function IndexPage() {
                 title="Konzert der Filmmusik"
                 description="Auch kulturell kann der Kinderlicht Wallersdorf e.V. einiges bieten: noch vor der Pandemie organisiert der Verein ein Konzert der Filmmusik mit 80 MusikerInnen."
                 short="Unterhaltung"
-                link="/neues/eine-musikalische-reise-durch-die-welt-der-filmmusik"
+                link="/eine-musikalische-reise-durch-die-welt-der-filmmusik"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -226,7 +226,7 @@ export default function IndexPage() {
                 title="Spenden an zwei Familien"
                 description="Der Kinderlicht Wallersdorf. e.V. spendet in diesem Jahr insgesamt 4000€ an zwei Familien. Unter anderem wird ein Auto mitfinanziert."
                 short="Hohe Spenden"
-                link="/neues/einen-beitrag-zum-auto-geleistet"
+                link="/einen-beitrag-zum-auto-geleistet"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -247,7 +247,7 @@ export default function IndexPage() {
                 title="Kinderlicht in Krisenzeiten"
                 description="Auch während der Krisenzeiten konnten wir einige Spenden sammeln und so weiterhelfen."
                 short="Corona Krise"
-                link="/neues/masken-fuer-ein-kinderlaecheln"
+                link="/masken-fuer-ein-kinderlaecheln"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
@@ -284,7 +284,7 @@ export default function IndexPage() {
                 title="Mehr Spenden und Renovierungen"
                 description="Auch in 2022 konnten wir viele Spenden verteilen und haben neben einer Wohnungsrenovierung auch ein Hochbeet für einen Kindergarten gebaut."
                 short="Anpacken!"
-                link="/neues/ab-ins-beet"
+                link="/ab-ins-beet"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"

@@ -56,7 +56,7 @@ export const sourceNodes = async ({ actions, getNodesByType, createNodeId, creat
 			parent: null,
 			children: [],
 			internal: {
-				type: 'AuthorJson',
+				type: 'Author',
 				contentDigest: createContentDigest(author),
 			},
 			...author,
