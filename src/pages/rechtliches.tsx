@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "../components/layout";
+import { HeadFC } from "gatsby";
 
 export default function Rechtliches() {
   return (
@@ -518,3 +519,5 @@ export default function Rechtliches() {
     </Layout>
   );
 }
+
+export const Head: HeadFC = () => <title>Kinderlicht</title>;

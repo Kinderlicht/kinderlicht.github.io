@@ -5,10 +5,11 @@ module.exports = {
     `./src/pages/**/*.{js,jsx,ts,tsx}`,
     `./src/templates/**/*.{js,jsx,ts,tsx}`,
     `./src/components/**/*.{js,jsx,ts,tsx}`,
+    "./node_modules/flowbite-react/**/*.js",
   ],
   safelist: [
     'h-96',
-    'w-1/3',
+    'md:w-1/3',
     'w-1/2',
   ],
   plugins: [require("flowbite/plugin"), require('@tailwindcss/forms'), require('@tailwindcss/typography')],

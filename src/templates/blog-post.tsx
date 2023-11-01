@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql, HeadFC, Link } from 'gatsby';
 import { MDXProvider } from "@mdx-js/react"
 import { compileMDX } from "gatsby-plugin-mdx"
 // import mdxComponents from '../mdxComponents'
@@ -85,6 +85,8 @@ export default function Post({ data: { mdx: post }, pageContext, children }: { d
     </Layout>;
 }
 
+export const Head: HeadFC<any> = ({data}) => <><title>{data.mdx.frontmatter.title} - Kinderlicht</title></>;
+
 export const pageQuery = graphql`
   query BlogPostQuery($slug: String) {
     mdx(fields: { slug: {eq: $slug }}) {
@@ -100,7 +102,7 @@ export const pageQuery = graphql`
             description
             image {
                 childImageSharp {
-                    gatsbyImageData(placeholder: BLURRED, formats: [AUTO, WEBP], width: 64, height: 64)
+                    gatsbyImageData(placeholder: TRACED_SVG, formats: [AUTO, WEBP], width: 64, height: 64)
                   }
             }
         }

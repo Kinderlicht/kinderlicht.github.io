@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import Layout from "../components/layout";
-import { Link, graphql } from "gatsby";
+import { HeadFC, Link, graphql } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import type { BlogPost } from "../types/";
 
@@ -142,3 +142,5 @@ query IndexQuery {
   }
 }
 `;
+
+export const Head: HeadFC = () => <title>Kinderlicht</title>;

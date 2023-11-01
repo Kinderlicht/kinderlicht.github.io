@@ -1,7 +1,7 @@
 import { Sponsor } from "../content/wir/sponsors";
 import { BoardMember, board_members } from "../content/wir/board";
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { HeadFC, Link, graphql } from "gatsby";
 import Layout from "../components/layout";
 import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
 
@@ -132,3 +132,5 @@ query SponsorQuery {
   }
 }
 `;
+
+export const Head: HeadFC = () => <title>Kinderlicht</title>;

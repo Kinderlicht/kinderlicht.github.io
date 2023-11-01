@@ -51,7 +51,6 @@ function HistoryLink({
 export default function IndexPage() {
   return (
     <Layout>
-      <div className="w-1/3 hidden"></div>
       <div>
         <section className="text-gray-600 body-font">
           <div className="container px-5 mt-24 mx-auto max-w-7x1">
@@ -311,4 +310,4 @@ export default function IndexPage() {
   );
 }
 
-export const Head: HeadFC = () => <title>Home Page</title>;
+export const Head: HeadFC = () => <title>Kinderlicht</title>;
