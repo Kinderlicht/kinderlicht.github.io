@@ -1,6 +1,7 @@
 import React from "react"
-import { graphql, Link, useStaticQuery } from "gatsby"
+import { Link, Script } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image";
+import DonationAccountModal from "./modals";
 // import { Helmet } from "react-helmet";
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -28,6 +29,7 @@ export default function Layout({
   children: React.ReactNode;
 }) {
   return (<>
+  <Script src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js" />
         <header>
           <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
@@ -150,7 +152,7 @@ export default function Layout({
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <div className="text-sm leading-6 text-gray-900 md:hidden">
-              {/* <DonationAccountModal /> */}
+              <DonationAccountModal />
               <svg
                 viewBox="0 0 2 2"
                 className="mx-2 inline h-0.5 w-0.5 fill-current"

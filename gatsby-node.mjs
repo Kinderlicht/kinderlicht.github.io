@@ -33,7 +33,6 @@ export async function createPages({ graphql, actions }) {
 				}
 				frontmatter {
 					title
-					category
 					tags
 				}
             }
@@ -57,8 +56,6 @@ export async function createPages({ graphql, actions }) {
 }
 
 export async function createSchemaCustomization({ actions }) {
-	console.log("\n\n\n\n\n\n\n\n\n\n\nFUUUUUUUUUUUUUCK\n\n\n\n\n\n\n\n");
-
 	const { createTypes } = actions
 	const typeDefs = `
 	  type Mdx implements Node {
@@ -78,7 +75,7 @@ export async function createSchemaCustomization({ actions }) {
 	createTypes(typeDefs)
 }
 
-function createPosts(posts, createPage) {
+/*function createPosts(posts, createPage) {
 	const series = posts.reduce((acc, post) => {
 		if(!!post.node.frontmatter.series) {
 			if(!acc[post.node.frontmatter.series.name]) {
@@ -115,7 +112,7 @@ function createPosts(posts, createPage) {
 			context: context
 		});
 	});
-}
+}*/
 
 function createTagPages(tags, createPage) {
 	// Make tag pages
