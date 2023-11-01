@@ -45,26 +45,26 @@ export default function Post({ data: { mdx: post }, pageContext, children }: { d
                 <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
                     <article className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
                         <header className="mb-4 lg:mb-6 not-format">
-                            {post.frontmatter.author && false && (
+                            {post.frontmatter.author && (
                                 <address className="flex items-center mb-6 not-italic">
                                     <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                                        <img
+                                        <GatsbyImage
                                             className="mr-4 h-16 rounded-full"
-                                            src={author.image}
-                                            alt={author.name}
-                                        ></img>
+                                            image={post.frontmatter.author.image.childImageSharp.gatsbyImageData}
+                                            alt={post.frontmatter.author.name}
+                                        />
                                         <div>
                                             <p
                                                 rel="author"
                                                 className="text-xl font-bold text-gray-900 dark:text-white"
                                             >
-                                                {author.name}
+                                                {post.frontmatter.author.name}
                                             </p>
                                             <p className="text-base text-gray-500 dark:text-gray-400">
-                                                {author.description}
+                                                {post.frontmatter.author.description}
                                             </p>
                                             <p className="text-base text-gray-500 dark:text-gray-400">
-                                                <time>{ConvertDate(item["date"])}</time>
+                                                <time>{post.frontmatter.date}</time>
                                             </p>
                                         </div>
                                     </div>
@@ -94,8 +94,16 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "LL")
-        author
         tags
+        author {
+            name
+            description
+            image {
+                childImageSharp {
+                    gatsbyImageData(placeholder: BLURRED, formats: [AUTO, WEBP], width: 64, height: 64)
+                  }
+            }
+        }
         featuredImage {
           publicURL
           childImageSharp {

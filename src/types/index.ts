@@ -6,7 +6,7 @@ export type BlogPost = {
     body: string;
     frontmatter: {
       title: string;
-      author: string;
+      author: {[key: string]: any};
       date: string;
       short: string;
       

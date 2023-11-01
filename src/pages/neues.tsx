@@ -102,7 +102,6 @@ fragment PostFields on MdxEdge {
     }
     frontmatter {
       short
-      author
       title
       youtube
       date(formatString: "DD. MMMM YYYY", locale: "de")
