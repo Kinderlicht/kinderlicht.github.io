@@ -47,7 +47,7 @@ export default function Post({ data: { mdx: post }, pageContext, children }: { d
                                     <div className="inline-flex items-center text-sm text-gray-900 dark:text-white">
                                         <GatsbyImage
                                             className="mr-4 h-16 rounded-full"
-                                            image={post.frontmatter.author.image.childImageSharp.gatsbyImageData}
+                                            image={post.frontmatter.author.image?.childImageSharp?.gatsbyImageData}
                                             alt={post.frontmatter.author.name}
                                         />
                                         <div>
