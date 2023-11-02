@@ -128,7 +128,7 @@ export default function MemberForm() {
               </h2>
               <p className="mt-1 text-sm leading-6 text-gray-600">
                 Der Mitgliedsantrag muss bestätigt werden, gib also bitte
-                gültige E-Mail Adresse an.
+                eine gültige E-Mail Adresse an.
               </p>
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
