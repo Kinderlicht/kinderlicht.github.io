@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { createEvent } from "ics";
 import { ConvertDate, ConvertDateObject } from "../content/events/de_date";
 import { events, Event, eventIsSoon } from "../content/events/events";
-import { Link } from "gatsby";
+import { HeadFC, Link } from "gatsby";
 import Layout from "../components/layout";
 
 function download(filename: string, text: string) {
@@ -257,3 +257,5 @@ export default function EventPage() {
     </Layout>
   );
 }
+
+export const Head: HeadFC = () => <title>Kinderlicht</title>;
