@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler, FieldError, set } from "react-hook-form";
 import FormFail from "./form_fail";
+import FormSuccess from "./form_success";
 
 function ErrorMessage({
   field,
@@ -117,19 +118,8 @@ export default function MemberForm() {
 
   return (
     <>
-     {success == 1 && (
-        <div
-          className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
-          role="alert"
-        >
-          <p className="font-bold">Ups...</p>
-          <p>
-            Leider konnten wir deinen Antrag nicht bearbeiten, versuche es
-            später nochmal.
-          </p>
-        </div>
-      )}
-      {success == -1 && (
+      {success == 0 && (<FormSuccess/>)}
+      {success != 0 && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
@@ -722,7 +712,7 @@ export default function MemberForm() {
           </div>
         </form>
       )}
-      {success == 1 && (<FormFail recover={recover}/>)}
+      {success == 1 && <FormFail recover={recover} />}
     </>
   );
 }
