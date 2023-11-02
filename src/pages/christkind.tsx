@@ -1,5 +1,8 @@
 import { Link } from "gatsby";
 import React, { useState, MouseEvent } from "react";
+import FormSuccess from "../components/form_success";
+import FormFail from "../components/form_fail";
+import Layout from "../components/layout";
 
 const valid_ids = [
   "VRRTQOFF",
@@ -1009,33 +1012,43 @@ function SuccessPage({ slug }: { slug: string }) {
   let [message, setText] = useState<string>("");
   let [completeName, setName] = useState<string>("");
   let [err, setErr] = useState<number>(-1);
+  let [recover, setRecover] = React.useState("");
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     fetch("https://api.campai.com/formSubmissions/6536c50d26e1924cfba8d412", {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
       },
       body: JSON.stringify({
-        formData: { name: completeName, erklaerung: message, wunsch: slug, mail: email },
-        confirmationMail: email
+        formData: {
+          name: completeName,
+          erklaerung: message,
+          wunsch: slug,
+          mail: email,
+        },
+        confirmationMail: email,
       }),
     })
       .then((res) => {
         if (!res.ok) {
-            throw new Error("Status not ok.");
+          throw new Error("Status not ok.");
         }
         return res.json();
       })
       .then((_) => {
-        setEmail("");
-        setText("");
         setErr(0);
       })
-      .catch(_ => {
-        setEmail("");
-        setText("");
+      .catch((_) => {
+        setRecover(
+          JSON.stringify({
+            name: completeName,
+            erklaerung: message,
+            wunsch: slug,
+            mail: email,
+          })
+        );
         setErr(1);
       });
   };
@@ -1053,8 +1066,19 @@ function SuccessPage({ slug }: { slug: string }) {
         Herzlichen Dank für deine Mithilfe in unserer gemeinsamen
         Weihnachtsaktion! Bitte fülle die untenstehenden Felder aus.
       </p>
-      <form className={err == -1 ? "" : "hidden"}>
-      <div className="mb-6">
+      <p className="mb-2 text-center">
+        Eine Aktion von{" "}
+        <Link className="text-indigo-500" to="/">
+          Kinderlicht Wallersdorf e.V.
+        </Link>{" "}
+        und{" "}
+        <a className="text-indigo-500" href="https://niedermaier.eu/">
+          Spedition Niedermaier
+        </a>
+        .
+      </p>
+      <form className={err != 0 ? "" : "hidden"}>
+        <div className="mb-6">
           <label
             htmlFor="email"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -1108,125 +1132,95 @@ function SuccessPage({ slug }: { slug: string }) {
           Abschicken
         </button>
       </form>
-      {err == 0 && (
-        <div
-          className="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
-          role="alert"
-        >
-          <div className="flex">
-            <div className="py-1">
-              <svg
-                className="fill-current h-6 w-6 text-teal-500 mr-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
-              </svg>
-            </div>
-            <div>
-              <p className="font-bold">Nur noch ein Schritt...</p>
-              <p className="text-sm">
-                Vielen Dank für deine Mithilfe! Du solltest eine E-Mail erhalten
-                haben, die Du bestätigen musst. Bitte überprüfe auch deinen
-                SPAM-Ordner.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-      {err == 1 && (
-        <div
-          className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
-          role="alert"
-        >
-          <p className="font-bold">Ups...</p>
-          <p>
-            Leider konnten wir deinen Antrag nicht bearbeiten, versuche es
-            später nochmal.
-          </p>
-        </div>
-      )}
+      {err == 0 && <FormSuccess />}
+      {err == 1 && <FormFail recover={recover} />}
     </div>
   );
 }
 
-const ChristkindPage = ({ location } : {location: any}) => {
+const ChristkindPage = ({ location }: { location: any }) => {
   let [text, setText] = useState<string>("");
   const { state = {} } = location;
-  const { id } = state || {"id": location.search?.substring(1)? location.search?.substring(1) : ""};
+  const { id } = state || {
+    id: location.search?.substring(1) ? location.search?.substring(1) : "",
+  };
   const valid = id && valid_ids.indexOf(id) > -1;
   return !valid ? (
-    <div className="container text-center max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
-      <span className="mb-8 text-3xl font-bold text-center mr-4">
-        Gib deine Wunsch-ID ein{" "}
-      </span>
-      <span className="inline-block w-full p-8 xl:w-1/4 xl:p-1">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <label
-            htmlFor="search"
-            className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-          >
-            Suchen
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="w-4 h-4 text-gray-500 dark:text-gray-400 bi bi-postcard-heart"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 4.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7Zm3.5.878c1.482-1.42 4.795 1.392 0 4.622-4.795-3.23-1.482-6.043 0-4.622ZM2.5 5a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Z" />
-                <path
-                  fillRule="evenodd"
-                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2Z"
-                />
-              </svg>
-            </div>
-            <input
-              type="search"
-              id="search"
-              onChange={(t) => setText(t.target.value.toUpperCase())}
-              className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-orange-300 focus:border-orange-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
-              placeholder="ABCDEFGH"
-              required
-            />
-            <Link
-              to={'/christkind'}
-              state={{ id: text }}
-              className="text-white absolute right-2.5 bottom-2.5 bg-primary hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+    <Layout>
+      <div className="container text-center max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
+        <span className="mb-8 text-3xl font-bold text-center mr-4">
+          Gib deine Wunsch-ID ein{" "}
+        </span>
+        <span className="inline-block w-full p-8 xl:w-1/4 xl:p-1">
+          <form onSubmit={(e) => e.preventDefault()}>
+            <label
+              htmlFor="search"
+              className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
             >
-              Wunsch erfüllen
-            </Link>
-          </div>
-        </form>
-      </span>
-      {id && (
-        <div
-          className="w-full flex p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
-          role="alert"
-        >
-          <svg
-            className="flex-shrink-0 inline w-4 h-4 mr-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
+              Suchen
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="w-4 h-4 text-gray-500 dark:text-gray-400 bi bi-postcard-heart"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 4.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7Zm3.5.878c1.482-1.42 4.795 1.392 0 4.622-4.795-3.23-1.482-6.043 0-4.622ZM2.5 5a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Z" />
+                  <path
+                    fillRule="evenodd"
+                    d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="search"
+                id="search"
+                onChange={(t) => setText(t.target.value.toUpperCase())}
+                className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-orange-300 focus:border-orange-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+                placeholder="ABCDEFGH"
+                required
+              />
+              <Link
+                to={"/christkind"}
+                state={{ id: text }}
+                className="text-white absolute right-2.5 bottom-2.5 bg-primary hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+              >
+                Wunsch erfüllen
+              </Link>
+            </div>
+          </form>
+        </span>
+        {id && (
+          <div
+            className="w-full flex p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+            role="alert"
           >
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-          </svg>
-          <span className="sr-only">Info</span>
-          <div>
-            <span className="font-medium">Die Wunsch-ID '{id}'</span> ist
-            leider ungültig.
+            <svg
+              className="flex-shrink-0 inline w-4 h-4 mr-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <span className="sr-only">Info</span>
+            <div>
+              <span className="font-medium">Die Wunsch-ID '{id}'</span> ist
+              leider ungültig.
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </Layout>
   ) : (
-    <SuccessPage slug={id?.toString()} />
+    <Layout>
+      <SuccessPage slug={id?.toString()} />
+    </Layout>
   );
 };
 
