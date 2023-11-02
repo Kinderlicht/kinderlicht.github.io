@@ -165,7 +165,7 @@ export default function EventPage() {
 
   return (
     <Layout>
-    <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
+    <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-10 mt-32">
       <h2 className="mb-16 text-3xl font-bold text-center">
         Unsere{" "}
         <span className="text-primary dark:text-primary-400 no-underline">

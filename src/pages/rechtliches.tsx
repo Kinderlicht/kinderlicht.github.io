@@ -5,7 +5,7 @@ import { HeadFC } from "gatsby";
 export default function Rechtliches() {
   return (
     <Layout>
-      <div className="container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
+      <div className="container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32 px-6">
         <section className="bg-white dark:bg-gray-900">
           <h2 className="mb-2 text-3xl font-bold text-center">
             Unsere{" "}
@@ -17,16 +17,17 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             <strong>Website / Datenschutzerklärung / Privacy Policy</strong>
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
-            Der Kinderlicht Wallersdorf e. V. nimmt als Anbieter der Website
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+            Der Kinderlicht Wallersdorf e. V. nimmt als Anbieter der Website{" "}
             <a
+              className="text-indigo-500"
               href="http://www.kinderlicht-wallersdorf.de"
               target="_blank"
               rel="noopener noreferrer"
             >
               www.kinderlicht-wallersdorf.de
             </a>
-            und verantwortliche Stelle die Verpflichtung zum Datenschutz sehr
+            {" "}und verantwortliche Stelle die Verpflichtung zum Datenschutz sehr
             ernst und gestaltet seine Website so, dass nur so wenige
             personenbezogene Daten wie nötig erhoben, verarbeitet und genutzt
             werden. Unter keinen Umständen werden personenbezogene Daten zu
@@ -51,20 +52,21 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Zweckänderungen der Verarbeitung und Datennutzung
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8 prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Da sich aufgrund des technischen Fortschritts und organisatorischer
             Änderungen die eingesetzten Verarbeitungsverfahren
             ändern/weiterentwickeln können, behalten wir uns vor, die
             vorliegende Datenschutzerklärung gemäß den neuen technischen
             Rahmenbedingungen weiterzuentwickeln. Wir bitten Sie deshalb, die
-            Datenschutzerklärung von&nbsp;
+            Datenschutzerklärung von&nbsp;{" "}
             <a
+              className="text-indigo-500"
               href="http://www.kinderlicht-wallersdorf.de/"
               target="_blank"
               rel="noopener noreferrer"
             >
               www.kinderlicht-wallersdorf.de
-            </a>
+            </a>{" "}
             von Zeit zu Zeit zu überprüfen. Sollten Sie mit den im Verlaufe der
             Zeit auftretenden Weiterentwicklungen nicht einverstanden sein, so
             können Sie schriftlich, gemäß Art. 17 EU-DSGVO, eine Löschung der
@@ -75,7 +77,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Anonyme Datenerhebung
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Sie können die Webseiten der verantwortlichen Stelle grundsätzlich
             besuchen, ohne uns mitzuteilen, wer Sie sind. Wir erfahren nur den
             Namen Ihres Internet Service Providers, die Webseite, von der aus
@@ -86,7 +88,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Erhebung und Verarbeitung personenbezogener Daten
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Personenbezogene Daten werden nur erhoben, wenn Sie uns diese von
             sich aus, zum Beispiel zum Zwecke der Durchführung eines
             Vertragsverhältnisses zwischen dem Kinderlicht Wallersdorf e. V.,
@@ -115,7 +117,7 @@ export default function Rechtliches() {
             Export und Verarbeitung der Daten in Staaten außerhalb des
             Europäischen Wirtschaftsraumes
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Es findet kein Export ihrer personenbezogenen Daten in Staaten
             außerhalb des Europäischen Wirtschaftsraumes (im Folgenden EWR)
             statt. Trotzdem können, soweit Sie sich in Facebook eingeloggt haben
@@ -150,7 +152,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Nutzung und Weitergabe personenbezogener Daten
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Die im Rahmen der Webseiten der verantwortlichen Stelle erhobenen
             personenbezogenen Daten werden ohne Ihre Einwilligung nur zur
             Vertragsabwicklung und Bearbeitung Ihrer Anfragen genutzt. Darüber
@@ -162,7 +164,7 @@ export default function Rechtliches() {
             widerrufen.
           </p>
           <h3 className="mb-2 text-2xl font-bold mt-8">Externe Links</h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Zu Ihrer Information finden Sie auf unseren Seiten Links, die auf
             Seiten Dritter verweisen. Soweit dies nicht offensichtlich erkennbar
             ist, weisen wir Sie darauf hin, dass es sich um einen externen Link
@@ -172,7 +174,7 @@ export default function Rechtliches() {
             Anbieter nicht.
           </p>
           <h3 className="mb-2 text-2xl font-bold mt-8">Einsatz von Cookies</h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Die verantwortliche Stelle verwendet sogenannte &quot;Cookies&quot;,
             um die Online-Erfahrung und Online-Zeit des Kunden individuell
             auszugestalten und zu optimieren. Ein Cookie ist eine Textdatei, die
@@ -189,7 +191,7 @@ export default function Rechtliches() {
             verwendet Sitzungscookies sowie permanente Cookies.
           </p>
           <h3 className="mb-2 text-2xl font-bold mt-8">Sitzungscookies</h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Die verantwortliche Stelle verwendet überwiegend
             &quot;Sitzungscookies&quot;, die nicht auf der Festplatte des Kunden
             gespeichert werden und die mit Verlassen des Browsers gelöscht
@@ -197,7 +199,7 @@ export default function Rechtliches() {
             und zum Load-Balancing (Ausgleich der System-Belastung) verwendet.
           </p>
           <h3 className="mb-2 text-2xl font-bold mt-8">Permanente Cookies</h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Darüber hinaus verwendet die verantwortliche Stelle &quot;permanente
             Cookies&quot;, um die persönlichen Nutzungseinstellungen, die ein
             Kunde bei der Nutzung der Services der verantwortlichen Stelle
@@ -215,7 +217,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Vermeidung von Cookies
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Der Besucher hat jederzeit die Möglichkeit, das Setzen von Cookies
             abzulehnen. Dies geschieht in der Regel durch die Wahl der
             entsprechenden Option in den Einstellungen des Browsers oder durch
@@ -228,7 +230,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Verwendung von Analyseprogrammen
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Die verantwortliche Stelle führt Analysen über das Verhalten seiner
             Kunden im Rahmen der Nutzung seines Services durch bzw. lässt diese
             durchführen. Zu diesem Zweck werden anonymisierte oder
@@ -242,15 +244,16 @@ export default function Rechtliches() {
             gekürzt verarbeitet, um eine direkte Personenbeziehbarkeit
             auszuschließen. Der in diesem Zusammenhang stattfindenden
             Datenerhebung und -speicherung kann jederzeit mit Wirkung für die
-            Zukunft widersprochen werden. Bitte wenden Sie sich dazu
+            Zukunft widersprochen werden. Bitte wenden Sie sich dazu{" "}
             <a
+              className="text-indigo-500"
               href="http://tools.google.com/dlpage/gaoptout?hl=de"
               target="_blank"
               rel="noopener noreferrer"
             >
-              direkt an Google.
+              direkt an Google
             </a>
-            Google gibt seinen Nutzern, wie beispielsweise der verantwortlichen
+            . Google gibt seinen Nutzern, wie beispielsweise der verantwortlichen
             Stelle vor, die nachfolgende Belehrung in ihren
             Datenschutzerklärungen zu verwenden. Dieser Aufforderung kommt
             der&nbsp;Kinderlicht Wallersdorf e. V. &nbsp;mit der Wiedergabe des
@@ -283,7 +286,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Verwendung von Facebook Social Plugins
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Die verantwortliche Stelle verwendet auf ihrer Website Social
             Plugins (&quot;Plugins&quot;) des sozialen Netzwerkes facebook.com,
             welches von der Facebook Inc., 1601 S. California Ave, Palo Alto, CA
@@ -313,7 +316,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Verwendung von Twitter
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Die verantwortliche Stelle verwendet auf ihrer Website Funktionen
             des Dienstes Twitter. Diese Funktionen werden angeboten durch die
             Twitter Inc., Twitter, Inc. 1355 Market St, Suite 900, San
@@ -324,17 +327,19 @@ export default function Rechtliches() {
             weisen darauf hin, dass wir als Anbieter der Seiten keine Kenntnis
             vom Inhalt der übermittelten Daten sowie deren Nutzung durch Twitter
             erhalten. Weitere Informationen hierzu finden Sie in der
-            Datenschutzerklärung von Twitter unter:
+            Datenschutzerklärung von Twitter unter:{" "}
             <a
+              className="text-indigo-500"
               href="http://www.twitter.com/privacy"
               target="_blank"
               rel="noopener noreferrer"
             >
               www.twitter.com/privacy
             </a>
-            Ihre Datenschutzeinstellungen bei Twitter können Sie in den
-            Konto-Einstellungen ändern unter:
+            . Ihre Datenschutzeinstellungen bei Twitter können Sie in den
+            Konto-Einstellungen ändern unter:{" "}
             <a
+              className="text-indigo-500"
               href="http://www.twitter.com/account/settings"
               target="_blank"
               rel="noopener noreferrer"
@@ -346,7 +351,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Verwendung von Instagram Social Plugins
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Die verantwortliche Stelle verwendet auf ihrer Website Social
             Plugins (&quot;Plugins&quot;) von Instagram, das von der Instagram
             LLC
@@ -354,8 +359,9 @@ export default function Rechtliches() {
             (&quot;Instagram&quot;) betrieben wird. Die Plugins sind mit einem
             Instagram-Logo beispielsweise in Form einer
             &quot;Instagram-Kamera&quot; gekennzeichnet. Eine Übersicht über die
-            Instagram Plugins und deren Aussehen finden Sie hier:
+            Instagram Plugins und deren Aussehen finden Sie hier:{" "}
             <a
+              className="text-indigo-500"
               href="http://blog.instagram.com/post/36222022872/introducing-instagram-badges"
               target="_blank"
               rel="noopener noreferrer"
@@ -382,8 +388,9 @@ export default function Rechtliches() {
             die weitere Verarbeitung und Nutzung der Daten durch Instagram sowie
             Ihre diesbezüglichen Rechte und Einstellungsmöglichkeiten zum Schutz
             Ihrer Privatsphäre entnehmen Sie bitte den Datenschutzhinweisen von
-            Instagram:
+            Instagram:{" "}
             <a
+              className="text-indigo-500"
               href="https://help.instagram.com/155833707900388/"
               target="_blank"
               rel="noopener noreferrer"
@@ -408,7 +415,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Verwendung von YouTube-Plugins
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Die verantwortliche Stelle nutzt für die Einbindung von Videos u.a.
             den Anbieter YouTube. YouTube wird betrieben von YouTube LLC mit
             Hauptgeschäftssitz in 901 Cherry Avenue, San Bruno, CA 94066, USA.
@@ -428,8 +435,9 @@ export default function Rechtliches() {
             Benutzerkonten der Firmen YouTube LLC und Google Inc. abmelden und
             die entsprechenden Cookies der Firmen löschen. Weitere Informationen
             zur Datenverarbeitung und Hinweise zum Datenschutz durch YouTube
-            (Google) finden Sie unter
+            (Google) finden Sie unter{" "}
             <a
+              className="text-indigo-500"
               href="http://www.google.de/intl/de/policies/privacy/"
               target="_blank"
               rel="noopener noreferrer"
@@ -441,7 +449,7 @@ export default function Rechtliches() {
           <h3 className="mb-2 text-2xl font-bold mt-8">
             Weitere Informationen und Kontakte
           </h3>
-          <p className="mb-8  text-justify lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
+          <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Wenn Sie weitere Fragen zum Thema &quot;Datenschutz bei der
             verantwortlichen Stelle&quot; haben, wenden Sie sich an den
             Datenschutzbeauftragten des Kinderlicht Wallersdorf e. V. Sie können

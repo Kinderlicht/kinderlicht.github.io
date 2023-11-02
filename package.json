@@ -18,6 +18,8 @@
   "dependencies": {
     "@mdx-js/mdx": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
+    "@tailwindcss/forms": "^0.5.6",
+    "@tailwindcss/typography": "^0.5.8",
     "autoprefixer": "^10.4.16",
     "esm": "^3.2.25",
     "flowbite": "^2.0.0",
@@ -34,6 +36,7 @@
     "gatsby-remark-images": "^7.11.0",
     "gatsby-source-filesystem": "^5.12.0",
     "gatsby-transformer-sharp": "^5.11.0",
+    "iban": "^0.0.14",
     "ics": "^3.5.0",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
@@ -42,10 +45,7 @@
     "rehype-accessible-emojis": "^0.3.2",
     "remark-gfm": "^3.0.1",
     "remark-smartypants": "^2.0.0",
-    
-    "tailwindcss": "^3.3.5",
-    "@tailwindcss/forms": "^0.5.6",
-    "@tailwindcss/typography": "^0.5.8"
+    "tailwindcss": "^3.3.5"
   },
   "devDependencies": {
     "@types/node": "^20.3.3",

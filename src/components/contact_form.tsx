@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler, FieldError } from "react-hook-form";
+import FormFail from "./form_fail";
 
 function ErrorMessage({
   field,
@@ -25,6 +26,7 @@ export default function MemberForm() {
     handleSubmit,
   } = useForm<Message>({ mode: "onChange" });
   let [success, setSuccess] = React.useState(-1);
+  let [recover, setRecover] = React.useState("");
   const onSubmit: SubmitHandler<Message> = (data) => {
     console.log(data);
     fetch("https://api.campai.com/formSubmissions/65228c088027e5517c174547", {
@@ -53,6 +55,7 @@ export default function MemberForm() {
         setSuccess(0);
       })
       .catch((_) => {
+        setRecover(JSON.stringify(data));
         setSuccess(1);
       });
   };
@@ -82,18 +85,6 @@ export default function MemberForm() {
             </p>
           </div>
         </div>
-      </div>
-    )}
-    {success == 1 && (
-      <div
-        className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
-        role="alert"
-      >
-        <p className="font-bold">Ups...</p>
-        <p>
-          Leider konnten wir deinen Antrag nicht bearbeiten, versuche es
-          später nochmal.
-        </p>
       </div>
     )}
     {success == -1 &&
@@ -210,6 +201,8 @@ export default function MemberForm() {
           Senden
         </button>
       </div>
-    </form>}</>
+    </form>}
+    {success == 1 && (<FormFail recover={recover}/>)}
+    </>
   );
 }

@@ -18,33 +18,43 @@ const config = {
     "gatsby-plugin-sitemap",
     `gatsby-remark-images`,
     {
-			resolve: "gatsby-plugin-mdx",
-			options: {
-				mdxOptions: {
-					remarkPlugins: [
-						remarkGfm,
-						remarkSmartypants,
-					],
-					rehypePlugins: [
-						rehypeAccessibleEmojis,
-						// rehypePrism,
-					]
-				},
-				gatsbyRemarkPlugins: [
-					{
-						resolve: `gatsby-remark-images`,
-						options: {
-							maxWidth: 1200,
-							wrapperStyle: () => "margin: 5 -40px",
-							withWebp: true,
-							withAvif: true,
-							quality: 100,
-							showCaptions: true
-						},
-					},
-				]
-			}
-		},
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Kinderlicht Wallerdorf e.V.`,
+        short_name: `Kinderlicht`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        // Generate PWA icons and a favicon
+        icon: `src/images/quadratic.png`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-mdx",
+      options: {
+        mdxOptions: {
+          remarkPlugins: [remarkGfm, remarkSmartypants],
+          rehypePlugins: [
+            rehypeAccessibleEmojis,
+            // rehypePrism,
+          ],
+        },
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1200,
+              wrapperStyle: () => "margin: 5 -40px",
+              withWebp: true,
+              withAvif: true,
+              quality: 100,
+              showCaptions: true,
+            },
+          },
+        ],
+      },
+    },
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -55,14 +65,14 @@ const config = {
     },
     "gatsby-plugin-sharp",
     {
-			resolve: "gatsby-transformer-sharp",
-			options: {
-				defaults: {
-					stripMetadata: true,
-					breakpoints: [400, 750, 1080, 1366, 1920]
-				}
-			}
-		},
+      resolve: "gatsby-transformer-sharp",
+      options: {
+        defaults: {
+          stripMetadata: true,
+          breakpoints: [400, 750, 1080, 1366, 1920],
+        },
+      },
+    },
     {
       resolve: "gatsby-source-filesystem",
       options: {

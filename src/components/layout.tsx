@@ -1,16 +1,16 @@
 import React from "react"
-import { HeadFC, Link } from "gatsby"
+import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image";
 import DonationAccountModal from "./modals";
 import { numberOfUpcomingEvents } from "../content/events/events";
 import { Navbar } from "flowbite-react";
 // import { Helmet } from "react-helmet";
 
-function showNotifications(notifications: number) {
+function ShowNotifications({notifications}: {notifications:number}) {
   return (
     <>
       {notifications > 0 && (
-        <div className="inline-flex items-center -mt-2 justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">
+        <div className="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">
           {notifications.toString()}
         </div>
       )}
@@ -18,7 +18,8 @@ function showNotifications(notifications: number) {
   );
 }
 
-const GatsbyLinkWrapper = ({ href, children }) => <Link to={href}>{children}</Link>;
+const GatsbyLinkWrapper = ({ href, children }: {href: string, children: any}) => <Link className="block border-b-2 truncate shadow md:shadow-none py-2 pl-3 pr-4 mb-2 rounded md:mb-0 md:border-b-0 md:bg-transparent md:text-black md:p-0 dark:text-white md:dark:text-primary" to={href}>{children}</Link>;
+const GatsbyLinkWrapperIcon = ({ href, children }: {href: string, children: any}) => <Link to={href}>{children}</Link>;
 
 export default function Layout({
   children,
@@ -28,7 +29,7 @@ export default function Layout({
   return (<>
     <header className="mx-auto">
       <Navbar fluid rounded className="max-w-screen-2xl mx-auto">
-        <Navbar.Brand as={GatsbyLinkWrapper} href="/">
+        <Navbar.Brand as={GatsbyLinkWrapperIcon} href="/">
           <div className="flex items-center">
             <StaticImage
               src="../images/quadratic.png"
@@ -43,120 +44,14 @@ export default function Layout({
         <div className="flex md:order-2">
           <Navbar.Toggle />
         </div>
-        <Navbar.Collapse>
+        <Navbar.Collapse className="divide-y-2">
           <Navbar.Link href="/beitreten" as={GatsbyLinkWrapper}>Beitreten</Navbar.Link>
           <Navbar.Link href="/anfrage" as={GatsbyLinkWrapper}>Anfrage</Navbar.Link>
           <Navbar.Link href="/neues" as={GatsbyLinkWrapper}>Neues</Navbar.Link>
-          <Navbar.Link href="/events" as={GatsbyLinkWrapper}>Events</Navbar.Link>
+          <Navbar.Link href="/events" as={GatsbyLinkWrapper}>Events{" "}<ShowNotifications notifications={numberOfUpcomingEvents}/></Navbar.Link>
           <Navbar.Link href="/wir" as={GatsbyLinkWrapper}>Wir</Navbar.Link>
         </Navbar.Collapse>
       </Navbar>
-
-      {/* <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link to="/" className="flex items-center">
-            <StaticImage
-              src="../images/icon.png"
-              className="mr-3 h-6 sm:h-9 w-4"
-              alt="Kinderlicht Logo"
-            />
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              Kinderlicht Wallersdorf e.V.
-            </span>
-          </Link>
-          <button
-            data-collapse-toggle="mobile-menu"
-            type="button"
-            className="md:hidden ml-3 text-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg inline-flex items-center justify-center"
-            aria-controls="mobile-menu-2"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Hauptmenü</span>
-            <svg
-              className="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-            <svg
-              className="hidden w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </button>
-          <div
-            className="hidden md:block w-full md:w-auto"
-            id="mobile-menu"
-          >
-            <ul className="flex-col md:flex-row flex md:space-x-8 mt-4 md:mt-0 md:text-sm md:font-medium">
-              <li>
-                <Link
-                  to="#"
-                  className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
-                  aria-current="page"
-                >
-                  Kinderlicht
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/beitreten"
-                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Beitreten
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/anfrage"
-                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Anfrage
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/neues"
-                  className="relative inline-flex items-center py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Neues
-                  {showNotifications(0)}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/events"
-                  className="relative inline-flex py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Events
-                  {showNotifications(numberOfUpcomingEvents)}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/wir"
-                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Wir
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav> */}
     </header>
     <div className="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
       <div
