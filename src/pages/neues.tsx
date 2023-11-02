@@ -5,18 +5,16 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import type { BlogPost } from "../types/";
 
 const NewsEntry: React.FC<{ post: BlogPost }> = ({ post }) => {
-  const className = "object-cover w-full rounded h-44 dark:bg-gray-500";
-
   return (
     <Link
       rel="noopener noreferrer"
       to={post.fields.slug}
       className="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-900 bg-gray-200 rounded-xl w-full"
     >
-      <>{post.frontmatter.featuredImage && <GatsbyImage role="presentation" image={post.frontmatter.featuredImage.childImageSharp.gatsbyImageData} alt={post.frontmatter.title} className={className} />}</>
+      <>{post.frontmatter.featuredImage && <GatsbyImage role="presentation" image={post.frontmatter.featuredImage.childImageSharp.gatsbyImageData} alt={post.frontmatter.title} className="object-cover w-full rounded h-44 dark:bg-gray-500" />}</>
       <>{post.frontmatter.youtube && <iframe
         loading="lazy"
-        className={className}
+        className="object-cover w-full rounded h-44 dark:bg-gray-500"
         src={post.frontmatter.youtube}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
