@@ -18,6 +18,7 @@ const HeroImage = ({ post, recommended: isRecommended }: { post: BlogPost, recom
         <>
             {post.frontmatter.youtube ? (
                 <iframe
+                    loading='lazy'
                     className={className}
                     src={post.frontmatter.youtube}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -85,7 +86,7 @@ export default function Post({ data: { mdx: post }, pageContext, children }: { d
     </Layout>;
 }
 
-export const Head: HeadFC<any> = ({data}) => <><title>{data.mdx.frontmatter.title} - Kinderlicht</title></>;
+export const Head: HeadFC<any> = ({ data }) => <><title>{data.mdx.frontmatter.title} - Kinderlicht</title></>;
 
 export const pageQuery = graphql`
   query BlogPostQuery($slug: String) {
