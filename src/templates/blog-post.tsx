@@ -8,18 +8,13 @@ import _ from 'lodash';
 import Layout from '../components/layout';
 import type { BlogPost } from "../types/";
 
-const HeroImage = ({ post, recommended: isRecommended }: { post: BlogPost, recommended?: boolean, }) => {
-    const className = isRecommended
-        ? "object-cover w-full rounded h-44 dark:bg-gray-500"
-        : "object-cover w-full mb-8 rounded lg:col-span-7 dark:bg-gray-500 h-96";
-
-
+const HeroImage = ({ post }: { post: BlogPost }) => {
     return (
         <>
             {post.frontmatter.youtube ? (
                 <iframe
                     loading='lazy'
-                    className={className}
+                    className="object-cover w-full mb-8 rounded-lg lg:col-span-7 dark:bg-gray-500 h-96"
                     src={post.frontmatter.youtube}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -30,7 +25,7 @@ const HeroImage = ({ post, recommended: isRecommended }: { post: BlogPost, recom
                     role="presentation"
                     image={post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData}
                     alt={post.frontmatter.title}
-                    className={className} />
+                    className="object-cover mb-8 rounded-lg lg:col-span-7 dark:bg-gray-500 w-full" />
             )}
         </>
     );
@@ -38,43 +33,42 @@ const HeroImage = ({ post, recommended: isRecommended }: { post: BlogPost, recom
 
 export default function Post({ data: { mdx: post }, pageContext, children }: { data: { mdx: BlogPost }, pageContext: any, children: any }) {
     return <Layout>
-        <section className="container">
+        <section className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-12 mt-32">
             <main className="bg-white dark:bg-gray-900 antialiased">
                 <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
                     <article className="mx-auto w-full container">
-                        <header className="mb-4 lg:mb-6 not-format">
+                        <div className="mx-auto prose dark:prose-dark lg:prose-xl prose-slate">
+                            <h1 className="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
+                                {post.frontmatter.title}
+                            </h1>
+                            <header className="mb-4 lg:mb-6 not-format">
                             {post.frontmatter.author && (
-                                <address className="flex items-center mb-6 not-italic">
-                                    <div className="inline-flex items-center text-sm text-gray-900 dark:text-white">
+                                <address className="flex items-center not-italic bg-gray-100 rounded-lg">
+                                    <div className="ml-8 inline-flex items-center text-sm text-gray-900 dark:text-white">
                                         <GatsbyImage
                                             className="mr-4 h-16 rounded-full"
                                             image={post.frontmatter.author.image?.childImageSharp?.gatsbyImageData}
                                             alt={post.frontmatter.author.name}
                                         />
-                                        <div>
-                                            <p
+                                        <p className='container'>
+                                            <span
                                                 rel="author"
-                                                className="text-xl font-bold text-gray-900 dark:text-white"
+                                                className="block text-xl font-bold text-gray-900 dark:text-white"
                                             >
                                                 {post.frontmatter.author.name}
-                                            </p>
-                                            <p className="text-base text-gray-500 dark:text-gray-400">
+                                            </span>
+                                            <span className="block text-base text-gray-500 dark:text-gray-400">
                                                 {post.frontmatter.author.description}
-                                            </p>
-                                            <p className="text-base text-gray-500 dark:text-gray-400">
+                                            </span>
+                                            <span className="block text-base text-gray-500 dark:text-gray-400">
                                                 <time>{post.frontmatter.date}</time>
-                                            </p>
-                                        </div>
+                                            </span>
+                                        </p>
                                     </div>
                                 </address>
                             )}
                         </header>
-                        <HeroImage post={post} recommended={false} />
-                        <div className="mx-auto prose dark:prose-dark lg:prose-xl prose-slate">
-                            <h1 className="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
-                                {post.frontmatter.title}
-                            </h1>
-
+                            <HeroImage post={post} />
                             <MDXProvider>
                                 {children}
                             </MDXProvider>
