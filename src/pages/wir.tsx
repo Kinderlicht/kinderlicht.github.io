@@ -122,6 +122,7 @@ query SponsorQuery {
     nodes {
       name
       location
+      link
       externalImage
       image {
         childImageSharp {
