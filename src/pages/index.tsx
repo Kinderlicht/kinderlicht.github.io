@@ -98,7 +98,7 @@ export default function IndexPage() {
                 title="Ankündigungen und Neuigkeiten"
                 description="Hier kannst du jeden unserer Schritte verfolgen!"
                 short="Unsere News"
-                link=""
+                link="/neues"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
