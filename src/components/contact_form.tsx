@@ -29,7 +29,6 @@ export default function MemberForm() {
   let [success, setSuccess] = React.useState(-1);
   let [recover, setRecover] = React.useState("");
   const onSubmit: SubmitHandler<Message> = (data) => {
-    console.log(data);
     fetch("https://api.campai.com/formSubmissions/65228c088027e5517c174547", {
       method: "POST",
       headers: {

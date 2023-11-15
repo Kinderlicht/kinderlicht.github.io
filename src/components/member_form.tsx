@@ -1,13 +1,14 @@
 import React from "react";
-import { useForm, SubmitHandler, FieldError, set } from "react-hook-form";
+import { useForm, SubmitHandler, FieldError } from "react-hook-form";
 import FormFail from "./form_fail";
 import FormSuccess from "./form_success";
+import FamilyMembershipForm, { Relative } from "./family_membership_form";
 
-function ErrorMessage({
+export function ErrorMessage({
   field,
   error,
 }: {
-  field: FieldError | undefined;
+  field: FieldError | undefined | boolean;
   error: string;
 }) {
   return <>{field && <div className="text-sm text-red-500">{error}</div>}</>;
@@ -27,6 +28,7 @@ interface Member {
   iban: string;
   bic: string;
   join: Date;
+  relatives: Relative[];
   donation: number;
   confirmDonationDocument: boolean;
   confirmPayment: boolean;
@@ -35,7 +37,7 @@ interface Member {
   confirmDataProtection: boolean;
 }
 
-function calculateAge(birthDate: Date) {
+export function calculateAge(birthDate: Date) {
   const today = new Date();
   let age_now = today.getFullYear() - birthDate.getFullYear();
   const m = today.getMonth() - birthDate.getMonth();
@@ -45,8 +47,54 @@ function calculateAge(birthDate: Date) {
   return age_now;
 }
 
+function getAgeLimit(maxAge: number) {
+  const today = new Date();
+  const currentYear = today.getFullYear();
+
+  const maxAgeYearsAgo = new Date();
+  maxAgeYearsAgo.setFullYear(currentYear - maxAge);
+  maxAgeYearsAgo.setDate(maxAgeYearsAgo.getDate() - 1); // include today
+  return maxAgeYearsAgo;
+}
+
+function baseFee(member: Member): number {
+  if (member.birthday === undefined || member.relatives === undefined) {
+    return 24;
+  }
+  const isChild = calculateAge(member.birthday) < 18;
+  const numChildren =
+    member.relatives.filter(
+      (member) => member.birthday && calculateAge(member.birthday) < 18
+    ).length + (isChild ? 1 : 0);
+  const numAdults =
+    member.relatives.filter(
+      (member) => member.birthday && calculateAge(member.birthday) >= 18
+    ).length + (isChild ? 0 : 1);
+  if (numChildren === 1 && numAdults === 0) {
+    // Only a child
+    return 12;
+  }
+  if (numAdults === 1) {
+    if (numChildren === 0) {
+      // Normal full aged
+      return 24;
+    }
+    // Family with 1 adult
+    return 33 + (numChildren - 1) * 9;
+  }
+  if (numChildren === 0) {
+    // partnership
+    return 42;
+  }
+  // family with 2 adults
+  return 54 + (numChildren - 1) * 9;
+}
+
+function calculateFee(member: Member): number {
+  return baseFee(member) + parseInt((member.donation || "0").toString());
+}
+
 export default function MemberForm() {
-  let [sum, setSum] = React.useState(24);
   // -1: not submitted, 1: error, 0: success
   let [success, setSuccess] = React.useState(-1);
   let [recover, setRecover] = React.useState("");
@@ -54,51 +102,59 @@ export default function MemberForm() {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
+    setValue,
+    getValues,
+    setError,
+    clearErrors,
   } = useForm<Member>({ mode: "onChange" });
+  const familyMembers = watch("relatives", []);
+
   const onSubmit: SubmitHandler<Member> = (data) => {
-    console.log(data);
-    fetch("https://api.campai.com/formSubmissions/64edd24425030d7d29ddfecc", {
+    fetch("https://api.campai.com/formSubmissions/65552d674146670923e8f96c", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify({
         formData: {
-          gender: data.gender,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          birthday: data.birthday.toISOString().split("T")[0],
-          street: data.street,
-          postalCode: data.postalCode,
-          city: data.city,
-          state: data.state,
-          country: data.country,
-          email: data.email,
-          contactContainer: {
-            contactEmail: data.contactEmail,
-            contactPost: data.contactPost,
-            contactNone: !data.contactEmail && !data.contactPost,
-          },
-          join: data.join.toISOString().split("T")[0],
-          donation: data.donation,
-          confirmDonationDocumentContainer: {
-            confirmDonationDocument: data.confirmDonationDocument,
-          },
-          iban: data.iban,
-          bic: data.bic,
-          confirmPayment: data.confirmPayment,
-          confirmPaymentContainer: {
-            confirmationMail: data.email,
-          },
-          confirmDataProtectionContainer: {
-            confirmDataProtection: data.confirmDataProtection,
-          },
+          allData: JSON.stringify({
+            gender: data.gender,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            birthday: data.birthday.toISOString().split("T")[0],
+            street: data.street,
+            postalCode: data.postalCode,
+            city: data.city,
+            state: data.state,
+            country: data.country,
+            email: data.email,
+            contactContainer: {
+              contactEmail: data.contactEmail,
+              contactPost: data.contactPost,
+              contactNone: !data.contactEmail && !data.contactPost,
+            },
+            join: data.join.toISOString().split("T")[0],
+            donation: data.donation,
+            confirmDonationDocumentContainer: {
+              confirmDonationDocument: data.confirmDonationDocument,
+            },
+            iban: data.iban,
+            bic: data.bic,
+            confirmPayment: data.confirmPayment,
+            confirmPaymentContainer: {
+              confirmationMail: data.email,
+            },
+            confirmDataProtectionContainer: {
+              confirmDataProtection: data.confirmDataProtection,
+            },
+          }),
+          email: data.email
         },
         confirmationMail: data.email,
       }),
     })
       .then((res) => {
-        console.log(res);
         if (!res.ok) {
           throw new Error("Status not ok.");
         }
@@ -112,13 +168,11 @@ export default function MemberForm() {
         setSuccess(1);
       });
   };
-  const eighteenYearsAgo = new Date();
-  const currentYear = eighteenYearsAgo.getFullYear();
-  eighteenYearsAgo.setFullYear(currentYear - 18);
+  const eighteenYearsAgo = getAgeLimit(18);
 
   return (
     <>
-      {success == 0 && (<FormSuccess/>)}
+      {success == 0 && <FormSuccess />}
       {success != 0 && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-12">
@@ -127,8 +181,8 @@ export default function MemberForm() {
                 Mitgliedsantrag
               </h2>
               <p className="mt-1 text-sm leading-6 text-gray-600">
-                Der Mitgliedsantrag muss bestätigt werden, gib also bitte
-                eine gültige E-Mail Adresse an.
+                Der Mitgliedsantrag muss bestätigt werden, gib also bitte eine
+                gültige E-Mail Adresse an.
               </p>
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -245,9 +299,9 @@ export default function MemberForm() {
                         required: true,
                         valueAsDate: true,
                         validate: {
-                          is_eighteen: (v) =>
-                            calculateAge(v) >= 18 ||
-                            "Du musst mindestens 18 Jahre alt sein.",
+                          is_seventeen: (v) =>
+                            calculateAge(v) >= 7 ||
+                            "Du musst mindestens 7 Jahre alt sein, um uns beizutreten.",
                           is_too_old: (v) =>
                             calculateAge(v) <= 150 ||
                             "Ich denke nicht, dass du schon 150 Jahre alt bist.",
@@ -484,11 +538,13 @@ export default function MemberForm() {
               </h2>
               <p className="mt-1 text-sm leading-6 text-gray-600">
                 Spenden, Mitgliedsbeiträge und sonstige Zuwendungen an den
-                Verein. Wir erheben einen Mitgliedsbeitrag von 24 € pro Jahr.
-                Die Mitgliedschaft ist jederzeit kündbar. Du hast angegeben,
-                dass du inklusive Mitgliedsbeitrag jährlich {sum} € spenden
+                Verein. Familien- und Partnermitgliedschaften sind vergünstigt.
+                Der Endbetrag wird automatisch berechnet. Alle Mitgliedschaften
+                sind jederzeit kündbar. Du hast angegeben, dass du inklusive
+                Mitgliedsbeitrag jährlich {calculateFee(watch())} € spenden
                 möchtest.
               </p>
+              {/*ToDo: Download Link*/}
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-3">
@@ -505,7 +561,11 @@ export default function MemberForm() {
                         valueAsDate: true,
                         validate: {
                           is_past: (v) =>
-                            v >= new Date() ||
+                            // yesterday
+                            v >=
+                              new Date(
+                                new Date().valueOf() - 1000 * 60 * 60 * 24
+                              ) ||
                             "Das Datum kann nicht in der Vergangenheit liegen.",
                         },
                       })}
@@ -544,11 +604,6 @@ export default function MemberForm() {
                       defaultValue={0}
                       min={0}
                       max={10000000}
-                      onChange={(e) =>
-                        isNaN(parseInt(e.target.value))
-                          ? setSum(24)
-                          : setSum(24 + parseInt(e.target.value))
-                      }
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -571,14 +626,31 @@ export default function MemberForm() {
                           htmlFor="confirmation-yes"
                           className="font-medium text-gray-900"
                         >
-                          Ich möchte eine Spendenbescheinigung über {sum} € zum
-                          Endes des Geschäftsjahres erhalten.
+                          Ich möchte eine Spendenbescheinigung über{" "}
+                          {calculateFee(watch())} € zum Endes des
+                          Geschäftsjahres erhalten.
                         </label>
                       </div>
                     </div>
                   </div>
                 </fieldset>
               </div>
+
+              <details className="text-base leading-7 text-gray-900 mt-8">
+                <summary className="font-semibold">
+                  Familien- und Partnermitgliedschaften
+                </summary>
+                <FamilyMembershipForm
+                  setValue={setValue}
+                  familyMembers={familyMembers}
+                  getValues={getValues}
+                  propagateError={setError}
+                  clearPropagateError={clearErrors}
+                />
+              </details>
+              <p className="col-span-full text-red-500">
+                {errors.relatives?.message}
+              </p>
             </div>
 
             <div className="border-b border-gray-900/10 pb-12">
