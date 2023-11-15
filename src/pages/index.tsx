@@ -259,7 +259,7 @@ export default function IndexPage() {
                 title="Der Kinderlicht Wallersdorf e.V."
                 description="Sieben engagierte Mitglieder gründen den Verein im Oktober 2018."
                 short="Die Gründung"
-                link="/die-gruendung"
+                link="/wie-alles-begann"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
