@@ -105,6 +105,7 @@ export const sourceNodes = async ({ actions, getNodesByType, createNodeId, creat
 };
 
 export async function createPages({ graphql, actions }) {
+	const { createPage } = actions;
 	const result = await graphql(`
       query {
         allMdx(filter: {frontmatter: {draft: {ne: true}}}) {

@@ -143,11 +143,13 @@ function FeatureSection() {
               </dl>
             </div>
           </div>
+          <div>
           <StaticImage
             alt="Unsere Vorstandschaft"
             src="../images/home/all.jpg"
-            className="lg:pr-8 lg:pt-4 rounded-3xl shadow-xl"
+            className="h-full w-full object-cover object-center rounded-3xl"
           />
+          </div>
         </div>
       </div>
       <div className="flex flex-wrap container items-center mt-8">
