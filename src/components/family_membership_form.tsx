@@ -103,7 +103,7 @@ export default function FamilyMembershipForm({
           >
             Anrede
           </label>
-          <div className="mt-2">
+          <div className="mt-2 sm:col-span-2 col-span-full">
             <select
               {...register("gender", { required: true })}
               id="member-gender"
@@ -117,7 +117,7 @@ export default function FamilyMembershipForm({
           </div>
           <ErrorMessage field={errors.gender} error="Anrede wird benötigt" />
         </div>
-        <div className="sm:col-span-2">
+        <div className="sm:col-span-2 col-span-full">
           <label
             className="font-medium text-gray-900"
             htmlFor="member-first-name"
@@ -138,7 +138,7 @@ export default function FamilyMembershipForm({
             error="Vorname wird benötigt"
           />
         </div>
-        <div className="sm:col-span-2">
+        <div className="sm:col-span-2 col-span-full">
           <label
             className="font-medium text-gray-900"
             htmlFor="member-last-name"
@@ -159,7 +159,7 @@ export default function FamilyMembershipForm({
             error="Nachname wird benötigt"
           />
         </div>
-        <div className="sm:col-span-2">
+        <div className="sm:col-span-3 col-span-full">
           <label className="font-medium text-gray-900" htmlFor="member-email">
             E-Mail
           </label>
@@ -184,7 +184,7 @@ export default function FamilyMembershipForm({
             }
           />
         </div>
-        <div className="col-span-2">
+        <div className="sm:col-span-3 col-span-full">
           <label
             htmlFor="member-birth"
             className="block text-sm font-medium leading-6 text-gray-900"
@@ -241,7 +241,7 @@ export default function FamilyMembershipForm({
             </div>
           </div>
           {exists && (
-            <div className="mt-6 space-y-6">
+            <div className="mt-6 space-y-6 col-span-full">
               <div className="relative flex gap-x-3">
                 <div className="flex h-6 items-center">
                   <input
@@ -289,7 +289,7 @@ export default function FamilyMembershipForm({
               </div>
             </div>
 
-            <div className="col-span-3">
+            <div className="sm:col-span-3 col-span-full">
               <label
                 htmlFor="member-postal-code"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -311,7 +311,7 @@ export default function FamilyMembershipForm({
               </div>
             </div>
 
-            <div className="col-span-3">
+            <div className="sm:col-span-3 col-span-full">
               <label
                 htmlFor="member-city"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -330,7 +330,7 @@ export default function FamilyMembershipForm({
               </div>
             </div>
 
-            <div className="sm:col-span-3 col-span-3">
+            <div className="sm:col-span-3 col-span-full">
               <label
                 htmlFor="member-region"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -352,7 +352,7 @@ export default function FamilyMembershipForm({
               </div>
             </div>
 
-            <div className="sm:col-span-3 col-span-3">
+            <div className="sm:col-span-3 col-span-full">
               <label
                 htmlFor="member-country"
                 className="block text-sm font-medium leading-6 text-gray-900"

@@ -105,27 +105,6 @@ export const sourceNodes = async ({ actions, getNodesByType, createNodeId, creat
 };
 
 export async function createPages({ graphql, actions }) {
-	const { createPage, createRedirect } = actions;
-	createRedirect({
-		fromPath: `/hilf-mit/werde-mitglied`,
-		toPath: `/beitreten`,
-		redirectInBrowser: true,
-		isPermanent: true,
-	});
-
-	createRedirect({
-		fromPath: `/hilf-mit/spenden`,
-		toPath: `/quittung`,
-		redirectInBrowser: true,
-		isPermanent: true,
-	});
-
-	createRedirect({
-		fromPath: `/ueber-uns`,
-		toPath: `/wie-ales-begann`,
-		redirectInBrowser: true,
-		isPermanent: true,
-	});
 	const result = await graphql(`
       query {
         allMdx(filter: {frontmatter: {draft: {ne: true}}}) {
