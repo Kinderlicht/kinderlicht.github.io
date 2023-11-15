@@ -4,6 +4,7 @@ import { createFilePath } from "gatsby-source-filesystem";
 import { reporter } from "gatsby-cli/lib/reporter/reporter.js";
 import authorsData from './src/content/authors.json' assert { type: 'json' };
 import sponsorsData from './src/content/sponsors.json' assert { type: 'json' };
+import boardData from './src/content/board.json' assert { type: 'json' };
 
 
 export async function onCreateNode({ node, getNode, actions }) {
@@ -46,6 +47,13 @@ export const sourceNodes = async ({ actions, getNodesByType, createNodeId, creat
 		externalImage: String
 		link: String!
 	}
+
+	type Board implements Node {
+		name: String!
+		location: String!
+		image: File @link(by: "relativePath")
+		role: String!
+	}
   `);
 
 	Object.keys(authorsData).forEach(authorId => {
@@ -80,10 +88,44 @@ export const sourceNodes = async ({ actions, getNodesByType, createNodeId, creat
 			},
 		});
 	});
+
+	boardData.forEach((board, index) => {
+		const nodeId = createNodeId(`Board-${index}`);
+		createNode({
+			...board,
+			id: nodeId,
+			parent: null,
+			children: [],
+			internal: {
+				type: 'Board',
+				contentDigest: createContentDigest(board),
+			},
+		});
+	});
 };
 
 export async function createPages({ graphql, actions }) {
-	const { createPage } = actions;
+	const { createPage, createRedirect } = actions;
+	createRedirect({
+		fromPath: `/hilf-mit/werde-mitglied`,
+		toPath: `/beitreten`,
+		redirectInBrowser: true,
+		isPermanent: true,
+	});
+
+	createRedirect({
+		fromPath: `/hilf-mit/spenden`,
+		toPath: `/quittung`,
+		redirectInBrowser: true,
+		isPermanent: true,
+	});
+
+	createRedirect({
+		fromPath: `/ueber-uns`,
+		toPath: `/wie-ales-begann`,
+		redirectInBrowser: true,
+		isPermanent: true,
+	});
 	const result = await graphql(`
       query {
         allMdx(filter: {frontmatter: {draft: {ne: true}}}) {

@@ -1,7 +1,7 @@
 import * as React from "react";
-import { HeadFC, PageProps, Link } from "gatsby";
+import { HeadFC, Link } from "gatsby";
 import Layout from "../components/layout";
-import { GatsbyImage, StaticImage, getImage } from "gatsby-plugin-image";
+import { StaticImage } from "gatsby-plugin-image";
 
 // component for links
 function HistoryLink({
@@ -19,7 +19,7 @@ function HistoryLink({
   visual: string | React.ReactNode;
   size: number;
 }) {
-  const width = size === 1 ? "w-full" : (size === 2 ? "w-1/2" : "w-1/3");
+  const width = size === 1 ? "w-full" : size === 2 ? "w-1/2" : "w-1/3";
   return (
     <Link to={link} className={`w-full md:${width} p-4`}>
       <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
@@ -49,23 +49,125 @@ function HistoryLink({
   );
 }
 
+function FeatureSection() {
+  return (
+    <div className="overflow-hidden bg-white">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+          <div className="lg:pr-8 lg:pt-4">
+            <div className="lg:max-w-lg">
+              <h2 className="text-base font-bold">
+                Wer samma mia,{" "}
+                <span className="text-primary dark:text-primary-400 no-underline">
+                  wos damma mia?
+                </span>
+              </h2>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                Gemeinsam weiter!
+              </p>
+              <p className="mt-6 text-lg leading-8 text-gray-600">
+                Wir, der Kinderlicht Wallersdorf e. V., sind eine bunte Truppe,
+                die bereits seit einigen Jahre durch Veranstaltungen und
+                Projekte Spendengelder für sozial benachteiligte (Armut,
+                Krankheit, Behinderung, etc.) Kinder und Jugendliche sammelt und
+                regional gezielt unterstützt, dort wo Hilfe benötigt wird.
+                Unsere Projekte sind dabei so vielfältig wie wir selbst. Dabei
+                steht bei uns die Freude an der Zusammenarbeit und der
+                Gemeinschaftssinn im Vordergrund, mit dem Ziel zu helfen und zu
+                unterstützen!
+              </p>
+              <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
+                <div className="relative pl-9">
+                  <dt className="inline font-semibold text-gray-900">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="absolute left-1 top-1 h-5 w-5 text-primary bi bi-stars"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z" />
+                    </svg>
+                    Effektiv.{" "}
+                  </dt>
+                  <dd className="inline">
+                    Der Kinderlicht Wallersdorf e.V. setzt sich
+                    leidenschaftlich dafür ein, Kindern und Familien in
+                    schwierigen Situationen zu helfen. Dank großzügiger Spenden
+                    und kreativer Aktionen können wir effektiv und mit möglichst
+                    wenige Bürokratie Unterstützung bieten.
+                  </dd>
+                </div>
+                <div className="relative pl-9">
+                  <dt className="inline font-semibold text-gray-900">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="text-primary absolute left-1 top-1 h-5 w-5 bi bi-people-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                    </svg>
+                    Gemeinschaftlich.{" "}
+                  </dt>
+                  <dd className="inline">
+                    Bei uns arbeitet ein engagiertes Team Hand in Hand und schafft
+                    Möglichkeiten, Kindern und Familien in Not zu helfen.
+                  </dd>
+                </div>
+                <div className="relative pl-9">
+                  <dt className="inline font-semibold text-gray-900">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="text-primary absolute left-1 top-1 h-5 w-5 bi bi-brush-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.118 8.118 0 0 1-3.078.132 3.659 3.659 0 0 1-.562-.135 1.382 1.382 0 0 1-.466-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.394-.197.625-.453.867-.826.095-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.201-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.176-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z" />
+                    </svg>
+                    Kreativ.{" "}
+                  </dt>
+                  <dd className="inline">
+                    Wir sind bekannt für unsere verrückten Aktionen, die nicht
+                    nur Spaß machen, sondern auch viel Gutes bewirken. Dank
+                    der großartigen Unterstützung von allen Seiten 
+                    können wir kreativ sein und bedürftigen
+                    Kindern und Familien Hoffnung und Hilfe schenken.
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <StaticImage
+            alt="Unsere Vorstandschaft"
+            src="../images/home/all.jpg"
+            className="lg:pr-8 lg:pt-4 rounded-3xl shadow-xl"
+          />
+        </div>
+      </div>
+      <div className="flex flex-wrap container items-center mt-8">
+        <StaticImage
+          src="../images/home/motto.svg"
+          alt="Weil nix wird eh scho z'oft do."
+          className="m-auto w-full aspect-[3755/227]"
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function IndexPage() {
   return (
     <Layout>
+      <StaticImage src="../images/home/banner.svg" alt="Kinderlicht Banner" className="my-4" quality={100}/>
       <div>
-        <section className="text-gray-600 body-font">
-          <div className="container px-5 mt-24 mx-auto max-w-7x1">
-            <div className="flex flex-wrap w-full mb-4 p-4">
-              <div className="w-full mb-6 lg:mb-0">
-                <h2 className="text-3xl font-bold">
-                  Kinderlicht Wallersdorf{" "}
-                  <span className="text-primary dark:text-primary-400 no-underline">
-                    e. V.
-                  </span>
-                </h2>
-                <div className="h-1 w-20 bg-primary rounded"></div>
-              </div>
-            </div>
+        <section className="text-gray-600 body-font mt-24">
+          <div className="container px-5 mt-16 mx-auto max-w-7x1">
             <div className="flex flex-wrap -m-4">
               <HistoryLink
                 title="Ich suche Hilfe!"
@@ -110,6 +212,12 @@ export default function IndexPage() {
                 size={3}
               />
             </div>
+          </div>
+        </section>
+        <section className="text-gray-600 body-font">
+          <div className="container px-5 mt-24 mx-auto max-w-7x1">
+            <div className="flex flex-wrap w-full mb-4 p-4"></div>
+            <FeatureSection></FeatureSection>
           </div>
         </section>
         <section className="text-gray-600 body-font">

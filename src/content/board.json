@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Enrico Koch",
+        "role": "Erster Vorstand",
+        "email": "enrico.koch@kinderlicht-wallersdorf.de",
+        "image": "board/enrico.png"
+    },
+    {
+        "name": "Christina Weig",
+        "role": "Zweite Vorständin",
+        "email": "christina.weig@kinderlicht-wallersdorf.de",
+        "image": "board/christina.png"
+    },
+    {
+        "name": "Julian Dietlmeier",
+        "role": "Kassier",
+        "email": "julian.dietlmeier@kinderlicht-wallersdorf.de",
+        "image": "board/julian.png"
+    },
+    {
+        "name": "Matthias Kettl",
+        "role": "Schriftführer",
+        "email": "matthias.kettl@kinderlicht-wallersdorf.de",
+        "image": "board/matthias.png"
+    },
+    {
+        "name": "Anna-Lena Heine",
+        "role": "Erste Beisitzerin",
+        "email": "annalena.heine@kinderlicht-wallersdorf.de",
+        "image": "board/anna.png"
+    },
+    {
+        "name": "Ramona Trautmannsberger",
+        "role": "Zweite Beisitzerin",
+        "email": "ramona.trautmannsberger@kinderlicht-wallersdorf.de",
+        "image": "board/ramona.png"
+    }
+]

@@ -38,8 +38,8 @@ export default function DonationReceipt() {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm<Member>({ mode: "onChange" });
-  let [firstEmail, setFirstEmail] = React.useState("");
   let [payment, setPayment] = React.useState("");
   let [success, setSuccess] = React.useState(-1);
   let [recover, setRecover] = React.useState("");
@@ -177,7 +177,6 @@ export default function DonationReceipt() {
                         })}
                         id="email"
                         type="email"
-                        onBlur={(e) => setFirstEmail(e.target.value)}
                         autoComplete="email"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
@@ -461,7 +460,7 @@ export default function DonationReceipt() {
                             required: payment == "per Paypal",
                             pattern: /^\S+@\S+$/i,
                           })}
-                          defaultValue={firstEmail}
+                          defaultValue={watch().email || ""}
                           id="paypal-mail"
                           type="email"
                           autoComplete="email"
