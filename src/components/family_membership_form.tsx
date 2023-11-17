@@ -18,7 +18,7 @@ export type Relative = {
   country?: string;
 };
 
-export function checkFamilyMembers(familyMembers: Relative[], birthday: Date, strict=false) {
+export function checkFamilyMembers(familyMembers: Relative[], birthday: Date) {
   const isChild = birthday && calculateAge(birthday) < 18;
   const countChildren = familyMembers.filter(
     (member) => member.birthday && calculateAge(member.birthday) < 18
@@ -33,7 +33,7 @@ export function checkFamilyMembers(familyMembers: Relative[], birthday: Date, st
     if (countAdults > 2) {
       return "Es dürfen maximal zwei Erziehungsberechtigte pro Familie beitreten.";
     }
-    if (strict && countAdults == 0) {
+    if (countChildren >= 2 && countAdults == 0) {
       return "Es muss mindestens ein/e Erziehungsberechtigte/r pro Familie beitreten.";
     }
   } else {
