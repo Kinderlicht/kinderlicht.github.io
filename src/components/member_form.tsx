@@ -111,14 +111,14 @@ export default function MemberForm() {
   const familyMembers = watch("relatives", []);
 
   const onSubmit: SubmitHandler<Member> = (data) => {
-    fetch("https://api.campai.com/formSubmissions/65552d674146670923e8f96c", {
+    fetch("https://api.campai.com/formSubmissions/64edd24425030d7d29ddfecc", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify({
         formData: {
-          allData: JSON.stringify({
+          // allData: JSON.stringify({
             gender: data.gender,
             firstName: data.firstName,
             lastName: data.lastName,
@@ -129,27 +129,17 @@ export default function MemberForm() {
             state: data.state,
             country: data.country,
             email: data.email,
-            contactContainer: {
-              contactEmail: data.contactEmail,
-              contactPost: data.contactPost,
-              contactNone: !data.contactEmail && !data.contactPost,
-            },
+            relatives: JSON.stringify(data.relatives),
+            contactContainer: [data.contactEmail? "Email" : "keine Emails", data.contactPost? "Post" : "keine Post"],
             join: data.join.toISOString().split("T")[0],
             donation: data.donation,
-            confirmDonationDocumentContainer: {
-              confirmDonationDocument: data.confirmDonationDocument,
-            },
+            confirmDonationDocumentContainer: [data.confirmDonationDocument],
             iban: data.iban,
             bic: data.bic,
-            confirmPayment: data.confirmPayment,
-            confirmPaymentContainer: {
-              confirmationMail: data.email,
-            },
-            confirmDataProtectionContainer: {
-              confirmDataProtection: data.confirmDataProtection,
-            },
-          }),
-          email: data.email
+            confirmPaymentContainer: [data.confirmPayment.toString()],
+            confirmDataProtectionContainer: [data.confirmDataProtection.toString()],
+          //}),
+          //email: data.email
         },
         confirmationMail: data.email,
       }),
@@ -635,6 +625,8 @@ export default function MemberForm() {
                   </div>
                 </fieldset>
               </div>
+
+              <div className="col-span-full text-2xl mt-2 text-center font-semibold">Jährlicher Betrag: <span className="text-primary">{calculateFee(watch())} €</span></div>
 
               <details className="text-base leading-7 text-gray-900 mt-8">
                 <summary className="font-semibold">
