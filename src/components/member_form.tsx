@@ -58,10 +58,13 @@ function getAgeLimit(maxAge: number) {
 }
 
 function baseFee(member: Member): number {
-  if (member.birthday === undefined || member.relatives === undefined) {
+  if (member.birthday === undefined) {
     return 24;
   }
   const isChild = calculateAge(member.birthday) < 18;
+  if (member.relatives === undefined || member.relatives.length == 0) {
+    return isChild ? 12 : 24;
+  }
   const numChildren =
     member.relatives.filter(
       (member) => member.birthday && calculateAge(member.birthday) < 18
@@ -111,38 +114,44 @@ export default function MemberForm() {
   const familyMembers = watch("relatives", []);
 
   const onSubmit: SubmitHandler<Member> = (data) => {
+    const request = {
+      formData: {
+        // allData: JSON.stringify({
+        gender: data.gender,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        birthday: data.birthday.toISOString().split("T")[0],
+        street: data.street,
+        postalCode: data.postalCode,
+        city: data.city,
+        state: data.state,
+        country: data.country,
+        email: data.email,
+        contactContainer: [
+          data.contactEmail ? "Email" : "keine Emails",
+          data.contactPost ? "Post" : "keine Post",
+        ],
+        join: data.join.toISOString().split("T")[0],
+        relatives: JSON.stringify(data.relatives),
+        donation: data.donation,
+        confirmDonationDocumentContainer: [
+          data.confirmDonationDocument.toString(),
+        ],
+        iban: data.iban,
+        bic: data.bic,
+        confirmPaymentContainer: [data.confirmPayment.toString()],
+        confirmDataProtectionContainer: [data.confirmDataProtection.toString()],
+        //}),
+        //email: data.email
+      },
+      confirmationMail: data.email,
+    };
     fetch("https://api.campai.com/formSubmissions/64edd24425030d7d29ddfecc", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({
-        formData: {
-          // allData: JSON.stringify({
-            gender: data.gender,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            birthday: data.birthday.toISOString().split("T")[0],
-            street: data.street,
-            postalCode: data.postalCode,
-            city: data.city,
-            state: data.state,
-            country: data.country,
-            email: data.email,
-            relatives: JSON.stringify(data.relatives),
-            contactContainer: [data.contactEmail? "Email" : "keine Emails", data.contactPost? "Post" : "keine Post"],
-            join: data.join.toISOString().split("T")[0],
-            donation: data.donation,
-            confirmDonationDocumentContainer: [data.confirmDonationDocument],
-            iban: data.iban,
-            bic: data.bic,
-            confirmPaymentContainer: [data.confirmPayment.toString()],
-            confirmDataProtectionContainer: [data.confirmDataProtection.toString()],
-          //}),
-          //email: data.email
-        },
-        confirmationMail: data.email,
-      }),
+      body: JSON.stringify(request),
     })
       .then((res) => {
         if (!res.ok) {
@@ -153,8 +162,8 @@ export default function MemberForm() {
       .then((_) => {
         setSuccess(0);
       })
-      .catch((_) => {
-        setRecover(JSON.stringify(data));
+      .catch((e) => {
+        setRecover(JSON.stringify(request));
         setSuccess(1);
       });
   };
@@ -534,7 +543,17 @@ export default function MemberForm() {
                 Mitgliedsbeitrag jährlich {calculateFee(watch())} € spenden
                 möchtest.
               </p>
-              {/*ToDo: Download Link*/}
+              {
+                /*ToDo: Download Link*/ calculateAge(watch("birthday")) <
+                  18 && (
+                  <p className="text-primary text-sm leading-6">
+                    Da du noch unter 18 Jahre alt bist, erhältst du von uns
+                    separat eine zweite E-Mail mit einem Dokument, dass deine
+                    Erziehungsberechtigten postalisch und unterzeichnet an uns
+                    zurückschicken müssen.
+                  </p>
+                )
+              }
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-3">
@@ -626,7 +645,10 @@ export default function MemberForm() {
                 </fieldset>
               </div>
 
-              <div className="col-span-full text-2xl mt-2 text-center font-semibold">Jährlicher Betrag: <span className="text-primary">{calculateFee(watch())} €</span></div>
+              <div className="col-span-full text-2xl mt-2 text-center font-semibold">
+                Jährlicher Betrag:{" "}
+                <span className="text-primary">{calculateFee(watch())} €</span>
+              </div>
 
               <details className="text-base leading-7 text-gray-900 mt-8">
                 <summary className="font-semibold">
@@ -765,7 +787,6 @@ export default function MemberForm() {
               </div>
             </div>
           </div>
-
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
               type="submit"
