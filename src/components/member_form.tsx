@@ -38,6 +38,9 @@ interface Member {
 }
 
 export function calculateAge(birthDate: Date) {
+  if (birthDate === undefined) {
+    return 18;
+  }
   const today = new Date();
   let age_now = today.getFullYear() - birthDate.getFullYear();
   const m = today.getMonth() - birthDate.getMonth();
