@@ -19,6 +19,7 @@ interface Member {
   firstName: string;
   lastName: string;
   birthday: Date;
+  date: Date;
   email: string;
   street: string;
   postalCode: string;
@@ -30,6 +31,7 @@ interface Member {
   bic: string;
   how: string;
   paypalMail: string;
+  text: string;
   confirmDataProtection: boolean;
 }
 
@@ -56,6 +58,7 @@ export default function DonationReceipt() {
           firstName: data.firstName,
           lastName: data.lastName,
           birthday: data.birthday.toISOString().split("T")[0],
+          date: data.date.toISOString().split("T")[0],
           email: data.email,
           street: data.street,
           postalCode: data.postalCode.toString(),
@@ -67,9 +70,8 @@ export default function DonationReceipt() {
           bic: data.bic || "",
           paypalMail: data.paypalMail || "",
           money: data.money,
-          confirmationDataProtectionContainer: {
-            confirmationDataProtection: data.confirmDataProtection,
-          },
+          text: data.text,
+          confirmationDataProtectionContainer: data.confirmDataProtection,
         },
         confirmationMail: data.email,
       }),
@@ -90,7 +92,7 @@ export default function DonationReceipt() {
   };
   return (
     <>
-      {success == 0 && (<FormSuccess/>)}
+      {success == 0 && <FormSuccess />}
       {success != 0 && (
         <>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -407,8 +409,10 @@ export default function DonationReceipt() {
                             {...register("iban", {
                               required: payment == "per Banküberweisung",
                               validate: {
-                                ibanValidation: (v) => require("iban").isValid(v) || "IBAN ungültig."
-                              }
+                                ibanValidation: (v) =>
+                                  require("iban").isValid(v) ||
+                                  "IBAN ungültig.",
+                              },
                             })}
                             type="text"
                             id="iban"
@@ -416,7 +420,11 @@ export default function DonationReceipt() {
                           />
                           <ErrorMessage
                             field={errors.iban}
-                            error={errors.iban?.message? errors.iban.message : "IBAN wird benötigt"}
+                            error={
+                              errors.iban?.message
+                                ? errors.iban.message
+                                : "IBAN wird benötigt"
+                            }
                           ></ErrorMessage>
                         </div>
                       </div>
@@ -478,6 +486,51 @@ export default function DonationReceipt() {
                       </div>
                     </div>
                   )}
+                </div>
+
+                <div className="col-span-full my-2">
+                  <label
+                    htmlFor="date"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Datum der Spende
+                  </label>
+                  <div className="my-2">
+                    <input
+                      id="date"
+                      type="date"
+                      {...register("date", {
+                        required: true,
+                        valueAsDate: true,
+                      })}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    <ErrorMessage
+                      field={errors.date}
+                      error={
+                        errors.date?.message
+                          ? errors.date?.message
+                          : "Bitte gib an, wann du die Spende ungefähr getätigt hast."
+                      }
+                    ></ErrorMessage>
+                  </div>
+                </div>
+
+                <div className="sm:col-span-full my-2">
+                  <label
+                    htmlFor="text"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Sonstige Anmerkungen (optional):
+                  </label>
+                  <div className="my-2">
+                    <input
+                      {...register("text")}
+                      type="text"
+                      id="text"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -550,7 +603,7 @@ export default function DonationReceipt() {
               </button>
             </div>
           </form>
-          {success == 1 && (<FormFail recover={recover}/>)}
+          {success == 1 && <FormFail recover={recover} />}
         </>
       )}
     </>
