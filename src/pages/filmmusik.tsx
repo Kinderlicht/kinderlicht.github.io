@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../components/layout";
 import ConcertForm from "../components/concert_form";
-import { HeadFC } from "gatsby";
+import { HeadFC, Link } from "gatsby";
 
 export default function Home() {
   return (
@@ -25,8 +25,11 @@ export default function Home() {
         </p>
         <p>
           Schreibe uns schnell und unverbindlich eine Nachricht und wir melden
-          uns bei dir!
+          uns bei dir! Mehr Informationen findest du in <Link className="text-indigo-500" to="/konzert-der-filmmusik">unserem Artikel.</Link>{" "}
+          Einen Überblick über das Konzert der Filmmusik 2020 findest du <Link className="text-indigo-500" to="/eine-musikalische-reise-durch-die-welt-der-filmmusik/">hier.</Link>
+
         </p>
+        
         <ConcertForm />
       </div>
     </Layout>
