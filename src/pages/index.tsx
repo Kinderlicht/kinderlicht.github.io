@@ -414,6 +414,49 @@ export default function IndexPage() {
                 size={2}
               />
             </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2023</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              <HistoryLink
+                title="Kinderlicht in Krisenzeiten"
+                description="Auch während der Krisenzeiten konnten wir einige Spenden sammeln und so weiterhelfen."
+                short="Corona Krise"
+                link="/masken-fuer-ein-kinderlaecheln"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/corona.jpg"
+                    alt="Corona Krise"
+                  />
+                }
+                size={3}
+              />
+              <HistoryLink
+                title="Kinderlicht wird 5 Jahre alt"
+                description="Der Kinderlicht Wallersdorf e.V. feiert sein 5-jähriges Bestehen. Wir blicken zurück auf viele erfolgreiche Projekte und freuen uns auf die Zukunft."
+                short="Grillfest zum Jubiläum"
+                link="https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0"
+                visual="https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0"
+                size={3}
+              />
+              <HistoryLink
+                title="Schneeball mit Kolping"
+                description="Der Schneeball 2023 ist das Markenzeichen des Kinderlicht Wallersdorf e.V. und konnte in Zusammenarbeit mit Kolping und mit über 110 Gästen wieder seinen Charme entfalten."
+                short="Herzlichen Dank an Kolping für die einzigartige Zusammenarbeit im Schneeball 2023!"
+                link="/schneeball-2023"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/news/schneeball-2023.jpg"
+                    alt="Corona Krise"
+                  />
+                }
+                size={3}
+              />
+            </div>
           </div>
         </section>
       </div>
