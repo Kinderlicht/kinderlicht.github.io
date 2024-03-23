@@ -421,15 +421,15 @@ export default function IndexPage() {
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
-                title="Kinderlicht in Krisenzeiten"
-                description="Auch während der Krisenzeiten konnten wir einige Spenden sammeln und so weiterhelfen."
-                short="Corona Krise"
-                link="/masken-fuer-ein-kinderlaecheln"
+                title="DKMS Registrierungsaktion"
+                description="In Zusammenarbeit mit der DKMS konnten wir eine Registrierungsaktion durchführen und so potentielle Stammzellenspender*innen finden."
+                short="Stammzellenspende"
+                link="https://www.facebook.com/KinderlichtWallersdorf/posts/pfbid02dq3FW8QqHRviX7G4XhAZ7UhXXVPw6QWTgeR9ysvVGrf1TYADqyh1dSoVoJqzjZu2l"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/corona.jpg"
-                    alt="Corona Krise"
+                    src="../images/home/stammzellenspende.jpg"
+                    alt="Stammzellenspende"
                   />
                 }
                 size={3}
@@ -438,20 +438,26 @@ export default function IndexPage() {
                 title="Kinderlicht wird 5 Jahre alt"
                 description="Der Kinderlicht Wallersdorf e.V. feiert sein 5-jähriges Bestehen. Wir blicken zurück auf viele erfolgreiche Projekte und freuen uns auf die Zukunft."
                 short="Grillfest zum Jubiläum"
-                link="https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0"
-                visual="https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0"
+                link="https://www.facebook.com/KinderlichtWallersdorf/posts/pfbid02Y28G7fR1RaDGs9SDZQdZDDmWyTQKxqnxWKok6B4NCnK1bVSFnemQ34mL8SNmAnzml"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/news/jubilaeum-2023.jpg"
+                    alt="5 Jahre Kinderlicht - Gruppenbild"
+                  />
+                }
                 size={3}
               />
               <HistoryLink
                 title="Schneeball mit Kolping"
                 description="Der Schneeball 2023 ist das Markenzeichen des Kinderlicht Wallersdorf e.V. und konnte in Zusammenarbeit mit Kolping und mit über 110 Gästen wieder seinen Charme entfalten."
-                short="Herzlichen Dank an Kolping für die einzigartige Zusammenarbeit im Schneeball 2023!"
+                short="Kolping und Kinderlicht begeistern"
                 link="/schneeball-2023"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/news/schneeball-2023.jpg"
-                    alt="Corona Krise"
+                    alt="Schneeball 2023"
                   />
                 }
                 size={3}
