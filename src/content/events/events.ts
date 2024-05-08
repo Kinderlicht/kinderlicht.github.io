@@ -4,6 +4,25 @@ export type Event = EventAttributes;
 
 export const events: Event[] = [
     {
+        "start": [2024, 7, 13, 19, 30],
+        "duration": { "hours": 3 },
+        "startInputType": "local",
+        "startOutputType": "local",
+        "title": "Konzert der Filmmusik 2.0",
+        "description": "Das Konzert der Filmmusik geht in die zweite Runde! Wir freuen uns auf einen Abend voller schöner Momente mit ausgezeichneten KünstlerInnen.",
+        "location": "Mehrgenerationen Park, Auf d. Oed 40A, 94522 Wallersdorf",
+        "url": "https://form.campai.com/2UDVjKg6BbDW",
+        "geo": { "lat": 48.737208, "lon": 12.7577644},
+        "categories": ["Veranstaltung", "Musik", "Tanzen"],
+        "status": "CONFIRMED",
+        "busyStatus": "BUSY",
+        "organizer": { "name": "Kinderlicht Wallersdorf e.V.", "email": "info@kinderlicht-wallersdorf.de" },
+        "attendees": [
+          { "name": "Kinderlicht Wallersdorf e.V.", "email": "info@kinderlicht-wallersdorf.de", "rsvp": true, "partstat": "ACCEPTED", "role": "REQ-PARTICIPANT" }
+        ],
+        "htmlContent": "Das Konzert der Filmmusik geht in die zweite Runde! Wir freuen uns auf einen Abend voller schöner Momente mit ausgezeichneten KünstlerInnen.",
+    },
+    {
         "start": [2024, 1, 3, 19, 0],
         "duration": { "hours": 3 },
         "startInputType": "local",
