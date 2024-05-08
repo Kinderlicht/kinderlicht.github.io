@@ -20,7 +20,7 @@ export const events: Event[] = [
         "attendees": [
           { "name": "Kinderlicht Wallersdorf e.V.", "email": "info@kinderlicht-wallersdorf.de", "rsvp": true, "partstat": "ACCEPTED", "role": "REQ-PARTICIPANT" }
         ],
-        "htmlContent": "Das Konzert der Filmmusik geht in die zweite Runde! Wir freuen uns auf einen Abend voller schöner Momente mit ausgezeichneten KünstlerInnen.",
+        "htmlContent": "Das Konzert der Filmmusik geht in die zweite Runde! Wir freuen uns auf einen Abend voller schöner Momente mit ausgezeichneten KünstlerInnen. <a href=\"https://form.campai.com/2UDVjKg6BbDW\">Hier klicken um zu reservieren.</a>",
     },
     {
         "start": [2024, 1, 3, 19, 0],
