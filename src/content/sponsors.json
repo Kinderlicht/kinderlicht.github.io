@@ -62,7 +62,7 @@
     {
         "name": "Eventbar Woibadinga",
         "location": "aus 94522 Wallersdorf",
-        "externalImage": "https://eventbar-woibadinga.de/wp-content/uploads/2021/05/Logo.png",
+        "image": "supporter/woibadinga.jpg",
         "link": "https://eventbar-woibadinga.de/"
     },
     {
@@ -80,7 +80,7 @@
     {
         "name": "Ortmaier Druck",
         "location": "aus 84160 Frontenhausen",
-        "externalImage": "https://ortmaier-druck.de/wp-content/uploads/2014/07/ortmaier_header_logo.png",
+        "externalImage": "https://ortmaier-druck.de/images/logos/ortmaierdruck-logo-003.svg",
         "link": "https://ortmaier-druck.de/"
     },
     {
@@ -164,7 +164,7 @@
     {
         "name": "SIXTY-UP",
         "location": "aus 94431 Pilsting",
-        "externalImage": "https://www.sixty-up.de/images/headers/BANDLOGO_2012_small.png",
+        "externalImage": "http://www.sixty-up.de/images/bandlogo_2012_small.png",
         "link": "https://www.sixty-up.de/"
     },
     {
