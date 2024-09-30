@@ -24,7 +24,7 @@
     "caniuse-lite": "^1.0.30001663",
     "esm": "^3.2.25",
     "flowbite": "^2.2.1",
-    "flowbite-react": "^0.6.4",
+    "flowbite-react": "^0.10.1",
     "gatsby": "^5.11.0",
     "gatsby-plugin-image": "^3.11.0",
     "gatsby-plugin-manifest": "^5.11.0",
