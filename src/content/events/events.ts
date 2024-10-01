@@ -3,6 +3,25 @@ import { EventAttributes } from "ics";
 export type Event = EventAttributes;
 
 export const events: Event[] = [
+      {
+        "start": [2024, 11, 23, 15, 30],
+        "duration": { "hours": 4, "minutes": 30 },
+        "startInputType": "local",
+        "startOutputType": "local",
+        "title": "Weihnachtsmarkt Waldwipfelweg",
+        "description": "Dieses Jahr laden wir alle Kinderlichter, Gönner und Freunde zu einem gemeinsamen Ausflug in der Weihnachtszeit ein. Vom Verein wird dabei ein Bus organisiert, der Eintritt übernommen und alle Teilnehmer/innen erhalten einen Verzehrgutschein.",
+        "location": "Volksfestplatz, 94522 Wallersdorf",
+        "url": "https://form.campai.com/sv8KAdBG3LCz",
+        "geo": { "lat": 48.7337222, "lon": 12.7515239},
+        "categories": ["Veranstaltung"],
+        "status": "CONFIRMED",
+        "busyStatus": "BUSY",
+        "organizer": { "name": "Kinderlicht Wallersdorf e.V.", "email": "info@kinderlicht-wallersdorf.de" },
+        "attendees": [
+          { "name": "Kinderlicht Wallersdorf e.V.", "email": "info@kinderlicht-wallersdorf.de", "rsvp": true, "partstat": "ACCEPTED", "role": "REQ-PARTICIPANT" }
+        ],
+        "htmlContent": "Dieses Jahr laden wir alle Kinderlichter, Gönner und Freunde zu einem gemeinsamen Ausflug in der Weihnachtszeit ein. Vom Verein wird dabei ein Bus organisiert, der Eintritt übernommen und alle Teilnehmer/innen erhalten einen Verzehrgutschein.. <a href=\"https://form.campai.com/sv8KAdBG3LCz\">Hier klicken um zu reservieren.</a>",
+    },
     {
         "start": [2024, 7, 13, 19, 30],
         "duration": { "hours": 3 },
