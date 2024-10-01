@@ -20,7 +20,7 @@ export const events: Event[] = [
         "attendees": [
           { "name": "Kinderlicht Wallersdorf e.V.", "email": "info@kinderlicht-wallersdorf.de", "rsvp": true, "partstat": "ACCEPTED", "role": "REQ-PARTICIPANT" }
         ],
-        "htmlContent": "Dieses Jahr laden wir alle Kinderlichter, Gönner und Freunde zu einem gemeinsamen Ausflug in der Weihnachtszeit ein. Vom Verein wird dabei ein Bus organisiert, der Eintritt übernommen und alle Teilnehmer/innen erhalten einen Verzehrgutschein.. <a href=\"https://form.campai.com/sv8KAdBG3LCz\">Hier klicken um zu reservieren.</a>",
+        "htmlContent": "Dieses Jahr laden wir alle Kinderlichter, Gönner und Freunde zu einem gemeinsamen Ausflug in der Weihnachtszeit ein. Vom Verein wird dabei ein Bus organisiert, der Eintritt übernommen und alle Teilnehmer/innen erhalten einen Verzehrgutschein. <a href=\"https://form.campai.com/sv8KAdBG3LCz\">Hier klicken um zu reservieren.</a>",
     },
     {
         "start": [2024, 7, 13, 19, 30],
