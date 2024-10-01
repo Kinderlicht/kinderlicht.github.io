@@ -155,7 +155,7 @@ export default function EventPage() {
 
     if (endDate !== "") {
       const endDateDate = new Date(endDate);
-      const eventEndDate = ConvertDateObject(e.start); // Events don't last longer than 24 hours, probably. Otherwise: Fuck you
+      const eventEndDate = ConvertDateObject(e.start); // Events don't last longer than 24 hours, probably
 
       if (eventEndDate > endDateDate) return false;
     }
