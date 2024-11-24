@@ -3,6 +3,7 @@ import { useForm, SubmitHandler, FieldError } from "react-hook-form";
 import FormFail from "./form_fail";
 import FormSuccess from "./form_success";
 import FamilyMembershipForm, { Relative } from "./family_membership_form";
+import { handleCookies, queryConsent } from "./cookie_manager";
 
 export function ErrorMessage({
   field,
@@ -172,10 +173,12 @@ export default function MemberForm() {
   };
   const eighteenYearsAgo = getAgeLimit(18);
 
+  let [consent, setConsent] = React.useState(queryConsent());
   return (
     <>
-      {success == 0 && <FormSuccess />}
-      {success != 0 && (
+      {handleCookies(["Formular für Spendenquittung"], setConsent)}
+      {success == 0 && consent && <FormSuccess />}
+      {success != 0 && consent && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">

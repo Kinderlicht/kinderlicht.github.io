@@ -4,6 +4,7 @@ import React from "react";
 import { HeadFC, Link, graphql } from "gatsby";
 import Layout from "../components/layout";
 import { GatsbyImage } from "gatsby-plugin-image";
+import { handleCookies, queryConsent } from "../components/cookie_manager";
 
 function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
   return (
@@ -112,6 +113,7 @@ export default function Home({
 }: {
   data: { sponsors: { nodes: Sponsor[] }; boards: { nodes: Board[] } };
 }) {
+  let [consent, setConsent] = React.useState(queryConsent());
   return (
     <Layout>
       <div className="p-4 container max-w-8xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
@@ -128,7 +130,6 @@ export default function Home({
               <BoardMemberCard member={member} key={index} />
             ))}
           </div>
-          
         </section>
 
         <div className="container my-24 mx-auto md:px-6">
@@ -142,11 +143,14 @@ export default function Home({
             Die Sortierung der Unterstützer erfolgte rein zufällig.
           </p>
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            {sponsors.nodes.map((sponsor, index) => (
-              <SponsorCard sponsor={sponsor} key={index} />
-            ))}
-          </div>
+          {handleCookies(["Die Logos unserer Unterstützer."], setConsent)}
+          {consent && (
+            <div className="grid gap-6 lg:grid-cols-3">
+              {sponsors.nodes.map((sponsor, index) => (
+                <SponsorCard sponsor={sponsor} key={index} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Layout>
