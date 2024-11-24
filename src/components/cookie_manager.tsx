@@ -17,13 +17,6 @@ export function handleCookies(content: [string], setConsent: CallableFunction) {
     Cookies.set("consent", "true", { expires: 365 }); // Expires in 1 year
     // Set cookie or perform other actions
   };
-  const id = window.setInterval(() => {
-    if (queryConsent()) {
-        setConsent(true);
-        setCurrConsent(true);
-        window.clearInterval(id);
-    }
-  }, 100);
   return (
     <div>
         Diese Website verwendet Cookies, um Inhalte und Funktionen
@@ -32,7 +25,7 @@ export function handleCookies(content: [string], setConsent: CallableFunction) {
         übermittelt. Weitere Informationen finden Sie in unserer{" "}
         <a href="/rechtliches">Datenschutzerklärung</a>. Bitte geben Sie uns
         Ihre Zustimmung, um die verborgenen Inhalte auf dieser Seite
-        freizuschalten. Folgende Inhalte sind verborgen:
+        anzuzeigen. Folgende Inhalte sind verborgen:
         <ul>
         {content.map((c, index) => (
             <li key={index}>{c}</li>

@@ -24,13 +24,6 @@ const CookieConsent = () => {
     // Remove cookie or perform other actions
   };
 
-  const id = window.setInterval(() => {
-    setHide(queryConsent());
-    if (hide) {
-      window.clearInterval(id);
-    }
-  }, 100);
-
   return (
     <>
       {!hide && (
