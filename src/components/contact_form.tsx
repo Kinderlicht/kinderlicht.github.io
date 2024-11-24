@@ -63,7 +63,7 @@ export default function MemberForm() {
   let [consent, setConsent] = React.useState(queryConsent());
   return (
     <>
-    {handleCookies(["Formular für Spendenquittung"], setConsent)}
+    {handleCookies(["Formular für Anfragen"], setConsent)}
     {success == 0 && consent && (<FormSuccess/>)}
     {success != 0 && consent &&
     <form onSubmit={handleSubmit(onSubmit)}>
