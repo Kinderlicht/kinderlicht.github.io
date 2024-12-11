@@ -52,7 +52,7 @@ function EventView(event: Event, index: number) {
             to={event["url"]}
             className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
           >
-            Anmelden{" "}
+            {!event["url"].includes("gewinnspiel") ? "Anmelden": "Teilnehmen"}{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
