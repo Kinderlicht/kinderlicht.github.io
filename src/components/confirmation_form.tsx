@@ -551,6 +551,17 @@ export default function DonationReceipt() {
                     hier
                   </a>
                   .
+                  Du erklärst dich damit einverstanden, dass alle Inhalte im 
+                  Formula an unsere Vereinsverwaltungssoftware Campai übermittelt.
+                  Die Datenschutzbestimmungen von Campai findest du{" "}
+                  <a
+                    className="text-indigo-600"
+                    href="https://www.campai.com/datenschutz"
+                    target="_blank"
+                  >
+                    hier
+                  </a>
+                  .
                 </p>
 
                 <div className="mt-2 grid grid-cols-1 gap-x-6 sm:grid-cols-6">

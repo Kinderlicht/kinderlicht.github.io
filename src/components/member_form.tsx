@@ -732,63 +732,74 @@ export default function MemberForm() {
               </div>
             </div>
             <div className="border-b border-gray-900/10 pb-12">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">
-                Datenschutz
-              </h2>
-              <p className="mt-1 text-sm leading-6 text-gray-600">
-                Die angegebenen Daten werden unter Berücksichtigung des
-                BundesDatenschutz-Gesetzes (BDSG) erhoben und ausschließlich für
-                Zwecke der Mitgliederverwaltung gespeichert und genutzt. Die
-                Bestimmungen findest du{" "}
-                <a
-                  className="text-indigo-600"
-                  href="/rechtliches"
-                  target="_blank"
-                >
-                  hier
-                </a>
-                .
-              </p>
+                <h2 className="text-base font-semibold leading-7 text-gray-900">
+                  Datenschutz
+                </h2>
+                <p className="mt-1 text-sm leading-6 text-gray-600">
+                  Die angegebenen Daten werden unter Berücksichtigung des
+                  BundesDatenschutz-Gesetzes (BDSG) erhoben und ausschließlich
+                  für Zwecke der Spendenverwaltung gespeichert und genutzt. Die
+                  Bestimmungen findest du{" "}
+                  <a
+                    className="text-indigo-600"
+                    href="/rechtliches"
+                    target="_blank"
+                  >
+                    hier
+                  </a>
+                  .
+                  Du erklärst dich damit einverstanden, dass alle Inhalte im 
+                  Formula an unsere Vereinsverwaltungssoftware Campai übermittelt.
+                  Die Datenschutzbestimmungen von Campai findest du{" "}
+                  <a
+                    className="text-indigo-600"
+                    href="https://www.campai.com/datenschutz"
+                    target="_blank"
+                  >
+                    hier
+                  </a>
+                  .
+                </p>
 
-              <div className="mt-2 grid grid-cols-1 gap-x-6 sm:grid-cols-6">
-                <fieldset className="col-span-full">
-                  <div className="mt-6 space-y-6">
-                    <div className="relative flex gap-x-3">
-                      <div className="flex h-6 items-center">
-                        <input
-                          {...register("confirmDataProtection", {
-                            required: true,
-                          })}
-                          id="data-yes"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                      </div>
-                      <div className="text-sm leading-6">
-                        <label
-                          htmlFor="data-yes"
-                          className="font-medium text-gray-900"
-                        >
-                          Ich habe die Datenschutzbestimmungen gelesen,
-                          verstanden und akzeptiert.
-                        </label>
-                        <ErrorMessage
-                          field={errors.confirmDataProtection}
-                          error="Du musst den Datenschutzbestimmungen zustimmen."
-                        ></ErrorMessage>
-                        <p className="text-gray-500">
-                          Du erklärst Dich damit einverstanden, dass Deine Daten
-                          zur Bearbeitung Deiner Anfrageverwendet werden.
-                          Weitere Informationen und Widerrufshinweise findest Du
-                          inunserer Datenschutzerklärung und in den Hinweisen
-                          zur Verarbeitung Deiner Daten.
-                        </p>
+                <div className="mt-2 grid grid-cols-1 gap-x-6 sm:grid-cols-6">
+                  <fieldset className="col-span-full">
+                    <div className="mt-6 space-y-6">
+                      <div className="relative flex gap-x-3">
+                        <div className="flex h-6 items-center">
+                          <input
+                            {...register("confirmDataProtection", {
+                              required: true,
+                            })}
+                            id="data-yes"
+                            type="checkbox"
+                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          />
+                        </div>
+                        <div className="text-sm leading-6">
+                          <label
+                            htmlFor="data-yes"
+                            className="font-medium text-gray-900"
+                          >
+                            Ich habe die Datenschutzbestimmungen gelesen,
+                            verstanden und akzeptiert.
+                          </label>
+                          <ErrorMessage
+                            field={errors.confirmDataProtection}
+                            error="Du musst den Datenschutzbestimmungen zustimmen."
+                          ></ErrorMessage>
+                          <p className="text-gray-500">
+                            Du erklärst Dich damit einverstanden, dass Deine
+                            Daten zur Bearbeitung Deiner Anfrageverwendet
+                            werden. Weitere Informationen und Widerrufshinweise
+                            findest Du inunserer Datenschutzerklärung und in den
+                            Hinweisen zur Verarbeitung Deiner Daten.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </fieldset>
+                  </fieldset>
+                </div>
               </div>
-            </div>
           </div>
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
