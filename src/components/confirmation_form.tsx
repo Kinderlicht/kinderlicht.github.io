@@ -3,7 +3,6 @@ import React from "react";
 import { useForm, SubmitHandler, FieldError } from "react-hook-form";
 import FormFail from "./form_fail";
 import FormSuccess from "./form_success";
-import { handleCookies, queryConsent } from "./cookie_manager";
 
 function ErrorMessage({
   field,
@@ -91,12 +90,10 @@ export default function DonationReceipt() {
         setSuccess(1);
       });
   };
-  let [consent, setConsent] = React.useState(queryConsent());
   return (
     <>
-      {handleCookies(["Formular für Spendenquittung"], setConsent)}
-      {success == 0 && consent && <FormSuccess />}
-      {success != 0 && consent && (
+      {success == 0 && <FormSuccess />}
+      {success != 0 && (
         <>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-12">

@@ -3,57 +3,6 @@ import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import { numberOfUpcomingEvents } from "../content/events/events";
 import { Navbar } from "flowbite-react";
-import { useState } from "react";
-import Cookies from "js-cookie";
-import { queryConsent } from "./cookie_manager";
-
-const CookieConsent = () => {
-  const [hide, setHide] = useState(Cookies.get("consent") !== undefined);
-
-  const handleAccept = () => {
-    setHide(true);
-    // Set the consent cookie value
-    Cookies.set("consent", "true", { expires: 365 }); // Expires in 1 year
-    // Set cookie or perform other actions
-  };
-
-  const handleDecline = () => {
-    setHide(true);
-    // Remove the consent cookie
-    Cookies.set("consent", "false", { expires: 1 });
-    // Remove cookie or perform other actions
-  };
-
-  return (
-    <>
-      {!hide && (
-        <div className="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4">
-          <p className="mb-2">
-            Diese Website verwendet Cookies, um Inhalte und Funktionen
-            bereitzustellen. Inhalte von externen Webseiten (z. B. Bilder)
-            werden eingebunden, und Formulare werden an die Vereinssoftware
-            Campai übermittelt. Weitere Informationen finden Sie in unserer{" "}
-            <a href="/rechtliches">Datenschutzerklärung</a>.
-          </p>
-          <div className="flex justify-end">
-            <button
-              className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mr-2"
-              onClick={handleAccept}
-            >
-              Zustimmen
-            </button>
-            <button
-              className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-              onClick={handleDecline}
-            >
-              Ablehnen
-            </button>
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
 
 // import { Helmet } from "react-helmet";
 
@@ -417,8 +366,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
-
-      {CookieConsent()}
     </>
   );
 }
