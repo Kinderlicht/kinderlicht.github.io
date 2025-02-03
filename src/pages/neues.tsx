@@ -1,8 +1,11 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React from "react";
+import "../styles/global.css";
 import Layout from "../components/layout";
 import { HeadFC, Link, graphql } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import type { BlogPost } from "../types/";
+import Timeline from "../components/timeline";
+import { Activity } from "../components/horizontal_scroll";
 
 const NewsEntry: React.FC<{ post: BlogPost }> = ({ post }) => {
   return (
@@ -48,12 +51,36 @@ const BlogIndex: React.FC<{ data: any }> = ({ data }) => {
   //   console.log("Is new?", isNewValue, first)
   // }, [])
 
+  const activities: Activity[] = [
+    {
+      title: 'Donation 1',
+      description: 'A generous donation to help children',
+      donation: 50,
+      date: '2025-01-15',
+    },
+    {
+      title: 'Donation 2',
+      description: 'Another donation supporting the cause',
+      donation: 75,
+      date: '2025-01-20',
+    },
+    {
+      title: 'Donation 3',
+      description: 'A further contribution for our kids',
+      donation: 100,
+      date: '2025-01-25',
+    },
+    // Add more activities as needed
+  ];
+
   return <Layout>
     <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
       <h2 className="mb-16 text-3xl font-bold text-center">
         Unsere{" "}
         <span className="text-primary dark:text-primary-400 no-underline">Neuigkeiten</span>
       </h2>
+
+      <Timeline activities={activities}/>
 
       <Link
         rel="noopener noreferrer"

@@ -3,3 +3,145 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.flame-container{
+  margin-top: auto;
+  margin-left: 50%;
+  margin-right: 50%;
+  margin-bottom: auto;
+  animation-name: flame-flicker;
+  animation-duration:1000ms;
+  animation-delay:800ms;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.flame-flame{
+  position:relative;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+  transform:rotate(-45deg);
+}
+
+.flame-yellow{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background:gold;
+  box-shadow: 0px 0px 9px 4px gold;
+}
+
+.flame-orange{
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  width: 40px;
+  height: 40px;
+  background:orange;
+  box-shadow: 0px 0px 9px 4px orange;
+}
+
+.flame-red{
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  width: 50px;
+  height: 50px;
+  background:OrangeRed;
+  box-shadow: 0px 0px 5px 4px OrangeRed;
+}
+
+.flame-white{
+  width: 30px;
+  height: 30px;
+  background:white;
+  box-shadow: 0px 0px 9px 4px white;
+}
+
+@keyframes flame-flicker{
+  0%   {transform: rotate(-1deg);}
+  20%  {transform: rotate(1deg);}
+  40%  {transform: rotate(-1deg);}
+  60%  {transform: rotate(1deg) scaleY(1.02);}
+  80%  {transform: rotate(-2deg) scaleY(0.98);}
+  100% {transform: rotate(1deg);}
+}
+
+/* Hide scrollbar in WebKit-based browsers */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar in Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+
+@keyframes money-added-keyframes {
+  0% {
+    color: #FFD700;
+    transform: scale(1.2);
+    text-shadow: 0 0 10px #FFD700;
+  }
+  20% {
+    transform: scale(1) rotate(-2deg);
+  }
+  40% {
+    transform: scale(1.1) rotate(2deg);
+  }
+  60% {
+    transform: scale(1) rotate(-2deg);
+  }
+  80% {
+    transform: scale(1.1) rotate(2deg);
+  }
+  100% {
+    color: #FFD700;
+    transform: scale(1) rotate(0);
+    text-shadow: none;
+  }
+}
+.money-added {
+  animation: money-added-keyframes 1s ease-in-out;
+}
+
+/* Floating Text Animation */
+@keyframes float-up {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -20px) scale(1.3);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50px) scale(0.8);
+  }
+}
+.float-up-animation {
+  animation: float-up 1s ease-out forwards;
+}
+
+.fade-out-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  mask-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  -webkit-mask-size: 100% 100%;
+}
