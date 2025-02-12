@@ -4,7 +4,7 @@ export type Event = EventAttributes;
 
 export const events: Event[] = [
        {
-         "start": [2025, 14, 3, 18, 30],
+         "start": [2025, 3, 14, 18, 30],
          "duration": { "hours": 3, "minutes": 30 },
          "startInputType": "local",
          "startOutputType": "local",
