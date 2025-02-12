@@ -4,11 +4,28 @@ export type Event = EventAttributes;
 
 export const events: Event[] = [
        {
+         "start": [2025, 14, 3, 18, 30],
+         "duration": { "hours": 3, "minutes": 30 },
+         "startInputType": "local",
+         "startOutputType": "local",
+         "title": "Jahreshauptversammlung 2025",
+         "description": "Der Kinderlicht Wallersdorf e.V. läd zur diesjährigen Jahreshauptversammlung ein.",
+         "location": "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+         "geo": { "lat": 48.738713, "lon": 12.7486027},
+         "categories": ["Veranstaltung"],
+         "status": "CONFIRMED",
+         "busyStatus": "BUSY",
+         "organizer": { "name": "Kinderlicht Wallersdorf e.V.", "email": "info@kinderlicht-wallersdorf.de" },
+         "attendees": [
+           { "name": "Kinderlicht Wallersdorf e.V.", "email": "info@kinderlicht-wallersdorf.de", "rsvp": true, "partstat": "ACCEPTED", "role": "REQ-PARTICIPANT" }
+         ],
+         "htmlContent": "In diesem Jahr findet die Jahreshauptversammlung im Keller des Pfarrsaals bei der Kegelbahn statt. Für das leibliche Wohl ist gesorgt. Die Kegelbahn kann im Anschluss an die JHV genutzt werden."
+       },
+       {
          "start": [2024, 12, 16, 18, 0],
          "duration": { "hours": 3, "minutes": 30 },
          "startInputType": "local",
          "startOutputType": "local",
-         "url": "https://www.kinderlicht-wallersdorf.de/gewinnspiel",
          "title": "Weihnachtsmarkt Wallersdorf",
          "description": "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
          "location": "Kirche St. Johannes, 94522 Wallersdorf",
