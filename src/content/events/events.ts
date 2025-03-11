@@ -8,7 +8,7 @@ export const events: Event[] = [
     duration: { hours: 3, minutes: 0 },
     startInputType: "local",
     startOutputType: "local",
-    title: "Jahreshauptversammlung 2025",
+    title: "Frühstücksbuffet",
     description:
       "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
     location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
@@ -30,7 +30,7 @@ export const events: Event[] = [
       },
     ],
     htmlContent:
-      "In diesem Jahr findet die Jahreshauptversammlung im Keller des Pfarrsaals bei der Kegelbahn statt. Für das leibliche Wohl ist gesorgt. Die Kegelbahn kann im Anschluss an die JHV genutzt werden.",
+      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
   },
   {
     start: [2025, 3, 14, 18, 30],
