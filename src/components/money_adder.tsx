@@ -7,6 +7,9 @@ interface MoneyAdderProps {
 }
 
 export const formatCurrency = (cents: number): string => {
+  if (cents < 0) {
+    return `-${formatCurrency(-cents)}`;
+  }
   const euros = cents / 100;
 
   if (euros >= 1000000) {

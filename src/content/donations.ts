@@ -10,13 +10,13 @@ export const activities: Activity[] = [
     {
       "date": "2025-01-01T00:00:00.000Z",
       "donation": 77784,
-      "title": "Überahme eines iPads",
+      "title": "iPad",
       "description": "Digitale Schulklasse"
     },
     {
       "date": "2024-12-01T00:00:00.000Z",
       "donation": 200000,
-      "title": "Spezielles Fahrrad",
+      "title": "Fahrrad",
       "description": "Familie in Not"
     },
     {
@@ -34,13 +34,13 @@ export const activities: Activity[] = [
     {
       "date": "2024-11-01T00:00:00.000Z",
       "donation": 22350,
-      "title": "Seelchen Bücherkauf",
+      "title": "Seelchen",
       "description": "Familien in Not"
     },
     {
       "date": "2024-11-01T00:00:00.000Z",
       "donation": 35000,
-      "title": "Pelletsübernahme",
+      "title": "Pellets",
       "description": "Familie in Not"
     },
     {
@@ -52,26 +52,26 @@ export const activities: Activity[] = [
     {
       "date": "2024-09-01T00:00:00.000Z",
       "donation": 21680,
-      "title": "Übernahme von Kosten",
+      "title": "Spende",
       "description": "Pflegeschule"
     },
     {
       "date": "2024-09-01T00:00:00.000Z",
       "donation": 20000,
-      "title": "Ausflug nach Berlin",
+      "title": "Berlinreise",
       "description": "Familie in Not"
     },
     {
       "date": "2024-08-01T00:00:00.000Z",
       "donation": 259182,
-      "title": "1. gemeinsamer Urlaub",
+      "title": "Urlaub",
       "description": "Familie in Not"
     },
     {
       "date": "2024-08-01T00:00:00.000Z",
       "donation": 50000,
       "title": "Spende",
-      "description": "Förderverein Mutter-Kind-Haus Eichendorf"
+      "description": "Mutter-Kind-Haus Eichendorf"
     },
     {
       "date": "2024-07-01T00:00:00.000Z",
@@ -101,7 +101,7 @@ export const activities: Activity[] = [
       "date": "2023-12-01T00:00:00.000Z",
       "donation": 24669,
       "title": "Christkindlexpress",
-      "description": "Geschenke für Familien in Not"
+      "description": "Familien in Not"
     },
     {
       "date": "2023-11-01T00:00:00.000Z",
@@ -155,7 +155,7 @@ export const activities: Activity[] = [
       "date": "2023-05-01T00:00:00.000Z",
       "donation": 100000,
       "title": "Spende",
-      "description": "Familienreferat Kolping"
+      "description": "Kolping"
     },
     {
       "date": "2023-03-01T00:00:00.000Z",
@@ -173,7 +173,7 @@ export const activities: Activity[] = [
       "date": "2022-10-01T00:00:00.000Z",
       "donation": 1200000,
       "title": "Spende",
-      "description": "Spendenlauf der Grund- und Mittelschule Wallersdorf"
+      "description": "Spendenlauf Wallersdorf"
     },
     {
       "date": "2022-09-01T00:00:00.000Z",
@@ -184,7 +184,7 @@ export const activities: Activity[] = [
     {
       "date": "2022-08-01T00:00:00.000Z",
       "donation": 30000,
-      "title": "Fahrtkostenübernahme",
+      "title": "Fahrtkosten",
       "description": "Familie in Not"
     },
     {
@@ -196,13 +196,13 @@ export const activities: Activity[] = [
     {
       "date": "2022-06-01T00:00:00.000Z",
       "donation": 27734,
-      "title": "Renovierung nach Brand",
+      "title": "Renovierung",
       "description": "Familie in Not"
     },
     {
       "date": "2022-06-01T00:00:00.000Z",
       "donation": 39670,
-      "title": "Bau von Hochbeeten",
+      "title": "Hochbeete",
       "description": "Thomas Wiser Haus"
     },
     {
@@ -226,13 +226,13 @@ export const activities: Activity[] = [
     {
       "date": "2021-01-01T00:00:00.000Z",
       "donation": 100000,
-      "title": "Spende nach Krebserkrankung",
-      "description": "Familie in Not"
+      "title": "Spende",
+      "description": "Krebskrankes Kind"
     },
     {
       "date": "2020-12-01T00:00:00.000Z",
       "donation": 200000,
-      "title": "Spende nach Kindsverlust",
+      "title": "Spende",
       "description": "Grabstein für Familie in Not"
     },
     {
@@ -250,31 +250,31 @@ export const activities: Activity[] = [
     {
       "date": "2020-06-01T00:00:00.000Z",
       "donation": 200000,
-      "title": "Zuschuss für Auto-Anschaffung",
-      "description": "Familie in Not"
+      "title": "Auto-Anschaffung",
+      "description": "Zuschuss für Familie in Not"
     },
     {
       "date": "2020-06-01T00:00:00.000Z",
       "donation": 600000,
-      "title": "Digitaler Rollstuhl / Zimmereinrichtung",
-      "description": "Familie in Not"
+      "title": "Digitaler Rollstuhl",
+      "description": "und Zimmereinrichtung für Familie in Not"
     },
     {
       "date": "2019-12-01T00:00:00.000Z",
       "donation": 15000,
-      "title": "Weihnachtsaufmerksamkeiten",
+      "title": "Weihnachtsgeschenke",
       "description": "Familien"
     },
     {
       "date": "2019-11-01T00:00:00.000Z",
       "donation": 35000,
       "title": "Kinobesuch im KuKi",
-      "description": "Schüler*innen der Lebenshilfe Landau a.d. Isar"
+      "description": "Schüler*innen der Lebenshilfe"
     },
     {
       "date": "2019-10-01T00:00:00.000Z",
       "donation": 305637,
-      "title": "Ausflug zum Nürburgring",
+      "title": "Nürburgring",
       "description": "Familien in Not (VKKK)"
     }    
   ]

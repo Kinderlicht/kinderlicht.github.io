@@ -731,16 +731,16 @@ const MemberForm: React.FC = () => {
             </p>
           </div>
           <section>
-            <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-[#FFA500] pb-2">
-                Familien- und Partnermitgliedschaften
+                Angehörige*n anlegen:
               </h2>
               <button
                 type="button"
                 onClick={addRelative}
                 className="px-4 py-2 bg-[#FFA500] hover:bg-[#e69500] text-white rounded shadow text-sm"
               >
-                Angehörige*n hinzufügen
+                Angehörige*n anlegen
               </button>
             </div>
             {fields.map((field, index) => {
@@ -1236,7 +1236,7 @@ const MemberForm: React.FC = () => {
           <section>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-[#FFA500] pb-2">
-                Verbindung mit Mitgliedern:
+                Mitglied angeben:
               </h2>
               <button
                 type="button"
