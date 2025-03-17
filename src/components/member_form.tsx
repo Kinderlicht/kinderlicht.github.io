@@ -299,6 +299,7 @@ const MemberForm: React.FC = () => {
             Falls Angehörige bereits Mitglied sind oder hier mit angelegt werden,
             erhalten alle Parteien einen Rabatt von 3€ auf den jährlichen Beitrag.
             Diese Information kann am Ende des Formulas angegeben werden.
+            Der Basisbeitrag beträgt 24€ für Erwachsene und 12€ für Kinder.
           </p>
         </header>
 
