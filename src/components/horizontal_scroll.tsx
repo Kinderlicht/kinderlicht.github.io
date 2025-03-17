@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { formatCurrency } from './money_adder';
 
 export interface Activity {
   title: string;
@@ -87,7 +88,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({ activities, onIndexChange }
   return (
     <div style={styles.container}>
       {/* Integrated header */}
-      <div style={styles.header}>Kürzliche Spenden</div>
+      <div style={styles.header}>Unsere Spenden (anonymisiert)</div>
 
       <div style={styles.carouselWrapper}>
         {/* Render side cards only on non-mobile */}
@@ -158,7 +159,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ activity, isActive = false 
     <div style={styles.card}>
       <h3 style={styles.cardTitle}>{activity.title}</h3>
       <p style={styles.cardDescription}>{activity.description}</p>
-      <p style={styles.cardDonation}>${activity.donation}</p>
+      <p style={styles.cardDonation}>{formatCurrency(activity.donation)}</p>
       <p style={styles.cardDate}>{new Date(activity.date).toLocaleDateString()}</p>
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Flame from "./flame";
-import MoneyAdder from "./money_adder";
 import ActivityCarousel, { Activity } from "./horizontal_scroll";
 
 interface TimelineProps {
@@ -8,6 +7,9 @@ interface TimelineProps {
 }
 
 export default function Timeline({ activities }: TimelineProps) {
+  activities = [...activities].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
   const [currentTotal, setCurrentTotal] = useState(0);
   const total = activities.map((d) => d.donation).reduce((a, b) => a + b, 0);
 

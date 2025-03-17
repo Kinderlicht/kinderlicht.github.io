@@ -1,9 +1,24 @@
+import { e } from "framer-motion/dist/types.d-CdW9auKD";
 import React, { FC, useEffect, useState } from "react";
 
 interface MoneyAdderProps {
   /** The current total balance you want to display. */
   amount: number;
 }
+
+export const formatCurrency = (cents: number): string => {
+  const euros = cents / 100;
+
+  if (euros >= 1000000) {
+    return `${(euros / 1000000).toFixed(1)}M€`;
+  } else if (euros >= 10000) {
+    return `${(euros / 1000).toFixed(1)}T€`;
+  } else if (euros >= 1000) {
+    return euros.toFixed(0).charAt(0) + "." + euros.toFixed(0).slice(1) + "," + euros.toFixed(2).split(".")[1] + "€";
+  } else {
+    return `${euros.toFixed(2).replace(".", ",")}€`;
+  }
+};
 
 const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
   // Keep track of the previous amount so we can detect increments/decrements
@@ -62,7 +77,7 @@ const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
         key={animationKey}
         className="inline-block font-bold text-3xl money-added"
       >
-        {displayAmount}€
+        {formatCurrency(displayAmount)}
       </span>
 
       {/* Render each floating amount as absolutely positioned within this container */}
@@ -73,7 +88,7 @@ const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
           onAnimationEnd={() => handleAnimationEnd(item.id)}
         >
           {/* Show + sign only if diff > 0 */}
-          {item.diff > 0 ? `+${item.diff}€` : `${item.diff}€`}
+          {item.diff > 0 ? `+${formatCurrency(item.diff)}` : `${formatCurrency(item.diff)}`}
         </span>
       ))}
     </div>

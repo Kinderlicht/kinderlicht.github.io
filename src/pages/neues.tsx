@@ -6,6 +6,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import type { BlogPost } from "../types/";
 import Timeline from "../components/timeline";
 import { Activity } from "../components/horizontal_scroll";
+import { activities } from "../content/donations";
 
 const NewsEntry: React.FC<{ post: BlogPost }> = ({ post }) => {
   return (
@@ -41,37 +42,6 @@ const BlogIndex: React.FC<{ data: any }> = ({ data }) => {
   const first: BlogPost = posts[0].node;
 
   const className = "object-cover w-full h-64 rounded sm:h-96 lg:col-span-7 dark:bg-gray-500";
-  // const articleIsNew = 1000 * 60 * 60 * 24 * 7;
-  // const [isNew, setIsNew] = useState(false);
-
-  // useEffect(() => {
-  //   const isNewValue = new Date(first.frontmatter.date).getTime() + articleIsNew > new Date().getTime();
-  //   setIsNew(isNewValue);
-
-  //   console.log("Is new?", isNewValue, first)
-  // }, [])
-
-  const activities: Activity[] = [
-    {
-      title: 'Donation 1',
-      description: 'A generous donation to help children',
-      donation: 50,
-      date: '2025-01-15',
-    },
-    {
-      title: 'Donation 2',
-      description: 'Another donation supporting the cause',
-      donation: 75,
-      date: '2025-01-20',
-    },
-    {
-      title: 'Donation 3',
-      description: 'A further contribution for our kids',
-      donation: 100,
-      date: '2025-01-25',
-    },
-    // Add more activities as needed
-  ];
 
   return <Layout>
     <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
