@@ -295,6 +295,11 @@ const MemberForm: React.FC = () => {
             Bitte fülle alle Felder sorgfältig aus. Der Antrag muss mit einer
             gültigen E-Mail-Adresse bestätigt werden.
           </p>
+          <p className="text-gray-600 mt-2">
+            Falls Angehörige bereits Mitglied sind oder hier mit angelegt werden,
+            erhalten alle Parteien einen Rabatt von 3€ auf den jährlichen Beitrag.
+            Diese Information kann am Ende des Formulas angegeben werden.
+          </p>
         </header>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
@@ -717,12 +722,16 @@ const MemberForm: React.FC = () => {
           {/* Hinweis Section */}
           <div className="border-l-4 border-blue-500 bg-blue-50 p-4 mb-4">
             <p>
+              Falls Angehörige bereits Mitglied sind oder hier mit angelegt werden,
+              erhalten alle Parteien einen Rabatt von 3€ auf den jährlichen Beitrag.
+            </p>
+            <p className="mt-2">
               Als Angehörige werden Personen bezeichnet, die entweder Verwandte
               ersten Grades (Mütter, Väter, Erziehungsberechtigte und Kinder),
               Geschwister oder gesetzlich anerkannte Partner*innen sind.
             </p>
             <p className="mt-2">
-              Das ganze ist vom Alter unabhängig. Eine 25-jährige Tochter ist
+              Das ganze ist vom Alter unabhängig. Eine 17-jährige Tochter ist
               also auch eine Angehörige des 24-jährigen Bruders und der
               50-jährigen Mutter.
             </p>
