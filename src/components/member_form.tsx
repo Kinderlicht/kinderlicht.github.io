@@ -1393,6 +1393,9 @@ const MemberForm: React.FC = () => {
                         <option value="Verwandte*r ersten Grades">
                           Verwandte*r ersten Grades
                         </option>
+                        <option value="Partner*in">
+                          Partner*in
+                        </option>
                       </select>
                       {errors.existingFamilyMembers?.[index]?.relation && (
                         <p className="text-orange-500 text-xs mt-1">
