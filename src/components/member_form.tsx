@@ -43,7 +43,8 @@ type ExistingFamilyMember = {
     | "Erziehungsberechtigte*r"
     | "Kind"
     | "Geschwister"
-    | "Verwandte*r ersten Grades";
+    | "Verwandte*r ersten Grades"
+    | "Partner*in";
 };
 
 // The main member type now includes an array of relatives and existing family members
