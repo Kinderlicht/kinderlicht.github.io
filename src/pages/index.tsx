@@ -237,180 +237,36 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2018</span>
+              <span className="flex-shrink mx-4 text-gray-400">2024</span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
-                title="Die Anfänge"
-                description="Schon vor der Gründung waren viele Mitglieder beim Lichterhaus Wallersdorf aktiv. Dabei wurden Spenden für die Krebshilfe gesammelt."
-                short="Wie alles begann"
-                link="/wie-alles-begann"
+                title="Konzert der Filmmusik - Teil 2"
+                description="Nach dem großen Erfolg im Jahr 2020, haben wir 2024 das Konzert der Filmmusik wiederholt. Es war ein voller Erfolg!"
+                short="Eine Sprache, die jeder versteht"
+                link="/ein-abend-voller-musik-fuer-den-guten-zweck"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/start.jpg"
-                    alt="Wie alles begann"
-                  />
-                }
-                size={2}
-              />
-              <HistoryLink
-                title="Der Kinderlicht Wallersdorf e.V."
-                description="Sieben engagierte Mitglieder gründen den Verein im Oktober 2018."
-                short="Die Gründung"
-                link="/wie-alles-begann"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/founding.jpg"
-                    alt="Die Gründung"
-                  />
-                }
-                size={2}
-              />
-            </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2019</span>
-              <div className="flex-grow border-t border-gray-400"></div>
-            </div>
-            <div className="flex flex-wrap -m-4">
-              <HistoryLink
-                title="Florian Pronold übernimmt die Schirmherrschaft"
-                description="Schnell war auch ein prominenter Schirmherr aus dem Bundestag gefunden: Florian Pronold."
-                short="Schirmherrschaft"
-                link="/schirmherrschaft"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/umbrella.jpg"
-                    alt="Schirmherrschaft"
-                  />
-                }
-                size={3}
-              />
-              <HistoryLink
-                title="Rennen auf dem Nürburgring"
-                description="Innerhalb eines Jahres konnten wir mehreren betroffenen Familien gemeinsam mit der VKKK ein Wochenende auf dem Nürburgring ermöglichen."
-                short="Gemeinsam ans Ziel"
-                link="https://www.youtube.com/embed/FjgCtdiizUY?si=fIZhSdl5d-02NIQv&amp;controls=0"
-                visual="https://www.youtube.com/embed/FjgCtdiizUY?si=fIZhSdl5d-02NIQv&amp;controls=0"
-                size={3}
-              />
-              <HistoryLink
-                title="Lasershow durch Crowdfunding"
-                description="Wenig später gab es schon das nächste - im wahrsten Sinne des Wortes - Highlight: Durch Crowdfunding konnten wir eine umweltschonende Lasershow organisieren."
-                short="Lasershow"
-                link="/lasershow-premiere-in-wallersdorf"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/fireworks.jpg"
-                    alt="Lasershow"
-                  />
-                }
-                size={3}
-              />
-            </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2020</span>
-              <div className="flex-grow border-t border-gray-400"></div>
-            </div>
-            <div className="flex flex-wrap -m-4">
-              <HistoryLink
-                title="Konzert der Filmmusik"
-                description="Auch kulturell kann der Kinderlicht Wallersdorf e.V. einiges bieten: noch vor der Pandemie organisiert der Verein ein Konzert der Filmmusik mit 80 MusikerInnen."
-                short="Unterhaltung"
-                link="/eine-musikalische-reise-durch-die-welt-der-filmmusik"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/music.jpg"
-                    alt="Unterhaltung"
-                  />
-                }
-                size={2}
-              />
-              <HistoryLink
-                title="Spenden an zwei Familien"
-                description="Der Kinderlicht Wallersdorf. e.V. spendet in diesem Jahr insgesamt 4000€ an zwei Familien. Unter anderem wird ein Auto mitfinanziert."
-                short="Hohe Spenden"
-                link="/einen-beitrag-zum-auto-geleistet"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/car.jpg"
-                    alt="Hohe Spenden"
-                  />
-                }
-                size={2}
-              />
-            </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2021</span>
-              <div className="flex-grow border-t border-gray-400"></div>
-            </div>
-            <div className="flex flex-wrap -m-4">
-              <HistoryLink
-                title="Kinderlicht in Krisenzeiten"
-                description="Auch während der Krisenzeiten konnten wir einige Spenden sammeln und so weiterhelfen."
-                short="Corona Krise"
-                link="/masken-fuer-ein-kinderlaecheln"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/corona.jpg"
-                    alt="Corona Krise"
-                  />
-                }
-                size={3}
-              />
-              <HistoryLink
-                title="Ferienprogramm"
-                description="In unserem zweiten Ferienprogramm, nahmen wir die TeilnehmerInnen auf eine dreitägige Reise durch die Zeit ins Mittelalter mit."
-                short="3 Tage im Mittelalter"
-                link="https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0"
-                visual="https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0"
-                size={3}
-              />
-              <HistoryLink
-                title="24 Tage Livestreams"
-                description="Für eine großangelegte Spendenaktion haben wir an 24 Tagen in Folge eigens produzierte Inhalte gestreamt. Es konnten 3346€ gesammelt werden."
-                short="#Krippalkalender"
-                link="https://www.youtube.com/embed/bGR75Cy2BrU?si=CN-bjRy-gWQdhQ9Y&amp;controls=0"
-                visual="https://www.youtube.com/embed/bGR75Cy2BrU?si=CN-bjRy-gWQdhQ9Y&amp;controls=0"
-                size={3}
-              />
-            </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2022</span>
-              <div className="flex-grow border-t border-gray-400"></div>
-            </div>
-            <div className="flex flex-wrap -m-4">
-              <HistoryLink
-                title="Mehr Spenden und Renovierungen"
-                description="Auch in 2022 konnten wir viele Spenden verteilen und haben neben einer Wohnungsrenovierung auch ein Hochbeet für einen Kindergarten gebaut."
-                short="Anpacken!"
-                link="/ab-ins-beet"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/hochbeet.jpg"
+                    src="../images/home/kdf2.jpg"
                     alt="Anpacken!"
                   />
                 }
                 size={2}
               />
               <HistoryLink
-                title="Die vier Jahreszeiten"
-                description='Auch unsere FilmemacherInnen haben nicht geschlafen und einen Kinofilm produziert. Kann der Weihnachtswichtel die "4 Jahreszeiten" von der bösen Hexe befreien?'
-                short="Kinofilm"
-                link="https://www.youtube.com/embed/ZRj34XeuHCY?si=-6323dPZhhbgEPjS&amp;controls=0"
-                visual="https://www.youtube.com/embed/ZRj34XeuHCY?si=-6323dPZhhbgEPjS&amp;controls=0"
+                title="Don't Stand Alone"
+                description='In Zusammenarbeit mit der Frauenliste und anderen Vereinen aus Wallersdorf, wurden täglich Getränke und Köstlichkeiten zur Vorweihnachtszeit ausgegeben. Das gesammelte Geld kam den jeweiligen Vereinen zu Gute.'
+                short="Gemeinsam stark"
+                link="/ein-unvergesslicher-weihnachtsstand-in-wallersdorf"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/weihnachtsstand.png"
+                    alt="Anpacken!"
+                  />
+                }
                 size={2}
               />
             </div>
@@ -461,6 +317,185 @@ export default function IndexPage() {
                   />
                 }
                 size={3}
+              />
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2022</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              <HistoryLink
+                title="Mehr Spenden und Renovierungen"
+                description="Auch in 2022 konnten wir viele Spenden verteilen und haben neben einer Wohnungsrenovierung auch ein Hochbeet für einen Kindergarten gebaut."
+                short="Anpacken!"
+                link="/ab-ins-beet"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/hochbeet.jpg"
+                    alt="Anpacken!"
+                  />
+                }
+                size={2}
+              />
+              <HistoryLink
+                title="Die vier Jahreszeiten"
+                description='Auch unsere FilmemacherInnen haben nicht geschlafen und einen Kinofilm produziert. Kann der Weihnachtswichtel die "4 Jahreszeiten" von der bösen Hexe befreien?'
+                short="Kinofilm"
+                link="https://www.youtube.com/embed/ZRj34XeuHCY?si=-6323dPZhhbgEPjS&amp;controls=0"
+                visual="https://www.youtube.com/embed/ZRj34XeuHCY?si=-6323dPZhhbgEPjS&amp;controls=0"
+                size={2}
+              />
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2021</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              <HistoryLink
+                title="Kinderlicht in Krisenzeiten"
+                description="Auch während der Krisenzeiten konnten wir einige Spenden sammeln und so weiterhelfen."
+                short="Corona Krise"
+                link="/masken-fuer-ein-kinderlaecheln"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/corona.jpg"
+                    alt="Corona Krise"
+                  />
+                }
+                size={3}
+              />
+              <HistoryLink
+                title="Ferienprogramm"
+                description="In unserem zweiten Ferienprogramm, nahmen wir die TeilnehmerInnen auf eine dreitägige Reise durch die Zeit ins Mittelalter mit."
+                short="3 Tage im Mittelalter"
+                link="https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0"
+                visual="https://www.youtube.com/embed/AkCsF4e41JI?si=ZYmi62akER48yqNr&amp;controls=0"
+                size={3}
+              />
+              <HistoryLink
+                title="24 Tage Livestreams"
+                description="Für eine großangelegte Spendenaktion haben wir an 24 Tagen in Folge eigens produzierte Inhalte gestreamt. Es konnten 3346€ gesammelt werden."
+                short="#Krippalkalender"
+                link="https://www.youtube.com/embed/bGR75Cy2BrU?si=CN-bjRy-gWQdhQ9Y&amp;controls=0"
+                visual="https://www.youtube.com/embed/bGR75Cy2BrU?si=CN-bjRy-gWQdhQ9Y&amp;controls=0"
+                size={3}
+              />
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2020</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              <HistoryLink
+                title="Konzert der Filmmusik"
+                description="Auch kulturell kann der Kinderlicht Wallersdorf e.V. einiges bieten: noch vor der Pandemie organisiert der Verein ein Konzert der Filmmusik mit 80 MusikerInnen."
+                short="Unterhaltung"
+                link="/eine-musikalische-reise-durch-die-welt-der-filmmusik"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/music.jpg"
+                    alt="Unterhaltung"
+                  />
+                }
+                size={2}
+              />
+              <HistoryLink
+                title="Spenden an zwei Familien"
+                description="Der Kinderlicht Wallersdorf. e.V. spendet in diesem Jahr insgesamt 4000€ an zwei Familien. Unter anderem wird ein Auto mitfinanziert."
+                short="Hohe Spenden"
+                link="/einen-beitrag-zum-auto-geleistet"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/car.jpg"
+                    alt="Hohe Spenden"
+                  />
+                }
+                size={2}
+              />
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2019</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              <HistoryLink
+                title="Florian Pronold übernimmt die Schirmherrschaft"
+                description="Schnell war auch ein prominenter Schirmherr aus dem Bundestag gefunden: Florian Pronold."
+                short="Schirmherrschaft"
+                link="/schirmherrschaft"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/umbrella.jpg"
+                    alt="Schirmherrschaft"
+                  />
+                }
+                size={3}
+              />
+              <HistoryLink
+                title="Rennen auf dem Nürburgring"
+                description="Innerhalb eines Jahres konnten wir mehreren betroffenen Familien gemeinsam mit der VKKK ein Wochenende auf dem Nürburgring ermöglichen."
+                short="Gemeinsam ans Ziel"
+                link="https://www.youtube.com/embed/FjgCtdiizUY?si=fIZhSdl5d-02NIQv&amp;controls=0"
+                visual="https://www.youtube.com/embed/FjgCtdiizUY?si=fIZhSdl5d-02NIQv&amp;controls=0"
+                size={3}
+              />
+              <HistoryLink
+                title="Lasershow durch Crowdfunding"
+                description="Wenig später gab es schon das nächste - im wahrsten Sinne des Wortes - Highlight: Durch Crowdfunding konnten wir eine umweltschonende Lasershow organisieren."
+                short="Lasershow"
+                link="/lasershow-premiere-in-wallersdorf"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/fireworks.jpg"
+                    alt="Lasershow"
+                  />
+                }
+                size={3}
+              />
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2018</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              <HistoryLink
+                title="Die Anfänge"
+                description="Schon vor der Gründung waren viele Mitglieder beim Lichterhaus Wallersdorf aktiv. Dabei wurden Spenden für die Krebshilfe gesammelt."
+                short="Wie alles begann"
+                link="/wie-alles-begann"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/start.jpg"
+                    alt="Wie alles begann"
+                  />
+                }
+                size={2}
+              />
+              <HistoryLink
+                title="Der Kinderlicht Wallersdorf e.V."
+                description="Sieben engagierte Mitglieder gründen den Verein im Oktober 2018."
+                short="Die Gründung"
+                link="/wie-alles-begann"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/home/founding.jpg"
+                    alt="Die Gründung"
+                  />
+                }
+                size={2}
               />
             </div>
           </div>
