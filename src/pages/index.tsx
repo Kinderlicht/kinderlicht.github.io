@@ -135,7 +135,7 @@ function FeatureSection() {
                   <dd className="inline">
                     Wir sind bekannt für unsere verrückten Aktionen, die nicht
                     nur Spaß machen, sondern auch viel Gutes bewirken.
-                    Ob ein Konzert, ein Kinofil, eine Lasershow, Bälle, oder ein
+                    Ob ein Konzert, ein Kinofilm, eine Lasershow, Bälle, oder ein
                     Weihnachtsstand - bei uns ist immer was los!
                   </dd>
                 </div>
