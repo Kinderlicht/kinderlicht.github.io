@@ -4,6 +4,96 @@ export type Event = EventAttributes;
 
 export const events: Event[] = [
   {
+    start: [2025, 10, 26, 9, 30],
+    duration: { hours: 3, minutes: 0 },
+    startInputType: "local",
+    url: "https://form.campai.com/Y2oXlVHpk9mG",
+    startOutputType: "local",
+    title: "Frühstücksbuffet",
+    description:
+      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+    geo: { lat: 48.738713, lon: 12.7486027 },
+    categories: ["Veranstaltung"],
+    status: "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {
+      name: "Kinderlicht Wallersdorf e.V.",
+      email: "info@kinderlicht-wallersdorf.de",
+    },
+    attendees: [
+      {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+        rsvp: true,
+        partstat: "ACCEPTED",
+        role: "REQ-PARTICIPANT",
+      },
+    ],
+    htmlContent:
+      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+  },
+  {
+    start: [2025, 9, 14, 9, 30],
+    duration: { hours: 3, minutes: 0 },
+    url: "https://form.campai.com/Y2oXlVHpk9mG",
+    startInputType: "local",
+    startOutputType: "local",
+    title: "Frühstücksbuffet",
+    description:
+      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+    geo: { lat: 48.738713, lon: 12.7486027 },
+    categories: ["Veranstaltung"],
+    status: "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {
+      name: "Kinderlicht Wallersdorf e.V.",
+      email: "info@kinderlicht-wallersdorf.de",
+    },
+    attendees: [
+      {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+        rsvp: true,
+        partstat: "ACCEPTED",
+        role: "REQ-PARTICIPANT",
+      },
+    ],
+    htmlContent:
+      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+  },
+  {
+    start: [2025, 5, 25, 9, 30],
+    duration: { hours: 3, minutes: 0 },
+    url: "https://form.campai.com/Y2oXlVHpk9mG",
+    startInputType: "local",
+    startOutputType: "local",
+    title: "Frühstücksbuffet",
+    description:
+      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+    geo: { lat: 48.738713, lon: 12.7486027 },
+    categories: ["Veranstaltung"],
+    status: "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {
+      name: "Kinderlicht Wallersdorf e.V.",
+      email: "info@kinderlicht-wallersdorf.de",
+    },
+    attendees: [
+      {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+        rsvp: true,
+        partstat: "ACCEPTED",
+        role: "REQ-PARTICIPANT",
+      },
+    ],
+    htmlContent:
+      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+  },
+  {
     start: [2025, 3, 23, 9, 30],
     duration: { hours: 3, minutes: 0 },
     startInputType: "local",
