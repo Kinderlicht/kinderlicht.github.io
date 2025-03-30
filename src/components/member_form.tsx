@@ -1386,8 +1386,8 @@ const MemberForm: React.FC = () => {
                         className={inputClasses}
                       >
                         <option value="">Bitte wählen</option>
-                        <option value="Erziehungsberechtigte">
-                          Erziehungsberechtigte
+                        <option value="Erziehungsberechtigte*r">
+                          Erziehungsberechtigte*r
                         </option>
                         <option value="Kind">Kind</option>
                         <option value="Geschwister">Geschwister</option>
