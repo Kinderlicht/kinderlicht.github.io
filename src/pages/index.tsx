@@ -115,7 +115,7 @@ function FeatureSection() {
                   </dt>
                   <dd className="inline">
                     Bei uns arbeitet ein engagiertes Team Hand in Hand und schafft
-                    Möglichkeiten, Kindern und Familien in Not zu helfen.
+                    Möglichkeiten, unkompliziert Kindern und Familien in Not zu helfen.
                   </dd>
                 </div>
                 <div className="relative pl-9">
@@ -134,10 +134,9 @@ function FeatureSection() {
                   </dt>
                   <dd className="inline">
                     Wir sind bekannt für unsere verrückten Aktionen, die nicht
-                    nur Spaß machen, sondern auch viel Gutes bewirken. Dank
-                    der großartigen Unterstützung von allen Seiten 
-                    können wir kreativ sein und bedürftigen
-                    Kindern und Familien Hoffnung und Hilfe schenken.
+                    nur Spaß machen, sondern auch viel Gutes bewirken.
+                    Ob ein Konzert, ein Kinofil, eine Lasershow, Bälle, oder ein
+                    Weihnachtsstand - bei uns ist immer was los!
                   </dd>
                 </div>
               </dl>
