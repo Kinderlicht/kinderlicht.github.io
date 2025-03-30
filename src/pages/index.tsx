@@ -113,10 +113,11 @@ function FeatureSection() {
                     Gemeinschaftlich.{" "}
                   </dt>
                   <dd className="inline">
-                    Bei uns arbeitet ein engagiertes, diverses Team Hand in Hand.
-                    Wir unterstützen regional und direkt dort, wo Hilfe
+                    Bei uns arbeitet ein engagiertes und diverses Team Hand in Hand.
+                    Wir unterstützen überwiegend regional und direkt dort, wo Hilfe
                     benötigt wird. Dabei arbeiten wir unter anderem eng mit
                     lokalen sozialen Einrichtungen und Institutionen zusammen.
+                    Innerhalb von 5 Jahren konnten wir so bereits über 55.000€ spenden.
                   </dd>
                 </div>
                 <div className="relative pl-9">
