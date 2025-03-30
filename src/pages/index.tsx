@@ -94,9 +94,8 @@ function FeatureSection() {
                   <dd className="inline">
                     Der Kinderlicht Wallersdorf e.V. setzt sich
                     leidenschaftlich dafür ein, Kindern und Familien in
-                    schwierigen Situationen zu helfen. Dank großzügiger Spenden
-                    und kreativer Aktionen können wir effektiv und mit möglichst
-                    wenige Bürokratie Unterstützung bieten.
+                    schwierigen Situationen zu helfen.
+                    Unser Ziel ist es, unbürokratisch und schnell zu helfen.
                   </dd>
                 </div>
                 <div className="relative pl-9">
@@ -114,8 +113,10 @@ function FeatureSection() {
                     Gemeinschaftlich.{" "}
                   </dt>
                   <dd className="inline">
-                    Bei uns arbeitet ein engagiertes Team Hand in Hand und schafft
-                    Möglichkeiten, unkompliziert Kindern und Familien in Not zu helfen.
+                    Bei uns arbeitet ein engagiertes, diverses Team Hand in Hand.
+                    Wir unterstützen regional und direkt dort, wo Hilfe
+                    benötigt wird. Dabei arbeiten wir unter anderem eng mit
+                    lokalen sozialen Einrichtungen und Institutionen zusammen.
                   </dd>
                 </div>
                 <div className="relative pl-9">
