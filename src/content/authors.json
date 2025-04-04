@@ -8,5 +8,10 @@
       "name": "Enrico Koch",
       "description": "Erster Vorstand",
       "image": "news/author/enrico.jpg"
+    },
+    "Anna-Lena Heine": {
+      "name": "Anna-Lena Heine",
+      "description": "Beisitzerin",
+      "image": "news/author/anna-lena.png"
     }
 }
