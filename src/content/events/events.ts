@@ -61,7 +61,7 @@ export const events: Event[] = [
       },
     ],
     htmlContent:
-      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+      "Der Kinderlicht Wallersdorf e.V., die Jugend Pilsting-Wallersdorf und Kolping laden zum Flosar ein. Bringt eure alten Schätze vorbei und verkauft sie! 10% des Erlöses gehen an den guten Zweck.",
   },
   {
     start: [2025, 9, 14, 9, 30],
