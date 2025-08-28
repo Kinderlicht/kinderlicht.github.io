@@ -34,6 +34,36 @@ export const events: Event[] = [
       "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
   },
   {
+    start: [2025, 10, 18, 11, 0],
+    duration: { hours: 5, minutes: 0 },
+    startInputType: "local",
+    url: "https://instagram.com/p/DN0azu9WsQt/",
+    startOutputType: "local",
+    title: "Flosar",
+    description:
+      "Der Kinderlicht Wallersdorf e.V., die Jugend Pilsting-Wallersdorf und Kolping laden zum Flosar ein. Bringt eure alten Schätze vorbei und verkauft sie! 10% des Erlöses gehen an den guten Zweck.",
+    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+    geo: { lat: 48.738713, lon: 12.7486027 },
+    categories: ["Veranstaltung"],
+    status: "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {
+      name: "Kinderlicht Wallersdorf e.V.",
+      email: "info@kinderlicht-wallersdorf.de",
+    },
+    attendees: [
+      {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+        rsvp: true,
+        partstat: "ACCEPTED",
+        role: "REQ-PARTICIPANT",
+      },
+    ],
+    htmlContent:
+      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+  },
+  {
     start: [2025, 9, 14, 9, 30],
     duration: { hours: 3, minutes: 0 },
     url: "https://form.campai.com/Y2oXlVHpk9mG",
