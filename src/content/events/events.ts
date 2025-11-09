@@ -4,6 +4,93 @@ export type Event = EventAttributes;
 
 export const events: Event[] = [
   {
+    start: [2025, 12, 22, 18, 0],
+    duration: { hours: 3, minutes: 30 },
+    startInputType: "local",
+    startOutputType: "local",
+    title: "Weihnachtsmarkt Wallersdorf",
+    description:
+      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
+    location: "Kirche St. Johannes, 94522 Wallersdorf",
+    geo: { lat: 48.7384811, lon: 12.7472498 },
+    categories: ["Veranstaltung"],
+    status: "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {
+      name: "Kinderlicht Wallersdorf e.V.",
+      email: "info@kinderlicht-wallersdorf.de",
+    },
+    attendees: [
+      {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+        rsvp: true,
+        partstat: "ACCEPTED",
+        role: "REQ-PARTICIPANT",
+      },
+    ],
+    htmlContent:
+      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
+  },
+  {
+    start: [2024, 12, 15, 18, 0],
+    duration: { hours: 3, minutes: 30 },
+    startInputType: "local",
+    startOutputType: "local",
+    title: "Weihnachtsmarkt Wallersdorf",
+    description:
+      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
+    location: "Kirche St. Johannes, 94522 Wallersdorf",
+    geo: { lat: 48.7384811, lon: 12.7472498 },
+    categories: ["Veranstaltung"],
+    status: "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {
+      name: "Kinderlicht Wallersdorf e.V.",
+      email: "info@kinderlicht-wallersdorf.de",
+    },
+    attendees: [
+      {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+        rsvp: true,
+        partstat: "ACCEPTED",
+        role: "REQ-PARTICIPANT",
+      },
+    ],
+    htmlContent:
+      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
+  },
+  {
+    start: [2024, 12, 1, 18, 0],
+    duration: { hours: 3, minutes: 30 },
+    startInputType: "local",
+    startOutputType: "local",
+    title: "Weihnachtsmarkt Wallersdorf",
+    description:
+      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
+    location: "Kirche St. Johannes, 94522 Wallersdorf",
+    geo: { lat: 48.7384811, lon: 12.7472498 },
+    categories: ["Veranstaltung"],
+    status: "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {
+      name: "Kinderlicht Wallersdorf e.V.",
+      email: "info@kinderlicht-wallersdorf.de",
+    },
+    attendees: [
+      {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+        rsvp: true,
+        partstat: "ACCEPTED",
+        role: "REQ-PARTICIPANT",
+      },
+    ],
+    htmlContent:
+      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
+  },
+  {
     start: [2025, 10, 18, 11, 0],
     duration: { hours: 5, minutes: 0 },
     startInputType: "local",
