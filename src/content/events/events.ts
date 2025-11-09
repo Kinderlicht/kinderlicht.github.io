@@ -33,7 +33,7 @@ export const events: Event[] = [
       "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
   },
   {
-    start: [2024, 12, 15, 18, 0],
+    start: [2025, 12, 15, 18, 0],
     duration: { hours: 3, minutes: 30 },
     startInputType: "local",
     startOutputType: "local",
@@ -62,7 +62,7 @@ export const events: Event[] = [
       "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
   },
   {
-    start: [2024, 12, 1, 18, 0],
+    start: [2025, 12, 1, 18, 0],
     duration: { hours: 3, minutes: 30 },
     startInputType: "local",
     startOutputType: "local",
