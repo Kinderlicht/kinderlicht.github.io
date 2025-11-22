@@ -11,11 +11,11 @@ export default function Home() {
 
 <h2 className="text-2xl font-extrabold dark:text-white">Gewinnbeschreibung</h2>
  <p>Zu gewinnen gibt es jeweils ein Paket in 3 Kategorien</p>
-<ol>
+<ul>
     <li>Kategorie 1: eine Bratwurstsemmel, eine Tasse Glühwein oder Punsch (0,2 l) nach Wahl sowie einmal einen Spieß Schokofrüchte nach Wahl.</li>
     <li>Kategorie 2: eine Bratwurstsemmel und eine Tasse Glühwein oder Punsch (0,2 l).</li>
     <li>Kategorie 3: eine Tasse Glühwein oder Punsch (0,2 l), wahlweise mit Schuss (2 cl).</li>
-</ol>
+</ul>
 <p>Der Gewinn kann nur am Weihnachtstand des Kinderlicht Wallersdorf e. V. am 22.12.2025 eingelöst werden.</p>
 <p>Die Gewinner haben sich am 22.12.2025 zwischen 18:00 und 21:00 Uhr am Weihnachtstand des Kinderlicht Wallersdorf e. V. persönlich zu melden, um den Gewinn einzulösen. Ein Ersatzanspruch bei Nichterscheinen besteht nicht.</p> 
 
