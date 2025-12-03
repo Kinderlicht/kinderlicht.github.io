@@ -3,6 +3,36 @@ import { EventAttributes } from "ics";
 export type Event = EventAttributes;
 
 export const events: Event[] = [
+    {
+    start: [2025, 12, 17, 19, 0],
+    duration: { hours: 6, minutes: 0 },
+    startInputType: "local",
+    startOutputType: "local",
+    title: "Schneeball",
+    url: "https://app.campai.com/em/ueqq6/events/693044716ba241a984bee8e3",
+    description:
+      "Der Kinderlicht Wallersdorf läd zum Schneeball ein.",
+    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+    geo: { lat: 48.738713, lon: 12.7486027 },
+    categories: ["Veranstaltung"],
+    status: "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {
+      name: "Kinderlicht Wallersdorf e.V.",
+      email: "info@kinderlicht-wallersdorf.de",
+    },
+    attendees: [
+      {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+        rsvp: true,
+        partstat: "ACCEPTED",
+        role: "REQ-PARTICIPANT",
+      },
+    ],
+    htmlContent:
+      "Der Kinderlicht Wallersdorf läd zum Schneeball ein.<br><iframe src=\"https://app.campai.com/em/ueqq6/events/693044716ba241a984bee8e3\" data-campai-id></iframe>\n<script src=\"https://app.campai.com/scripts/embeddable.js\"></script>",
+  },
   {
     start: [2025, 12, 22, 18, 0],
     duration: { hours: 3, minutes: 30 },
