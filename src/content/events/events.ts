@@ -31,7 +31,7 @@ export const events: Event[] = [
       },
     ],
     htmlContent:
-      "Der Kinderlicht Wallersdorf läd zum Schneeball ein.<br><iframe src=\"https://app.campai.com/em/ueqq6/events/693044716ba241a984bee8e3\" data-campai-id></iframe>\n<script src=\"https://app.campai.com/scripts/embeddable.js\"></script>",
+      "Der Kinderlicht Wallersdorf läd zum Schneeball ein.",
   },
   {
     start: [2025, 12, 22, 18, 0],
