@@ -116,6 +116,7 @@ export default function DonationReceipt() {
                         <option>Frau</option>
                         <option>Herr</option>
                         <option>ohne</option>
+                        <option>Firma</option>
                       </select>
                     </div>
                   </div>
@@ -125,7 +126,7 @@ export default function DonationReceipt() {
                       htmlFor="first-name"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Vorname
+                      {watch().gender === "Firma" ? "Firmenname" : "Vorname"}
                     </label>
                     <div className="mt-2">
                       <input
@@ -137,7 +138,7 @@ export default function DonationReceipt() {
                       />
                       <ErrorMessage
                         field={errors.firstName}
-                        error="Vorname wird benötigt"
+                        error={watch().gender === "Firma" ? "Firmenname wird benötigt" : "Vorname wird benötigt"}
                       ></ErrorMessage>
                     </div>
                   </div>
@@ -147,7 +148,7 @@ export default function DonationReceipt() {
                       htmlFor="last-name"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Nachname
+                      {watch().gender === "Firma" ? "Zusatz" : "Nachname"}
                     </label>
                     <div className="mt-2">
                       <input
@@ -159,7 +160,7 @@ export default function DonationReceipt() {
                       />
                       <ErrorMessage
                         field={errors.lastName}
-                        error="Nachname wird benötigt"
+                        error={watch().gender === "Firma" ? "Zusatz wird benötigt" : "Nachname wird benötigt"}
                       ></ErrorMessage>
                     </div>
                   </div>
