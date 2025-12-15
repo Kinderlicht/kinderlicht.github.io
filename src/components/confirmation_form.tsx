@@ -152,7 +152,7 @@ export default function DonationReceipt() {
                     </label>
                     <div className="mt-2">
                       <input
-                        {...register("lastName", { required: true })}
+                        {...register("lastName", { required: watch().gender !== "Firma" })}
                         type="text"
                         id="last-name"
                         autoComplete="family-name"
