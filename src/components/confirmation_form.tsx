@@ -56,7 +56,7 @@ export default function DonationReceipt() {
         formData: {
           gender: data.gender,
           firstName: data.firstName,
-          lastName: data.lastName,
+          lastName: data.lastName || "keine Angabe",
           birthday: data.birthday.toISOString().split("T")[0],
           date: data.date.toISOString().split("T")[0],
           email: data.email,
