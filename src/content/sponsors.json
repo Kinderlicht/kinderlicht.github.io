@@ -42,6 +42,24 @@
     "link": "https://www.mein-bauernhof.de/verkaufstelle/asters-holunderhof-705559/"
   },
   {
+    "name": "DM Landau",
+    "location": "aus 94405 Landau a.d. Isar",
+    "link": "https://www.dm.de/store/d17m/landau-a-d-isar/bahnhofstrasse-2",
+    "image": "supporter/dm.svg"
+  },
+  {
+    "name": "DM Plattling",
+    "location": "aus 94447 Plattling",
+    "link": "https://www.dm.de/store/d3i7/plattling/landauer-strasse-8",
+    "image": "supporter/dm.svg"
+  },
+  {
+    "name": "Bachner Group",
+    "location": "aus 84048 Mainburg",
+    "link": "https://www.bachner.de",
+    "image": "supporter/Bachner-Group.svg"
+  },
+  {
     "name": "Music Station",
     "location": "aus 94330 Aiterhofen",
     "link": "https://www.music-station.de/",
@@ -76,6 +94,12 @@
     "location": "aus 84028 Landshut",
     "link": "https://www.weiss-grunert.de/",
     "image": "supporter/Rechtsanwaelte-Weiss-Grunert.png"
+  },
+  {
+    "name": "Spedition Niedermaier",
+    "location": "aus 94405 Landau a.d. Isar",
+    "link": "https://www.niedermaier.eu/",
+    "image": "supporter/Spedition-Niedermaier.svg"
   },
   {
     "name": "Ortmaier Druck",
