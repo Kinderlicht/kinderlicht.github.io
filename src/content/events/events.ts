@@ -31,7 +31,7 @@ export const events: Event[] = [
       },
     ],
     htmlContent:
-      "Der Kinderlicht Wallersdorf läd zum Schneeball ein.",
+      "Der Kinderlicht Wallersdorf läd zum Schneeball ein. Wir bitten darum, Reservierungen über den Anmeldebutton oben vorzunehmen. Aufgrund der jüngesten Ergeinisse haben wir uns dazu entschieden, den gesament Erlös des Abends and drei Kinder aus Wallersdorf zu spenden, die unverschuldet in Not geraten sind. Wer direkt spenden möchte, kann dies über PayPal oder Überweisung mit dem Stickwort 'Schnee' tun. Alle Infos dazu findet ihr im Banner direkt oben auf der Seite.",
   },
   {
     start: [2025, 12, 22, 18, 0],
