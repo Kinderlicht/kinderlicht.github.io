@@ -65,7 +65,7 @@ function Statistic() {
             </svg>
           </div>
           <h3 className="text-2xl text-gray-800 font-extrabold">
-            ... und über 60 weitere Mitglieder.
+            ... und über 100 weitere Mitglieder.
           </h3>
         </div>
       </div>
