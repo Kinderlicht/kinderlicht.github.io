@@ -22,9 +22,9 @@ function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
                   />
                 )}
                 {sponsor.image && sponsor.image.extension === "svg" && (
-                  <img
-                  src={sponsor.image.publicURL}
-                  alt={sponsor.name}
+                  <object
+                  data={sponsor.image}
+                  type="image/svg+xml"
                   className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
                   />
                 )}
