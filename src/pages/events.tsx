@@ -175,22 +175,27 @@ export default function EventPage() {
 
   return (
     <Layout>
+      <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
+        <h2 className="mb-16 text-3xl font-bold text-center">
+          Unsere{" "}
+          <span className="text-primary dark:text-primary-400 no-underline">
+            Events
+          </span>
+        </h2>
+      </div>
       <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-white relative overflow-hidden">
         {/* Decorative background elements */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-200 rounded-full filter blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute top-1/3 right-0 w-80 h-80 bg-amber-200 rounded-full filter blur-3xl opacity-30 translate-x-1/2"></div>
         <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-yellow-200 rounded-full filter blur-3xl opacity-20"></div>
         
-        <div className="relative z-10 container max-w-5xl mx-auto px-4 py-8 mt-24">
+        <div className="relative z-10 container max-w-5xl mx-auto px-4 py-8">
           
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 rounded-full mb-6 shadow-xl ring-4 ring-orange-100">
               <span className="text-4xl">🎉</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 bg-clip-text text-transparent mb-4">
-              Unsere Veranstaltungen
-            </h1>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               Entdecke unsere kommenden Events und werde Teil unserer Gemeinschaft!
             </p>
