@@ -20,6 +20,9 @@ module.exports = {
       mono: ["sans-serif"],
     },
     extend: {
+      screens: {
+        'xs': '400px',
+      },
       colors: {
         primary: "#FFA500", // Orange
       },
