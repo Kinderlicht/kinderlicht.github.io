@@ -162,3 +162,168 @@
   );
   -webkit-mask-size: 100% 100%;
 }
+
+/* ===== Member Form Styles ===== */
+
+/* Form input styling */
+.form-input {
+  @apply mt-1 w-full rounded-xl border-2 border-gray-200 p-3 transition-all duration-300 bg-gray-50 outline-none;
+}
+
+.form-input:hover {
+  @apply bg-white border-gray-300 shadow-sm;
+}
+
+.form-input:focus {
+  @apply bg-white border-orange-400 ring-4 ring-orange-100 shadow-md;
+}
+
+/* Form label styling */
+.form-label {
+  @apply block text-sm font-medium text-gray-600 mb-1;
+}
+
+/* Checkbox custom styling */
+.form-checkbox {
+  @apply h-5 w-5 rounded-md border-2 border-gray-300 cursor-pointer;
+  accent-color: #f97316;
+}
+
+.form-checkbox:checked {
+  @apply border-orange-500;
+}
+
+/* Section card styling */
+.form-section {
+  @apply bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-100 shadow-sm;
+  transition: all 0.3s ease;
+}
+
+.form-section:hover {
+  @apply shadow-md border-gray-200;
+}
+
+/* Error message styling */
+.form-error {
+  @apply text-red-500 text-xs mt-1 flex items-center gap-1;
+}
+
+.form-error::before {
+  content: "⚠";
+}
+
+/* Button styling */
+.btn-primary {
+  @apply px-6 py-3 bg-gradient-to-r from-orange-400 to-amber-500 text-white rounded-xl shadow-lg font-semibold;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  @apply from-orange-500 to-amber-600 shadow-xl transform -translate-y-0.5;
+}
+
+.btn-primary:active {
+  @apply transform translate-y-0 shadow-md;
+}
+
+.btn-secondary {
+  @apply px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-xl shadow-lg font-semibold;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  @apply from-green-500 to-emerald-600 shadow-xl transform -translate-y-0.5;
+}
+
+/* Card hover effects */
+.form-card {
+  @apply bg-white rounded-2xl border border-gray-100 shadow-md;
+  transition: all 0.3s ease;
+}
+
+.form-card:hover {
+  @apply shadow-lg border-gray-200;
+}
+
+/* Animated gradient background */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-gradient {
+  background: linear-gradient(-45deg, #ff9a56, #ffad5c, #ffc876, #fff3e0);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Pulse animation for important elements */
+@keyframes gentle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.gentle-pulse {
+  animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+/* Slide in animation */
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-up {
+  animation: slide-in-up 0.4s ease-out forwards;
+}
+
+/* Progress step indicator */
+.step-indicator {
+  @apply w-10 h-10 rounded-full flex items-center justify-center font-bold text-white;
+  background: linear-gradient(135deg, #f97316, #f59e0b);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+}
+
+/* Info box styling */
+.info-box {
+  @apply bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100;
+}
+
+.info-box-warning {
+  @apply bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border border-amber-200;
+}
+
+/* Decorative elements */
+.decorative-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+/* Custom scrollbar for form */
+.form-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.form-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #f97316, #f59e0b);
+  border-radius: 10px;
+}
+
+.form-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ea580c, #d97706);
+}

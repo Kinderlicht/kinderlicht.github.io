@@ -259,18 +259,34 @@ const MemberForm: React.FC = () => {
   // Reusable section header with icon and gradient underline
   const sectionHeader = (title: string, emoji?: string) => (
     <div className="flex items-center gap-3 mb-6">
-      {emoji && <span className="text-2xl">{emoji}</span>}
-      <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+      {emoji && (
+        <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl flex items-center justify-center shadow-md">
+          <span className="text-xl">{emoji}</span>
+        </div>
+      )}
+      <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
         {title}
       </h2>
     </div>
   );
 
-  // Common styling for inputs and checkboxes - more rounded and friendly
+  // Common styling for inputs - enhanced with transitions and shadows
   const inputClasses =
-    "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-200 bg-gray-50 hover:bg-white outline-none";
+    "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 placeholder-gray-400";
+  
+  // Select styling with custom appearance
+  const selectClasses =
+    "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:1.5em] bg-[right_0.75rem_center] bg-no-repeat pr-10";
+  
+  // Checkbox styling
   const checkboxClasses =
-    "h-5 w-5 text-orange-500 border-2 border-gray-300 rounded-md cursor-pointer accent-orange-500";
+    "h-5 w-5 rounded-lg border-2 border-gray-300 cursor-pointer accent-orange-500 transition-all duration-200 hover:border-orange-400";
+  
+  // Label styling
+  const labelClasses = "block text-sm font-medium text-gray-600 mb-1";
+  
+  // Error message styling
+  const errorClasses = "text-red-500 text-xs mt-1.5 flex items-center gap-1";
 
   // Main member's dynamic price calculation using watched birthday
   const mainBirthday = watch("birthday");
@@ -278,10 +294,15 @@ const MemberForm: React.FC = () => {
 
   // Styled badge for price display - more prominent and friendly
   const PriceBadge = ({ price, title }: { price: number; title: string }) => (
-    <div className="mt-4 flex justify-end">
-      <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold px-5 py-2 rounded-full shadow-lg flex items-center gap-2">
-        <span className="text-lg">✨</span>
-        <span>{title}: {price} €</span>
+    <div className="mt-6 flex justify-end">
+      <div className="bg-gradient-to-r from-emerald-400 via-green-500 to-teal-500 text-white font-bold px-6 py-3 rounded-2xl shadow-lg flex items-center gap-3 transform hover:scale-105 transition-transform duration-200">
+        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+          <span className="text-lg">💰</span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-xs opacity-80 uppercase tracking-wide">{title}</span>
+          <span className="text-xl">{price} €</span>
+        </div>
       </div>
     </div>
   );
@@ -291,44 +312,55 @@ const MemberForm: React.FC = () => {
   ) : success === 500 ? (
     <FormFail recover={JSON.stringify(getValues())} />
   ) : (
-    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-white py-8 px-4 relative overflow-hidden">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-orange-200 rounded-full filter blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute top-1/3 right-0 w-80 h-80 bg-amber-200 rounded-full filter blur-3xl opacity-30 translate-x-1/2"></div>
+      <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-yellow-200 rounded-full filter blur-3xl opacity-20"></div>
+      
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Friendly Header Card */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 mb-8 border border-orange-100">
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 mb-8 border border-white/50">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full mb-4 shadow-lg">
-              <span className="text-4xl">🌟</span>
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 rounded-full mb-6 shadow-xl ring-4 ring-orange-100">
+              <span className="text-5xl">🌟</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">Willkommen bei Kinderlicht!</h1>
-            <p className="text-gray-600 text-lg mb-4">
+            <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 bg-clip-text text-transparent mb-4">Willkommen bei Kinderlicht!</h1>
+            <p className="text-gray-600 text-lg mb-6 max-w-2xl mx-auto">
               Werde Teil unserer Gemeinschaft und hilf uns, Kinderaugen zum Leuchten zu bringen.
             </p>
-            <div className="bg-orange-50 rounded-2xl p-4 text-left max-w-2xl mx-auto">
-              <p className="text-gray-700 text-sm leading-relaxed">
-                <span className="font-semibold text-orange-600">💡 Gut zu wissen:</span> Der Basisbeitrag beträgt <span className="font-bold">24€</span> für Erwachsene und <span className="font-bold">12€</span> für Kinder.
-                Bei Familienmitgliedschaften gibt es <span className="font-bold text-green-600">3€ Rabatt</span> pro Person!
-              </p>
+            <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-5 text-left max-w-2xl mx-auto border border-orange-100 shadow-inner">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">💡</span>
+                <div>
+                  <p className="font-semibold text-gray-800 mb-1">Gut zu wissen:</p>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Der Basisbeitrag beträgt <span className="font-bold text-orange-600">24€</span> für Erwachsene und <span className="font-bold text-orange-600">12€</span> für Kinder.
+                    Bei Familienmitgliedschaften erhält jeder <span className="font-bold text-green-600">3€ Rabatt</span>!
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Main Form Card */}
-        <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
+        <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 md:p-10 border border-white/50">
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Main Member Form */}
-          <div className="space-y-8">
-            <section className="bg-gray-50 rounded-2xl p-6">
+          <div className="space-y-6">
+            <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
               {sectionHeader("Persönliche Informationen", "👤")}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Anrede */}
                 <div>
-                  <label className="block text-sm text-gray-600">Anrede</label>
+                  <label className={labelClasses}>Anrede</label>
                   <select
                     {...register("gender", {
                       required: "Anrede ist erforderlich",
                     })}
-                    className={inputClasses}
+                    className={selectClasses}
                   >
                     <option value="">Bitte wählen</option>
                     <option value="Herr">Herr</option>
@@ -336,30 +368,31 @@ const MemberForm: React.FC = () => {
                     <option value="ohne">ohne</option>
                   </select>
                   {errors.gender && (
-                    <p className="text-orange-500 text-xs mt-1">
+                    <p className={errorClasses}>
                       {errors.gender.message}
                     </p>
                   )}
                 </div>
                 {/* Vorname */}
                 <div>
-                  <label className="block text-sm text-gray-600">Vorname</label>
+                  <label className={labelClasses}>Vorname</label>
                   <input
                     {...register("firstName", {
                       required: "Vorname ist erforderlich",
                     })}
                     type="text"
+                    placeholder="Max"
                     className={inputClasses}
                   />
                   {errors.firstName && (
-                    <p className="text-orange-500 text-xs mt-1">
+                    <p className={errorClasses}>
                       {errors.firstName.message}
                     </p>
                   )}
                 </div>
                 {/* Nachname */}
                 <div>
-                  <label className="block text-sm text-gray-600">
+                  <label className={labelClasses}>
                     Nachname
                   </label>
                   <input
@@ -367,17 +400,18 @@ const MemberForm: React.FC = () => {
                       required: "Nachname ist erforderlich",
                     })}
                     type="text"
+                    placeholder="Mustermann"
                     className={inputClasses}
                   />
                   {errors.lastName && (
-                    <p className="text-orange-500 text-xs mt-1">
+                    <p className={errorClasses}>
                       {errors.lastName.message}
                     </p>
                   )}
                 </div>
                 {/* Geburtsdatum */}
                 <div>
-                  <label className="block text-sm text-gray-600">
+                  <label className={labelClasses}>
                     Geburtsdatum
                   </label>
                   <input
@@ -396,14 +430,14 @@ const MemberForm: React.FC = () => {
                     className={inputClasses}
                   />
                   {errors.birthday && (
-                    <p className="text-orange-500 text-xs mt-1">
+                    <p className={errorClasses}>
                       {errors.birthday.message}
                     </p>
                   )}
                 </div>
                 {/* E-Mail */}
                 <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-600">E-Mail</label>
+                  <label className={labelClasses}>E-Mail</label>
                   <input
                     {...register("email", {
                       required: "E-Mail ist erforderlich",
@@ -413,10 +447,11 @@ const MemberForm: React.FC = () => {
                       },
                     })}
                     type="email"
+                    placeholder="max.mustermann@email.de"
                     className={inputClasses}
                   />
                   {errors.email && (
-                    <p className="text-orange-500 text-xs mt-1">
+                    <p className={errorClasses}>
                       {errors.email.message}
                     </p>
                   )}
@@ -425,9 +460,9 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Adresse */}
-            <section className="bg-gray-50 rounded-2xl p-6">
+            <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
               {sectionHeader("Adresse", "🏠")}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="md:col-span-2">
                   <label className="block text-sm text-gray-600">
                     Straße + Nr. (ggf. Adresszusatz)
@@ -512,9 +547,9 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Bankdetails */}
-            <section className="bg-gray-50 rounded-2xl p-6">
+            <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
               {sectionHeader("Bankdetails", "🏦")}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm text-gray-600">IBAN</label>
                   <input
@@ -567,9 +602,9 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Mitgliedschaft */}
-            <section className="bg-gray-50 rounded-2xl p-6">
+            <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
               {sectionHeader("Mitgliedschaft", "🤝")}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm text-gray-600">
                     Eintrittsdatum
@@ -635,17 +670,20 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Kontaktaufnahme */}
-            <section className="bg-gray-50 rounded-2xl p-6">
+            <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
               {sectionHeader("Kontaktaufnahme", "📬")}
-              <div className="text-sm text-gray-600 mb-4 bg-blue-50 rounded-xl p-4">
-                <p>
-                  💌 Lasse dich über unsere bevorstehenden Aktionen informieren.
-                  Falls du nichts auswählst, kontaktieren wir dich
-                  ausschließlich per Post und nur dann, wenn es von Amtes wegen
-                  erforderlich ist.
-                </p>
+              <div className="text-sm text-gray-600 mb-5 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+                <div className="flex items-start gap-3">
+                  <span className="text-xl">💌</span>
+                  <p>
+                    Lasse dich über unsere bevorstehenden Aktionen informieren.
+                    Falls du nichts auswählst, kontaktieren wir dich
+                    ausschließlich per Post und nur dann, wenn es von Amtes wegen
+                    erforderlich ist.
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col space-y-3">
+              <div className="flex flex-col space-y-4">
                 <label className="inline-flex items-center">
                   <input
                     {...register("contactEmail")}
@@ -670,9 +708,9 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Datenschutz */}
-            <section className="bg-gray-50 rounded-2xl p-6">
+            <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
               {sectionHeader("Datenschutz", "🔒")}
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div className="text-sm text-gray-600">
                   <p>
                     Die angegebenen Daten werden unter Berücksichtigung des
@@ -1439,24 +1477,29 @@ const MemberForm: React.FC = () => {
           </section>
 
           {/* Submit Button */}
-          <div className="text-center pt-6">
+          <div className="text-center pt-8">
             <button
               type="submit"
-              className="px-12 py-4 bg-gradient-to-r from-gray-700 to-gray-900 hover:from-gray-800 hover:to-black text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-lg font-bold flex items-center gap-3 mx-auto"
+              className="group px-14 py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-600 hover:via-amber-600 hover:to-yellow-600 text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-xl font-bold flex items-center gap-4 mx-auto transform hover:-translate-y-1"
             >
-              <span>📨</span> Antrag absenden
+              <span className="group-hover:animate-bounce">📨</span> 
+              <span>Antrag absenden</span>
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
             </button>
+            <p className="text-gray-400 text-sm mt-4">Du erhältst eine Bestätigungsmail nach dem Absenden.</p>
           </div>
         </form>
         {success === 400 && (
           <div
-            className="bg-orange-50 border-2 border-orange-300 rounded-2xl p-6 mt-6 flex items-start gap-4"
+            className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-200 rounded-2xl p-6 mt-8 flex items-start gap-4 shadow-lg"
             role="alert"
           >
-            <span className="text-3xl">⚠️</span>
+            <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <span className="text-2xl">⚠️</span>
+            </div>
             <div>
-              <p className="font-bold text-orange-800 text-lg">Ups, da stimmt etwas nicht...</p>
-              <p className="text-orange-700 mt-1">
+              <p className="font-bold text-orange-800 text-lg mb-1">Ups, da stimmt etwas nicht...</p>
+              <p className="text-orange-700">
                 Campai konnte deinen Antrag nicht verarbeiten. Bitte überprüfe deine
                 E-Mail-Adresse, IBAN, BIC und das Geburtsdatum.
               </p>
