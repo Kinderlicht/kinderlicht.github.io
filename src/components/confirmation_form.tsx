@@ -533,6 +533,3 @@ export default function DonationReceipt() {
     </>
   );
 }
-    </>
-  );
-}
