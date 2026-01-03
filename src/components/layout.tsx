@@ -83,7 +83,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Navbar.Collapse>
         </Navbar>
       </header>
-      <div className="relative isolate overflow-hidden bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 px-4 py-3 sm:px-6">
+      <div className="sticky isolate overflow-hidden bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 px-4 py-3 sm:px-6"> 
         {/* Decorative blobs */}
         <div
           className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
