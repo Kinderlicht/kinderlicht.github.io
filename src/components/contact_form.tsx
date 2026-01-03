@@ -10,7 +10,7 @@ function ErrorMessage({
   field: FieldError | undefined;
   error: string;
 }) {
-  return <>{field && <div className="text-sm text-red-500">{error}</div>}</>;
+  return <>{field && <div className="text-red-500 text-xs mt-1.5 flex items-center gap-1">⚠️ {error}</div>}</>;
 }
 
 interface Message {
@@ -21,7 +21,30 @@ interface Message {
   confirmDataProtection: boolean;
 }
 
-export default function MemberForm() {
+// Reusable section header with icon and gradient underline
+const SectionHeader = ({ title, emoji }: { title: string; emoji?: string }) => (
+  <div className="flex items-center gap-3 mb-6">
+    {emoji && (
+      <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl flex items-center justify-center shadow-md">
+        <span className="text-xl">{emoji}</span>
+      </div>
+    )}
+    <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+      {title}
+    </h2>
+  </div>
+);
+
+// Common styling classes
+const inputClasses =
+  "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 placeholder-gray-400";
+
+const labelClasses = "block text-sm font-medium text-gray-600 mb-1";
+
+const checkboxClasses =
+  "h-5 w-5 rounded-lg border-2 border-gray-300 cursor-pointer accent-orange-500 transition-all duration-200 hover:border-orange-400";
+
+export default function ContactForm() {
   const {
     register,
     formState: { errors },
@@ -60,194 +83,177 @@ export default function MemberForm() {
         setSuccess(1);
       });
   };
+  
   return (
     <>
-    {success == 0 && (<FormSuccess/>)}
-    {success != 0 &&
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-12">
-        <div className="border-b border-gray-900/10 pb-12">
-
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <div className="col-span-full">
-              <label
-                htmlFor="first-name"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Kompletter Name
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("name", { required: true })}
-                  type="text"
-                  id="name"
-                  autoComplete="given-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-                <ErrorMessage
-                  field={errors.name}
-                  error="Name wird benötigt"
-                ></ErrorMessage>
-              </div>
-            </div>
-
-            <div className="col-span-full">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                E-Mail
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("email", {
-                    required: true,
-                    pattern: /^\S+@\S+$/i,
-                  })}
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-                <ErrorMessage
-                  field={errors.email}
-                  error={
-                    errors.email?.ref?.value
-                      ? errors.email.ref.value.toString() +
-                        " ist keine gültige E-Mail"
-                      : "E-Mail wird benötigt"
-                  }
-                ></ErrorMessage>
-              </div>
-            </div>
-
-
-            <div className="col-span-full">
-              <label
-                htmlFor="last-name"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Betreff
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("subject", { required: true })}
-                  type="text"
-                  id="last-name"
-                  autoComplete="family-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-                <ErrorMessage
-                  field={errors.subject}
-                  error="Bitte gib einen Betreff ein."
-                ></ErrorMessage>
-              </div>
-            </div>
-
-
-            <div className="col-span-full">
-              <label
-                htmlFor="last-name"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Deine Nachricht an uns.
-              </label>
-              <div className="mt-2">
-                <textarea
-                  {...register("text", { required: true })}
-                  id="text"
-                  autoComplete="family-name"
-                  className="block w-full h-96 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-                <ErrorMessage
-                  field={errors.text}
-                  error="Bitte gib einen Text ein."
-                ></ErrorMessage>
-              </div>
-            </div>
-
-            </div>
-        </div>
-      </div>
-      <div className="border-b border-gray-900/10 pb-12">
-                <h2 className="text-base font-semibold leading-7 text-gray-900">
-                  Datenschutz
-                </h2>
-                <p className="mt-1 text-sm leading-6 text-gray-600">
-                  Die angegebenen Daten werden unter Berücksichtigung des
-                  BundesDatenschutz-Gesetzes (BDSG) erhoben und ausschließlich
-                  für Zwecke der Spendenverwaltung gespeichert und genutzt. Die
-                  Bestimmungen findest du{" "}
-                  <a
-                    className="text-indigo-600"
-                    href="/rechtliches"
-                    target="_blank"
-                  >
-                    hier
-                  </a>
-                  .
-                  Du erklärst dich damit einverstanden, dass alle Inhalte im 
-                  Formular an unsere Vereinsverwaltungssoftware Campai übermittelt werden.
-                  Die Datenschutzbestimmungen von Campai findest du{" "}
-                  <a
-                    className="text-indigo-600"
-                    href="https://www.campai.com/datenschutz"
-                    target="_blank"
-                  >
-                    hier
-                  </a>
-                  .
+      {success == 0 && <FormSuccess />}
+      {success != 0 && (
+        <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-white py-8 px-4 relative overflow-hidden">
+          {/* Decorative background elements */}
+          <div className="absolute top-0 left-0 w-96 h-96 bg-orange-200 rounded-full filter blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute top-1/3 right-0 w-80 h-80 bg-amber-200 rounded-full filter blur-3xl opacity-30 translate-x-1/2"></div>
+          <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-yellow-200 rounded-full filter blur-3xl opacity-20"></div>
+          
+          <div className="max-w-2xl mx-auto relative z-10">
+            {/* Header Card */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 mb-8 border border-white/50">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 rounded-full mb-6 shadow-xl ring-4 ring-orange-100">
+                  <span className="text-5xl">💬</span>
+                </div>
+                <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 bg-clip-text text-transparent mb-4">
+                  Kontakt aufnehmen
+                </h1>
+                <p className="text-gray-600 text-lg mb-6 max-w-xl mx-auto">
+                  Hast du Fragen oder möchtest uns etwas mitteilen? Wir freuen uns von dir zu hören!
                 </p>
-
-                <div className="mt-2 grid grid-cols-1 gap-x-6 sm:grid-cols-6">
-                  <fieldset className="col-span-full">
-                    <div className="mt-6 space-y-6">
-                      <div className="relative flex gap-x-3">
-                        <div className="flex h-6 items-center">
-                          <input
-                            {...register("confirmDataProtection", {
-                              required: true,
-                            })}
-                            id="data-yes"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                          />
-                        </div>
-                        <div className="text-sm leading-6">
-                          <label
-                            htmlFor="data-yes"
-                            className="font-medium text-gray-900"
-                          >
-                            Ich habe die Datenschutzbestimmungen gelesen,
-                            verstanden und akzeptiert.
-                          </label>
-                          <ErrorMessage
-                            field={errors.confirmDataProtection}
-                            error="Du musst den Datenschutzbestimmungen zustimmen."
-                          ></ErrorMessage>
-                          <p className="text-gray-500">
-                            Du erklärst Dich damit einverstanden, dass Deine
-                            Daten zur Bearbeitung Deiner Anfrageverwendet
-                            werden. Weitere Informationen und Widerrufshinweise
-                            findest Du inunserer Datenschutzerklärung und in den
-                            Hinweisen zur Verarbeitung Deiner Daten.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </fieldset>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl px-4 py-2 border border-orange-100 flex items-center gap-2">
+                    <span>📧</span>
+                    <span className="text-gray-600 text-sm">Schnelle Antwort</span>
+                  </div>
+                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl px-4 py-2 border border-orange-100 flex items-center gap-2">
+                    <span>🤝</span>
+                    <span className="text-gray-600 text-sm">Persönlich & Freundlich</span>
+                  </div>
                 </div>
               </div>
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button
-          type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Senden
-        </button>
-      </div>
-    </form>}
-    {success == 1 && (<FormFail recover={recover}/>)}
+            </div>
+
+            {/* Main Form Card */}
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 md:p-10 border border-white/50">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                
+                {/* Deine Nachricht */}
+                <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <SectionHeader title="Deine Nachricht" emoji="✉️" />
+                  <div className="space-y-5">
+                    <div>
+                      <label htmlFor="name" className={labelClasses}>Dein Name</label>
+                      <input
+                        {...register("name", { required: true })}
+                        type="text"
+                        id="name"
+                        placeholder="Max Mustermann"
+                        autoComplete="name"
+                        className={inputClasses}
+                      />
+                      <ErrorMessage field={errors.name} error="Name wird benötigt" />
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className={labelClasses}>E-Mail</label>
+                      <input
+                        {...register("email", {
+                          required: true,
+                          pattern: /^\S+@\S+$/i,
+                        })}
+                        id="email"
+                        type="email"
+                        placeholder="max@beispiel.de"
+                        autoComplete="email"
+                        className={inputClasses}
+                      />
+                      <ErrorMessage
+                        field={errors.email}
+                        error={
+                          errors.email?.ref?.value
+                            ? errors.email.ref.value.toString() + " ist keine gültige E-Mail"
+                            : "E-Mail wird benötigt"
+                        }
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="subject" className={labelClasses}>Betreff</label>
+                      <input
+                        {...register("subject", { required: true })}
+                        type="text"
+                        id="subject"
+                        placeholder="Worum geht es?"
+                        className={inputClasses}
+                      />
+                      <ErrorMessage field={errors.subject} error="Bitte gib einen Betreff ein." />
+                    </div>
+
+                    <div>
+                      <label htmlFor="text" className={labelClasses}>Deine Nachricht an uns</label>
+                      <textarea
+                        {...register("text", { required: true })}
+                        id="text"
+                        placeholder="Schreib uns hier deine Nachricht..."
+                        rows={8}
+                        className={`${inputClasses} resize-none`}
+                      />
+                      <ErrorMessage field={errors.text} error="Bitte gib einen Text ein." />
+                    </div>
+                  </div>
+                </section>
+
+                {/* Datenschutz */}
+                <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <SectionHeader title="Datenschutz" emoji="🔒" />
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100 mb-5">
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      Die angegebenen Daten werden unter Berücksichtigung des
+                      BundesDatenschutz-Gesetzes (BDSG) erhoben und ausschließlich
+                      für Zwecke der Spendenverwaltung gespeichert und genutzt. Die
+                      Bestimmungen findest du{" "}
+                      <a className="text-orange-600 hover:text-orange-700 font-medium" href="/rechtliches" target="_blank">
+                        hier
+                      </a>
+                      . Du erklärst dich damit einverstanden, dass alle Inhalte im 
+                      Formular an unsere Vereinsverwaltungssoftware Campai übermittelt werden.
+                      Die Datenschutzbestimmungen von Campai findest du{" "}
+                      <a className="text-orange-600 hover:text-orange-700 font-medium" href="https://www.campai.com/datenschutz" target="_blank">
+                        hier
+                      </a>
+                      .
+                    </p>
+                  </div>
+
+                  <div className="flex items-start gap-4 bg-white rounded-xl p-4 border border-gray-200">
+                    <input
+                      {...register("confirmDataProtection", { required: true })}
+                      id="data-yes"
+                      type="checkbox"
+                      className={checkboxClasses}
+                    />
+                    <div className="flex-1">
+                      <label htmlFor="data-yes" className="font-medium text-gray-800 cursor-pointer">
+                        Ich habe die Datenschutzbestimmungen gelesen, verstanden und akzeptiert.
+                      </label>
+                      <ErrorMessage
+                        field={errors.confirmDataProtection}
+                        error="Du musst den Datenschutzbestimmungen zustimmen."
+                      />
+                      <p className="text-gray-500 text-sm mt-2">
+                        Du erklärst Dich damit einverstanden, dass Deine
+                        Daten zur Bearbeitung Deiner Anfrage verwendet werden.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Submit Button */}
+                <div className="text-center pt-8">
+                  <button
+                    type="submit"
+                    className="group px-14 py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-600 hover:via-amber-600 hover:to-yellow-600 text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-xl font-bold flex items-center gap-4 mx-auto transform hover:-translate-y-1"
+                  >
+                    <span className="group-hover:animate-bounce">📨</span>
+                    <span>Nachricht senden</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
+                  </button>
+                  <p className="text-gray-400 text-sm mt-4">Du erhältst eine Bestätigungsmail nach dem Absenden.</p>
+                </div>
+              </form>
+              
+              {success == 1 && <FormFail recover={recover} />}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

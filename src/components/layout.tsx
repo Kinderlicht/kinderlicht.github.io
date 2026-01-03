@@ -103,9 +103,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {/* Bank info pill */}
           <div className="flex items-center gap-1.5 sm:gap-2 bg-white/60 backdrop-blur-sm rounded-full px-2 sm:px-3 py-1 shadow-sm whitespace-nowrap">
             <span className="text-orange-500 font-semibold text-xs sm:text-sm">🏦</span>
-            <span className="hidden sm:inline text-gray-700 text-xs sm:text-sm">VR Bank</span>
+            <span className="hidden sm:inline text-gray-700 text-xs sm:text-sm">VR Bank Landau</span>
             <span className="text-gray-400 hidden sm:inline">|</span>
             <span title="IBAN" className="font-mono text-[10px] sm:text-xs text-gray-700">DE04 7419 1000 0007 7243 14</span>
+            <span className="text-gray-400 hidden sm:inline">|</span>
+            <span title="BIC" className="font-mono text-[10px] sm:text-xs text-gray-700">GENODEF1LND</span>
           </div>
           
           {/* Action buttons */}
@@ -130,7 +132,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               to="/quittung"
               className="rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap"
             >
-              Quittung →
+              Quittung anfordern →
             </Link>
           </div>
         </div>
