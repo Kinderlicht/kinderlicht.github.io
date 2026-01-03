@@ -145,12 +145,22 @@ export default function Home({
             </span>
           </h2>
           <p className="mb-16 text-center">
-            Die Sortierung der Unterstützer erfolgte rein zufällig.
+            Die Sortierung der Unterstützer erfolgt täglich rein zufällig.
           </p>
           <div className="grid gap-6 lg:grid-cols-3">
-            {sponsors.nodes.map((sponsor, index) => (
+            {/* Sponsors are randomly sorted based on today's date */}
+            {[...sponsors.nodes]
+              .sort((a, b) => {
+              const today = new Date().toDateString();
+              const seedA = today + a.name;
+              const seedB = today + b.name;
+              const hashA = seedA.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+              const hashB = seedB.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+              return hashA - hashB;
+              })
+              .map((sponsor, index) => (
               <SponsorCard sponsor={sponsor} key={index} />
-            ))}
+              ))}
           </div>
         </div>
       </div>
