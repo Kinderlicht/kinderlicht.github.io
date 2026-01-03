@@ -21,7 +21,7 @@ export default function Timeline({ activities }: TimelineProps) {
           Unsere Spenden
         </h2>
         <p className="text-gray-500 text-sm md:text-base">
-          Entdecke unsere Spendengeschichte – jeder Klick zeigt mehr Herzenswärme
+          Entdecke unsere Spendengeschichte (anonymisiert)
         </p>
       </div>
 
