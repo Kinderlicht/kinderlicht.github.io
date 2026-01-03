@@ -256,29 +256,33 @@ const MemberForm: React.FC = () => {
     });
   };
 
-  // Reusable section header with a thin bright orange underline.
-  const sectionHeader = (title: string) => (
-    <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-[#FFA500] pb-2 mb-4">
-      {title}
-    </h2>
+  // Reusable section header with icon and gradient underline
+  const sectionHeader = (title: string, emoji?: string) => (
+    <div className="flex items-center gap-3 mb-6">
+      {emoji && <span className="text-2xl">{emoji}</span>}
+      <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+        {title}
+      </h2>
+    </div>
   );
 
-  // Common styling for inputs and checkboxes
+  // Common styling for inputs and checkboxes - more rounded and friendly
   const inputClasses =
-    "mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-[#FFA500] p-2";
+    "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-200 bg-gray-50 hover:bg-white outline-none";
   const checkboxClasses =
-    "h-5 w-5 text-[#FFA500] border border-gray-300 rounded";
+    "h-5 w-5 text-orange-500 border-2 border-gray-300 rounded-md cursor-pointer accent-orange-500";
 
   // Main member's dynamic price calculation using watched birthday
   const mainBirthday = watch("birthday");
   const mainMemberPrice = computePrice(mainBirthday);
 
-  // Styled badge for price display
+  // Styled badge for price display - more prominent and friendly
   const PriceBadge = ({ price, title }: { price: number; title: string }) => (
-    <div className="mt-2 flex justify-end">
-      <span className="bg-green-200 text-green-800 font-bold px-3 py-1 rounded-full shadow-md">
-        {title}: {price} €
-      </span>
+    <div className="mt-4 flex justify-end">
+      <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold px-5 py-2 rounded-full shadow-lg flex items-center gap-2">
+        <span className="text-lg">✨</span>
+        <span>{title}: {price} €</span>
+      </div>
     </div>
   );
 
@@ -287,28 +291,35 @@ const MemberForm: React.FC = () => {
   ) : success === 500 ? (
     <FormFail recover={JSON.stringify(getValues())} />
   ) : (
-    <div className="min-h-screen bg-white py-8 px-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
-        {/* Header */}
-        <header className="mb-6 text-center">
-          <h1 className="text-3xl font-bold text-gray-800">Mitgliedsantrag</h1>
-          <p className="text-gray-600 mt-2">
-            Bitte fülle alle Felder sorgfältig aus. Der Antrag muss mit einer
-            gültigen E-Mail-Adresse bestätigt werden.
-          </p>
-          <p className="text-gray-600 mt-2">
-            Falls Angehörige bereits Mitglied sind oder hier mit angelegt werden,
-            erhalten alle Parteien einen Rabatt von 3€ auf den jährlichen Beitrag.
-            Diese Information kann am Ende des Formulas angegeben werden.
-            Der Basisbeitrag beträgt 24€ für Erwachsene und 12€ für Kinder.
-          </p>
-        </header>
+    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Friendly Header Card */}
+        <div className="bg-white rounded-3xl shadow-xl p-8 mb-8 border border-orange-100">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full mb-4 shadow-lg">
+              <span className="text-4xl">🌟</span>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">Willkommen bei Kinderlicht!</h1>
+            <p className="text-gray-600 text-lg mb-4">
+              Werde Teil unserer Gemeinschaft und hilf uns, Kinderaugen zum Leuchten zu bringen.
+            </p>
+            <div className="bg-orange-50 rounded-2xl p-4 text-left max-w-2xl mx-auto">
+              <p className="text-gray-700 text-sm leading-relaxed">
+                <span className="font-semibold text-orange-600">💡 Gut zu wissen:</span> Der Basisbeitrag beträgt <span className="font-bold">24€</span> für Erwachsene und <span className="font-bold">12€</span> für Kinder.
+                Bei Familienmitgliedschaften gibt es <span className="font-bold text-green-600">3€ Rabatt</span> pro Person!
+              </p>
+            </div>
+          </div>
+        </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
+        {/* Main Form Card */}
+        <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           {/* Main Member Form */}
           <div className="space-y-8">
-            <section>
-              {sectionHeader("Persönliche Informationen")}
+            <section className="bg-gray-50 rounded-2xl p-6">
+              {sectionHeader("Persönliche Informationen", "👤")}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Anrede */}
                 <div>
@@ -414,8 +425,8 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Adresse */}
-            <section>
-              {sectionHeader("Adresse")}
+            <section className="bg-gray-50 rounded-2xl p-6">
+              {sectionHeader("Adresse", "🏠")}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
                   <label className="block text-sm text-gray-600">
@@ -501,8 +512,8 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Bankdetails */}
-            <section>
-              {sectionHeader("Bankdetails")}
+            <section className="bg-gray-50 rounded-2xl p-6">
+              {sectionHeader("Bankdetails", "🏦")}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-gray-600">IBAN</label>
@@ -556,8 +567,8 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Mitgliedschaft */}
-            <section>
-              {sectionHeader("Mitgliedschaft")}
+            <section className="bg-gray-50 rounded-2xl p-6">
+              {sectionHeader("Mitgliedschaft", "🤝")}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-gray-600">
@@ -624,17 +635,17 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Kontaktaufnahme */}
-            <section>
-              {sectionHeader("Kontaktaufnahme")}
-              <div className="text-sm text-gray-600 mb-2">
+            <section className="bg-gray-50 rounded-2xl p-6">
+              {sectionHeader("Kontaktaufnahme", "📬")}
+              <div className="text-sm text-gray-600 mb-4 bg-blue-50 rounded-xl p-4">
                 <p>
-                  Lasse dich über unsere bevorstehenden Aktionen informieren.
+                  💌 Lasse dich über unsere bevorstehenden Aktionen informieren.
                   Falls du nichts auswählst, kontaktieren wir dich
                   ausschließlich per Post und nur dann, wenn es von Amtes wegen
                   erforderlich ist.
                 </p>
               </div>
-              <div className="flex flex-col space-y-2">
+              <div className="flex flex-col space-y-3">
                 <label className="inline-flex items-center">
                   <input
                     {...register("contactEmail")}
@@ -659,8 +670,8 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Datenschutz */}
-            <section>
-              {sectionHeader("Datenschutz")}
+            <section className="bg-gray-50 rounded-2xl p-6">
+              {sectionHeader("Datenschutz", "🔒")}
               <div className="space-y-4">
                 <div className="text-sm text-gray-600">
                   <p>
@@ -722,36 +733,38 @@ const MemberForm: React.FC = () => {
           {/* Relatives Section */}
 
           {/* Hinweis Section */}
-          <div className="border-l-4 border-blue-500 bg-blue-50 p-4 mb-4">
-            <p>
-              Falls Angehörige bereits Mitglied sind oder hier mit angelegt werden,
-              erhalten alle Parteien einen Rabatt von 3€ auf den jährlichen Beitrag.
-            </p>
-            <p className="mt-2">
-              Als Angehörige werden Personen bezeichnet, die entweder Verwandte
-              ersten Grades (Mütter, Väter, Erziehungsberechtigte und Kinder),
-              Geschwister oder gesetzlich anerkannte Partner*innen sind.
-            </p>
-            <p className="mt-2">
-              Das ganze ist vom Alter unabhängig. Eine 17-jährige Tochter ist
-              also auch eine Angehörige des 24-jährigen Bruders und der
-              50-jährigen Mutter.
-            </p>
-            <p className="mt-2">
-              Ein Nachweis über das Verhältnis muss auf Anfrage erbracht werden.
-            </p>
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl">👨‍👩‍👧‍👦</span>
+              <div>
+                <h3 className="font-bold text-gray-800 mb-2">Familienmitgliedschaft</h3>
+                <p className="text-gray-700 text-sm mb-2">
+                  Falls Angehörige bereits Mitglied sind oder hier mit angelegt werden,
+                  erhalten <span className="font-semibold text-green-600">alle Parteien 3€ Rabatt</span> auf den jährlichen Beitrag.
+                </p>
+                <p className="text-gray-600 text-sm mb-2">
+                  Als Angehörige gelten: Eltern, Kinder, Geschwister und gesetzlich anerkannte Partner*innen.
+                </p>
+                <p className="text-gray-500 text-xs italic">
+                  Ein Nachweis über das Verhältnis kann auf Anfrage erforderlich sein.
+                </p>
+              </div>
+            </div>
           </div>
-          <section>
-          <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-[#FFA500] pb-2">
-                Angehörige*n anlegen:
-              </h2>
+          <section className="bg-white rounded-2xl border-2 border-dashed border-orange-200 p-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">➕</span>
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+                  Neue Angehörige anlegen
+                </h2>
+              </div>
               <button
                 type="button"
                 onClick={addRelative}
-                className="px-4 py-2 bg-[#FFA500] hover:bg-[#e69500] text-white rounded shadow text-sm"
+                className="px-6 py-3 bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 font-semibold flex items-center gap-2"
               >
-                Angehörige*n anlegen
+                <span>👤</span> Angehörige*n hinzufügen
               </button>
             </div>
             {fields.map((field, index) => {
@@ -760,18 +773,23 @@ const MemberForm: React.FC = () => {
               return (
                 <div
                   key={field.id}
-                  className="border border-gray-300 rounded-lg p-4 mb-6 relative bg-white"
+                  className="border-2 border-orange-200 rounded-2xl p-6 mb-6 relative bg-gradient-to-br from-orange-50 to-amber-50 shadow-md"
                 >
                   <button
                     type="button"
                     onClick={() => remove(index)}
-                    className="absolute top-2 right-2 text-[#FFA500] hover:text-[#e69500] text-2xl"
+                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-red-100 hover:bg-red-200 text-red-500 hover:text-red-600 rounded-full transition-colors text-lg font-bold"
                   >
-                    &times;
+                    ✕
                   </button>
-                  <h3 className="text-xl font-semibold text-gray-700 mb-4">
-                    Angehörige*r {index + 1}
-                  </h3>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold">
+                      {index + 1}
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800">
+                      Angehörige*r {index + 1}
+                    </h3>
+                  </div>
                   <div className="space-y-6">
                     {/* Persönliche Informationen */}
                     <section>
@@ -1244,17 +1262,20 @@ const MemberForm: React.FC = () => {
           </section>
 
           {/* Existing Family Members Section */}
-          <section>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-[#FFA500] pb-2">
-                Mitglied angeben:
-              </h2>
+          <section className="bg-white rounded-2xl border-2 border-dashed border-green-200 p-6">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">🔗</span>
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+                  Bestehendes Mitglied verknüpfen
+                </h2>
+              </div>
               <button
                 type="button"
                 onClick={addExistingFamilyMember}
-                className="px-4 py-2 bg-[#FFA500] hover:bg-[#e69500] text-white rounded shadow text-sm"
+                className="px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 font-semibold flex items-center gap-2"
               >
-                Angehörige*n angeben
+                <span>🔍</span> Mitglied suchen
               </button>
             </div>
 
@@ -1266,14 +1287,14 @@ const MemberForm: React.FC = () => {
               return (
                 <div
                   key={field.id}
-                  className="border border-gray-300 rounded-lg p-4 mb-6 relative bg-white"
+                  className="border-2 border-green-200 rounded-2xl p-6 mb-6 relative bg-gradient-to-br from-green-50 to-emerald-50 shadow-md"
                 >
                   <button
                     type="button"
                     onClick={() => removeExisting(index)}
-                    className="absolute top-2 right-2 text-[#FFA500] hover:text-[#e69500] text-2xl"
+                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-red-100 hover:bg-red-200 text-red-500 hover:text-red-600 rounded-full transition-colors text-lg font-bold"
                   >
-                    &times;
+                    ✕
                   </button>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -1418,29 +1439,31 @@ const MemberForm: React.FC = () => {
           </section>
 
           {/* Submit Button */}
-          <div className="text-center">
+          <div className="text-center pt-6">
             <button
               type="submit"
-              className="px-10 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded shadow-md text-lg font-semibold"
+              className="px-12 py-4 bg-gradient-to-r from-gray-700 to-gray-900 hover:from-gray-800 hover:to-black text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-lg font-bold flex items-center gap-3 mx-auto"
             >
-              Senden
+              <span>📨</span> Antrag absenden
             </button>
           </div>
         </form>
         {success === 400 && (
           <div
-            className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 mt-5"
+            className="bg-orange-50 border-2 border-orange-300 rounded-2xl p-6 mt-6 flex items-start gap-4"
             role="alert"
           >
-            <p className="font-bold">Ups...</p>
-            <p>
-              Campai konnte deinen Antrag nicht verarbeiten. Das liegt
-              vermutlich an einer ungültigen Angabe der E-Mail-Adresse, der
-              IBAN, der BIC oder des Geburtsdatums. Bitte überprüfe deine
-              Angaben und versuche es erneut.
-            </p>
+            <span className="text-3xl">⚠️</span>
+            <div>
+              <p className="font-bold text-orange-800 text-lg">Ups, da stimmt etwas nicht...</p>
+              <p className="text-orange-700 mt-1">
+                Campai konnte deinen Antrag nicht verarbeiten. Bitte überprüfe deine
+                E-Mail-Adresse, IBAN, BIC und das Geburtsdatum.
+              </p>
+            </div>
           </div>
         )}
+        </div>
       </div>
     </div>
   );
