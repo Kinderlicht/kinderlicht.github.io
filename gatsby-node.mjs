@@ -2,9 +2,9 @@ import path from "path"
 import _ from "lodash";
 import { createFilePath } from "gatsby-source-filesystem";
 import { reporter } from "gatsby-cli/lib/reporter/reporter.js";
-import authorsData from './src/content/authors.json' assert { type: 'json' };
-import sponsorsData from './src/content/sponsors.json' assert { type: 'json' };
-import boardData from './src/content/board.json' assert { type: 'json' };
+import authorsData from './src/content/authors.json' with { type: 'json' };
+import sponsorsData from './src/content/sponsors.json' with { type: 'json' };
+import boardData from './src/content/board.json' with { type: 'json' };
 
 
 export async function onCreateNode({ node, getNode, actions }) {

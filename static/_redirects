@@ -1,0 +1,4 @@
+# Netlify redirects
+/hilf-mit/werde-mitglied /beitreten 301
+/hilf-mit/spenden /quittung 301
+/ueber-uns /wie-ales-begann 301

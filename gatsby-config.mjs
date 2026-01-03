@@ -89,29 +89,7 @@ const config = {
       },
       __key: "blog",
     },
-    {
-      resolve: "gatsby-plugin-netlify",
-      options: {
-        // Add your redirects here
-        redirects: [
-          {
-            from: "/hilf-mit/werde-mitglied",
-            to: "/beitreten",
-            status: 301,
-          },
-          {
-            from: "/hilf-mit/spenden",
-            to: "/quittung",
-            status: 301,
-          },
-          {
-            from: "/ueber-uns",
-            to: "/wie-ales-begann",
-            status: 301,
-          },
-        ],
-      },
-    },
+"gatsby-plugin-netlify",
   ],
 };
 
