@@ -131,9 +131,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <Link
             to="/quittung"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-md hover:shadow-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200"
-          >
-            Quittung anfordern <span aria-hidden="true">→</span>
+            className="p-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 transition-all duration-200 shadow-sm"
+            title="Quittung anfordern"
+            >
+            <span className="text-white text-sm font-semibold px-2">Quittung →</span>
           </Link>
         </div>
         
