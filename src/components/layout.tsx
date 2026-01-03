@@ -114,7 +114,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <a
               href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=B3F4DENU62RRN&ssrt=1693131246739"
-              className="p-1.5 sm:p-2 rounded-full bg-white/50 hover:bg-white transition-colors shadow-sm"
+              className="p-1.5 sm:p-2 rounded-full bg-white/50 hover:bg-white transition-colors shadow-sm hover:shadow-md"
               title="PayPal Spende"
             >
               <svg
@@ -130,7 +130,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </a>
             <Link
               to="/quittung"
-              className="rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap"
+              className="rounded-full bg-black hover:from-orange-600 hover:to-amber-600 px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap"
             >
               Quittung anfordern →
             </Link>
