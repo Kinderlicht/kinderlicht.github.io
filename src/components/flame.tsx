@@ -7,16 +7,22 @@ interface FlameProps {
 }
 
 export default function Flame({ money, total_money }: FlameProps) {
-  // Calculate the scale factor based on progress (1.0 at start, up to 2.0 at full)
+  // Calculate the scale factor based on progress (1.0 at start, up to 1.8 at full)
   const progress = total_money > 0 ? money / total_money : 0;
-  const scale = 1 + progress * 1.2; // Scale from 1x to 2.2x
+  const scale = 1 + progress * 0.8; // Scale from 1x to 1.8x (reduced to prevent overflow)
   
   // Calculate glow intensity based on progress
   const glowIntensity = Math.min(30 + progress * 40, 70);
   const glowOpacity = 0.3 + progress * 0.4;
 
+  // Calculate dynamic top margin to accommodate growth
+  const marginTop = progress * 40; // Add margin as flame grows
+
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div 
+      className="flex flex-col items-center justify-center"
+      style={{ marginTop: `${marginTop}px` }}
+    >
       {/* Glow background effect */}
       <div
         className="relative"

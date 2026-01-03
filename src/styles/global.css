@@ -6,35 +6,38 @@
 
 /* Flame scale container - prevents layout shift */
 .flame-scale-container {
-  display: inline-block;
-  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
 }
 
 /* Adjusted flame styles */
 .flame-container {
-  margin: auto;
   animation-name: flame-flicker;
   animation-duration: 1000ms;
   animation-delay: 200ms;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;
-  transform-origin: center bottom;
+  transform-origin: center center;
   position: relative;
   width: 50px;
-  height: 50px;
+  height: 60px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-/* Your remaining flame classes can remain the same */
+/* Flame layer base styles */
 .flame-flame {
   position: absolute;
   border-bottom-right-radius: 50%;
   border-bottom-left-radius: 50%;
   border-top-left-radius: 50%;
   transform: rotate(-45deg);
-  left: 50%;
   bottom: 0;
-  transform-origin: center bottom;
+  left: 50%;
 }
 
 .flame-yellow {
@@ -42,8 +45,8 @@
   height: 30px;
   background: gold;
   box-shadow: 0px 0px 12px 6px gold;
+  transform: rotate(-45deg) translateX(-50%);
   margin-left: -15px;
-  transform: rotate(-45deg);
   z-index: 4;
 }
 
@@ -52,8 +55,8 @@
   height: 40px;
   background: orange;
   box-shadow: 0px 0px 12px 6px orange;
+  transform: rotate(-45deg) translateX(-50%);
   margin-left: -20px;
-  transform: rotate(-45deg);
   z-index: 3;
 }
 
@@ -62,8 +65,8 @@
   height: 50px;
   background: OrangeRed;
   box-shadow: 0px 0px 8px 6px OrangeRed;
+  transform: rotate(-45deg) translateX(-50%);
   margin-left: -25px;
-  transform: rotate(-45deg);
   z-index: 2;
 }
 
@@ -72,8 +75,8 @@
   height: 20px;
   background: white;
   box-shadow: 0px 0px 12px 6px rgba(255, 255, 255, 0.9);
+  transform: rotate(-45deg) translateX(-50%);
   margin-left: -10px;
-  transform: rotate(-45deg);
   z-index: 5;
 }
 
