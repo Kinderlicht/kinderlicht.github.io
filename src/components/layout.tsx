@@ -129,9 +129,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </svg>
             </a>
           </div>
-          <p className="text-sm text-gray-600 font-medium">
-            💛 Unterstütze unsere Arbeit für Kinder in Not
-          </p>
           <Link
             to="/quittung"
             className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-md hover:shadow-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200"
@@ -141,8 +138,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
         
         {/* Desktop: Original horizontal layout */}
-        <div className="hidden lg:flex lg:items-center lg:justify-between lg:gap-x-6">
-          <p className="text-sm leading-6 text-gray-900 hidden lg:block">
+        <div className="hidden lg:flex lg:flex-col lg:items-center lg:justify-center lg:gap-y-3">
+          <p className="text-sm leading-6 text-gray-900">
             <span className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm rounded-full px-4 py-1.5 shadow-sm">
               <span className="text-orange-500 font-semibold">🏦 Spendenkonto</span>
               <span className="text-gray-400">|</span>
@@ -154,7 +151,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </span>
             <a
               href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=B3F4DENU62RRN&ssrt=1693131246739"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+              className="text-gray-500 hover:text-gray-900 dark:hover:text-white ml-4"
             >
               <span title="PayPal Spende">
                 <svg
