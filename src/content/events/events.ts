@@ -481,7 +481,7 @@ const dateFromArray = (date: number[]) => new Date(date.join("-"));
 export const eventIsSoon = 1000 * 60 * 60 * 24 * 30;
 export const numberOfUpcomingEvents = events.filter(
   (evt) =>
-    dateFromArray(evt["start"].slice(0, 3)) > new Date() &&
-    dateFromArray(evt["start"].slice(0, 3)).getTime() - new Date().getTime() <
+    dateFromArray(evt["start"].slice(0, 3)) >= new Date() &&
+    dateFromArray(evt["start"].slice(0, 3)).getTime() - new Date().getTime() <=
       eventIsSoon
 ).length;
