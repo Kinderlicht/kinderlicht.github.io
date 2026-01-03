@@ -13,19 +13,19 @@ function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
           <div className="p-6">
             <div className="flex flex-wrap items-center">
               <div className="flex-basis shrink-0 grow-0 px-3 w-5/12">
-                {sponsor.image && sponsor.image.extension !== "svg" && (
+                {sponsor.image && sponsor.image.childImageSharp && (
                   <GatsbyImage
-                  className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
-                  image={sponsor.image.childImageSharp.gatsbyImageData}
-                  alt={sponsor.name}
-                  objectFit="contain"
+                    className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
+                    image={sponsor.image.childImageSharp.gatsbyImageData}
+                    alt={sponsor.name}
+                    objectFit="contain"
                   />
                 )}
-                {sponsor.image && sponsor.image.extension === "svg" && (
-                  <object
-                  data={sponsor.image}
-                  type="image/svg+xml"
-                  className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
+                {sponsor.image && sponsor.image.extension === "svg" && sponsor.image.publicURL && (
+                  <img
+                    src={sponsor.image.publicURL}
+                    alt={sponsor.name}
+                    className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
                   />
                 )}
                 {sponsor.externalImage && (
@@ -167,6 +167,8 @@ export const indexQuery = graphql`
         link
         externalImage
         image {
+          publicURL
+          extension
           childImageSharp {
             gatsbyImageData(
               placeholder: BLURRED

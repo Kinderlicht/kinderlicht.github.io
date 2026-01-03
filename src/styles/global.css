@@ -4,70 +4,94 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Flame scale container - prevents layout shift */
+.flame-scale-container {
+  display: inline-block;
+  padding: 20px;
+}
+
 /* Adjusted flame styles */
 .flame-container {
-  margin: auto; /* centers the container within its parent */
+  margin: auto;
   animation-name: flame-flicker;
   animation-duration: 1000ms;
-  animation-delay: 800ms;
-  animation-timing-function: ease-in;
+  animation-delay: 200ms;
+  animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;
-  transform-origin: center center; /* ensures scaling/growth happens from the center */
+  transform-origin: center bottom;
+  position: relative;
+  width: 50px;
+  height: 50px;
 }
 
 /* Your remaining flame classes can remain the same */
 .flame-flame {
-  position: relative;
+  position: absolute;
   border-bottom-right-radius: 50%;
   border-bottom-left-radius: 50%;
   border-top-left-radius: 50%;
   transform: rotate(-45deg);
+  left: 50%;
+  bottom: 0;
+  transform-origin: center bottom;
 }
 
 .flame-yellow {
-  position: absolute;
   width: 30px;
   height: 30px;
   background: gold;
-  box-shadow: 0px 0px 9px 4px gold;
+  box-shadow: 0px 0px 12px 6px gold;
+  margin-left: -15px;
+  transform: rotate(-45deg);
+  z-index: 4;
 }
 
 .flame-orange {
-  position: absolute;
-  left: -5px;
-  top: -5px;
   width: 40px;
   height: 40px;
   background: orange;
-  box-shadow: 0px 0px 9px 4px orange;
+  box-shadow: 0px 0px 12px 6px orange;
+  margin-left: -20px;
+  transform: rotate(-45deg);
+  z-index: 3;
 }
 
 .flame-red {
-  position: absolute;
-  left: -10px;
-  top: -10px;
   width: 50px;
   height: 50px;
   background: OrangeRed;
-  box-shadow: 0px 0px 5px 4px OrangeRed;
+  box-shadow: 0px 0px 8px 6px OrangeRed;
+  margin-left: -25px;
+  transform: rotate(-45deg);
+  z-index: 2;
 }
 
 .flame-white {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background: white;
-  box-shadow: 0px 0px 9px 4px white;
+  box-shadow: 0px 0px 12px 6px rgba(255, 255, 255, 0.9);
+  margin-left: -10px;
+  transform: rotate(-45deg);
+  z-index: 5;
 }
 
-/* (Keep your keyframes as-is) */
+/* Flame flicker animation */
 @keyframes flame-flicker {
-  0%   { transform: rotate(-1deg); }
-  20%  { transform: rotate(1deg); }
-  40%  { transform: rotate(-1deg); }
-  60%  { transform: rotate(1deg) scaleY(1.02); }
-  80%  { transform: rotate(-2deg) scaleY(0.98); }
-  100% { transform: rotate(1deg); }
+  0%   { transform: rotate(-1deg) scaleY(1); }
+  20%  { transform: rotate(1deg) scaleY(1.02); }
+  40%  { transform: rotate(-1deg) scaleY(0.98); }
+  60%  { transform: rotate(1deg) scaleY(1.04); }
+  80%  { transform: rotate(-2deg) scaleY(0.96); }
+  100% { transform: rotate(1deg) scaleY(1.02); }
+}
+
+/* Flame grow pulse animation - triggered on donation change */
+@keyframes flame-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 
