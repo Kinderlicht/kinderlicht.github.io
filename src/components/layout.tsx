@@ -47,16 +47,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <header className="mx-auto bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-100">
         <Navbar fluid rounded className="max-w-screen-2xl mx-auto py-3">
           <Navbar.Brand as={GatsbyLinkWrapperIcon} href="/">
-            <div className="flex items-center group">
+            <div className="flex items-center group ml-0 md:ml-4">
               <div className="relative">
-                <StaticImage
-                  src="../images/quadratic.png"
-                  className="mr-3 h-6 sm:h-9 w-4 transition-transform duration-300 group-hover:scale-110"
-                  alt="Kinderlicht Logo"
-                />
+              <StaticImage
+                src="../images/quadratic.png"
+                className="mr-3 h-6 sm:h-9 w-4 transition-transform duration-300 group-hover:scale-110"
+                alt="Kinderlicht Logo"
+              />
               </div>
-              <span className="self-center text-xl font-bold bg-gradient-to-r from-orange-500 to-amber-600 bg-clip-text text-transparent whitespace-nowrap">
-                Kinderlicht Wallersdorf e.V.
+              <span className="self-center text-xl font-bold text-primary whitespace-nowrap">
+              Kinderlicht Wallersdorf e.V.
               </span>
             </div>
           </Navbar.Brand>
@@ -141,6 +141,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <footer className="bg-white dark:bg-gray-900">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="md:flex md:justify-between">
+            
             <div className="mb-6 md:mb-0">
               <Link to="/" className="flex items-center">
                 <StaticImage
