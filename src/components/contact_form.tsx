@@ -212,14 +212,15 @@ export default function ContactForm() {
                     </p>
                   </div>
 
-                  <div className="flex items-start gap-4 bg-white rounded-xl p-4 border border-gray-200">
+                  <div className="flex items-start gap-4 bg-white rounded-xl p-4 border border-gray-200 overflow-hidden">
                     <input
                       {...register("confirmDataProtection", { required: true })}
                       id="data-yes"
                       type="checkbox"
-                      className={checkboxClasses}
+                      className={`${checkboxClasses} flex-shrink-0`}
                     />
-                    <div className="flex-1">
+                    
+                    <div className="flex-1 min-w-0 break-words">
                       <label htmlFor="data-yes" className="font-medium text-gray-800 cursor-pointer">
                         Ich habe die Datenschutzbestimmungen gelesen, verstanden und akzeptiert.
                       </label>

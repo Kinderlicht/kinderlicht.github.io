@@ -469,41 +469,42 @@ export default function DonationReceipt() {
                 {/* Datenschutz */}
                 <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
                   <SectionHeader title="Datenschutz" emoji="🔒" />
-                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100 mb-5">
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 sm:p-4 border border-blue-100 mb-5 overflow-hidden">
+                    <p className="text-sm text-gray-600 leading-relaxed break-words">
                       Die angegebenen Daten werden unter Berücksichtigung des
                       BundesDatenschutz-Gesetzes (BDSG) erhoben und ausschließlich
                       für Zwecke der Spendenverwaltung gespeichert und genutzt. Die
                       Bestimmungen findest du{" "}
-                      <a className="text-orange-600 hover:text-orange-700 font-medium" href="/rechtliches" target="_blank">
+                      <a className="text-orange-600 hover:text-orange-700 font-medium break-all" href="/rechtliches" target="_blank">
                         hier
                       </a>
                       . Du erklärst dich damit einverstanden, dass alle Inhalte im 
                       Formular an unsere Vereinsverwaltungssoftware Campai übermittelt werden.
                       Die Datenschutzbestimmungen von Campai findest du{" "}
-                      <a className="text-orange-600 hover:text-orange-700 font-medium" href="https://www.campai.com/datenschutz" target="_blank">
+                      <a className="text-orange-600 hover:text-orange-700 font-medium break-all" href="https://www.campai.com/datenschutz" target="_blank">
                         hier
                       </a>
                       .
                     </p>
                   </div>
 
-                  <div className="flex items-start gap-4 bg-white rounded-xl p-4 border border-gray-200">
+                  <div className="flex items-start gap-3 sm:gap-4 bg-white rounded-xl p-3 sm:p-4 border border-gray-200 overflow-hidden">
                     <input
                       {...register("confirmDataProtection", { required: true })}
                       id="data-yes"
                       type="checkbox"
-                      className={checkboxClasses}
+                      className={`${checkboxClasses} flex-shrink-0`}
                     />
-                    <div className="flex-1">
-                      <label htmlFor="data-yes" className="font-medium text-gray-800 cursor-pointer">
+                    
+                    <div className="flex-1 min-w-0">
+                      <label htmlFor="data-yes" className="font-medium text-gray-800 cursor-pointer break-words">
                         Ich habe die Datenschutzbestimmungen gelesen, verstanden und akzeptiert.
                       </label>
                       <ErrorMessage
                         field={errors.confirmDataProtection}
                         error="Du musst den Datenschutzbestimmungen zustimmen."
                       />
-                      <p className="text-gray-500 text-sm mt-2">
+                      <p className="text-gray-500 text-sm mt-2 break-words">
                         Du erklärst Dich damit einverstanden, dass Deine
                         Daten zur Bearbeitung Deiner Anfrage verwendet werden.
                       </p>
