@@ -112,7 +112,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <Link
               to="/spendenkonto"
-              className="sm:hidden rounded-full bg-black hover:from-orange-600 hover:to-amber-600 px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap"
+              className="sm:hidden p-1.5 sm:p-2 rounded-full bg-white/50 hover:bg-white transition-colors shadow-sm hover:shadow-md"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -121,7 +121,7 @@ export default function Home({
 }) {
   return (
     <Layout>
-      <div className="p-4 container max-w-8xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
+      <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
         <section className="mb-32 text-center">
           <h2 className="mb-32 text-3xl font-bold">
             Unsere{" "}

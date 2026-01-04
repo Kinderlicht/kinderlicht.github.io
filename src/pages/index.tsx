@@ -52,7 +52,7 @@ function HistoryLink({
 function FeatureSection() {
   return (
     <div className="overflow-hidden bg-white">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="lg:pr-8 lg:pt-4">
             <div className="lg:max-w-lg">
@@ -170,7 +170,7 @@ export default function IndexPage() {
       <StaticImage src="../images/home/banner.svg" alt="Kinderlicht Banner" className="my-4" quality={100}/>
       <div>
         <section className="text-gray-600 body-font mt-24">
-          <div className="container px-5 mt-16 mx-auto max-w-7x1">
+          <div className="container px-5 mt-16 mx-auto max-w-6xl">
             <div className="flex flex-wrap -m-4">
               <HistoryLink
                 title="Ich suche Hilfe!"
@@ -218,13 +218,13 @@ export default function IndexPage() {
           </div>
         </section>
         <section className="text-gray-600 body-font">
-          <div className="container px-5 mt-24 mx-auto max-w-7x1">
+          <div className="container px-5 mt-24 mx-auto max-w-6xl">
             <div className="flex flex-wrap w-full mb-4 p-4"></div>
             <FeatureSection></FeatureSection>
           </div>
         </section>
         <section className="text-gray-600 body-font">
-          <div className="container px-5 py-24 mx-auto max-w-7x1">
+          <div className="container px-5 py-24 mx-auto max-w-6xl">
             <div className="flex flex-wrap w-full mb-4 p-4">
               <div className="w-full mb-6 lg:mb-0">
                 <h2 className="text-3xl font-bold">
