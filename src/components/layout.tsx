@@ -58,11 +58,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </span>
             </div>
           </Navbar.Brand>
+
           <div className="flex md:order-2">
             <Navbar.Toggle className="p-2 rounded-xl hover:bg-orange-50 transition-colors" />
           </div>
           
-          <Navbar.Collapse className="md:hidden lg:flex lg:items-center lg:gap-1">
+          <Navbar.Collapse className="md:flex md:items-center md:gap-1">
             <Navbar.Link href="/beitreten" as={GatsbyLinkWrapper}>
               ❤️ Beitreten
             </Navbar.Link>
