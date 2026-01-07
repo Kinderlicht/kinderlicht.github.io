@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center min-w-0">
               <StaticImage
                 src="../images/quadratic.png"
-                className="mr-2 h-6 sm:h-9 w-auto flex-shrink-0"
+                className="mr-3 h-6 sm:h-9 w-4"
                 alt="Kinderlicht Logo"
               />
               <span className="self-center text-xl font-semibold whitespace-nowrap truncate dark:text-white max-w-[14rem] sm:max-w-none">
