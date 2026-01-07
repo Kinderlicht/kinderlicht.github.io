@@ -45,25 +45,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <header className="mx-auto bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-100">
-        <Navbar fluid rounded className="max-w-screen-2xl mx-auto py-3">
+        <Navbar fluid rounded className="max-w-screen-2xl mx-auto py-3 flex-nowrap">
           <Navbar.Brand as={GatsbyLinkWrapperIcon} href="/">
-            <div className="flex items-center">
+            <div className="flex items-center min-w-0">
               <StaticImage
                 src="../images/quadratic.png"
-                className="mr-3 h-6 sm:h-9 w-4"
+                className="mr-2 h-6 sm:h-9 w-auto flex-shrink-0"
                 alt="Kinderlicht Logo"
               />
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+              <span className="self-center text-xl font-semibold whitespace-nowrap truncate dark:text-white max-w-[14rem] sm:max-w-none">
                 Kinderlicht Wallersdorf e.V.
               </span>
             </div>
           </Navbar.Brand>
 
-          <div className="flex md:order-2">
+          <div className="flex lg:order-2">
             <Navbar.Toggle className="p-2 rounded-xl hover:bg-orange-50 transition-colors" />
           </div>
           
-          <Navbar.Collapse className="md:flex md:items-center md:gap-1">
+          <Navbar.Collapse className="lg:flex lg:items-center lg:gap-1">
             <Navbar.Link href="/beitreten" as={GatsbyLinkWrapper}>
               ❤️ Beitreten
             </Navbar.Link>
