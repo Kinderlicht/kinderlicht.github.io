@@ -43,6 +43,7 @@ function EventCard({ event, index }: { event: Event; index: number }) {
     <div 
       key={index} 
       className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 ${isFinished ? 'opacity-60' : 'hover:-translate-y-1'}`}
+      id={`event-${event["eventId"]}`}
     >
       {/* Top accent bar */}
       <div className={`h-1.5 w-full ${isFinished ? 'bg-gray-300' : isSoon ? 'bg-gradient-to-r from-green-400 to-emerald-500' : 'bg-gradient-to-r from-orange-400 to-amber-500'}`}></div>
@@ -170,7 +171,7 @@ export default function EventPage() {
     }
   }, []);
 
-  let filtered = events.filter((e) => {
+  let filtered = indexedEvents.filter((e) => {
     if (searchTerm !== "") {
       let text = e.title || "";
       text += " ";
