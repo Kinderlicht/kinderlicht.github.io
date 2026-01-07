@@ -98,16 +98,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
         
         {/* Single-line layout - wraps only on very small screens */}
-        <div className="flex flex-col xs:flex-row items-center justify-center gap-2 sm:gap-3 text-center">
-          {/* Bank info pill */}
-          <div className="hidden sm:flex items-center gap-1.5 sm:gap-2 bg-white/60 backdrop-blur-sm rounded-full px-2 sm:px-3 py-1 shadow-sm whitespace-nowrap ">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-center">
+          {/* Bank info pill - clickable to copy IBAN */}
+          <button
+            onClick={() => navigator.clipboard.writeText("DE04741910000007724314")}
+            className="flex items-center gap-1.5 sm:gap-2 bg-white/60 backdrop-blur-sm rounded-full px-2 sm:px-3 py-1 shadow-sm whitespace-nowrap hover:bg-white/80 transition-colors cursor-pointer"
+            title="Klicken zum Kopieren der IBAN"
+          >
             <span className="text-orange-500 font-semibold text-xs sm:text-sm">🏦</span>
-            <span className="hidden sm:inline text-gray-700 text-xs sm:text-sm">VR Bank Landau</span>
-            <span className="text-gray-400 hidden sm:inline">|</span>
+            <span className="hidden md:inline text-gray-700 text-xs sm:text-sm">VR Bank Landau</span>
+            <span className="text-gray-400 hidden md:inline">|</span>
             <span title="IBAN" className="font-mono text-[10px] sm:text-xs text-gray-700">DE04 7419 1000 0007 7243 14</span>
-            <span className="text-gray-400 hidden sm:inline">|</span>
-            <span title="BIC" className="font-mono text-[10px] sm:text-xs text-gray-700">GENODEF1LND</span>
-          </div>
+            <span className="text-gray-400 hidden md:inline">|</span>
+            <span title="BIC" className="font-mono text-[10px] sm:text-xs text-gray-700 hidden md:inline">GENODEF1LND</span>
+          </button>
           
           {/* Action buttons */}
           <div className="flex items-center gap-2">
