@@ -188,7 +188,7 @@ export default function EventPage() {
   const [endDate, setEndDate] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [showPast, setShowPast] = useState<boolean>(false);
-  const [highlightedId, setHighlightedId] = React.useState<number | null>(null);
+  const [highlightedId, setHighlightedId] = useState<number | null>(null);
   // Create indexed events (reverse index: last item = 0, first item = events.length - 1)
   const indexedEvents = events.map((event, idx) => ({
     ...event,
