@@ -1,6 +1,96 @@
 import { Activity } from "../components/horizontal_scroll";
 
 export const activities: Activity[] = [
+  {
+    "date": "2025-12-08T00:00:00.000Z",
+    "donation": 55000,
+    "title": "Weihnachtsgeschenke",
+    "description": "Bedürftige Kinder"
+    },
+    {
+    "date": "2025-12-08T00:00:00.000Z",
+    "donation": 32500,
+    "title": "Weihnachtsgeschenke",
+    "description": "Bedürftige Kinder"
+    },
+    {
+    "date": "2025-12-08T00:00:00.000Z",
+    "donation": 25000,
+    "title": "Weihnachtsgeschenke",
+    "description": "Bedürftige Kinder"
+    },
+    {
+    "date": "2025-12-08T00:00:00.000Z",
+    "donation": 20000,
+    "title": "Weihnachtsgeschenke",
+    "description": "Bedürftige Kinder"
+    },
+    {
+    "date": "2025-12-08T00:00:00.000Z",
+    "donation": 15000,
+    "title": "Weihnachtsgeschenke",
+    "description": "Bedürftige Kinder"
+    },
+    {
+    "date": "2025-12-08T00:00:00.000Z",
+    "donation": 9196,
+    "title": "Weihnachtsgeschenke",
+    "description": "Bedürftige Kinder"
+    },
+    {
+    "date": "2025-12-08T00:00:00.000Z",
+    "donation": 7500,
+    "title": "Weihnachtsgeschenke",
+    "description": "Bedürftige Kinder"
+    },
+    {
+    "date": "2025-12-08T00:00:00.000Z",
+    "donation": 6495,
+    "title": "Weihnachtsgeschenke",
+    "description": "Bedürftige Kinder"
+    },
+    {
+    "date": "2025-12-08T00:00:00.000Z",
+    "donation": 2500,
+    "title": "Weihnachtsgeschenke",
+    "description": "Bedürftige Kinder"
+    },
+    {
+    "date": "2025-11-06T00:00:00.000Z",
+    "donation": 17400,
+    "title": "Deutschlandticket (3 Monate)",
+    "description": "Familie in Not"
+    },
+    {
+    "date": "2025-10-15T00:00:00.000Z",
+    "donation": 7500,
+    "title": "Tagesausflug",
+    "description": "Tagesausflug für Mutter und Kind"
+    },
+    {
+    "date": "2025-09-22T00:00:00.000Z",
+    "donation": 15000,
+    "title": "Soforthilfe",
+    "description": "Familie in Not"
+    },
+    {
+    "date": "2025-09-11T00:00:00.000Z",
+    "donation": 6531,
+    "title": "Schulsachen",
+    "description": "Schulsachen für ein Kind in Not."
+    },
+    {
+    "date": "2025-09-11T00:00:00.000Z",
+    "donation": 3689,
+    "title": "Schulsachen",
+    "description": "Schulsachen für ein Kind in Not."
+    },
+    {
+    "date": "2025-09-11T00:00:00.000Z",
+    "donation": 2035,
+    "title": "Schulsachen",
+    "description": "Schulsachen für ein Kind in Not."
+    },
     {
       "date": "2025-08-29T00:00:00.000Z",
       "donation": 20000,
