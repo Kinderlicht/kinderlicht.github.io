@@ -16,7 +16,7 @@ function download(filename: string, text: string) {
   URL.revokeObjectURL(url);
 }
 
-function EventCard({ event, index }: { event: Event; index: number }) {
+function EventCard({ event, index, highlightedId }: { event: Event; index: number; highlightedId: null | number }) {
   const icsFile = createEvent(event);
   let content: string | undefined = "Ups, da ist etwas schief gelaufen...";
   if (icsFile["error"] == null) {
@@ -437,7 +437,7 @@ export default function EventPage() {
           {filtered.length > 0 ? (
             <div className="grid grid-cols-1 gap-6">
               {filtered.map((e, index) => (
-                <EventCard key={index} event={e} index={index} />
+                <EventCard key={index} event={e} index={index} highlightedId={highlightedId} />
               ))}
             </div>
           ) : (
