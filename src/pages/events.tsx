@@ -47,7 +47,7 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
   return (
     <div
       key={index}
-      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 ${isFinished ? "opacity-60" : "hover:-translate-y-1"} ${highlightedId === event.eventId ? "transition-all duration-500 ring-4 ring-orange-400 bg-orange-50 scale-[1.01]" : ""}`}
+      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 ${isFinished ? "opacity-60" : "hover:-translate-y-1"} ${highlightedId !== null && highlightedId === event.eventId ? "transition-all duration-500 ring-4 ring-orange-400 bg-orange-50 scale-[1.01]" : ""}`}
       id={`event-${event["eventId"]}`}
     >
       {/* Top accent bar */}
