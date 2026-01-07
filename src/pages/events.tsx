@@ -138,6 +138,37 @@ export default function EventPage() {
   const [endDate, setEndDate] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [showPast, setShowPast] = useState<boolean>(false);
+  // Create indexed events (reverse index: last item = 0, first item = events.length - 1)
+  const indexedEvents = events.map((event, idx) => ({
+    ...event,
+    eventId: events.length - 1 - idx
+  }));
+
+  // Handle hash navigation on mount
+  React.useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const targetId = parseInt(hash, 10);
+      if (!isNaN(targetId)) {
+        // Find the event with this id
+        const targetEvent = indexedEvents.find(e => e.eventId === targetId);
+        if (targetEvent) {
+          const eventDate = ConvertDateObject(targetEvent.start);
+          // If it's a past event and showPast is false, enable showPast
+          if (eventDate < new Date() && !showPast) {
+            setShowPast(true);
+          }
+          // Scroll to the element after a short delay to allow render
+          setTimeout(() => {
+            const element = document.getElementById(`event-${targetId}`);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 100);
+        }
+      }
+    }
+  }, []);
 
   let filtered = events.filter((e) => {
     if (searchTerm !== "") {
