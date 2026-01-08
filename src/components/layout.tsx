@@ -53,7 +53,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 className="mr-3 h-6 sm:h-9 w-4"
                 alt="Kinderlicht Logo"
               />
-              <span className="self-center text-xl font-semibold whitespace-nowrap truncate dark:text-white max-w-[14rem] sm:max-w-none">
+              <span className="self-center text-sm sm:text-xl font-semibold whitespace-nowrap dark:text-white">
                 Kinderlicht Wallersdorf e.V.
               </span>
             </div>
