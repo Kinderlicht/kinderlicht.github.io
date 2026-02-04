@@ -458,57 +458,61 @@ export default function Rechtliches() {
             Ihren Daten und gerne auch Anregungen jederzeit per Brief oder
             E-Mail an die Adresse unten im Impressum senden.
           </p>
-          <div className="w-full grid place-items-center">
-            <div className="w-fit p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+          <div className="w-full flex justify-center px-4 sm:px-0">
+            <div className="w-full max-w-2xl p-4 sm:p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <h5 className="mb-4 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white text-center sm:text-left">
                 Impressum
               </h5>
 
               <div
-                className="mb-3 flex flex-row font-normal text-gray-500 dark:text-gray-400"
+                className="mb-4 flex flex-col md:flex-row gap-4 md:gap-0 font-normal text-gray-500 dark:text-gray-400"
                 id="impressum"
               >
-                <div className="xl:w-1/2 md:w-1/2 p-4">
-                  <strong>Adresse:</strong>
+                <div className="w-full md:w-1/2 p-2 sm:p-4">
+                  <strong className="text-gray-700 dark:text-gray-300">Adresse:</strong>
                   <br></br>
                   Kinderlicht Wallersdorf e.V.<br></br>
                   Frühlingsstr. 4<br></br>
                   94522 Wallersdorf<br></br>
                   <br></br>
-                  <strong>Kontakt:</strong>
+                  <strong className="text-gray-700 dark:text-gray-300">Kontakt:</strong>
                   <br></br>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="inline-block bi bi-phone"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z" />
-                    <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-                  </svg>
-                  (09933)&nbsp;6289907<br></br>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="inline-block bi bi-envelope"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
-                  </svg>
-                  info[at]kinderlicht-wallersdorf.de
+                  <span className="flex items-center gap-2 mt-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="flex-shrink-0 bi bi-phone"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z" />
+                      <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                    </svg>
+                    <span>(09933)&nbsp;6289907</span>
+                  </span>
+                  <span className="flex items-center gap-2 mt-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="flex-shrink-0 bi bi-envelope"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
+                    </svg>
+                    <span className="break-all">info[at]kinderlicht-wallersdorf.de</span>
+                  </span>
                 </div>
-                <div className="xl:w-1/2 md:w-1/2 p-4">
-                  <strong>Registereintrag:</strong>
+                <div className="w-full md:w-1/2 p-2 sm:p-4 border-t md:border-t-0 md:border-l border-gray-200 dark:border-gray-600 pt-4 md:pt-2">
+                  <strong className="text-gray-700 dark:text-gray-300">Registereintrag:</strong>
                   <br></br>
                   Eintragung im Vereinsregister<br></br>
                   Registergericht: Landshut<br></br>
                   Registernummer: VR 200931<br></br>
                   <br></br>
-                  <strong>Umsatzsteuer-ID:</strong>
+                  <strong className="text-gray-700 dark:text-gray-300">Umsatzsteuer-ID:</strong>
                   <br></br>
                   108/109/50221<br></br>
                   <i>gemäß §27a Umsatzsteuergesetz</i>
@@ -516,10 +520,12 @@ export default function Rechtliches() {
                 </div>
               </div>
 
-              <i className="text-gray-500">
-                Angaben gemäß § 5 TMG; vertreten durch Enrico Koch und Christina
-                Weig
-              </i>
+              <div className="pt-3 border-t border-gray-200 dark:border-gray-600">
+                <i className="text-gray-500 dark:text-gray-400 text-sm">
+                  Angaben gemäß § 5 TMG; vertreten durch Enrico Koch und Christina
+                  Weig
+                </i>
+              </div>
             </div>
           </div>
         </section>
