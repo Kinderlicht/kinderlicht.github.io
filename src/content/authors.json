@@ -13,5 +13,10 @@
       "name": "Anna-Lena Heine",
       "description": "Beisitzerin",
       "image": "news/author/anna-lena.png"
+    },
+    "Melanie Bosin": {
+      "name": "Melanie Bosin",
+      "description": "Beisitzerin",
+      "image": "news/author/melanie.png"
     }
 }
