@@ -256,7 +256,7 @@ export default function IndexPage() {
                 }
                 size={3}
               />
-                            <HistoryLink
+              <HistoryLink
                 title="Europapark Ausflug"
                 description="Wir haben 15 Kinder in den Europapark eingeladen, um ihnen zwei unvergessliche Tage zu bereiten."
                 short="Adrenalin pur"
