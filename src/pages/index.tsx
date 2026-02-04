@@ -244,7 +244,7 @@ export default function IndexPage() {
             <div className="flex flex-wrap -m-4">
               <HistoryLink
                 title="Schneeball 2025"
-                description="Im Jahr 2025 fand der Schneeball als Spendenaktion für 3 Kinder aus Wallersdorf statt. Die Anteilnahme war überwältigend."
+                description="Im Jahr 2025 stand der Schneeball im Zeichen dreier Kinder aus Wallersdorf. Die Anteilnahme war überwältigend."
                 short="Schneeball 2025"
                 link="/2025-12-27_schneeball-wallersdorf"
                 visual={
@@ -252,6 +252,20 @@ export default function IndexPage() {
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/news/2025-12-27_schneeball-wallersdorf.jpeg"
                     alt="Schneeball 2025"
+                  />
+                }
+                size={3}
+              />
+                            <HistoryLink
+                title="Europapark Ausflug"
+                description="Wir haben 15 Kinder in den Europapark eingeladen, um ihnen zwei unvergessliche Tage zu bereiten."
+                short="Adrenalin pur"
+                link="/2025-06-20_europapark"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/news/2025-06-20_europapark.png"
+                    alt="Europapark Ausflug"
                   />
                 }
                 size={3}
@@ -266,20 +280,6 @@ export default function IndexPage() {
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/news/2025-10-18_erster-flosar-in-wallersdorf-ein-voller-erfolg.jpg"
                     alt="Erster Flosar"
-                  />
-                }
-                size={3}
-              />
-              <HistoryLink
-                title="Europapark Ausflug"
-                description="Wir haben 15 Kinder in den Europapark eingeladen, um ihnen einen unvergesslichen Tag zu bereiten."
-                short="Adrenalin pur"
-                link="/2025-06-20_europapark"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/news/2025-06-20_europapark.png"
-                    alt="Europapark Ausflug"
                   />
                 }
                 size={3}
