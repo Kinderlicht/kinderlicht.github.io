@@ -243,6 +243,55 @@ export default function IndexPage() {
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
+                title="Schneeball 2025"
+                description="Im Jahr 2025 fand der Schneeball als Spendenaktion für 3 Kinder aus Wallersdorf statt. Die Anteilnahme war überwältigend."
+                short="Schneeball 2025"
+                link="/2025-12-27_schneeball-wallersdorf"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/news/2025-12-27_schneeball-wallersdorf.jpeg"
+                    alt="Schneeball 2025"
+                  />
+                }
+                size={3}
+              />
+              <HistoryLink
+                title="Erster Flosar"
+                description="Zusammen mit Kolping konnten wir mit dem ersten Flosar (Flohmarkt + Basar) eine neue Spendenaktion ins Leben rufen. Der Erfolg war überwältigend!"
+                short="Nachhaltig helfen"
+                link="/2025-10-18_erster-flosar-in-wallersdorf-ein-voller-erfolg/"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/news/2025-10-18_erster-flosar-in-wallersdorf-ein-voller-erfolg.jpg"
+                    alt="Erster Flosar"
+                  />
+                }
+                size={3}
+              />
+              <HistoryLink
+                title="Europapark Ausflug"
+                description="Wir haben 15 Kinder in den Europapark eingeladen, um ihnen einen unvergesslichen Tag zu bereiten."
+                short="Adrenalin pur"
+                link="/2025-06-20_europapark"
+                visual={
+                  <StaticImage
+                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+                    src="../images/news/2025-06-20_europapark.png"
+                    alt="Europapark Ausflug"
+                  />
+                }
+                size={3}
+              />
+            </div>
+            <div className="relative flex py-5 items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink mx-4 text-gray-400">2022</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex flex-wrap -m-4">
+              <HistoryLink
                 title="Konzert der Filmmusik - Teil 2"
                 description="Nach dem großen Erfolg im Jahr 2020, haben wir 2024 das Konzert der Filmmusik wiederholt. Es war ein voller Erfolg!"
                 short="Eine Sprache, die jeder versteht"
