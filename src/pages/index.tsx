@@ -238,7 +238,7 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2024</span>
+              <span className="flex-shrink mx-4 text-gray-400">2025</span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
@@ -287,7 +287,7 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2022</span>
+              <span className="flex-shrink mx-4 text-gray-400">2024</span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
