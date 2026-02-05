@@ -5,6 +5,25 @@ import { events, Event, eventIsSoon } from "../content/events/events";
 import { HeadFC, Link } from "gatsby";
 import Layout from "../components/layout";
 
+// CSS keyframes for highlight animation
+const highlightStyles = `
+@keyframes highlightPulse {
+  0%, 100% { background-color: white; }
+  50% { background-color: #fef3c7; }
+}
+`;
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleId = 'event-highlight-styles';
+  if (!document.getElementById(styleId)) {
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.textContent = highlightStyles;
+    document.head.appendChild(style);
+  }
+}
+
 function download(filename: string, text: string) {
   const blob = new Blob([text], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
@@ -47,19 +66,20 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
   return (
     <div
       key={index}
-      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 ${isFinished ? "opacity-60" : "hover:-translate-y-1"} ${highlightedId !== null && highlightedId === event.eventId ? "transition-all duration-500 ring-4 ring-orange-400 bg-orange-50 scale-[1.01]" : ""}`}
+      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 ${isFinished ? "opacity-60" : "hover:-translate-y-1"} ${highlightedId !== null && highlightedId === event.eventId ? "ring-4 ring-amber-400 animate-pulse-highlight" : ""}`}
       id={`event-${event["eventId"]}`}
+      style={highlightedId !== null && highlightedId === event.eventId ? { animation: 'highlightPulse 1.5s ease-in-out 2' } : {}}
     >
       {/* Top accent bar */}
       <div
-        className={`h-1.5 w-full ${isFinished ? "bg-gray-300" : isSoon ? "bg-gradient-to-r from-green-400 to-emerald-500" : "bg-gradient-to-r from-orange-400 to-amber-500"}`}
+        className={`h-1.5 w-full ${isFinished ? "bg-gray-300" : isSoon ? "bg-gradient-to-r from-green-400 to-emerald-500" : "bg-gradient-to-r from-gray-300 to-gray-400"}`}
       ></div>
 
       <div className="p-6">
         <div className="flex gap-5">
           {/* Date box */}
           <div
-            className={`flex-shrink-0 w-20 h-24 rounded-2xl flex flex-col items-center justify-center shadow-md ${isFinished ? "bg-gray-100" : "bg-gradient-to-br from-orange-400 to-amber-500"}`}
+            className={`flex-shrink-0 w-20 h-24 rounded-2xl flex flex-col items-center justify-center shadow-md ${isFinished ? "bg-gray-100" : "bg-gradient-to-br from-slate-600 to-slate-700"}`}
           >
             <span
               className={`text-2xl font-bold leading-none ${isFinished ? "text-gray-500" : "text-white"}`}
@@ -93,7 +113,7 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
             </div>
 
             <h3
-              className={`text-xl font-bold mb-2 ${isFinished ? "text-gray-500" : "text-gray-800 group-hover:text-orange-600 transition-colors"}`}
+              className={`text-xl font-bold mb-2 ${isFinished ? "text-gray-500" : "text-gray-800"}`}
             >
               {event["title"]}
             </h3>
@@ -101,7 +121,7 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
             <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-3">
               <button
                 onClick={() => download("event.ics", content || "")}
-                className="inline-flex items-center gap-1.5 text-orange-600 hover:text-orange-700 transition-colors cursor-pointer group/time"
+                className="inline-flex items-center gap-1.5 text-gray-600 hover:text-amber-600 transition-colors cursor-pointer group/time"
                 title="Klicken um zum Kalender hinzuzufügen"
               >
                 <svg
@@ -118,7 +138,7 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
               {loc && (
                 <Link
                   to={loc}
-                  className="inline-flex items-center gap-1.5 text-orange-600 hover:text-orange-700 transition-colors group/loc"
+                  className="inline-flex items-center gap-1.5 text-gray-600 hover:text-amber-600 transition-colors group/loc"
                   title="Klicken um Standort in Google Maps zu öffnen"
                 >
                   <svg
