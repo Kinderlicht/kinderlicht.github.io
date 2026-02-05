@@ -59,10 +59,10 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
         <div className="flex gap-5">
           {/* Date box */}
           <div
-            className={`flex-shrink-0 w-20 h-20 rounded-2xl flex flex-col items-center justify-center shadow-md ${isFinished ? "bg-gray-100" : "bg-gradient-to-br from-orange-400 to-amber-500"}`}
+            className={`flex-shrink-0 w-20 h-24 rounded-2xl flex flex-col items-center justify-center shadow-md ${isFinished ? "bg-gray-100" : "bg-gradient-to-br from-orange-400 to-amber-500"}`}
           >
             <span
-              className={`text-2xl font-bold ${isFinished ? "text-gray-500" : "text-white"}`}
+              className={`text-2xl font-bold leading-none ${isFinished ? "text-gray-500" : "text-white"}`}
             >
               {day}
             </span>
@@ -70,6 +70,11 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
               className={`text-xs font-semibold uppercase tracking-wide ${isFinished ? "text-gray-400" : "text-white/90"}`}
             >
               {month}
+            </span>
+            <span
+              className={`text-xs font-medium ${isFinished ? "text-gray-400" : "text-white/80"}`}
+            >
+              {year}
             </span>
           </div>
 
@@ -93,10 +98,11 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
               {event["title"]}
             </h3>
 
-            <div className="flex flex-wrap gap-3 text-sm text-gray-500 mb-3">
+            <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-3">
               <button
                 onClick={() => download("event.ics", content || "")}
-                className="inline-flex items-center gap-1.5 hover:text-orange-600 transition-colors"
+                className="inline-flex items-center gap-1.5 text-orange-600 hover:text-orange-700 transition-colors cursor-pointer group/time"
+                title="Klicken um zum Kalender hinzuzufügen"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -106,13 +112,14 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
                 >
                   <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 3.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5H2.545c-.3 0-.545.224-.545.5zm6.5 5a.5.5 0 0 0-1 0V10H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V11H10a.5.5 0 0 0 0-1H8.5V8.5z" />
                 </svg>
-                {time} Uhr
+                <span className="underline decoration-dotted underline-offset-2 group-hover/time:decoration-solid">{time} Uhr</span>
               </button>
 
               {loc && (
                 <Link
                   to={loc}
-                  className="inline-flex items-center gap-1.5 hover:text-orange-600 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-orange-600 hover:text-orange-700 transition-colors group/loc"
+                  title="Klicken um Standort in Google Maps zu öffnen"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -122,7 +129,7 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
                   >
                     <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                   </svg>
-                  <span className="truncate max-w-[200px]">
+                  <span className="truncate max-w-[200px] underline decoration-dotted underline-offset-2 group-hover/loc:decoration-solid">
                     {event["location"]?.split(",")[0]}
                   </span>
                 </Link>
@@ -170,12 +177,6 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
                 />
               </svg>
             </Link>
-            <button
-              onClick={() => download("event.ics", content || "")}
-              className="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-5 py-2.5 rounded-xl transition-colors"
-            >
-              📅 Zum Kalender
-            </button>
           </div>
         )}
       </div>
@@ -256,6 +257,27 @@ export default function EventPage() {
     }
 
     return true;
+  });
+
+  // Sort events: upcoming first (ascending by date), then past events (descending by date)
+  filtered.sort((a, b) => {
+    const dateA = ConvertDateObject(a.start);
+    const dateB = ConvertDateObject(b.start);
+    const now = new Date();
+    const aIsUpcoming = dateA >= now;
+    const bIsUpcoming = dateB >= now;
+    
+    // If both are upcoming or both are past, sort accordingly
+    if (aIsUpcoming && bIsUpcoming) {
+      // Upcoming events: nearest first (ascending)
+      return dateA.getTime() - dateB.getTime();
+    } else if (!aIsUpcoming && !bIsUpcoming) {
+      // Past events: most recent first (descending)
+      return dateB.getTime() - dateA.getTime();
+    } else {
+      // Upcoming events come before past events
+      return aIsUpcoming ? -1 : 1;
+    }
   });
 
   // Count upcoming events
