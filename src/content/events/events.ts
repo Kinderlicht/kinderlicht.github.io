@@ -4,6 +4,185 @@ export type Event = EventAttributes;
 
 export const events: Event[] = [
     {
+      start: [2027, 1, 2, 19, 0],
+      duration: { hours: 6, minutes: 0 },
+      startInputType: "local",
+      startOutputType: "local",
+      title: "Schneeball",
+      description:
+        "Der Kinderlicht Wallersdorf läd zum Schneeball ein.",
+      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+      geo: { lat: 48.738713, lon: 12.7486027 },
+      categories: ["Veranstaltung"],
+      status: "CONFIRMED",
+      busyStatus: "BUSY",
+      organizer: {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+      },
+      attendees: [
+        {
+          name: "Kinderlicht Wallersdorf e.V.",
+          email: "info@kinderlicht-wallersdorf.de",
+          rsvp: true,
+          partstat: "ACCEPTED",
+          role: "REQ-PARTICIPANT",
+        },
+      ],
+      htmlContent:
+        "Der Kinderlicht Wallersdorf läd zum Schneeball ein. Wir bitten darum, Reservierungen über den Anmeldebutton oben vorzunehmen (wird im Verlauf des Jahres freigeschaltet).",
+    },
+    {
+      start: [2026, 11, 7, 9, 30],
+      duration: { hours: 3, minutes: 0 },
+      url: "https://form.campai.com/Y2oXlVHpk9mG",
+      startInputType: "local",
+      startOutputType: "local",
+      title: "Frühstücksbuffet",
+      description:
+        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+      geo: { lat: 48.738713, lon: 12.7486027 },
+      categories: ["Veranstaltung"],
+      status: "CONFIRMED",
+      busyStatus: "BUSY",
+      organizer: {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+      },
+      attendees: [
+        {
+          name: "Kinderlicht Wallersdorf e.V.",
+          email: "info@kinderlicht-wallersdorf.de",
+          rsvp: true,
+          partstat: "ACCEPTED",
+          role: "REQ-PARTICIPANT",
+        },
+      ],
+      htmlContent:
+        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+    },
+    {
+      start: [2026, 9, 26, 9, 30],
+      duration: { hours: 3, minutes: 0 },
+      url: "https://form.campai.com/Y2oXlVHpk9mG",
+      startInputType: "local",
+      startOutputType: "local",
+      title: "Frühstücksbuffet",
+      description:
+        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+      geo: { lat: 48.738713, lon: 12.7486027 },
+      categories: ["Veranstaltung"],
+      status: "CONFIRMED",
+      busyStatus: "BUSY",
+      organizer: {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+      },
+      attendees: [
+        {
+          name: "Kinderlicht Wallersdorf e.V.",
+          email: "info@kinderlicht-wallersdorf.de",
+          rsvp: true,
+          partstat: "ACCEPTED",
+          role: "REQ-PARTICIPANT",
+        },
+      ],
+      htmlContent:
+        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+    },
+    {
+      start: [2026, 5, 30, 14, 30],
+      duration: { hours: 3, minutes: 30 },
+      url: "https://form.campai.com/Y2oXlVHpk9mG",
+      startInputType: "local",
+      startOutputType: "local",
+      title: "Tänzchenkaffee",
+      description:
+        "Der Kinderlicht Wallersdorf e.V. läd zum Tänzchenkaffee ein. Hier erwartet euch ein leckeres und günstiges Kuchenbuffet, Kaffee und natürlich Musik zum Tanzen.",
+      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+      geo: { lat: 48.738713, lon: 12.7486027 },
+      categories: ["Veranstaltung"],
+      status: "CONFIRMED",
+      busyStatus: "BUSY",
+      organizer: {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+      },
+      attendees: [
+        {
+          name: "Kinderlicht Wallersdorf e.V.",
+          email: "info@kinderlicht-wallersdorf.de",
+          rsvp: true,
+          partstat: "ACCEPTED",
+          role: "REQ-PARTICIPANT",
+        },
+      ],
+      htmlContent:
+        "Der Kinderlicht Wallersdorf e.V. läd zum Tänzchenkaffee ein. Hier erwartet euch ein leckeres und günstiges Kuchenbuffet, Kaffee und natürlich Musik zum Tanzen.",
+    },
+    {
+      start: [2026, 5, 30, 9, 30],
+      duration: { hours: 3, minutes: 0 },
+      url: "https://form.campai.com/Y2oXlVHpk9mG",
+      startInputType: "local",
+      startOutputType: "local",
+      title: "Frühstücksbuffet",
+      description:
+        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+      geo: { lat: 48.738713, lon: 12.7486027 },
+      categories: ["Veranstaltung"],
+      status: "CONFIRMED",
+      busyStatus: "BUSY",
+      organizer: {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+      },
+      attendees: [
+        {
+          name: "Kinderlicht Wallersdorf e.V.",
+          email: "info@kinderlicht-wallersdorf.de",
+          rsvp: true,
+          partstat: "ACCEPTED",
+          role: "REQ-PARTICIPANT",
+        },
+      ],
+      htmlContent:
+        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+    },
+    {
+      start: [2026, 4, 11, 9, 30],
+      duration: { hours: 3, minutes: 0 },
+      url: "https://form.campai.com/Y2oXlVHpk9mG",
+      startInputType: "local",
+      startOutputType: "local",
+      title: "Frühstücksbuffet",
+      description:
+        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
+      geo: { lat: 48.738713, lon: 12.7486027 },
+      categories: ["Veranstaltung"],
+      status: "CONFIRMED",
+      busyStatus: "BUSY",
+      organizer: {
+        name: "Kinderlicht Wallersdorf e.V.",
+        email: "info@kinderlicht-wallersdorf.de",
+      },
+      attendees: [
+        {
+          name: "Kinderlicht Wallersdorf e.V.",
+          email: "info@kinderlicht-wallersdorf.de",
+          rsvp: true,
+          partstat: "ACCEPTED",
+          role: "REQ-PARTICIPANT",
+        },
+      ],
+      htmlContent:
+        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
+    },
+    {
     start: [2025, 12, 27, 19, 0],
     duration: { hours: 6, minutes: 0 },
     startInputType: "local",
