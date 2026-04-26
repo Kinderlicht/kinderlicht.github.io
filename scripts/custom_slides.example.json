@@ -1,0 +1,29 @@
+{
+  "slides": [
+    {
+      "title": "Partner und Kooperationen",
+      "subtitle": "Kurzüberblick",
+      "body": "Wichtige Partnerschaften des Vereins im Berichtsjahr.",
+      "bullets": [
+        "Neue Partner aus der Region",
+        "Stabile Zusammenarbeit mit bestehenden Unterstützern"
+      ],
+      "image": "src/images/news/jhv-2024.jpg",
+      "plotSlots": [
+        "partner-kategorien",
+        "kooperationen-im-jahresverlauf"
+      ]
+    },
+    {
+      "title": "Projektstatus",
+      "subtitle": "Laufende Maßnahmen",
+      "bullets": [
+        "Aktive Projekte",
+        "Abgeschlossene Projekte"
+      ],
+      "plotSlots": [
+        "projektfortschritt"
+      ]
+    }
+  ]
+}

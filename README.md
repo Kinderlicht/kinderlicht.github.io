@@ -47,3 +47,52 @@
 Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
 
 [<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-minimal-ts)
+
+## JHV Slide Pipeline
+
+The JHV slideshow tooling is now split into two clear steps:
+
+1. Collect metadata (data retrieval + normalization)
+2. Generate slides (rendering only)
+
+### 1) Collect metadata
+
+Run:
+
+```shell
+python3 scripts/collect_jhv_metadata.py --api-key "<CAMPAI_API_KEY>"
+```
+
+Optional:
+
+```shell
+python3 scripts/collect_jhv_metadata.py \
+  --api-key "<CAMPAI_API_KEY>" \
+  --reference-date 2026-12-31 \
+  --output scripts/out/jhv-metadata-2026.json
+```
+
+### 2) Generate slides from metadata
+
+Run:
+
+```shell
+python3 scripts/generate_jhv_slides.py \
+  --metadata scripts/out/jhv-metadata-2026.json
+```
+
+Optional custom slides:
+
+```shell
+python3 scripts/generate_jhv_slides.py \
+  --metadata scripts/out/jhv-metadata-2026.json \
+  --custom-slides scripts/custom_slides.example.json
+```
+
+### Files and responsibilities
+
+- `scripts/collect_jhv_metadata.py`: Fetches Campai members and derives yearly metadata from blog content.
+- `scripts/generate_jhv_slides.py`: Renders HTML deck from metadata.
+- `scripts/templates/slide_deck.html.tpl`: HTML shell template.
+- `scripts/templates/slide_deck.css`: Deck styling.
+- `scripts/templates/slide_deck.js`: Slide navigation/animation behavior.
