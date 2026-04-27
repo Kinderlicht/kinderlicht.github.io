@@ -16,6 +16,11 @@
     const modalImage = document.getElementById('entry-modal-image');
     let current = 0;
 
+    if (entryModal) {
+      // Keep modal outside the translated slide track so it always opens centered.
+      document.body.appendChild(entryModal);
+    }
+
     const slideshows = Array.from(document.querySelectorAll('.auto-slideshow'));
     slideshows.forEach((slideshow) => {
       const frames = Array.from(slideshow.querySelectorAll('.frame'));
@@ -50,7 +55,9 @@
 
     function decodeEntryPayload(encoded) {
       try {
-        const json = atob(encoded);
+        const binary = atob(encoded);
+        const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+        const json = new TextDecoder('utf-8').decode(bytes);
         return JSON.parse(json);
       } catch {
         return null;
