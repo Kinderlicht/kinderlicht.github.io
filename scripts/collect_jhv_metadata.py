@@ -218,7 +218,12 @@ def collect_slide_image_sources(articles: Iterable[Article]) -> list[dict[str, s
 
 def build_special_entries(
     articles: Iterable[Article],
-) -> tuple[list[dict[str, str]], list[dict[str, str]], list[dict[str, str]], list[dict[str, str]]]:
+) -> tuple[
+    list[dict[str, str]],
+    list[dict[str, str]],
+    list[dict[str, str]],
+    list[dict[str, str]],
+]:
     received: list[dict[str, str]] = []
     given: list[dict[str, str]] = []
     kinderlicht_events: list[dict[str, str]] = []
@@ -229,7 +234,9 @@ def build_special_entries(
             donation_match = SPENDE_RE.match(tag)
             if donation_match:
                 entry = {
-                    "kind": "received" if donation_match.group("sign") == "+" else "given",
+                    "kind": "received"
+                    if donation_match.group("sign") == "+"
+                    else "given",
                     "amount": human_amount(donation_match.group("amount")),
                     "label": normalize_text(donation_match.group("label")),
                     "article_title": article.title,
@@ -283,7 +290,9 @@ def default_output_path(reference_date: date) -> Path:
 
 def main() -> int:
     args = parse_args()
-    reference_date = parse_date(args.reference_date) if args.reference_date else date.today()
+    reference_date = (
+        parse_date(args.reference_date) if args.reference_date else date.today()
+    )
 
     member_payload = fetch_campai_members(args.api_key)
     if member_payload is None:

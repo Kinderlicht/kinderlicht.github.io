@@ -238,7 +238,7 @@ def _extract_joined_at(record):
     joined_at = _parse_date(membership.get("enterDate"))
     if joined_at:
         return joined_at
-        
+
     return None
 
 
@@ -248,7 +248,7 @@ def _extract_leave_at(record):
     leave_at = _parse_date(membership.get("leaveDate"))
     if leave_at:
         return leave_at
-    
+
     return None
 
 
@@ -350,7 +350,9 @@ def main():
     if result is not None:
         members = build_members(result)
         active_count = sum(1 for member in members if member.active)
-        print(json.dumps([member.__dict__ for member in members], indent=4, default=str))
+        print(
+            json.dumps([member.__dict__ for member in members], indent=4, default=str)
+        )
         print(f"Active members: {active_count}")
 
 

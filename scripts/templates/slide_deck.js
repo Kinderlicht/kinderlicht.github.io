@@ -5,6 +5,15 @@
     const progressBar = document.getElementById('progress-bar');
     const prevButtons = document.querySelectorAll('[data-nav="prev"]');
     const nextButtons = document.querySelectorAll('[data-nav="next"]');
+    const entryCards = document.querySelectorAll('.entry-card-clickable[data-entry]');
+    const entryModal = document.getElementById('entry-modal');
+    const modalCloseButtons = document.querySelectorAll('[data-modal-close]');
+    const modalTitle = document.getElementById('entry-modal-title');
+    const modalDate = document.getElementById('entry-modal-date');
+    const modalShort = document.getElementById('entry-modal-short');
+    const modalText = document.getElementById('entry-modal-text');
+    const modalMedia = document.getElementById('entry-modal-media');
+    const modalImage = document.getElementById('entry-modal-image');
     let current = 0;
 
     const slideshows = Array.from(document.querySelectorAll('.auto-slideshow'));
@@ -39,9 +48,75 @@
       render();
     }
 
+    function decodeEntryPayload(encoded) {
+      try {
+        const json = atob(encoded);
+        return JSON.parse(json);
+      } catch {
+        return null;
+      }
+    }
+
+    function openEntryModal(payload) {
+      if (!entryModal || !payload) return;
+
+      modalTitle.textContent = payload.title || 'Beitrag';
+      modalDate.textContent = payload.date || '';
+      modalShort.textContent = payload.short || '';
+      modalText.textContent = payload.text || payload.short || '';
+
+      if (payload.image) {
+        modalImage.src = payload.image;
+        modalImage.alt = payload.title || 'Beitragsbild';
+        modalMedia.hidden = false;
+      } else {
+        modalImage.src = '';
+        modalImage.alt = '';
+        modalMedia.hidden = true;
+      }
+
+      entryModal.hidden = false;
+      entryModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEntryModal() {
+      if (!entryModal) return;
+      entryModal.hidden = true;
+      entryModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    entryCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const payload = decodeEntryPayload(card.getAttribute('data-entry') || '');
+        if (payload) openEntryModal(payload);
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          const payload = decodeEntryPayload(card.getAttribute('data-entry') || '');
+          if (payload) openEntryModal(payload);
+        }
+      });
+    });
+
+    modalCloseButtons.forEach((button) => {
+      button.addEventListener('click', closeEntryModal);
+    });
+
     prevButtons.forEach((button) => button.addEventListener('click', () => go(-1)));
     nextButtons.forEach((button) => button.addEventListener('click', () => go(1)));
     window.addEventListener('keydown', (event) => {
+      if (entryModal && !entryModal.hidden && event.key === 'Escape') {
+        event.preventDefault();
+        closeEntryModal();
+        return;
+      }
+      if (entryModal && !entryModal.hidden) {
+        return;
+      }
+
       if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
         event.preventDefault();
         go(1);

@@ -522,8 +522,7 @@ export default function Rechtliches() {
 
               <div className="pt-3 border-t border-gray-200 dark:border-gray-600">
                 <i className="text-gray-500 dark:text-gray-400 text-sm">
-                  Angaben gemäß § 5 TMG; vertreten durch Enrico Koch und Christina
-                  Weig
+                  Angaben gemäß § 5 TMG; vertreten durch Enrico Koch und Matthias Kettl
                 </i>
               </div>
             </div>

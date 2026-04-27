@@ -270,11 +270,12 @@ def deserialize_members(raw_members: list[dict[str, object]]) -> list[Member]:
 
 def prepare_slide_images(
     image_rows: list[dict[str, str]], output_directory: Path
-) -> list[str]:
+) -> tuple[list[str], dict[str, str]]:
     assets_dir = output_directory / "assets"
     assets_dir.mkdir(parents=True, exist_ok=True)
 
     urls: list[str] = []
+    image_by_title: dict[str, str] = {}
     for idx, item in enumerate(image_rows):
         source = Path(str(item.get("source", "")))
         if not source.exists():
@@ -284,8 +285,63 @@ def prepare_slide_images(
         filename = f"metadata-{idx + 1}-{base}{suffix}"
         target = assets_dir / filename
         target.write_bytes(source.read_bytes())
-        urls.append(f"assets/{filename}")
-    return urls
+        relative_url = f"assets/{filename}"
+        urls.append(relative_url)
+        alt_title = str(item.get("alt", "")).strip()
+        if alt_title:
+            image_by_title[alt_title] = relative_url
+    return urls, image_by_title
+
+
+def extract_mdx_preview(article_path: Path, max_chars: int = 900) -> str:
+    if not article_path.exists():
+        return ""
+
+    raw = article_path.read_text(encoding="utf-8")
+    body = raw
+    if raw.startswith("---"):
+        parts = raw.split("---", 2)
+        if len(parts) == 3:
+            body = parts[2]
+
+    # Strip most markdown syntax to keep a readable plain-text preview for modal use.
+    body = re.sub(r"```[\s\S]*?```", " ", body)
+    body = re.sub(r"`([^`]*)`", r"\1", body)
+    body = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", body)
+    body = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1", body)
+    body = re.sub(r"^#{1,6}\s*", "", body, flags=re.MULTILINE)
+    body = re.sub(r"<[^>]+>", " ", body)
+    body = re.sub(r"\s+", " ", body).strip()
+
+    if len(body) <= max_chars:
+        return body
+    return body[: max_chars - 1].rstrip() + "…"
+
+
+def build_article_details(
+    included_articles: list[dict[str, object]],
+    article_image_map: dict[str, str],
+) -> dict[str, dict[str, str]]:
+    details: dict[str, dict[str, str]] = {}
+    for article in included_articles:
+        title = str(article.get("title", "")).strip()
+        if not title:
+            continue
+
+        article_path_raw = str(article.get("path", "")).strip()
+        article_path = Path(article_path_raw) if article_path_raw else None
+        full_text = (
+            extract_mdx_preview(article_path) if article_path is not None else ""
+        )
+
+        details[title] = {
+            "title": title,
+            "date": str(article.get("date", "")).strip(),
+            "short": str(article.get("short", "")).strip(),
+            "text": full_text,
+            "image": article_image_map.get(title, ""),
+        }
+    return details
 
 
 def resolve_custom_image_source(
@@ -391,7 +447,9 @@ def make_gender_pie_chart(members: list[Member]) -> str:
 
     total = sum(counts.values())
     if total == 0:
-        return make_placeholder_svg("Geschlechterverteilung", "Keine aktiven Mitglieder")
+        return make_placeholder_svg(
+            "Geschlechterverteilung", "Keine aktiven Mitglieder"
+        )
 
     colors = {
         "Weiblich": "#ff8a1c",
@@ -421,7 +479,9 @@ def make_gender_pie_chart(members: list[Member]) -> str:
         if count <= 0:
             continue
         sweep = 2 * math.pi * (count / total)
-        segments.append(f'<path d="{arc_path(angle, angle + sweep)}" fill="{colors[label]}" />')
+        segments.append(
+            f'<path d="{arc_path(angle, angle + sweep)}" fill="{colors[label]}" />'
+        )
         labels.append(
             f'<text x="520" y="{142 + idx * 40}" fill="#f4f6f8" font-family="sans-serif" font-size="20">{escape_html(label)}: {count}</text>'
         )
@@ -431,21 +491,25 @@ def make_gender_pie_chart(members: list[Member]) -> str:
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Geschlechterverteilung">
       <rect width="900" height="520" rx="20" fill="#12151b" />
       <text x="28" y="44" fill="#ffb15c" font-family="sans-serif" font-size="20" font-weight="700">Geschlechterverteilung (aktiv)</text>
-      {''.join(segments)}
+      {"".join(segments)}
       <circle cx="320" cy="240" r="64" fill="#12151b"/>
       <text x="320" y="235" fill="#f4f6f8" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="700">{total}</text>
       <text x="320" y="262" fill="#aab0ba" text-anchor="middle" font-family="sans-serif" font-size="14">aktive</text>
-      {''.join(labels)}
+      {"".join(labels)}
     </svg>
     """.strip()
     return _chart_data_uri(svg)
 
 
 def make_age_distribution_chart(members: list[Member]) -> tuple[str, float | None]:
-    active_members = [member for member in members if member.active and member.age is not None]
+    active_members = [
+        member for member in members if member.active and member.age is not None
+    ]
     ages = [member.age for member in active_members if member.age is not None]
     if not ages:
-        return make_placeholder_svg("Altersverteilung", "Keine Altersdaten verfügbar"), None
+        return make_placeholder_svg(
+            "Altersverteilung", "Keine Altersdaten verfügbar"
+        ), None
 
     buckets = [
         ("<18", lambda age: age < 18),
@@ -483,8 +547,8 @@ def make_age_distribution_chart(members: list[Member]) -> tuple[str, float | Non
       <text x="28" y="44" fill="#ffb15c" font-family="sans-serif" font-size="20" font-weight="700">Altersverteilung (aktiv)</text>
       <line x1="70" y1="420" x2="650" y2="420" stroke="#5d6672" stroke-width="1" />
       <line x1="70" y1="420" x2="70" y2="130" stroke="#5d6672" stroke-width="1" />
-      {''.join(bars)}
-      {''.join(labels)}
+      {"".join(bars)}
+      {"".join(labels)}
       <text x="700" y="220" fill="#f4f6f8" font-family="sans-serif" font-size="20">Durchschnittsalter</text>
       <text x="700" y="258" fill="#ffb15c" font-family="sans-serif" font-size="48" font-weight="700">{avg_age:.1f}</text>
       <text x="700" y="286" fill="#aab0ba" font-family="sans-serif" font-size="16">Jahre</text>
@@ -494,9 +558,13 @@ def make_age_distribution_chart(members: list[Member]) -> tuple[str, float | Non
 
 
 def make_member_evolution_chart(members: list[Member], reference: date) -> str:
-    members_with_join_date = [member for member in members if member.joined_at is not None]
+    members_with_join_date = [
+        member for member in members if member.joined_at is not None
+    ]
     if not members_with_join_date:
-        return make_placeholder_svg("Mitgliederentwicklung", "Keine Eintrittsdaten verfügbar")
+        return make_placeholder_svg(
+            "Mitgliederentwicklung", "Keine Eintrittsdaten verfügbar"
+        )
 
     foundation = min(member.joined_at for member in members_with_join_date)
     checkpoints = [foundation]
@@ -569,7 +637,7 @@ def make_member_evolution_chart(members: list[Member], reference: date) -> str:
       <rect width="1200" height="520" rx="20" fill="#12151b" />
       <text x="28" y="44" fill="#ffb15c" font-family="sans-serif" font-size="20" font-weight="700">Entwicklung aktive Mitglieder</text>
       <text x="28" y="68" fill="#aab0ba" font-family="sans-serif" font-size="13">Startpunkt und danach jeweils zum 31.12. eines Jahres</text>
-      {''.join(y_grid)}
+      {"".join(y_grid)}
       <line x1="80" y1="430" x2="1110" y2="430" stroke="#5d6672" stroke-width="1" />
       <line x1="80" y1="430" x2="80" y2="80" stroke="#5d6672" stroke-width="1" />
       {vertical_ticks}
@@ -622,6 +690,7 @@ def build_slideshow_html(
 
 def category_cards(
     entries: list[dict[str, str]],
+    article_details: dict[str, dict[str, str]],
     empty_text: str,
     item_type: str,
     max_items: int = 6,
@@ -633,32 +702,43 @@ def category_cards(
     visible_items = entries[: max_items if max_items > 0 else len(entries)]
     for entry in visible_items:
         article_date = parse_date(str(entry["article_date"]))
+        article_title = str(entry.get("article_title", "")).strip()
+        detail = article_details.get(article_title, {})
+        modal_payload = {
+            "title": detail.get("title") or article_title,
+            "date": detail.get("date") or str(entry.get("article_date", "")),
+            "short": detail.get("short") or str(entry.get("article_short", "")).strip(),
+            "text": detail.get("text") or str(entry.get("article_short", "")).strip(),
+            "image": detail.get("image") or "",
+        }
+        payload_json = json.dumps(modal_payload, ensure_ascii=False)
+        payload_b64 = base64.b64encode(payload_json.encode("utf-8")).decode("ascii")
         if item_type == "donation":
             label_prefix = "eingegangen" if entry["kind"] == "received" else "geleistet"
             rendered.append(
                 f"""
-                <article class="entry-card">
+                                <article class="entry-card entry-card-clickable" role="button" tabindex="0" data-entry="{escape_html(payload_b64)}">
                   <div class="entry-toprow">
                     <span class="badge">{escape_html(label_prefix)}</span>
                     <span class="entry-date">{escape_html(format_german_date(article_date))}</span>
                   </div>
-                  <h3>{escape_html(entry['amount'])} <span class="dim">{escape_html(entry['label'])}</span></h3>
-                  <p class="entry-title">{escape_html(entry['article_title'])}</p>
-                  {f'<p class="entry-short">{escape_html(entry["article_short"])}</p>' if entry.get('article_short') else ''}
+                  <h3>{escape_html(entry["amount"])} <span class="dim">{escape_html(entry["label"])}</span></h3>
+                  <p class="entry-title">{escape_html(entry["article_title"])}</p>
+                  {f'<p class="entry-short">{escape_html(entry["article_short"])}</p>' if entry.get("article_short") else ""}
                 </article>
                 """.strip()
             )
         else:
             rendered.append(
                 f"""
-                <article class="entry-card">
+                                <article class="entry-card entry-card-clickable" role="button" tabindex="0" data-entry="{escape_html(payload_b64)}">
                   <div class="entry-toprow">
-                    <span class="badge">{escape_html(entry['kind'])}</span>
+                    <span class="badge">{escape_html(entry["kind"])}</span>
                     <span class="entry-date">{escape_html(format_german_date(article_date))}</span>
                   </div>
-                  <h3>{escape_html(entry['label'])}</h3>
-                  <p class="entry-title">{escape_html(entry['article_title'])}</p>
-                  {f'<p class="entry-short">{escape_html(entry["article_short"])}</p>' if entry.get('article_short') else ''}
+                  <h3>{escape_html(entry["label"])}</h3>
+                  <p class="entry-title">{escape_html(entry["article_title"])}</p>
+                  {f'<p class="entry-short">{escape_html(entry["article_short"])}</p>' if entry.get("article_short") else ""}
                 </article>
                 """.strip()
             )
@@ -685,7 +765,7 @@ def agenda_items(review_year: int, include_organe_voting: bool) -> str:
     entries.append(("Vorschau", "Nächste Schritte und Planung."))
 
     rows = "".join(
-        f'<li><span>{idx}</span><div><strong>{escape_html(title)}</strong><p>{escape_html(description)}</p></div></li>'
+        f"<li><span>{idx}</span><div><strong>{escape_html(title)}</strong><p>{escape_html(description)}</p></div></li>"
         for idx, (title, description) in enumerate(entries, start=1)
     )
     return f'<ol class="agenda-list">{rows}</ol>'
@@ -703,7 +783,11 @@ def overview_cards(
         ("Artikel", str(article_count), f"seit {format_german_date(boundary_date)}"),
         ("Aktive Mitglieder", str(active_member_count), "Stand heute"),
         ("Durchschnittsalter", average_age, "Jahre"),
-        ("Veranstaltungen", str(event_count), f"bis {format_german_date(reference_date)}"),
+        (
+            "Veranstaltungen",
+            str(event_count),
+            f"bis {format_german_date(reference_date)}",
+        ),
     ]
     return "\n".join(
         f"""
@@ -729,6 +813,7 @@ def render_slides_markup(
     given: list[dict[str, str]],
     kinderlicht_events: list[dict[str, str]],
     external_events: list[dict[str, str]],
+    article_details: dict[str, dict[str, str]],
     include_organe_voting: bool,
     custom_slides: list[CustomSlide],
     custom_image_map: dict[int, str],
@@ -762,27 +847,31 @@ def render_slides_markup(
 
     rueckblick_received = category_cards(
         received,
+        article_details,
         "Keine Spenden mit passendem Tag.",
         "donation",
-        max_items=6,
+        max_items=4,
     )
     rueckblick_given = category_cards(
         given,
+        article_details,
         "Keine Ausgaben mit passendem Tag.",
         "donation",
-        max_items=6,
+        max_items=4,
     )
     rueckblick_kinderlicht = category_cards(
         kinderlicht_events,
+        article_details,
         "Keine Kinderlicht-Veranstaltungen mit passendem Tag.",
         "event",
-        max_items=6,
+        max_items=4,
     )
     rueckblick_external = category_cards(
         external_events,
+        article_details,
         "Keine externen Veranstaltungen mit passendem Tag.",
         "event",
-        max_items=6,
+        max_items=4,
     )
 
     entlastung_image = make_voting_svg(
@@ -790,37 +879,50 @@ def render_slides_markup(
         "Abstimmung und Ergebnis",
     )
     organe_image = make_voting_svg(
-            "Wahl neuer Vereinsorgane",
-            "Wahl und Besetzung",
+        "Wahl neuer Vereinsorgane",
+        "Wahl und Besetzung",
     )
 
     beitragsordnung_markup = """
-        <div class="beitragsordnung-stage">
-            <article class="beitrags-tarif highlight">
-                <span class="tarif-name">Standard</span>
-                <strong>24 EUR</strong>
-                <p>jährlich pro Person</p>
-            </article>
-            <article class="beitrags-tarif">
-                <span class="tarif-name">Partnerschaft</span>
-                <strong>21 EUR</strong>
-                <p>jährlich pro Person</p>
-            </article>
-            <article class="beitrags-tarif">
-                <span class="tarif-name">Kinder / Jugendliche</span>
-                <strong>12 EUR</strong>
-                <p>jährlich pro Person</p>
-            </article>
-            <article class="beitrags-rabatt">
-                <h3>Familienrabatt</h3>
-                <p>Fuer alle Familienangehoerigen ersten Grades sowie Geschwister gilt ein Rabatt von 3 EUR pro Person.</p>
-            </article>
-        </div>
+            <div class="beitragsordnung-stage">
+                <div class="beitrags-top-grid">
+                    <article class="beitrags-tarif highlight">
+                        <span class="tarif-name">Standard</span>
+                        <strong>24 EUR</strong>
+                        <p>jährlich pro Person</p>
+                    </article>
+                    <article class="beitrags-tarif">
+                        <span class="tarif-name">Partnerschaft</span>
+                        <strong>21 EUR</strong>
+                        <p>jährlich pro Person</p>
+                    </article>
+                    <article class="beitrags-tarif">
+                        <span class="tarif-name">Kinder / Jugendliche</span>
+                        <strong>12 EUR</strong>
+                        <p>jährlich pro Person</p>
+                    </article>
+                </div>
+                <article class="beitrags-rabatt">
+                    <h3>Familienrabatt</h3>
+                    <p>Fuer alle Familienangehoerigen ersten Grades sowie Geschwister gilt ein Rabatt von 3 EUR pro Person.</p>
+                </article>
+                <article class="beitrags-voting-stage">
+                    <div class="vote-head">
+                        <h3>Abstimmung zur Beitragsordnung</h3>
+                        <p>Beschluss der Mitgliederversammlung per Handzeichen.</p>
+                    </div>
+                    <div class="beitrags-vote-options">
+                        <div class="vote-option vote-yes">Ja</div>
+                        <div class="vote-option vote-no">Nein</div>
+                        <div class="vote-option vote-abstain">Enthaltung</div>
+                    </div>
+                </article>
+            </div>
     """.strip()
 
     organe_voting_section = ""
     if include_organe_voting:
-            organe_voting_section = f"""
+        organe_voting_section = f"""
         <section class="slide split content-focus">
             <div class="slide-inner split-layout">
                 <div class="content-pane">
@@ -841,7 +943,9 @@ def render_slides_markup(
 
     custom_slides_html = ""
     for idx, slide in enumerate(custom_slides):
-        bullets_html = "".join(f"<li>{escape_html(item)}</li>" for item in slide.bullets)
+        bullets_html = "".join(
+            f"<li>{escape_html(item)}</li>" for item in slide.bullets
+        )
         plot_html = "".join(
             f'<div class="plot-slot" data-plot="{escape_html(slot)}"><span>{escape_html(slot)}</span></div>'
             for slot in slide.plot_slots
@@ -859,10 +963,10 @@ def render_slides_markup(
             <div class="hero compact">
               <div class="kicker">Zusatz</div>
               <h1>{escape_html(slide.title)}</h1>
-              {f'<p class="lead">{escape_html(slide.subtitle)}</p>' if slide.subtitle else ''}
-              {f'<p class="lead">{escape_html(slide.body)}</p>' if slide.body else ''}
-              {f'<ul class="bullet-list">{bullets_html}</ul>' if bullets_html else ''}
-              {f'<div class="plot-grid">{plot_html}</div>' if plot_html else ''}
+              {f'<p class="lead">{escape_html(slide.subtitle)}</p>' if slide.subtitle else ""}
+              {f'<p class="lead">{escape_html(slide.body)}</p>' if slide.body else ""}
+              {f'<ul class="bullet-list">{bullets_html}</ul>' if bullets_html else ""}
+              {f'<div class="plot-grid">{plot_html}</div>' if plot_html else ""}
             </div>
           </div>
           {media_html}
@@ -1124,6 +1228,22 @@ def render_slides_markup(
         </div>
       </section>
 
+            <div class="entry-modal" id="entry-modal" hidden aria-hidden="true">
+                <div class="entry-modal-backdrop" data-modal-close></div>
+                <article class="entry-modal-card" role="dialog" aria-modal="true" aria-labelledby="entry-modal-title">
+                    <button type="button" class="entry-modal-close" data-modal-close aria-label="Schließen">×</button>
+                    <div class="entry-modal-media" id="entry-modal-media" hidden>
+                        <img id="entry-modal-image" src="" alt="" />
+                    </div>
+                    <div class="entry-modal-content">
+                        <p class="entry-modal-date" id="entry-modal-date"></p>
+                        <h2 id="entry-modal-title"></h2>
+                        <p class="entry-modal-short" id="entry-modal-short"></p>
+                        <p class="entry-modal-text" id="entry-modal-text"></p>
+                    </div>
+                </article>
+            </div>
+
       {custom_slides_html}
     """.strip()
 
@@ -1171,7 +1291,10 @@ def _lazy_import_pdf_dependencies(*, auto_install: bool = False):
     missing: list[str] = []
 
     try:
-        from reportlab.lib.pagesizes import A4 as reportlab_a4, landscape as reportlab_landscape
+        from reportlab.lib.pagesizes import (
+            A4 as reportlab_a4,
+            landscape as reportlab_landscape,
+        )
         from reportlab.lib.utils import ImageReader as reportlab_image_reader
         from reportlab.pdfgen import canvas as reportlab_canvas
 
@@ -1512,7 +1635,11 @@ def main() -> int:
     output_path = resolve_output_path(args.output, review_year)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    collage_images = prepare_slide_images(list(metadata["slide_images"]), output_path.parent)
+    collage_images, article_image_map = prepare_slide_images(
+        list(metadata["slide_images"]),
+        output_path.parent,
+    )
+    article_details = build_article_details(included_articles, article_image_map)
     custom_slides = load_custom_slides(args.custom_slides)
     custom_image_map = prepare_custom_slide_images(
         custom_slides, args.custom_slides, output_path.parent
@@ -1530,6 +1657,7 @@ def main() -> int:
         given=given,
         kinderlicht_events=kinderlicht_events,
         external_events=external_events,
+        article_details=article_details,
         include_organe_voting=include_organe_voting,
         custom_slides=custom_slides,
         custom_image_map=custom_image_map,
