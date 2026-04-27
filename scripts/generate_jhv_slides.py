@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "public" / "rueckblick"
 TEMPLATE_DIR = ROOT / "scripts" / "templates"
 DEFAULT_METADATA_DIR = ROOT / "scripts" / "out"
+CONTENT_DIR = ROOT / "src" / "content"
 PDF_DEPENDENCIES = ("reportlab", "cairosvg")
 
 
@@ -130,8 +131,64 @@ def escape_html(value: str) -> str:
     return html.escape(value, quote=True)
 
 
+def _image_path_to_data_uri(image_path: Path) -> str:
+    suffix = image_path.suffix.lower()
+    mime_map = {
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".webp": "image/webp",
+        ".gif": "image/gif",
+        ".svg": "image/svg+xml",
+    }
+    mime = mime_map.get(suffix, "application/octet-stream")
+    payload = base64.b64encode(image_path.read_bytes()).decode("ascii")
+    return f"data:{mime};base64,{payload}"
+
+
+def resolve_slide_image_src(image_value: str | None) -> str:
+    if not image_value:
+        return ""
+
+    raw = str(image_value).strip()
+    if not raw:
+        return ""
+    if raw.startswith(("http://", "https://", "data:")):
+        return raw
+
+    normalized = raw.lstrip("/")
+    if normalized.startswith("images/"):
+        normalized = normalized[len("images/") :]
+
+    candidates = [
+        ROOT / "src" / "images" / normalized,
+        ROOT / "static" / "images" / normalized,
+        ROOT / "public" / "images" / normalized,
+        ROOT / normalized,
+    ]
+
+    for candidate in candidates:
+        if candidate.exists() and candidate.is_file():
+            try:
+                return _image_path_to_data_uri(candidate)
+            except Exception:
+                break
+
+    return f"/images/{normalized}"
+
+
 def format_german_date(value: date) -> str:
     return value.strftime("%d.%m.%Y")
+
+
+def format_euro(value: float | int | None) -> str:
+    if value is None:
+        return "-"
+    amount = float(value)
+    sign = "-" if amount < 0 else ""
+    absolute = abs(amount)
+    formatted = f"{absolute:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"{sign}{formatted} EUR"
 
 
 def slugify_filename(value: str) -> str:
@@ -411,10 +468,132 @@ def make_voting_svg(title: str, subtitle: str) -> str:
           <stop offset="0%" stop-color="#17191f"/>
           <stop offset="100%" stop-color="#0e1014"/>
         </linearGradient>
+        <filter id="votingGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
       </defs>
       <rect width="1600" height="900" fill="url(#voteBg)"/>
       <text x="170" y="330" fill="#f4f6f8" font-family="sans-serif" font-size="64" font-weight="700">{escape_html(title)}</text>
       <text x="170" y="410" fill="#ffb15c" font-family="sans-serif" font-size="32" font-weight="600">{escape_html(subtitle)}</text>
+    </svg>
+    """.strip()
+    return "data:image/svg+xml;base64," + base64.b64encode(svg.encode("utf-8")).decode(
+        "ascii"
+    )
+
+
+def load_sponsors() -> int:
+    """Load sponsors from sponsors.json and return count."""
+    sponsors_file = CONTENT_DIR / "sponsors.json"
+    if not sponsors_file.exists():
+        return 0
+    try:
+        sponsors = json.loads(sponsors_file.read_text(encoding="utf-8"))
+        return len(sponsors) if isinstance(sponsors, list) else 0
+    except Exception:
+        return 0
+
+
+def load_board_members() -> list[dict[str, str]]:
+    """Load board members from board.json."""
+    board_file = CONTENT_DIR / "board.json"
+    if not board_file.exists():
+        return []
+    try:
+        board = json.loads(board_file.read_text(encoding="utf-8"))
+        return board if isinstance(board, list) else []
+    except Exception:
+        return []
+
+
+def render_board_members_html(board_members: list[dict[str, str]] | None) -> str:
+    """Render board members in a grid layout with images and roles."""
+    if not board_members:
+        return '<div class="empty-state">Keine Vorstandsmitglieder verfügbar</div>'
+
+    members_html = []
+    for member in board_members:
+        name = member.get("name", "").strip()
+        role = member.get("role", "").strip()
+        image = member.get("image", "").strip()
+        image_url = resolve_slide_image_src(image)
+
+        members_html.append(
+            f"""
+        <article class="board-member">
+            {f'<div class="board-member-image"><img src="{escape_html(image_url)}" alt="{escape_html(name)}" /></div>' if image_url else '<div class="board-member-image-placeholder"></div>'}
+            <h3>{escape_html(name)}</h3>
+            <p class="role">{escape_html(role)}</p>
+        </article>
+        """.strip()
+        )
+
+    return f'<div class="board-grid">{"".join(members_html)}</div>'
+
+
+def make_voting_animation_svg(title: str, subtitle: str) -> str:
+    """Create an SVG with animated silhouettes of voting people."""
+    svg = f"""
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="{escape_html(title)}">
+      <defs>
+        <linearGradient id="animBg" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="#17191f"/>
+          <stop offset="100%" stop-color="#0e1014"/>
+        </linearGradient>
+        <style>
+          @keyframes silhouette-fade {{
+            0%, 100% {{ opacity: 0.3; }}
+            50% {{ opacity: 0.9; }}
+          }}
+          @keyframes silhouette-float {{
+            0%, 100% {{ transform: translateY(0px); }}
+            50% {{ transform: translateY(-8px); }}
+          }}
+          .silhouette {{
+            animation: silhouette-fade 2.5s infinite ease-in-out;
+          }}
+          .silhouette:nth-child(2) {{ animation-delay: 0.3s; }}
+          .silhouette:nth-child(3) {{ animation-delay: 0.6s; }}
+          .silhouette:nth-child(4) {{ animation-delay: 0.9s; }}
+          .silhouette:nth-child(5) {{ animation-delay: 1.2s; }}
+          .silhouette:nth-child(6) {{ animation-delay: 1.5s; }}
+          .silhouette:nth-child(7) {{ animation-delay: 1.8s; }}
+        </style>
+      </defs>
+      <rect width="1600" height="900" fill="url(#animBg)"/>
+      <text x="170" y="330" fill="#f4f6f8" font-family="sans-serif" font-size="64" font-weight="700">{escape_html(title)}</text>
+      <text x="170" y="410" fill="#ffb15c" font-family="sans-serif" font-size="32" font-weight="600">{escape_html(subtitle)}</text>
+      
+      <g class="voting-group">
+        <g class="silhouette" style="--x: 800px">
+          <circle cx="250" cy="600" r="28" fill="#ff8a1c" opacity="0.4"/>
+          <path d="M 250 630 Q 235 680 240 720 M 250 630 Q 265 680 260 720" stroke="#ff8a1c" stroke-width="8" fill="none" opacity="0.4" stroke-linecap="round"/>
+        </g>
+        <g class="silhouette" style="--x: 800px">
+          <circle cx="450" cy="620" r="30" fill="#ffb15c" opacity="0.4"/>
+          <path d="M 450 650 Q 430 705 438 745 M 450 650 Q 470 705 462 745" stroke="#ffb15c" stroke-width="9" fill="none" opacity="0.4" stroke-linecap="round"/>
+        </g>
+        <g class="silhouette" style="--x: 800px">
+          <circle cx="650" cy="610" r="26" fill="#ff8a1c" opacity="0.4"/>
+          <path d="M 650 636 Q 632 685 640 725 M 650 636 Q 668 685 660 725" stroke="#ff8a1c" stroke-width="7" fill="none" opacity="0.4" stroke-linecap="round"/>
+        </g>
+        <g class="silhouette" style="--x: 800px">
+          <circle cx="850" cy="625" r="29" fill="#ffb15c" opacity="0.4"/>
+          <path d="M 850 654 Q 830 708 838 748 M 850 654 Q 870 708 862 748" stroke="#ffb15c" stroke-width="8" fill="none" opacity="0.4" stroke-linecap="round"/>
+        </g>
+        <g class="silhouette" style="--x: 800px">
+          <circle cx="1050" cy="615" r="27" fill="#ff8a1c" opacity="0.4"/>
+          <path d="M 1050 642 Q 1032 690 1040 730 M 1050 642 Q 1068 690 1060 730" stroke="#ff8a1c" stroke-width="8" fill="none" opacity="0.4" stroke-linecap="round"/>
+        </g>
+        <g class="silhouette" style="--x: 800px">
+          <circle cx="1250" cy="630" r="28" fill="#ffb15c" opacity="0.4"/>
+          <path d="M 1250 658 Q 1230 710 1238 750 M 1250 658 Q 1270 710 1262 750" stroke="#ffb15c" stroke-width="8" fill="none" opacity="0.4" stroke-linecap="round"/>
+        </g>
+      </g>
     </svg>
     """.strip()
     return "data:image/svg+xml;base64," + base64.b64encode(svg.encode("utf-8")).decode(
@@ -665,6 +844,216 @@ def build_member_insights(members: list[Member], reference: date) -> MemberInsig
     )
 
 
+def _finance_value(mapping: dict[str, object], key: str) -> float:
+    value = mapping.get(key)
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        cleaned = value.strip().replace(" ", "").replace("€", "")
+        cleaned = cleaned.replace(".", "").replace(",", ".")
+        try:
+            return float(cleaned)
+        except ValueError:
+            return 0.0
+    return 0.0
+
+
+def _finance_movements_list(
+    entries: object, empty_label: str
+) -> list[dict[str, str | float | None]]:
+    if not isinstance(entries, list):
+        return []
+    items: list[dict[str, str | float | None]] = []
+    for raw in entries[:3]:
+        if not isinstance(raw, dict):
+            continue
+        amount = raw.get("amount")
+        parsed_amount = float(amount) if isinstance(amount, (int, float)) else 0.0
+        items.append(
+            {
+                "date": str(raw.get("date") or "-"),
+                "text": str(raw.get("text") or empty_label),
+                "amount": parsed_amount,
+            }
+        )
+    return items
+
+
+def make_finance_balance_chart(finance_report: dict[str, object]) -> str:
+    requested = finance_report.get("requested_accounts")
+    if not isinstance(requested, dict):
+        return make_placeholder_svg("Finanzübersicht", "Keine Kontodaten verfügbar")
+
+    labels = ["Kasse", "Bank (liquide)", "Bank (Anlage)"]
+    values: list[tuple[str, float, float]] = []
+    for label in labels:
+        row = requested.get(label)
+        if not isinstance(row, dict):
+            values.append((label, 0.0, 0.0))
+            continue
+        one_year_ago = _finance_value(row, "one_year_ago")
+        today = _finance_value(row, "today")
+        values.append((label, one_year_ago, today))
+
+    max_value = max((max(v1, v2) for _, v1, v2 in values), default=1.0)
+    max_value = max(max_value, 1.0)
+
+    chart_left = 120
+    chart_right = 1100
+    chart_bottom = 430
+    chart_top = 95
+    chart_height = chart_bottom - chart_top
+    group_count = len(values)
+    group_width = (chart_right - chart_left) / max(group_count, 1)
+    bar_width = 72
+    gap = 18
+
+    bars: list[str] = []
+    x_labels: list[str] = []
+    legends = []
+
+    for idx, (label, last_value, today_value) in enumerate(values):
+        group_center = chart_left + (idx + 0.5) * group_width
+        x1 = group_center - bar_width - gap / 2
+        x2 = group_center + gap / 2
+        h1 = (last_value / max_value) * chart_height
+        h2 = (today_value / max_value) * chart_height
+        y1 = chart_bottom - h1
+        y2 = chart_bottom - h2
+        bars.append(
+            f'<rect x="{x1:.1f}" y="{y1:.1f}" width="{bar_width}" height="{h1:.1f}" rx="10" fill="#6f7d8f" opacity="0.95" />'
+        )
+        bars.append(
+            f'<rect x="{x2:.1f}" y="{y2:.1f}" width="{bar_width}" height="{h2:.1f}" rx="10" fill="#ff8a1c" opacity="0.95" />'
+        )
+        bars.append(
+            f'<text x="{x1 + bar_width / 2:.1f}" y="{y1 - 10:.1f}" text-anchor="middle" fill="#dbe2ea" font-family="sans-serif" font-size="14">{int(round(last_value))}</text>'
+        )
+        bars.append(
+            f'<text x="{x2 + bar_width / 2:.1f}" y="{y2 - 10:.1f}" text-anchor="middle" fill="#ffd9b4" font-family="sans-serif" font-size="14">{int(round(today_value))}</text>'
+        )
+        x_labels.append(
+            f'<text x="{group_center:.1f}" y="458" text-anchor="middle" fill="#c6ced8" font-family="sans-serif" font-size="15">{escape_html(label)}</text>'
+        )
+
+    for step in range(0, 6):
+        value = max_value * step / 5
+        y = chart_bottom - chart_height * step / 5
+        bars.append(
+            f'<line x1="120" y1="{y:.1f}" x2="1100" y2="{y:.1f}" stroke="#3a4350" stroke-width="1" opacity="0.5" />'
+        )
+        bars.append(
+            f'<text x="104" y="{y + 4:.1f}" text-anchor="end" fill="#8f98a4" font-family="sans-serif" font-size="12">{int(round(value))}</text>'
+        )
+
+    legends.append(
+        '<rect x="760" y="54" width="18" height="18" rx="4" fill="#6f7d8f" /><text x="786" y="68" fill="#d8dee7" font-family="sans-serif" font-size="14">Vorjahr</text>'
+    )
+    legends.append(
+        '<rect x="890" y="54" width="18" height="18" rx="4" fill="#ff8a1c" /><text x="916" y="68" fill="#ffd6b0" font-family="sans-serif" font-size="14">Heute</text>'
+    )
+
+    svg = f"""
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-label="Kontostandvergleich Vorjahr und heute">
+      <rect width="1200" height="520" rx="20" fill="#12151b" />
+      <text x="28" y="44" fill="#ffb15c" font-family="sans-serif" font-size="20" font-weight="700">Kontostände: Vorjahr vs Heute</text>
+      <text x="28" y="68" fill="#aab0ba" font-family="sans-serif" font-size="13">Y-Achse in EUR, X-Achse nach Kontotyp</text>
+      <line x1="120" y1="430" x2="1100" y2="430" stroke="#5d6672" stroke-width="1" />
+      <line x1="120" y1="430" x2="120" y2="90" stroke="#5d6672" stroke-width="1" />
+      {"".join(bars)}
+      {"".join(x_labels)}
+      {"".join(legends)}
+      <text x="22" y="102" fill="#8f98a4" font-family="sans-serif" font-size="12" transform="rotate(-90, 22, 102)">EUR</text>
+    </svg>
+    """.strip()
+    return _chart_data_uri(svg)
+
+
+def build_finance_markup(finance_report: dict[str, object]) -> dict[str, str]:
+    expenses = finance_report.get("expenses_since_founding")
+    income = finance_report.get("income_since_founding")
+    totals = finance_report.get("totals_since_founding")
+    top_expenses = _finance_movements_list(
+        finance_report.get("top_3_expenses_last_year"), "Ausgabe"
+    )
+    top_income = _finance_movements_list(
+        finance_report.get("top_3_income_last_year"), "Einnahme"
+    )
+    total_money = finance_report.get("total_money_comparison")
+    requested_accounts = finance_report.get("requested_accounts")
+
+    expenses = expenses if isinstance(expenses, dict) else {}
+    income = income if isinstance(income, dict) else {}
+    totals = totals if isinstance(totals, dict) else {}
+    total_money = total_money if isinstance(total_money, dict) else {}
+    requested_accounts = (
+        requested_accounts if isinstance(requested_accounts, dict) else {}
+    )
+
+    expense_order = ["Vereinsverwaltung", "Unterstuetzung", "Veranstaltungen"]
+    income_order = ["Spenden", "Veranstaltungen", "Mitgliedsbeitraege", "Sonstiges"]
+
+    expenses_html = "".join(
+        f'<article class="finance-card"><p>{escape_html(label)}</p><strong>{escape_html(format_euro(_finance_value(expenses, label)))}</strong></article>'
+        for label in expense_order
+    )
+    income_html = "".join(
+        f'<article class="finance-card"><p>{escape_html(label)}</p><strong>{escape_html(format_euro(_finance_value(income, label)))}</strong></article>'
+        for label in income_order
+    )
+
+    totals_html = "".join(
+        [
+            f'<article class="finance-total"><span>Gesamteinnahmen seit Gründung</span><strong>{escape_html(format_euro(_finance_value(totals, "income")))}</strong></article>',
+            f'<article class="finance-total"><span>Gesamtausgaben seit Gründung</span><strong>{escape_html(format_euro(_finance_value(totals, "expenses")))}</strong></article>',
+            f'<article class="finance-total"><span>Differenz</span><strong>{escape_html(format_euro(_finance_value(totals, "difference")))}</strong></article>',
+        ]
+    )
+
+    def movement_html(items: list[dict[str, str | float | None]], empty: str) -> str:
+        if not items:
+            return f'<div class="empty-state">{escape_html(empty)}</div>'
+        return "".join(
+            f'<article class="finance-movement"><div><span>{escape_html(str(item["date"]))}</span><p>{escape_html(str(item["text"]))}</p></div><strong>{escape_html(format_euro(float(item["amount"])))}</strong></article>'
+            for item in items
+        )
+
+    top_expenses_html = movement_html(top_expenses, "Keine Ausgaben im letzten Jahr")
+    top_income_html = movement_html(top_income, "Keine Einnahmen im letzten Jahr")
+
+    account_rows = []
+    for label in ("Kasse", "Bank (liquide)", "Bank (Anlage)"):
+        row = requested_accounts.get(label)
+        if not isinstance(row, dict):
+            account_rows.append(
+                f'<article class="finance-account-row"><span>{escape_html(label)}</span><span>-</span><span>-</span><span>-</span></article>'
+            )
+            continue
+        one_year_ago = _finance_value(row, "one_year_ago")
+        today = _finance_value(row, "today")
+        diff = _finance_value(row, "difference")
+        account_rows.append(
+            f'<article class="finance-account-row"><span>{escape_html(label)}</span><span>{escape_html(format_euro(one_year_ago))}</span><span>{escape_html(format_euro(today))}</span><span>{escape_html(format_euro(diff))}</span></article>'
+        )
+
+    total_money_html = (
+        f'<article class="finance-total"><span>Gesamt vor einem Jahr</span><strong>{escape_html(format_euro(_finance_value(total_money, "one_year_ago")))}</strong></article>'
+        f'<article class="finance-total"><span>Gesamt heute</span><strong>{escape_html(format_euro(_finance_value(total_money, "today")))}</strong></article>'
+        f'<article class="finance-total"><span>Differenz</span><strong>{escape_html(format_euro(_finance_value(total_money, "difference")))}</strong></article>'
+    )
+
+    return {
+        "expenses_cards": expenses_html,
+        "income_cards": income_html,
+        "totals_cards": totals_html,
+        "top_expenses": top_expenses_html,
+        "top_income": top_income_html,
+        "account_rows": "".join(account_rows),
+        "total_money_cards": total_money_html,
+        "balance_chart": make_finance_balance_chart(finance_report),
+    }
+
+
 def build_slideshow_html(
     image_urls: list[str],
     name: str,
@@ -774,21 +1163,24 @@ def agenda_items(review_year: int, include_organe_voting: bool) -> str:
 def overview_cards(
     article_count: int,
     active_member_count: int,
-    average_age: str,
     event_count: int,
     boundary_date: date,
     reference_date: date,
+    sponsor_count: int = 0,
 ) -> str:
     cards = [
         ("Artikel", str(article_count), f"seit {format_german_date(boundary_date)}"),
         ("Aktive Mitglieder", str(active_member_count), "Stand heute"),
-        ("Durchschnittsalter", average_age, "Jahre"),
         (
             "Veranstaltungen",
             str(event_count),
             f"bis {format_german_date(reference_date)}",
         ),
     ]
+    if sponsor_count > 0:
+        cards.append(
+            ("Unterstützer/Sponsoren", str(sponsor_count), "Partner und Freunde")
+        )
     return "\n".join(
         f"""
         <article class="kpi-card">
@@ -809,6 +1201,7 @@ def render_slides_markup(
     included_articles: list[dict[str, object]],
     collage_images: list[str],
     member_insights: MemberInsights,
+    finance_report: dict[str, object],
     received: list[dict[str, str]],
     given: list[dict[str, str]],
     kinderlicht_events: list[dict[str, str]],
@@ -817,18 +1210,36 @@ def render_slides_markup(
     include_organe_voting: bool,
     custom_slides: list[CustomSlide],
     custom_image_map: dict[int, str],
+    board_members: list[dict[str, str]] | None = None,
+    sponsor_count: int = 0,
 ) -> str:
+    first_member_of_board = (
+        [
+            member
+            for member in board_members
+            if member.get("role") in ("Erster Vorstand", "Erste Vorständin")
+        ][0]
+        if board_members
+        else None
+    )
+    minute_writer = (
+        [
+            member
+            for member in board_members
+            if member.get("role") in ("Schriftführer", "Schriftführerin")
+        ][0]
+        if board_members
+        else None
+    )
+    if first_member_of_board is None or minute_writer is None:
+        raise ValueError("Board members must include a first chair and a minute writer")
     overview_html = overview_cards(
         article_count=len(included_articles),
         active_member_count=member_insights.active_count,
-        average_age=(
-            f"{member_insights.average_age:.1f}"
-            if member_insights.average_age is not None
-            else "-"
-        ),
         event_count=len(kinderlicht_events) + len(external_events),
         boundary_date=boundary_date,
         reference_date=reference_date,
+        sponsor_count=sponsor_count,
     )
 
     agenda_html = agenda_items(review_year, include_organe_voting)
@@ -873,14 +1284,20 @@ def render_slides_markup(
         "event",
         max_items=4,
     )
+    finance_markup = build_finance_markup(finance_report)
 
-    entlastung_image = make_voting_svg(
+    entlastung_image = make_voting_animation_svg(
         "Entlastung der Vorstandschaft",
         "Abstimmung und Ergebnis",
     )
-    organe_image = make_voting_svg(
-        "Wahl neuer Vereinsorgane",
-        "Wahl und Besetzung",
+
+    beitragsordnung_image = make_voting_animation_svg(
+        "Abstimmung Beitragsordnung",
+        "Beschluss der Mitgliederversammlung",
+    )
+    voting_animation_three = make_voting_animation_svg(
+        "Abstimmung Versammlungsleitung",
+        "Versammlungsleiter, Schriftführer und Abstimmungsform",
     )
 
     beitragsordnung_markup = """
@@ -906,37 +1323,93 @@ def render_slides_markup(
                     <h3>Familienrabatt</h3>
                     <p>Fuer alle Familienangehoerigen ersten Grades sowie Geschwister gilt ein Rabatt von 3 EUR pro Person.</p>
                 </article>
-                <article class="beitrags-voting-stage">
-                    <div class="vote-head">
-                        <h3>Abstimmung zur Beitragsordnung</h3>
-                        <p>Beschluss der Mitgliederversammlung per Handzeichen.</p>
-                    </div>
-                    <div class="beitrags-vote-options">
-                        <div class="vote-option vote-yes">Ja</div>
-                        <div class="vote-option vote-no">Nein</div>
-                        <div class="vote-option vote-abstain">Enthaltung</div>
-                    </div>
-                </article>
             </div>
+    """.strip()
+
+    board_members_html = render_board_members_html(board_members)
+
+    versammlungsleiter_member = (
+        board_members[0] if board_members and len(board_members) > 0 else {}
+    )
+    schriftfuehrer_member = (
+        board_members[3] if board_members and len(board_members) > 3 else {}
+    )
+
+    def _member_vote_label(member: dict[str, str]) -> str:
+        name = escape_html(member.get("name", "").strip())
+        role = escape_html(member.get("role", "").strip())
+        if name and role:
+            return f"<strong>{name}</strong> ({role})"
+        if name:
+            return f"<strong>{name}</strong>"
+        return "Nicht verfügbar"
+
+    versammlungsleiter_html = _member_vote_label(versammlungsleiter_member)
+    schriftfuehrer_html = _member_vote_label(schriftfuehrer_member)
+
+    versammlungsleiter_image_src = resolve_slide_image_src(
+        versammlungsleiter_member.get("image", "")
+    )
+    schriftfuehrer_image_src = resolve_slide_image_src(
+        schriftfuehrer_member.get("image", "")
+    )
+
+    versammlungsleiter_img_html = (
+        f'<div class="person-image"><img src="{escape_html(versammlungsleiter_image_src)}" alt="{escape_html(versammlungsleiter_member.get("name", "Versammlungsleiter"))}" /></div>'
+        if versammlungsleiter_image_src
+        else '<div class="person-image board-member-image-placeholder"></div>'
+    )
+    schriftfuehrer_img_html = (
+        f'<div class="person-image"><img src="{escape_html(schriftfuehrer_image_src)}" alt="{escape_html(schriftfuehrer_member.get("name", "Schriftführer"))}" /></div>'
+        if schriftfuehrer_image_src
+        else '<div class="person-image board-member-image-placeholder"></div>'
+    )
+
+    versammlungsleiter_section = f"""
+        <section class="slide full content-focus">
+            <div class="slide-inner">
+                <div class="hero compact">
+                    <div class="kicker">Abstimmung</div>
+                    <h1>Versammlungsleitung & Schriftführer</h1>
+                    <p class="lead">Vorschläge für die Leitung und Protokoll dieser Jahreshauptversammlung.</p>
+                    <div class="voting-items-grid">
+                        <article class="voting-person-item">
+                            {versammlungsleiter_img_html}
+                            <h3>Versammlungsleiter</h3>
+                            <p class="person-name">{versammlungsleiter_html}</p>
+                        </article>
+                        <article class="voting-person-item">
+                            {schriftfuehrer_img_html}
+                            <h3>Protokoll & Schriftführer</h3>
+                            <p class="person-name">{schriftfuehrer_html}</p>
+                        </article>
+                        <article class="voting-person-item voting-mode-item">
+                            <div class="person-image hand-emoji" role="img" aria-label="Handzeichen">✋</div>
+                            <h3>Abstimmungsform</h3>
+                            <p class="person-name"><strong>Alle Abstimmungen erfolgen per Handzeichen</strong> (nicht geheim)</p>
+                        </article>
+                    </div>
+                    <div class="voting-animation-panel">
+                        <div class="art"><img src="{voting_animation_three}" alt="Abstimmung Versammlungsleitung" /></div>
+                    </div>
+                </div>
+            </div>
+        </section>
     """.strip()
 
     organe_voting_section = ""
     if include_organe_voting:
         organe_voting_section = f"""
-        <section class="slide split content-focus">
+        <section class="slide full content-focus">
             <div class="slide-inner split-layout">
                 <div class="content-pane">
                     <div class="hero compact">
                         <div class="kicker">Wahl</div>
-                        <h1>Neue Vereinsorgane</h1>
-                        <p class="lead">Dieser Tagesordnungspunkt findet gemäß Satzung nur in geraden Jahren statt.</p>
-                        <div class="plot-grid">
-                            <div class="plot-slot" data-plot="organe-besetzung"><span>Besetzung Vereinsorgane</span></div>
-                            <div class="plot-slot" data-plot="organe-stimmen"><span>Stimmenverteilung</span></div>
-                        </div>
+                        <h1>Die aktuelle Vorstandschaft</h1>
+                        <p class="lead">Dieser Tagesordnungspunkt findet gemäß Satzung nur in geraden Jahren statt. Wir wählen neu für folgende Positionen:</p>
+                        {board_members_html}
                     </div>
                 </div>
-                <div class="media-pane subtle"><div class="art"><img src="{organe_image}" alt="Wahl neuer Vereinsorgane" /></div></div>
             </div>
         </section>
             """.strip()
@@ -1043,6 +1516,8 @@ def render_slides_markup(
         </div>
       </section>
 
+            {versammlungsleiter_section}
+
       <section class="slide full content-focus">
         <div class="slide-inner split-layout">
           <div class="content-pane">
@@ -1132,20 +1607,67 @@ def render_slides_markup(
         </div>
       </section>
 
-      <section class="slide full content-focus">
+            <section class="slide full content-focus">
         <div class="slide-inner split-layout">
           <div class="content-pane">
             <div class="hero compact">
               <div class="kicker">Finanzen</div>
-              <h1>Kassenbericht</h1>
-              <div class="plot-grid">
-                <div class="plot-slot" data-plot="kasse-einnahmen-ausgaben"><span>Einnahmen vs Ausgaben</span></div>
-                <div class="plot-slot" data-plot="kasse-verlauf"><span>Kassenverlauf</span></div>
+                            <h1>Einnahmen und Ausgaben nach Kategorie</h1>
+                            <div class="finance-columns">
+                                <div>
+                                    <h3 class="finance-heading">Ausgaben seit Gründung</h3>
+                                    <div class="finance-grid">{finance_markup["expenses_cards"]}</div>
+                                </div>
+                                <div>
+                                    <h3 class="finance-heading">Einnahmen seit Gründung</h3>
+                                    <div class="finance-grid">{finance_markup["income_cards"]}</div>
+                                </div>
               </div>
+                            <div class="finance-totals">{finance_markup["totals_cards"]}</div>
             </div>
           </div>
         </div>
       </section>
+
+            <section class="slide full content-focus">
+                <div class="slide-inner split-layout">
+                    <div class="content-pane">
+                        <div class="hero compact">
+                            <div class="kicker">Finanzen</div>
+                            <h1>Top 3 Bewegungen im letzten Jahr</h1>
+                            <div class="finance-columns">
+                                <div>
+                                    <h3 class="finance-heading">Größte Ausgaben</h3>
+                                    <div class="finance-movements">{finance_markup["top_expenses"]}</div>
+                                </div>
+                                <div>
+                                    <h3 class="finance-heading">Größte Einnahmen</h3>
+                                    <div class="finance-movements">{finance_markup["top_income"]}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="slide full content-focus">
+                <div class="slide-inner split-layout">
+                    <div class="content-pane">
+                        <div class="hero compact">
+                            <div class="kicker">Finanzen</div>
+                            <h1>Vermögensübersicht: Vorjahr vs Heute</h1>
+                            <div class="finance-totals">{finance_markup["total_money_cards"]}</div>
+                            <article class="member-plot member-plot-wide finance-plot">
+                                <img src="{finance_markup["balance_chart"]}" alt="Kontostände je Kontotyp im Vergleich Vorjahr zu heute" />
+                            </article>
+                            <div class="finance-account-table">
+                                <article class="finance-account-row finance-account-head"><span>Kontotyp</span><span>Vorjahr</span><span>Heute</span><span>Diff</span></article>
+                                {finance_markup["account_rows"]}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
       <section class="slide split content-focus">
         <div class="slide-inner split-layout">
@@ -1153,26 +1675,24 @@ def render_slides_markup(
             <div class="hero compact">
               <div class="kicker">Beschluss</div>
               <h1>Entlastung der Vorstandschaft</h1>
-              <div class="plot-grid">
-                <div class="plot-slot" data-plot="entlastung-stimmen"><span>Stimmenverteilung</span></div>
-                <div class="plot-slot" data-plot="entlastung-anwesenheit"><span>Anwesenheit und Quorum</span></div>
-              </div>
+              <p class="lead">Unser freiwillig bestellter Kassenprüfer Ronald Koch empfiehlt die Entlastung der Vorstandschaft.</p>
             </div>
           </div>
           <div class="media-pane subtle"><div class="art"><img src="{entlastung_image}" alt="Entlastung der Vorstandschaft" /></div></div>
         </div>
       </section>
 
-            <section class="slide full content-focus">
+            <section class="slide split content-focus">
                 <div class="slide-inner split-layout">
                     <div class="content-pane">
                         <div class="hero compact beitragsordnung-hero">
                             <div class="kicker">Beschluss</div>
                             <h1>Beitragsordnung</h1>
-                            <p class="lead">Abstimmung ueber die neuen Beitragssaetze fuer Mitglieder und Familienrabatt.</p>
+                            <p class="lead">Abstimmung über die neuen Beitragssätze für Mitglieder und Familienrabatt.</p>
                             {beitragsordnung_markup}
                         </div>
                     </div>
+                    <div class="media-pane subtle"><div class="art"><img src="{beitragsordnung_image}" alt="Abstimmung Beitragsordnung" /></div></div>
                 </div>
             </section>
 
@@ -1184,6 +1704,7 @@ def render_slides_markup(
             <div class="hero compact">
               <div class="kicker">Ausblick</div>
               <h1>Vorschau</h1>
+              <p class="lead">Die externe Vorschau-Slide wird aus Custom Slides geladen. Bitte eine externe Slide mit dem Titel "Vorschau" in custom_slides bereitstellen.</p>
               <div class="card-grid">{preview_cards}</div>
               <div class="plot-grid">
                 <div class="plot-slot" data-plot="vorschau-termine"><span>Termine im Jahresverlauf</span></div>
@@ -1627,6 +2148,8 @@ def main() -> int:
 
     members = deserialize_members(list(metadata["members"]))
     included_articles = list(metadata["included_articles"])
+    finance_report_raw = metadata.get("finance_report", {})
+    finance_report = finance_report_raw if isinstance(finance_report_raw, dict) else {}
     received = list(metadata["received"])
     given = list(metadata["given"])
     kinderlicht_events = list(metadata["kinderlicht_events"])
@@ -1645,6 +2168,9 @@ def main() -> int:
         custom_slides, args.custom_slides, output_path.parent
     )
 
+    board_members = load_board_members()
+    sponsor_count = load_sponsors()
+
     member_insights = build_member_insights(members, reference_date)
     slides_markup = render_slides_markup(
         review_year=review_year,
@@ -1653,6 +2179,7 @@ def main() -> int:
         included_articles=included_articles,
         collage_images=collage_images,
         member_insights=member_insights,
+        finance_report=finance_report,
         received=received,
         given=given,
         kinderlicht_events=kinderlicht_events,
@@ -1661,6 +2188,8 @@ def main() -> int:
         include_organe_voting=include_organe_voting,
         custom_slides=custom_slides,
         custom_image_map=custom_image_map,
+        board_members=board_members,
+        sponsor_count=sponsor_count,
     )
     html_output = render_slide_deck(
         review_year=review_year,

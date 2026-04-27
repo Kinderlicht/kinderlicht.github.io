@@ -11,7 +11,13 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Iterable
 
-from api_communication import build_members, fetch_campai_members
+from api_communication import (
+    build_account_report,
+    build_members,
+    fetch_campai_cash_account_transactions,
+    fetch_campai_cash_accounts,
+    fetch_campai_members,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -299,6 +305,18 @@ def main() -> int:
         raise RuntimeError("Campai API request failed. Check API key and connectivity.")
     members = build_members(member_payload)
 
+    finance_report: dict[str, object] = {}
+    try:
+        cash_accounts = fetch_campai_cash_accounts(args.api_key)
+        transactions = fetch_campai_cash_account_transactions(args.api_key)
+        finance_report = build_account_report(
+            cash_accounts=cash_accounts,
+            transactions=transactions,
+            reference_date=reference_date,
+        )
+    except Exception as error:
+        print(f"Warning: failed to collect finance report: {error}")
+
     all_articles = load_articles()
     boundary_date = latest_jhv_boundary(all_articles, reference_date)
     included_articles = [
@@ -332,6 +350,7 @@ def main() -> int:
             for article in included_articles
         ],
         "slide_images": collect_slide_image_sources(included_articles),
+        "finance_report": finance_report,
         "received": received,
         "given": given,
         "kinderlicht_events": kinderlicht_events,

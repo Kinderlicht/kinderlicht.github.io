@@ -567,7 +567,9 @@ def _income_category(text: str) -> str:
     if any(token in normalized for token in ("spende", "donation", "zuwendung")):
         return "Spenden"
 
-    if any(token in normalized for token in ("mitgliedsbeitrag", "beitrag", "membership")):
+    if any(
+        token in normalized for token in ("mitgliedsbeitrag", "beitrag", "membership")
+    ):
         return "Mitgliedsbeitraege"
 
     if any(
@@ -683,7 +685,9 @@ def _match_account(account_name: str, target: str) -> bool:
     if target == "Kasse":
         return "kasse" in normalized or normalized == "cash"
     if target == "Bank (liquide)":
-        return "bank" in normalized and ("liquide" in normalized or "liquid" in normalized)
+        return "bank" in normalized and (
+            "liquide" in normalized or "liquid" in normalized
+        )
     if target == "Bank (Anlage)":
         return "anlage" in normalized
     return False
@@ -697,7 +701,17 @@ def _account_bucket(account: dict[str, Any]) -> str | None:
     if "kasse" in name or account_type == "cash":
         return "Kasse"
 
-    if any(token in name for token in ("kuendigung", "kündigung", "anlage", "festgeld", "geschaeftsanteile", "geschäftsanteile")):
+    if any(
+        token in name
+        for token in (
+            "kuendigung",
+            "kündigung",
+            "anlage",
+            "festgeld",
+            "geschaeftsanteile",
+            "geschäftsanteile",
+        )
+    ):
         return "Bank (Anlage)"
 
     if account_number in {"950", "955"}:
@@ -736,7 +750,9 @@ def build_account_report(
         for item in transactions
         if isinstance(item, dict) and (item.get("id") or item.get("_id"))
     }
-    founding_date = min((movement.date for movement in movements if movement.date), default=None)
+    founding_date = min(
+        (movement.date for movement in movements if movement.date), default=None
+    )
 
     incomes = sorted(
         [movement for movement in movements if movement.direction == "income"],
@@ -824,12 +840,18 @@ def build_account_report(
         if movement.date is None or movement.id is None:
             continue
         raw_transaction = transaction_by_id.get(movement.id)
-        cash_account_id = _extract_cash_account_id(raw_transaction) if raw_transaction else None
-        signed_amount = movement.amount if movement.direction == "income" else -movement.amount
+        cash_account_id = (
+            _extract_cash_account_id(raw_transaction) if raw_transaction else None
+        )
+        signed_amount = (
+            movement.amount if movement.direction == "income" else -movement.amount
+        )
         signed_movements.append((movement.date, signed_amount, cash_account_id))
 
     total_one_year_ago = current_total_balance - sum(
-        amount for movement_date, amount, _ in signed_movements if movement_date > one_year_ago
+        amount
+        for movement_date, amount, _ in signed_movements
+        if movement_date > one_year_ago
     )
 
     account_snapshots: dict[str, dict[str, float | str | None]] = {}
@@ -854,8 +876,18 @@ def build_account_report(
 
     bucketed_accounts = {
         "Kasse": {"one_year_ago": 0.0, "today": 0.0, "difference": 0.0, "matched": 0},
-        "Bank (liquide)": {"one_year_ago": 0.0, "today": 0.0, "difference": 0.0, "matched": 0},
-        "Bank (Anlage)": {"one_year_ago": 0.0, "today": 0.0, "difference": 0.0, "matched": 0},
+        "Bank (liquide)": {
+            "one_year_ago": 0.0,
+            "today": 0.0,
+            "difference": 0.0,
+            "matched": 0,
+        },
+        "Bank (Anlage)": {
+            "one_year_ago": 0.0,
+            "today": 0.0,
+            "difference": 0.0,
+            "matched": 0,
+        },
     }
     for account in cash_accounts:
         if not isinstance(account, dict):
@@ -902,17 +934,21 @@ def build_account_report(
             "difference": None,
         }
 
-    total_difference_since_founding = total_income_since_founding - total_expenses_since_founding
+    total_difference_since_founding = (
+        total_income_since_founding - total_expenses_since_founding
+    )
     total_balance_difference = current_total_balance - total_one_year_ago
 
     return {
         "reference_date": reference_date.isoformat(),
         "founding_date": founding_date.isoformat() if founding_date else None,
         "expenses_since_founding": {
-            key: round(value, 2) for key, value in expense_breakdown_since_founding.items()
+            key: round(value, 2)
+            for key, value in expense_breakdown_since_founding.items()
         },
         "income_since_founding": {
-            key: round(value, 2) for key, value in income_breakdown_since_founding.items()
+            key: round(value, 2)
+            for key, value in income_breakdown_since_founding.items()
         },
         "totals_since_founding": {
             "expenses": round(total_expenses_since_founding, 2),
