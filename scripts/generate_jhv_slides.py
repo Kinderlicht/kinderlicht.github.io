@@ -47,6 +47,14 @@ class CustomSlide:
 
 
 @dataclass(frozen=True)
+class PreviewEvent:
+    title: str
+    description: str
+    tags: tuple[str, ...]
+    date: str
+
+
+@dataclass(frozen=True)
 class MemberInsights:
     active_count: int
     average_age: float | None
@@ -105,10 +113,22 @@ def parse_args() -> argparse.Namespace:
         help="Optional JSON file with custom slides.",
     )
     parser.add_argument(
+        "--preview",
+        type=Path,
+        default=Path(__file__).parent / "preview.json",
+        help="JSON file with upcoming preview events.",
+    )
+    parser.add_argument(
         "--pdf-output",
         type=Path,
         default=None,
         help="Optional output PDF path. If set, all slides are exported as one multi-page PDF.",
+    )
+    parser.add_argument(
+        "--minutes-output",
+        type=Path,
+        default=None,
+        help="Optional output path for the generated minutes text. If omitted, a text file is written next to the HTML output.",
     )
     parser.add_argument(
         "--install-pdf-deps",
@@ -240,6 +260,123 @@ def load_custom_slides(path: Path | None) -> list[CustomSlide]:
             )
         )
     return slides
+
+
+def load_preview_events(path: Path | None) -> list[PreviewEvent]:
+    if path is None:
+        return []
+
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(payload, dict):
+        payload = payload.get("events", payload.get("items", []))
+    if not isinstance(payload, list):
+        raise ValueError("Preview file must contain a list or {events: [...]}.")
+
+    events: list[PreviewEvent] = []
+    for entry in payload:
+        if not isinstance(entry, dict):
+            continue
+        title = str(entry.get("title", "")).strip()
+        description = str(entry.get("description", entry.get("body", ""))).strip()
+        date_value = str(entry.get("date", "")).strip()
+        tags_raw = entry.get("tags", [])
+        tags = (
+            tuple(str(item).strip() for item in tags_raw if str(item).strip())
+            if isinstance(tags_raw, list)
+            else tuple()
+        )
+        if not (title or description or date_value or tags):
+            continue
+        events.append(
+            PreviewEvent(
+                title=title or "Ohne Titel",
+                description=description,
+                tags=tags,
+                date=date_value,
+            )
+        )
+    return events
+
+
+def find_custom_slide(custom_slides: list[CustomSlide], title: str) -> CustomSlide | None:
+        target = title.strip().casefold()
+        for slide in custom_slides:
+                if slide.title.strip().casefold() == target:
+                        return slide
+        return None
+
+
+def render_custom_slide_section(
+    slide: CustomSlide,
+    *,
+    kicker: str | None = None,
+    image_src: str | None = None,
+) -> str:
+        bullets_html = "".join(f"<li>{escape_html(item)}</li>" for item in slide.bullets)
+        plot_html = "".join(
+                f'<div class="plot-slot" data-plot="{escape_html(slot)}"><span>{escape_html(slot)}</span></div>'
+                for slot in slide.plot_slots
+        )
+        media_html = ""
+        slide_class = "slide full content-focus"
+        resolved_image_src = image_src or slide.image or ""
+        if resolved_image_src and not slide.plot_slots:
+                slide_class = "slide split"
+                media_html = (
+                f'<div class="media-pane subtle"><div class="art"><img src="{escape_html(resolved_image_src)}" alt="{escape_html(slide.title)}" /></div></div>'
+                )
+
+        kicker_html = f'<div class="kicker">{escape_html(kicker)}</div>' if kicker else ""
+        subtitle_html = (
+                f'<p class="lead">{escape_html(slide.subtitle)}</p>' if slide.subtitle else ""
+        )
+        body_html = f'<p class="lead">{escape_html(slide.body)}</p>' if slide.body else ""
+        bullets_block = f'<ul class="bullet-list">{bullets_html}</ul>' if bullets_html else ""
+        plot_block = f'<div class="plot-grid">{plot_html}</div>' if plot_html else ""
+
+        return f"""
+            <section class="{slide_class}">
+                <div class="slide-inner split-layout">
+                    <div class="content-pane">
+                        <div class="hero compact">
+                            {kicker_html}
+                            <h1>{escape_html(slide.title)}</h1>
+                            {subtitle_html}
+                            {body_html}
+                            {bullets_block}
+                            {plot_block}
+                        </div>
+                    </div>
+                    {media_html}
+                </div>
+            </section>
+        """.strip()
+
+
+def render_preview_events_html(preview_events: list[PreviewEvent]) -> str:
+    if not preview_events:
+        return ""
+
+    cards: list[str] = []
+    for event in preview_events:
+        tags_html = "".join(
+            f'<span class="preview-event-tag">{escape_html(tag)}</span>'
+            for tag in event.tags
+        )
+        cards.append(
+            f"""
+            <article class="preview-event-card">
+              <div class="preview-event-toprow">
+                <span class="preview-event-date">{escape_html(event.date)}</span>
+                {f'<div class="preview-event-tags">{tags_html}</div>' if tags_html else ''}
+              </div>
+              <h3>{escape_html(event.title)}</h3>
+              {f'<p>{escape_html(event.description)}</p>' if event.description else ''}
+            </article>
+            """.strip()
+        )
+
+    return f'<div class="preview-events-grid">{"".join(cards)}</div>'
 
 
 def resolve_output_path(output: Path, review_year: int) -> Path:
@@ -461,29 +598,83 @@ def make_placeholder_svg(title: str, subtitle: str) -> str:
 
 
 def make_voting_svg(title: str, subtitle: str) -> str:
-    svg = f"""
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="{escape_html(title)}">
-      <defs>
-        <linearGradient id="voteBg" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0%" stop-color="#17191f"/>
-          <stop offset="100%" stop-color="#0e1014"/>
-        </linearGradient>
-        <filter id="votingGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-          <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-      <rect width="1600" height="900" fill="url(#voteBg)"/>
-      <text x="170" y="330" fill="#f4f6f8" font-family="sans-serif" font-size="64" font-weight="700">{escape_html(title)}</text>
-      <text x="170" y="410" fill="#ffb15c" font-family="sans-serif" font-size="32" font-weight="600">{escape_html(subtitle)}</text>
-    </svg>
-    """.strip()
-    return "data:image/svg+xml;base64," + base64.b64encode(svg.encode("utf-8")).decode(
-        "ascii"
-    )
+        svg = f"""
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="{escape_html(title)}">
+            <defs>
+                <linearGradient id="voteBg" x1="0" x2="1" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#12151b"/>
+                    <stop offset="100%" stop-color="#0b0e12"/>
+                </linearGradient>
+                <style>
+                    @keyframes bob {{
+                        0%, 100% {{ transform: translateY(0); opacity: 0.42; }}
+                        50% {{ transform: translateY(-6px); opacity: 0.9; }}
+                    }}
+                    @keyframes handLift {{
+                        0%, 100% {{ transform: translateY(0); }}
+                        50% {{ transform: translateY(-10px); }}
+                    }}
+                    .person {{ animation: bob 2.8s ease-in-out infinite; transform-origin: center bottom; }}
+                    .person.p2 {{ animation-delay: 0.2s; }}
+                    .person.p3 {{ animation-delay: 0.4s; }}
+                    .person.p4 {{ animation-delay: 0.6s; }}
+                    .person.p5 {{ animation-delay: 0.8s; }}
+                    .raised-arm {{ animation: handLift 1.4s ease-in-out infinite; transform-origin: center bottom; }}
+                </style>
+            </defs>
+            <rect width="1600" height="900" fill="url(#voteBg)"/>
+            <text x="160" y="240" fill="#f4f6f8" font-family="sans-serif" font-size="58" font-weight="700">{escape_html(title)}</text>
+            <text x="160" y="300" fill="#ffb15c" font-family="sans-serif" font-size="28" font-weight="600">{escape_html(subtitle)}</text>
+
+            <g transform="translate(300 520)">
+                <g class="person p1" transform="translate(0 0)" fill="#ffffff" opacity="0.34">
+                    <circle cx="60" cy="34" r="18"/>
+                    <rect x="42" y="54" width="36" height="74" rx="17"/>
+                    <rect x="26" y="74" width="12" height="56" rx="6"/>
+                    <rect x="82" y="74" width="12" height="56" rx="6"/>
+                    <rect x="44" y="126" width="12" height="64" rx="6"/>
+                    <rect x="62" y="126" width="12" height="64" rx="6"/>
+                </g>
+                <g class="person p2" transform="translate(170 8)" fill="#ffffff" opacity="0.38">
+                    <circle cx="60" cy="34" r="18"/>
+                    <rect x="42" y="54" width="36" height="74" rx="17"/>
+                    <rect x="26" y="74" width="12" height="56" rx="6"/>
+                    <rect x="82" y="74" width="12" height="56" rx="6"/>
+                    <rect x="44" y="126" width="12" height="64" rx="6"/>
+                    <rect x="62" y="126" width="12" height="64" rx="6"/>
+                    <rect class="raised-arm" x="88" y="28" width="10" height="72" rx="5" transform="rotate(-24 93 64)"/>
+                </g>
+                <g class="person p3" transform="translate(340 0)" fill="#ffffff" opacity="0.34">
+                    <circle cx="60" cy="34" r="18"/>
+                    <rect x="42" y="54" width="36" height="74" rx="17"/>
+                    <rect x="26" y="74" width="12" height="56" rx="6"/>
+                    <rect x="82" y="74" width="12" height="56" rx="6"/>
+                    <rect x="44" y="126" width="12" height="64" rx="6"/>
+                    <rect x="62" y="126" width="12" height="64" rx="6"/>
+                </g>
+                <g class="person p4" transform="translate(510 10)" fill="#ffffff" opacity="0.38">
+                    <circle cx="60" cy="34" r="18"/>
+                    <rect x="42" y="54" width="36" height="74" rx="17"/>
+                    <rect x="26" y="74" width="12" height="56" rx="6"/>
+                    <rect x="82" y="74" width="12" height="56" rx="6"/>
+                    <rect x="44" y="126" width="12" height="64" rx="6"/>
+                    <rect x="62" y="126" width="12" height="64" rx="6"/>
+                    <rect class="raised-arm" x="88" y="28" width="10" height="72" rx="5" transform="rotate(-20 93 64)"/>
+                </g>
+                <g class="person p5" transform="translate(680 0)" fill="#ffffff" opacity="0.34">
+                    <circle cx="60" cy="34" r="18"/>
+                    <rect x="42" y="54" width="36" height="74" rx="17"/>
+                    <rect x="26" y="74" width="12" height="56" rx="6"/>
+                    <rect x="82" y="74" width="12" height="56" rx="6"/>
+                    <rect x="44" y="126" width="12" height="64" rx="6"/>
+                    <rect x="62" y="126" width="12" height="64" rx="6"/>
+                </g>
+            </g>
+        </svg>
+        """.strip()
+        return "data:image/svg+xml;base64," + base64.b64encode(svg.encode("utf-8")).decode(
+                "ascii"
+        )
 
 
 def load_sponsors() -> int:
@@ -536,64 +727,37 @@ def render_board_members_html(board_members: list[dict[str, str]] | None) -> str
 
 
 def make_voting_animation_svg(title: str, subtitle: str) -> str:
-    """Create an SVG with animated silhouettes of voting people."""
+    """Create a simple SVG animation of raised hands voting."""
     svg = f"""
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="{escape_html(title)}">
       <defs>
-        <linearGradient id="animBg" x1="0" x2="1" y1="0" y2="1">
+        <linearGradient id="voteBg" x1="0" x2="1" y1="0" y2="1">
           <stop offset="0%" stop-color="#17191f"/>
           <stop offset="100%" stop-color="#0e1014"/>
         </linearGradient>
         <style>
-          @keyframes silhouette-fade {{
-            0%, 100% {{ opacity: 0.3; }}
-            50% {{ opacity: 0.9; }}
+          @keyframes handRaise {{
+            0%, 100% {{ transform: translateY(12px); opacity: 0.55; }}
+            50% {{ transform: translateY(0px); opacity: 0.95; }}
           }}
-          @keyframes silhouette-float {{
-            0%, 100% {{ transform: translateY(0px); }}
-            50% {{ transform: translateY(-8px); }}
-          }}
-          .silhouette {{
-            animation: silhouette-fade 2.5s infinite ease-in-out;
-          }}
-          .silhouette:nth-child(2) {{ animation-delay: 0.3s; }}
-          .silhouette:nth-child(3) {{ animation-delay: 0.6s; }}
-          .silhouette:nth-child(4) {{ animation-delay: 0.9s; }}
-          .silhouette:nth-child(5) {{ animation-delay: 1.2s; }}
-          .silhouette:nth-child(6) {{ animation-delay: 1.5s; }}
-          .silhouette:nth-child(7) {{ animation-delay: 1.8s; }}
+          .hand {{ animation: handRaise 2.2s ease-in-out infinite; transform-origin: bottom; }}
+          .hand1 {{ animation-delay: 0s; }}
+          .hand2 {{ animation-delay: 0.28s; }}
+          .hand3 {{ animation-delay: 0.56s; }}
+          .hand4 {{ animation-delay: 0.84s; }}
+          .hand5 {{ animation-delay: 1.12s; }}
         </style>
       </defs>
-      <rect width="1600" height="900" fill="url(#animBg)"/>
-      <text x="170" y="330" fill="#f4f6f8" font-family="sans-serif" font-size="64" font-weight="700">{escape_html(title)}</text>
-      <text x="170" y="410" fill="#ffb15c" font-family="sans-serif" font-size="32" font-weight="600">{escape_html(subtitle)}</text>
+      <rect width="1600" height="900" fill="url(#voteBg)"/>
+      <text x="170" y="320" fill="#f4f6f8" font-family="sans-serif" font-size="64" font-weight="700">{escape_html(title)}</text>
+      <text x="170" y="400" fill="#ffb15c" font-family="sans-serif" font-size="32" font-weight="600">{escape_html(subtitle)}</text>
       
-      <g class="voting-group">
-        <g class="silhouette" style="--x: 800px">
-          <circle cx="250" cy="600" r="28" fill="#ff8a1c" opacity="0.4"/>
-          <path d="M 250 630 Q 235 680 240 720 M 250 630 Q 265 680 260 720" stroke="#ff8a1c" stroke-width="8" fill="none" opacity="0.4" stroke-linecap="round"/>
-        </g>
-        <g class="silhouette" style="--x: 800px">
-          <circle cx="450" cy="620" r="30" fill="#ffb15c" opacity="0.4"/>
-          <path d="M 450 650 Q 430 705 438 745 M 450 650 Q 470 705 462 745" stroke="#ffb15c" stroke-width="9" fill="none" opacity="0.4" stroke-linecap="round"/>
-        </g>
-        <g class="silhouette" style="--x: 800px">
-          <circle cx="650" cy="610" r="26" fill="#ff8a1c" opacity="0.4"/>
-          <path d="M 650 636 Q 632 685 640 725 M 650 636 Q 668 685 660 725" stroke="#ff8a1c" stroke-width="7" fill="none" opacity="0.4" stroke-linecap="round"/>
-        </g>
-        <g class="silhouette" style="--x: 800px">
-          <circle cx="850" cy="625" r="29" fill="#ffb15c" opacity="0.4"/>
-          <path d="M 850 654 Q 830 708 838 748 M 850 654 Q 870 708 862 748" stroke="#ffb15c" stroke-width="8" fill="none" opacity="0.4" stroke-linecap="round"/>
-        </g>
-        <g class="silhouette" style="--x: 800px">
-          <circle cx="1050" cy="615" r="27" fill="#ff8a1c" opacity="0.4"/>
-          <path d="M 1050 642 Q 1032 690 1040 730 M 1050 642 Q 1068 690 1060 730" stroke="#ff8a1c" stroke-width="8" fill="none" opacity="0.4" stroke-linecap="round"/>
-        </g>
-        <g class="silhouette" style="--x: 800px">
-          <circle cx="1250" cy="630" r="28" fill="#ffb15c" opacity="0.4"/>
-          <path d="M 1250 658 Q 1230 710 1238 750 M 1250 658 Q 1270 710 1262 750" stroke="#ffb15c" stroke-width="8" fill="none" opacity="0.4" stroke-linecap="round"/>
-        </g>
-      </g>
+      <!-- Raised hands animation -->
+      <circle class="hand hand1" cx="420" cy="600" r="28" fill="#ff8a1c" opacity="0.7"/>
+      <circle class="hand hand2" cx="640" cy="610" r="24" fill="#ffb15c" opacity="0.7"/>
+      <circle class="hand hand3" cx="860" cy="600" r="26" fill="#ff8a1c" opacity="0.7"/>
+      <circle class="hand hand4" cx="1080" cy="615" r="25" fill="#ffb15c" opacity="0.7"/>
+      <circle class="hand hand5" cx="1300" cy="600" r="27" fill="#ff8a1c" opacity="0.7"/>
     </svg>
     """.strip()
     return "data:image/svg+xml;base64," + base64.b64encode(svg.encode("utf-8")).decode(
@@ -1143,6 +1307,7 @@ def agenda_items(review_year: int, include_organe_voting: bool) -> str:
     entries: list[tuple[str, str]] = [
         ("Begrüßung", "Start und kurze Einführung."),
         ("Agenda", "Ablauf und Struktur der Sitzung."),
+        ("Versammlungsleitung", "Bestimmung Versammlungsleiter, Protokoll und Abstimmungsform."),
         ("Vereinsdaten", "Kennzahlen und aktuelle Lage."),
         (f"Rückblick {review_year}", "Spenden, Aktionen und Highlights."),
         ("Kassenbericht", "Einnahmen, Ausgaben, Entwicklung."),
@@ -1210,6 +1375,7 @@ def render_slides_markup(
     include_organe_voting: bool,
     custom_slides: list[CustomSlide],
     custom_image_map: dict[int, str],
+    preview_events: list[PreviewEvent],
     board_members: list[dict[str, str]] | None = None,
     sponsor_count: int = 0,
 ) -> str:
@@ -1298,6 +1464,10 @@ def render_slides_markup(
     voting_animation_three = make_voting_animation_svg(
         "Abstimmung Versammlungsleitung",
         "Versammlungsleiter, Schriftführer und Abstimmungsform",
+    )
+    voting_animation_organs = make_voting_animation_svg(
+        "Neuwahl der Vereinsorgane",
+        "Abstimmung und Besetzung der Organe",
     )
 
     beitragsordnung_markup = """
@@ -1397,72 +1567,51 @@ def render_slides_markup(
         </section>
     """.strip()
 
-    organe_voting_section = ""
-    if include_organe_voting:
-        organe_voting_section = f"""
+    elect = (
+        "Wir wählen neu für folgende Positionen, die bisher wie folgt besetzt sind:"
+        if include_organe_voting
+        else ""
+    )
+    animation = f"""<div class="voting-animation-panel"><div class="art"><img src="{voting_animation_organs}" alt="Abstimmung Vereinsorgane" /></div></div>"""
+    organe_voting_section = f"""
+    <section class="slide full content-focus">
+        <div class="slide-inner split-layout">
+            <div class="content-pane">
+                <div class="hero compact">
+                    <div class="kicker">Wahl</div>
+                    <h1>Die aktuelle Vorstandschaft</h1>
+                    <p class="lead">Dieser Tagesordnungspunkt findet gemäß Satzung nur in geraden Jahren statt. {elect}</p>
+                    {board_members_html}
+                </div>
+            </div>
+            {animation if include_organe_voting else ""}
+        </div>
+    </section>
+        """.strip()
+
+    custom_slides_html = "\n".join(
+        render_custom_slide_section(
+            slide,
+            kicker="Zusatz",
+            image_src=custom_image_map.get(idx),
+        )
+        for idx, slide in enumerate(custom_slides)
+                if slide.title.strip().casefold() != "vorschau"
+    )
+
+    preview_events_html = render_preview_events_html(preview_events)
+    preview_section = f"""
         <section class="slide full content-focus">
-            <div class="slide-inner split-layout">
-                <div class="content-pane">
-                    <div class="hero compact">
-                        <div class="kicker">Wahl</div>
-                        <h1>Die aktuelle Vorstandschaft</h1>
-                        <p class="lead">Dieser Tagesordnungspunkt findet gemäß Satzung nur in geraden Jahren statt. Wir wählen neu für folgende Positionen:</p>
-                        {board_members_html}
+            <div class="slide-inner">
+                <div class="preview-stage">
+                    <div class="agenda-head preview-head">
+                        <div class="kicker">Ausblick</div>
+                        <h1>Vorschau</h1>
                     </div>
+                    {preview_events_html}
                 </div>
             </div>
         </section>
-            """.strip()
-
-    custom_slides_html = ""
-    for idx, slide in enumerate(custom_slides):
-        bullets_html = "".join(
-            f"<li>{escape_html(item)}</li>" for item in slide.bullets
-        )
-        plot_html = "".join(
-            f'<div class="plot-slot" data-plot="{escape_html(slot)}"><span>{escape_html(slot)}</span></div>'
-            for slot in slide.plot_slots
-        )
-        media_html = ""
-        slide_class = "slide full content-focus"
-        if idx in custom_image_map and not slide.plot_slots:
-            slide_class = "slide split"
-            media_html = f'<div class="media-pane subtle"><div class="art"><img src="{escape_html(custom_image_map[idx])}" alt="{escape_html(slide.title)}" /></div></div>'
-
-        custom_slides_html += f"""
-      <section class="{slide_class}">
-        <div class="slide-inner split-layout">
-          <div class="content-pane">
-            <div class="hero compact">
-              <div class="kicker">Zusatz</div>
-              <h1>{escape_html(slide.title)}</h1>
-              {f'<p class="lead">{escape_html(slide.subtitle)}</p>' if slide.subtitle else ""}
-              {f'<p class="lead">{escape_html(slide.body)}</p>' if slide.body else ""}
-              {f'<ul class="bullet-list">{bullets_html}</ul>' if bullets_html else ""}
-              {f'<div class="plot-grid">{plot_html}</div>' if plot_html else ""}
-            </div>
-          </div>
-          {media_html}
-        </div>
-      </section>
-        """.strip()
-
-    preview_cards = """
-      <article class="preview-card">
-        <span>Termine</span>
-        <strong>Jahresplanung</strong>
-        <p>Wichtige Termine.</p>
-      </article>
-      <article class="preview-card">
-        <span>Ideen</span>
-        <strong>Neue Projekte</strong>
-        <p>Nächste Vorhaben.</p>
-      </article>
-      <article class="preview-card">
-        <span>Ausblick</span>
-        <strong>Nächste Schritte</strong>
-        <p>Konkrete To-dos.</p>
-      </article>
     """.strip()
 
     welcome_stream_items = [
@@ -1698,22 +1847,7 @@ def render_slides_markup(
 
             {organe_voting_section}
 
-      <section class="slide full content-focus">
-        <div class="slide-inner split-layout">
-          <div class="content-pane">
-            <div class="hero compact">
-              <div class="kicker">Ausblick</div>
-              <h1>Vorschau</h1>
-              <p class="lead">Die externe Vorschau-Slide wird aus Custom Slides geladen. Bitte eine externe Slide mit dem Titel "Vorschau" in custom_slides bereitstellen.</p>
-              <div class="card-grid">{preview_cards}</div>
-              <div class="plot-grid">
-                <div class="plot-slot" data-plot="vorschau-termine"><span>Termine im Jahresverlauf</span></div>
-                <div class="plot-slot" data-plot="vorschau-prioritaeten"><span>Prioritäten und Verantwortliche</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            {preview_section}
 
       <section class="slide full">
         <div class="slide-inner">
@@ -1767,6 +1901,132 @@ def render_slides_markup(
 
       {custom_slides_html}
     """.strip()
+
+
+def render_minutes_text(
+    *,
+    review_year: int,
+    boundary_date: date,
+    reference_date: date,
+    included_articles: list[dict[str, object]],
+    member_insights: MemberInsights,
+    finance_report: dict[str, object],
+    received: list[dict[str, str]],
+    given: list[dict[str, str]],
+    kinderlicht_events: list[dict[str, str]],
+    external_events: list[dict[str, str]],
+    preview_events: list[PreviewEvent],
+    board_members: list[dict[str, str]],
+    sponsor_count: int,
+    include_organe_voting: bool,
+) -> str:
+    template_path = TEMPLATE_DIR / "jhv_minutes_template.de.txt"
+    template = Template(template_path.read_text(encoding="utf-8"))
+
+    agenda_titles = [
+        "Begrüßung",
+        "Agenda",
+        "Versammlungsleitung",
+        "Vereinsdaten",
+        f"Rückblick {review_year}",
+        "Kassenbericht",
+        "Entlastung Vorstandschaft",
+        "Beitragsordnung",
+    ]
+    if include_organe_voting:
+        agenda_titles.append("Wahl neuer Vereinsorgane")
+    agenda_titles.append("Vorschau")
+
+    board_lines = "\n".join(
+        f"- {member.get('name', '').strip()} ({member.get('role', '').strip()})"
+        for member in board_members
+        if member.get("name") or member.get("role")
+    ) or "- Keine Vorstandsmitglieder verfügbar"
+
+    article_titles = "\n".join(
+        f"- {str(article.get('title', '')).strip()}"
+        for article in included_articles
+        if str(article.get("title", "")).strip()
+    ) or "- Keine Beiträge vorhanden"
+
+    finance_totals = finance_report.get("totals_since_founding")
+    finance_totals = finance_totals if isinstance(finance_totals, dict) else {}
+    finance_requested = finance_report.get("requested_accounts")
+    finance_requested = finance_requested if isinstance(finance_requested, dict) else {}
+
+    top_expenses = _finance_movements_list(
+        finance_report.get("top_3_expenses_last_year"), "Ausgabe"
+    )
+    top_income = _finance_movements_list(
+        finance_report.get("top_3_income_last_year"), "Einnahme"
+    )
+
+    finance_summary_lines = [
+        f"- Gesamteinnahmen seit Gründung: {format_euro(_finance_value(finance_totals, 'income'))}",
+        f"- Gesamtausgaben seit Gründung: {format_euro(_finance_value(finance_totals, 'expenses'))}",
+        f"- Differenz: {format_euro(_finance_value(finance_totals, 'difference'))}",
+        f"- Kassenbestand heute: {format_euro(_finance_value(finance_requested.get('Kasse', {}), 'today') if isinstance(finance_requested.get('Kasse'), dict) else 0)}",
+        f"- Bank (liquide) heute: {format_euro(_finance_value(finance_requested.get('Bank (liquide)', {}), 'today') if isinstance(finance_requested.get('Bank (liquide)'), dict) else 0)}",
+        f"- Bank (Anlage) heute: {format_euro(_finance_value(finance_requested.get('Bank (Anlage)', {}), 'today') if isinstance(finance_requested.get('Bank (Anlage)'), dict) else 0)}",
+    ]
+    if top_expenses:
+        finance_summary_lines.append("- Größte Ausgaben des letzten Jahres:")
+        finance_summary_lines.extend(
+            f"  - {item['date']}: {item['text']} ({format_euro(item['amount'])})"
+            for item in top_expenses
+        )
+    if top_income:
+        finance_summary_lines.append("- Größte Einnahmen des letzten Jahres:")
+        finance_summary_lines.extend(
+            f"  - {item['date']}: {item['text']} ({format_euro(item['amount'])})"
+            for item in top_income
+        )
+    finance_summary = "\n".join(finance_summary_lines)
+
+    preview_summary_lines = []
+    for event in preview_events:
+        tags_text = f" [{', '.join(event.tags)}]" if event.tags else ""
+        preview_summary_lines.append(
+            f"- {event.date}: {event.title}{tags_text}"
+            + (f" - {event.description}" if event.description else "")
+        )
+    preview_summary = "\n".join(preview_summary_lines)
+
+    voting_result_placeholder = "[[ERGEBNIS EINTRAGEN]]"
+    versammlungsleiter_name = (
+        f"{board_members[0].get('name', '')} ({board_members[0].get('role', '')})"
+        if board_members and len(board_members) > 0
+        else "Nicht verfügbar"
+    )
+    schriftfuehrer_name = (
+        f"{board_members[3].get('name', '')} ({board_members[3].get('role', '')})"
+        if board_members and len(board_members) > 3
+        else "Nicht verfügbar"
+    )
+
+    return template.safe_substitute(
+        review_year=review_year,
+        boundary_date=format_german_date(boundary_date),
+        reference_date=format_german_date(reference_date),
+        article_count=len(included_articles),
+        active_member_count=member_insights.active_count,
+        average_age="-" if member_insights.average_age is None else f"{member_insights.average_age:.1f}",
+        sponsor_count=sponsor_count,
+        event_count=len(kinderlicht_events) + len(external_events),
+        received_count=len(received),
+        given_count=len(given),
+        kinderlicht_event_count=len(kinderlicht_events),
+        external_event_count=len(external_events),
+        article_titles=article_titles,
+        agenda_summary="\n".join(f"- {item}" for item in agenda_titles),
+        board_overview=board_lines,
+        versammlungsleiter_name=versammlungsleiter_name,
+        schriftfuehrer_name=schriftfuehrer_name,
+        voting_placeholder=voting_result_placeholder,
+        finance_summary=finance_summary,
+        preview_summary=preview_summary,
+        preview_event_count=len(preview_events),
+    )
 
 
 def render_slide_deck(
@@ -1865,23 +2125,36 @@ def build_pdf_slides(
     given: list[dict[str, str]],
     kinderlicht_events: list[dict[str, str]],
     external_events: list[dict[str, str]],
+    preview_events: list[PreviewEvent],
     include_organe_voting: bool,
 ) -> list[PdfSlide]:
     agenda_items = [
         "1 Begruessung",
         "2 Agenda",
-        "3 Vereinsdaten",
-        f"4 Rueckblick {review_year}",
-        "5 Kassenbericht",
-        "6 Entlastung Vorstandschaft",
-        "7 Beitragsordnung",
+        "3 Versammlungsleitung",
+        "4 Vereinsdaten",
+        f"5 Rueckblick {review_year}",
+        "6 Kassenbericht",
+        "7 Entlastung Vorstandschaft",
+        "8 Beitragsordnung",
     ]
     if include_organe_voting:
-        agenda_items.append("8 Wahl neuer Vereinsorgane")
-        agenda_items.append("9 Vorschau")
+        agenda_items.append("9 Wahl neuer Vereinsorgane")
+        agenda_items.append("10 Vorschau")
     else:
-        agenda_items.append("8 Vorschau")
+        agenda_items.append("9 Vorschau")
     agenda = tuple(agenda_items)
+
+    preview_bullets: tuple[str, ...]
+    if preview_events:
+        preview_bullets = tuple(
+            f"{event.date}: {event.title}"
+            + (f" [{', '.join(event.tags)}]" if event.tags else "")
+            + (f" - {event.description}" if event.description else "")
+            for event in preview_events
+        )
+    else:
+        preview_bullets = tuple()
 
     def _entry_bullets(entries: list[dict[str, str]], prefix: str) -> tuple[str, ...]:
         if not entries:
@@ -1909,6 +2182,17 @@ def build_pdf_slides(
             bullets=agenda,
             plot_images=tuple(),
             plot_placeholders=tuple(),
+        ),
+        PdfSlide(
+            title="Versammlungsleitung & Schriftführer",
+            subtitle="Abstimmung",
+            bullets=(
+                "Versammlungsleiter wird per Handzeichen bestätigt",
+                "Schriftführer protokolliert die Sitzung",
+                "Abstimmungsform: Handzeichen, nicht geheim",
+            ),
+            plot_images=tuple(),
+            plot_placeholders=("Abstimmung",),
         ),
         PdfSlide(
             title="Vereinsdaten",
@@ -1984,15 +2268,9 @@ def build_pdf_slides(
         PdfSlide(
             title="Vorschau",
             subtitle="Naechste Schritte",
-            bullets=(
-                "Termine im Jahresverlauf",
-                "Prioritaeten und Verantwortliche",
-            ),
+            bullets=preview_bullets,
             plot_images=tuple(),
-            plot_placeholders=(
-                "Termine im Jahresverlauf",
-                "Prioritaeten und Verantwortliche",
-            ),
+            plot_placeholders=("Vorschau",),
         ),
         PdfSlide(
             title="Danke",
@@ -2005,7 +2283,7 @@ def build_pdf_slides(
 
     if include_organe_voting:
         slides.insert(
-            11,
+            12,
             PdfSlide(
                 title="Wahl neuer Vereinsorgane",
                 subtitle="Beschluss",
@@ -2167,6 +2445,7 @@ def main() -> int:
     custom_image_map = prepare_custom_slide_images(
         custom_slides, args.custom_slides, output_path.parent
     )
+    preview_events = load_preview_events(args.preview)
 
     board_members = load_board_members()
     sponsor_count = load_sponsors()
@@ -2188,6 +2467,7 @@ def main() -> int:
         include_organe_voting=include_organe_voting,
         custom_slides=custom_slides,
         custom_image_map=custom_image_map,
+        preview_events=preview_events,
         board_members=board_members,
         sponsor_count=sponsor_count,
     )
@@ -2198,6 +2478,29 @@ def main() -> int:
 
     output_path.write_text(html_output, encoding="utf-8")
     print(f"Wrote {output_path}")
+
+    minutes_output_path = args.minutes_output
+    if minutes_output_path is None:
+        minutes_output_path = output_path.with_name(f"{output_path.stem}-protokoll.txt")
+
+    minutes_text = render_minutes_text(
+        review_year=review_year,
+        boundary_date=boundary_date,
+        reference_date=reference_date,
+        included_articles=included_articles,
+        member_insights=member_insights,
+        finance_report=finance_report,
+        received=received,
+        given=given,
+        kinderlicht_events=kinderlicht_events,
+        external_events=external_events,
+        preview_events=preview_events,
+        board_members=board_members,
+        sponsor_count=sponsor_count,
+        include_organe_voting=include_organe_voting,
+    )
+    minutes_output_path.write_text(minutes_text, encoding="utf-8")
+    print(f"Wrote {minutes_output_path}")
 
     if args.pdf_output is not None:
         pdf_slides = build_pdf_slides(
@@ -2210,6 +2513,7 @@ def main() -> int:
             given=given,
             kinderlicht_events=kinderlicht_events,
             external_events=external_events,
+            preview_events=preview_events,
             include_organe_voting=include_organe_voting,
         )
         export_slides_pdf(

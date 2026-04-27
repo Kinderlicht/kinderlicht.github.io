@@ -161,9 +161,10 @@
       padding: 0;
       display: grid;
       grid-template-columns: 1fr;
-      grid-template-rows: repeat(8, minmax(0, 1fr));
+      grid-auto-rows: minmax(0, 1fr);
       gap: 10px;
       min-height: 0;
+      height: 100%;
     }
     .agenda-list li {
       min-height: 0;
@@ -179,6 +180,80 @@
     .agenda-list li span { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 999px; background: linear-gradient(180deg, rgba(255,138,28,0.28), rgba(255,138,28,0.12)); color: var(--accent-strong); font-size: 1rem; font-weight: 700; }
     .agenda-list li strong { display: block; font-size: clamp(1.02rem, 1.5vw, 1.28rem); line-height: 1.15; }
     .agenda-list li p { margin: 3px 0 0; color: var(--muted); font-size: clamp(0.88rem, 1.1vw, 1.02rem); line-height: 1.25; }
+
+    .preview-stage {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 16px;
+      min-height: 0;
+    }
+    .preview-head {
+      margin-bottom: 0;
+    }
+    .preview-head h1 {
+      font-size: clamp(2rem, 3.2vw, 3rem);
+    }
+    .preview-events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-auto-rows: 1fr;
+      gap: 14px;
+      min-height: 0;
+    }
+    .preview-event-card {
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      height: 100%;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+    .preview-event-toprow {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .preview-event-date {
+      color: var(--accent-strong);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .preview-event-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+    .preview-event-tag {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255, 138, 28, 0.16);
+      border: 1px solid rgba(255, 138, 28, 0.22);
+      color: #ffd7af;
+      font-size: 0.74rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .preview-event-card h3 {
+      margin: 0;
+      font-size: clamp(1.12rem, 1.7vw, 1.5rem);
+      line-height: 1.12;
+    }
+    .preview-event-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
 
     .kpi-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .kpi-card { padding: 14px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-soft); }

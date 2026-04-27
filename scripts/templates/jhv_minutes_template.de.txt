@@ -1,0 +1,51 @@
+Protokoll der Jahreshauptversammlung $review_year
+
+Datum der Auswertung: $reference_date
+Stichtag für den Rückblick: $boundary_date
+
+1. Eröffnung und Ablauf
+Die Sitzung folgte der Tagesordnung mit den Punkten:
+$agenda_summary
+
+2. Statistik und Vereinsdaten
+- Berücksichtigte Beiträge: $article_count
+- Aktive Mitglieder: $active_member_count
+- Durchschnittsalter der aktiven Mitglieder: $average_age
+- Unterstützer und Sponsoren: $sponsor_count
+- Veranstaltungen im Zeitraum: $event_count
+- Eingegangene Spenden: $received_count
+- Geleistete Spenden: $given_count
+- Kinderlicht-Veranstaltungen: $kinderlicht_event_count
+- Externe Veranstaltungen: $external_event_count
+
+Berücksichtigte Beiträge:
+$article_titles
+
+3. Vorstand und Funktionen
+$board_overview
+
+Versammlungsleitung und Schriftführung:
+- Versammlungsleiter: $versammlungsleiter_name
+- Schriftführer: $schriftfuehrer_name
+- Abstimmungsform: Handzeichen, nicht geheim
+
+[[ERGEBNIS_VERSAMMLUNGSLEITUNG]]
+
+4. Finanzbericht
+$finance_summary
+
+5. Entlastung der Vorstandschaft
+[[ERGEBNIS_ENTLASTUNG_VORSTANDSCHAFT]]
+
+6. Beitragsordnung
+[[ERGEBNIS_BEITRAGSORDNUNG]]
+
+7. Wahl neuer Vereinsorgane
+[[ERGEBNIS_WAHL_VEREINSORGANE]]
+
+8. Vorschau
+Geplante Termine: $preview_event_count
+$preview_summary
+
+9. Schluss
+Die Versammlung wurde mit Dank an alle Beteiligten beendet.
