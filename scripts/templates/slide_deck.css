@@ -201,6 +201,65 @@
     .preview-card strong { display: block; margin-top: 4px; font-size: 0.9rem; }
     .preview-card p { margin: 4px 0 0 0; color: var(--muted); font-size: 0.76rem; }
 
+    .beitragsordnung-hero {
+      background:
+        radial-gradient(circle at 88% 12%, rgba(255, 138, 28, 0.2), rgba(255, 138, 28, 0) 42%),
+        linear-gradient(165deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+    .beitragsordnung-stage {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .beitrags-tarif {
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+      display: grid;
+      gap: 4px;
+    }
+    .beitrags-tarif.highlight {
+      border-color: rgba(255, 138, 28, 0.45);
+      background: linear-gradient(170deg, rgba(255, 138, 28, 0.22), rgba(255, 138, 28, 0.08));
+    }
+    .beitrags-tarif .tarif-name {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.66rem;
+    }
+    .beitrags-tarif strong {
+      font-size: 1.26rem;
+      color: #fff5e8;
+    }
+    .beitrags-tarif p {
+      margin: 0;
+      color: #e2e7ef;
+      font-size: 0.78rem;
+    }
+    .beitrags-rabatt {
+      grid-column: 1 / -1;
+      margin-top: 4px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255, 177, 92, 0.52);
+      background: rgba(255, 177, 92, 0.08);
+    }
+    .beitrags-rabatt h3 {
+      margin: 0;
+      color: #ffdcb7;
+      font-size: 0.92rem;
+    }
+    .beitrags-rabatt p {
+      margin: 6px 0 0;
+      color: #e3e8f0;
+      font-size: 0.78rem;
+      line-height: 1.3;
+    }
+
     .plot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
     .plot-slot { min-height: 110px; border-radius: 12px; border: 1px dashed rgba(255, 138, 28, 0.55); background: rgba(255, 138, 28, 0.08); display: grid; place-items: center; color: #ffd4a6; font-size: 0.72rem; text-transform: uppercase; text-align: center; padding: 6px; }
     .member-plot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
@@ -354,6 +413,7 @@
       .slides { height: auto; position: relative; transform: none !important; flex-direction: column; }
       .slide { width: 100vw; min-height: 100vh; padding: 50px 10px 10px; }
       .split-layout, .kpi-grid, .card-grid, .plot-grid, .member-plot-grid { grid-template-columns: 1fr; }
+      .beitragsordnung-stage { grid-template-columns: 1fr; }
       .agenda-list { grid-template-rows: none; gap: 7px; }
       .member-plot-wide { min-height: 180px; }
       .media-pane { min-height: 220px; }

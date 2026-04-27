@@ -89,10 +89,41 @@ python3 scripts/generate_jhv_slides.py \
   --custom-slides scripts/custom_slides.example.json
 ```
 
+Optional PDF export (all slides in one PDF file):
+
+```shell
+python3 scripts/generate_jhv_slides.py \
+  --metadata scripts/out/jhv-metadata-2026.json \
+  --pdf-output /tmp/jhv-rueckblick-2026.pdf
+```
+
+If PDF dependencies are missing, install them once:
+
+```shell
+python3 -m pip install reportlab cairosvg
+```
+
+Or let the script install them automatically during export:
+
+```shell
+python3 scripts/generate_jhv_slides.py \
+  --metadata scripts/out/jhv-metadata-2026.json \
+  --pdf-output /tmp/jhv-rueckblick-2026.pdf \
+  --install-pdf-deps
+```
+
+Force the Vereinsorgane voting slide even in odd years (for testing):
+
+```shell
+python3 scripts/generate_jhv_slides.py \
+  --metadata scripts/out/jhv-metadata-2026.json \
+  --force-voting-slide
+```
+
 ### Files and responsibilities
 
 - `scripts/collect_jhv_metadata.py`: Fetches Campai members and derives yearly metadata from blog content.
-- `scripts/generate_jhv_slides.py`: Renders HTML deck from metadata.
+- `scripts/generate_jhv_slides.py`: Renders HTML deck from metadata and can export a multi-page PDF.
 - `scripts/templates/slide_deck.html.tpl`: HTML shell template.
 - `scripts/templates/slide_deck.css`: Deck styling.
 - `scripts/templates/slide_deck.js`: Slide navigation/animation behavior.

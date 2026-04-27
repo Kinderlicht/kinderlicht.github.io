@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import base64
 import html
+import io
 import json
 import math
 import re
@@ -20,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "public" / "rueckblick"
 TEMPLATE_DIR = ROOT / "scripts" / "templates"
 DEFAULT_METADATA_DIR = ROOT / "scripts" / "out"
+PDF_DEPENDENCIES = ("reportlab", "cairosvg")
 
 
 @dataclass(frozen=True)
@@ -50,6 +52,15 @@ class MemberInsights:
     gender_chart: str
     age_chart: str
     evolution_chart: str
+
+
+@dataclass(frozen=True)
+class PdfSlide:
+    title: str
+    subtitle: str
+    bullets: tuple[str, ...]
+    plot_images: tuple[str, ...]
+    plot_placeholders: tuple[str, ...]
 
 
 def parse_args() -> argparse.Namespace:
@@ -91,6 +102,22 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=None,
         help="Optional JSON file with custom slides.",
+    )
+    parser.add_argument(
+        "--pdf-output",
+        type=Path,
+        default=None,
+        help="Optional output PDF path. If set, all slides are exported as one multi-page PDF.",
+    )
+    parser.add_argument(
+        "--install-pdf-deps",
+        action="store_true",
+        help="If set, missing PDF dependencies are installed automatically before export.",
+    )
+    parser.add_argument(
+        "--force-voting-slide",
+        action="store_true",
+        help="Force the voting slide for Vereinsorgane even in odd years.",
     )
     return parser.parse_args()
 
@@ -643,19 +670,25 @@ def category_cards(
     return "\n".join(rendered)
 
 
-def agenda_items(review_year: int) -> str:
-    return f"""
-    <ol class="agenda-list">
-      <li><span>1</span><div><strong>Begrüßung</strong><p>Start und kurze Einführung.</p></div></li>
-      <li><span>2</span><div><strong>Agenda</strong><p>Ablauf und Struktur der Sitzung.</p></div></li>
-      <li><span>3</span><div><strong>Vereinsdaten</strong><p>Kennzahlen und aktuelle Lage.</p></div></li>
-      <li><span>4</span><div><strong>Rückblick {review_year}</strong><p>Spenden, Aktionen und Highlights.</p></div></li>
-      <li><span>5</span><div><strong>Kassenbericht</strong><p>Einnahmen, Ausgaben, Entwicklung.</p></div></li>
-      <li><span>6</span><div><strong>Entlastung Vorstandschaft</strong><p>Abstimmung und Ergebnis.</p></div></li>
-      <li><span>7</span><div><strong>Beitragsordnung &amp; Organe</strong><p>Beschlüsse und Besetzung.</p></div></li>
-      <li><span>8</span><div><strong>Vorschau</strong><p>Nächste Schritte und Planung.</p></div></li>
-    </ol>
-    """.strip()
+def agenda_items(review_year: int, include_organe_voting: bool) -> str:
+    entries: list[tuple[str, str]] = [
+        ("Begrüßung", "Start und kurze Einführung."),
+        ("Agenda", "Ablauf und Struktur der Sitzung."),
+        ("Vereinsdaten", "Kennzahlen und aktuelle Lage."),
+        (f"Rückblick {review_year}", "Spenden, Aktionen und Highlights."),
+        ("Kassenbericht", "Einnahmen, Ausgaben, Entwicklung."),
+        ("Entlastung Vorstandschaft", "Abstimmung und Ergebnis."),
+        ("Beitragsordnung", "Beschluss zu Beitragsmodellen und Rabatt."),
+    ]
+    if include_organe_voting:
+        entries.append(("Wahl neuer Vereinsorgane", "Wahl und Besetzung der Organe."))
+    entries.append(("Vorschau", "Nächste Schritte und Planung."))
+
+    rows = "".join(
+        f'<li><span>{idx}</span><div><strong>{escape_html(title)}</strong><p>{escape_html(description)}</p></div></li>'
+        for idx, (title, description) in enumerate(entries, start=1)
+    )
+    return f'<ol class="agenda-list">{rows}</ol>'
 
 
 def overview_cards(
@@ -696,6 +729,7 @@ def render_slides_markup(
     given: list[dict[str, str]],
     kinderlicht_events: list[dict[str, str]],
     external_events: list[dict[str, str]],
+    include_organe_voting: bool,
     custom_slides: list[CustomSlide],
     custom_image_map: dict[int, str],
 ) -> str:
@@ -712,7 +746,7 @@ def render_slides_markup(
         reference_date=reference_date,
     )
 
-    agenda_html = agenda_items(review_year)
+    agenda_html = agenda_items(review_year, include_organe_voting)
     welcome_show = build_slideshow_html(
         collage_images[:12],
         "welcome",
@@ -755,10 +789,55 @@ def render_slides_markup(
         "Entlastung der Vorstandschaft",
         "Abstimmung und Ergebnis",
     )
-    abstimmung_image = make_voting_svg(
-        "Beitragsordnung & Vereinsorgane",
-        "Beschluss und Besetzung",
+    organe_image = make_voting_svg(
+            "Wahl neuer Vereinsorgane",
+            "Wahl und Besetzung",
     )
+
+    beitragsordnung_markup = """
+        <div class="beitragsordnung-stage">
+            <article class="beitrags-tarif highlight">
+                <span class="tarif-name">Standard</span>
+                <strong>24 EUR</strong>
+                <p>jährlich pro Person</p>
+            </article>
+            <article class="beitrags-tarif">
+                <span class="tarif-name">Partnerschaft</span>
+                <strong>21 EUR</strong>
+                <p>jährlich pro Person</p>
+            </article>
+            <article class="beitrags-tarif">
+                <span class="tarif-name">Kinder / Jugendliche</span>
+                <strong>12 EUR</strong>
+                <p>jährlich pro Person</p>
+            </article>
+            <article class="beitrags-rabatt">
+                <h3>Familienrabatt</h3>
+                <p>Fuer alle Familienangehoerigen ersten Grades sowie Geschwister gilt ein Rabatt von 3 EUR pro Person.</p>
+            </article>
+        </div>
+    """.strip()
+
+    organe_voting_section = ""
+    if include_organe_voting:
+            organe_voting_section = f"""
+        <section class="slide split content-focus">
+            <div class="slide-inner split-layout">
+                <div class="content-pane">
+                    <div class="hero compact">
+                        <div class="kicker">Wahl</div>
+                        <h1>Neue Vereinsorgane</h1>
+                        <p class="lead">Dieser Tagesordnungspunkt findet gemäß Satzung nur in geraden Jahren statt.</p>
+                        <div class="plot-grid">
+                            <div class="plot-slot" data-plot="organe-besetzung"><span>Besetzung Vereinsorgane</span></div>
+                            <div class="plot-slot" data-plot="organe-stimmen"><span>Stimmenverteilung</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="media-pane subtle"><div class="art"><img src="{organe_image}" alt="Wahl neuer Vereinsorgane" /></div></div>
+            </div>
+        </section>
+            """.strip()
 
     custom_slides_html = ""
     for idx, slide in enumerate(custom_slides):
@@ -980,21 +1059,20 @@ def render_slides_markup(
         </div>
       </section>
 
-      <section class="slide split content-focus">
-        <div class="slide-inner split-layout">
-          <div class="content-pane">
-            <div class="hero compact">
-              <div class="kicker">Beschluss</div>
-              <h1>Beitragsordnung &amp; Vereinsorgane</h1>
-              <div class="plot-grid">
-                <div class="plot-slot" data-plot="beitragsordnung-optionen"><span>Optionen und Varianten</span></div>
-                <div class="plot-slot" data-plot="organe-besetzung"><span>Besetzung Vereinsorgane</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="media-pane subtle"><div class="art"><img src="{abstimmung_image}" alt="Beitragsordnung und Vereinsorgane" /></div></div>
-        </div>
-      </section>
+            <section class="slide full content-focus">
+                <div class="slide-inner split-layout">
+                    <div class="content-pane">
+                        <div class="hero compact beitragsordnung-hero">
+                            <div class="kicker">Beschluss</div>
+                            <h1>Beitragsordnung</h1>
+                            <p class="lead">Abstimmung ueber die neuen Beitragssaetze fuer Mitglieder und Familienrabatt.</p>
+                            {beitragsordnung_markup}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {organe_voting_section}
 
       <section class="slide full content-focus">
         <div class="slide-inner split-layout">
@@ -1071,6 +1149,349 @@ def render_slide_deck(
     )
 
 
+def _decode_svg_data_uri(data_uri: str) -> str:
+    if not data_uri.startswith("data:image/svg+xml;base64,"):
+        raise ValueError("Only SVG data URI plots are supported for PDF export")
+    encoded = data_uri.split(",", 1)[1]
+    return base64.b64decode(encoded).decode("utf-8")
+
+
+def _install_missing_pdf_dependencies(missing_dependencies: list[str]) -> None:
+    install_cmd = [sys.executable, "-m", "pip", "install", *missing_dependencies]
+    print("Installing missing PDF dependencies: " + " ".join(missing_dependencies))
+    subprocess.run(install_cmd, check=True)
+
+
+def _lazy_import_pdf_dependencies(*, auto_install: bool = False):
+    A4 = None
+    landscape = None
+    ImageReader = None
+    canvas = None
+    cairosvg = None
+    missing: list[str] = []
+
+    try:
+        from reportlab.lib.pagesizes import A4 as reportlab_a4, landscape as reportlab_landscape
+        from reportlab.lib.utils import ImageReader as reportlab_image_reader
+        from reportlab.pdfgen import canvas as reportlab_canvas
+
+        A4 = reportlab_a4
+        landscape = reportlab_landscape
+        ImageReader = reportlab_image_reader
+        canvas = reportlab_canvas
+    except ModuleNotFoundError:
+        missing.append("reportlab")
+
+    try:
+        import cairosvg as cairosvg_module
+
+        cairosvg = cairosvg_module
+    except ModuleNotFoundError:
+        missing.append("cairosvg")
+
+    if missing:
+        unique_missing = sorted(set(missing))
+        if auto_install:
+            _install_missing_pdf_dependencies(unique_missing)
+            return _lazy_import_pdf_dependencies(auto_install=False)
+
+        install_hint = f"{sys.executable} -m pip install " + " ".join(unique_missing)
+        raise RuntimeError(
+            "PDF export requires optional dependencies. Install with: "
+            f"{install_hint} (or rerun with --install-pdf-deps)."
+        )
+
+    return {
+        "A4": A4,
+        "landscape": landscape,
+        "ImageReader": ImageReader,
+        "canvas": canvas,
+        "cairosvg": cairosvg,
+    }
+
+
+def build_pdf_slides(
+    *,
+    review_year: int,
+    boundary_date: date,
+    reference_date: date,
+    included_articles: list[dict[str, object]],
+    member_insights: MemberInsights,
+    received: list[dict[str, str]],
+    given: list[dict[str, str]],
+    kinderlicht_events: list[dict[str, str]],
+    external_events: list[dict[str, str]],
+    include_organe_voting: bool,
+) -> list[PdfSlide]:
+    agenda_items = [
+        "1 Begruessung",
+        "2 Agenda",
+        "3 Vereinsdaten",
+        f"4 Rueckblick {review_year}",
+        "5 Kassenbericht",
+        "6 Entlastung Vorstandschaft",
+        "7 Beitragsordnung",
+    ]
+    if include_organe_voting:
+        agenda_items.append("8 Wahl neuer Vereinsorgane")
+        agenda_items.append("9 Vorschau")
+    else:
+        agenda_items.append("8 Vorschau")
+    agenda = tuple(agenda_items)
+
+    def _entry_bullets(entries: list[dict[str, str]], prefix: str) -> tuple[str, ...]:
+        if not entries:
+            return ("Keine Eintraege vorhanden",)
+        return tuple(
+            f"{prefix}: {item['label']} ({item['article_date']})"
+            for item in entries[:8]
+        )
+
+    slides = [
+        PdfSlide(
+            title="Willkommen zur Jahreshauptversammlung",
+            subtitle=f"Rueckblick {review_year}",
+            bullets=(
+                f"Zeitraum: {format_german_date(boundary_date)} bis {format_german_date(reference_date)}",
+                f"Beitraege: {len(included_articles)}",
+                f"Spendenvorgaenge: {len(received) + len(given)}",
+            ),
+            plot_images=tuple(),
+            plot_placeholders=tuple(),
+        ),
+        PdfSlide(
+            title="Tagesordnung",
+            subtitle="Ablauf",
+            bullets=agenda,
+            plot_images=tuple(),
+            plot_placeholders=tuple(),
+        ),
+        PdfSlide(
+            title="Vereinsdaten",
+            subtitle="Kennzahlen und Verteilung",
+            bullets=(
+                f"Aktive Mitglieder: {member_insights.active_count}",
+                f"Durchschnittsalter: {member_insights.average_age if member_insights.average_age is not None else '-'}",
+            ),
+            plot_images=(member_insights.gender_chart, member_insights.age_chart),
+            plot_placeholders=tuple(),
+        ),
+        PdfSlide(
+            title="Mitgliederentwicklung",
+            subtitle="Start bis Jahresend-Stichtage",
+            bullets=tuple(),
+            plot_images=(member_insights.evolution_chart,),
+            plot_placeholders=tuple(),
+        ),
+        PdfSlide(
+            title="Eingegangene Spenden",
+            subtitle="Rueckblick",
+            bullets=_entry_bullets(received, "Spende +"),
+            plot_images=tuple(),
+            plot_placeholders=tuple(),
+        ),
+        PdfSlide(
+            title="Geleistete Spenden",
+            subtitle="Rueckblick",
+            bullets=_entry_bullets(given, "Spende -"),
+            plot_images=tuple(),
+            plot_placeholders=tuple(),
+        ),
+        PdfSlide(
+            title="Veranstaltungen Kinderlicht",
+            subtitle="Rueckblick",
+            bullets=_entry_bullets(kinderlicht_events, "Event"),
+            plot_images=tuple(),
+            plot_placeholders=tuple(),
+        ),
+        PdfSlide(
+            title="Veranstaltungen Extern",
+            subtitle="Rueckblick",
+            bullets=_entry_bullets(external_events, "Event"),
+            plot_images=tuple(),
+            plot_placeholders=tuple(),
+        ),
+        PdfSlide(
+            title="Kassenbericht",
+            subtitle="Finanzen",
+            bullets=tuple(),
+            plot_images=tuple(),
+            plot_placeholders=("Einnahmen vs Ausgaben", "Kassenverlauf"),
+        ),
+        PdfSlide(
+            title="Entlastung der Vorstandschaft",
+            subtitle="Beschluss",
+            bullets=tuple(),
+            plot_images=tuple(),
+            plot_placeholders=("Stimmenverteilung", "Anwesenheit und Quorum"),
+        ),
+        PdfSlide(
+            title="Beitragsordnung und Vereinsorgane",
+            subtitle="Beschluss",
+            bullets=(
+                "Standard: 24 EUR jährlich pro Person",
+                "Partnerschaft: 21 EUR jährlich pro Person",
+                "Kinder/Jugendliche: 12 EUR jährlich pro Person",
+                "Rabatt: 3 EUR pro Person fuer Familienangehoerige ersten Grades und Geschwister",
+            ),
+            plot_images=tuple(),
+            plot_placeholders=("Beitragsmodelle",),
+        ),
+        PdfSlide(
+            title="Vorschau",
+            subtitle="Naechste Schritte",
+            bullets=(
+                "Termine im Jahresverlauf",
+                "Prioritaeten und Verantwortliche",
+            ),
+            plot_images=tuple(),
+            plot_placeholders=(
+                "Termine im Jahresverlauf",
+                "Prioritaeten und Verantwortliche",
+            ),
+        ),
+        PdfSlide(
+            title="Danke",
+            subtitle="Kinderlicht Wallersdorf e.V.",
+            bullets=("Fuer eure Zeit, euren Einsatz und eure Unterstuetzung.",),
+            plot_images=tuple(),
+            plot_placeholders=tuple(),
+        ),
+    ]
+
+    if include_organe_voting:
+        slides.insert(
+            11,
+            PdfSlide(
+                title="Wahl neuer Vereinsorgane",
+                subtitle="Beschluss",
+                bullets=(
+                    "Dieser Punkt findet regulaer nur in geraden Jahren statt.",
+                    "Vorstellung, Wahl und Besetzung der Organe.",
+                ),
+                plot_images=tuple(),
+                plot_placeholders=("Besetzung Vereinsorgane", "Stimmenverteilung"),
+            ),
+        )
+
+    return slides
+
+
+def export_slides_pdf(
+    slides: list[PdfSlide], output_path: Path, *, auto_install_deps: bool = False
+) -> None:
+    deps = _lazy_import_pdf_dependencies(auto_install=auto_install_deps)
+    A4 = deps["A4"]
+    landscape = deps["landscape"]
+    ImageReader = deps["ImageReader"]
+    canvas = deps["canvas"]
+    cairosvg = deps["cairosvg"]
+
+    page_size = landscape(A4)
+    page_width, page_height = page_size
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    c = canvas.Canvas(str(output_path), pagesize=page_size)
+
+    for index, slide in enumerate(slides, start=1):
+        # Background
+        c.setFillColorRGB(0.07, 0.08, 0.11)
+        c.rect(0, 0, page_width, page_height, stroke=0, fill=1)
+
+        # Header
+        c.setFillColorRGB(0.96, 0.97, 0.98)
+        c.setFont("Helvetica-Bold", 28)
+        c.drawString(40, page_height - 58, slide.title)
+        if slide.subtitle:
+            c.setFillColorRGB(1.0, 0.69, 0.36)
+            c.setFont("Helvetica", 14)
+            c.drawString(40, page_height - 80, slide.subtitle)
+
+        # Bullet content
+        y = page_height - 120
+        c.setFillColorRGB(0.92, 0.94, 0.97)
+        c.setFont("Helvetica", 12)
+        for bullet in slide.bullets:
+            if y < 70:
+                break
+            c.drawString(52, y, f"- {bullet}")
+            y -= 18
+
+        # Plot images (charts)
+        if slide.plot_images:
+            plot_top = y - 12
+            if len(slide.plot_images) == 1:
+                boxes = [(40, 70, page_width - 80, max(160, plot_top - 70))]
+            else:
+                half_w = (page_width - 120) / 2
+                h = max(160, plot_top - 70)
+                boxes = [
+                    (40, 70, half_w, h),
+                    (80 + half_w, 70, half_w, h),
+                ]
+
+            for plot_uri, (x, y0, w, h) in zip(slide.plot_images, boxes):
+                try:
+                    svg = _decode_svg_data_uri(plot_uri)
+                    png_bytes = cairosvg.svg2png(
+                        bytestring=svg.encode("utf-8"),
+                        output_width=int(max(300, w)),
+                        output_height=int(max(200, h)),
+                    )
+                    c.drawImage(
+                        ImageReader(io.BytesIO(png_bytes)),
+                        x,
+                        y0,
+                        width=w,
+                        height=h,
+                        preserveAspectRatio=True,
+                        anchor="c",
+                    )
+                except Exception:
+                    c.setFillColorRGB(0.2, 0.23, 0.29)
+                    c.rect(x, y0, w, h, stroke=0, fill=1)
+                    c.setFillColorRGB(1.0, 0.69, 0.36)
+                    c.setFont("Helvetica", 11)
+                    c.drawString(
+                        x + 12,
+                        y0 + h / 2,
+                        "Plot konnte nicht gerendert werden",
+                    )
+
+        # Placeholder plots for non-data slides
+        elif slide.plot_placeholders:
+            box_w = (page_width - 120) / 2
+            box_h = max(150, y - 85)
+            for idx, label in enumerate(slide.plot_placeholders[:2]):
+                x = 40 + idx * (box_w + 40)
+                y0 = 70
+                c.setFillColorRGB(0.15, 0.18, 0.22)
+                c.roundRect(x, y0, box_w, box_h, 8, stroke=0, fill=1)
+                c.setStrokeColorRGB(1.0, 0.54, 0.11)
+                c.setDash(4, 4)
+                c.roundRect(
+                    x + 1,
+                    y0 + 1,
+                    box_w - 2,
+                    box_h - 2,
+                    8,
+                    stroke=1,
+                    fill=0,
+                )
+                c.setDash()
+                c.setFillColorRGB(1.0, 0.83, 0.61)
+                c.setFont("Helvetica", 12)
+                c.drawCentredString(x + box_w / 2, y0 + box_h / 2, label)
+
+        # Footer
+        c.setFillColorRGB(0.67, 0.7, 0.75)
+        c.setFont("Helvetica", 10)
+        c.drawRightString(page_width - 20, 16, f"{index}/{len(slides)}")
+        c.showPage()
+
+    c.save()
+
+
 def main() -> int:
     args = parse_args()
     metadata_path = resolve_metadata_path(args)
@@ -1079,6 +1500,7 @@ def main() -> int:
     reference_date = parse_date(str(metadata["reference_date"]))
     boundary_date = parse_date(str(metadata["boundary_date"]))
     review_year = int(metadata["review_year"])
+    include_organe_voting = args.force_voting_slide or (review_year % 2 == 0)
 
     members = deserialize_members(list(metadata["members"]))
     included_articles = list(metadata["included_articles"])
@@ -1108,6 +1530,7 @@ def main() -> int:
         given=given,
         kinderlicht_events=kinderlicht_events,
         external_events=external_events,
+        include_organe_voting=include_organe_voting,
         custom_slides=custom_slides,
         custom_image_map=custom_image_map,
     )
@@ -1118,6 +1541,27 @@ def main() -> int:
 
     output_path.write_text(html_output, encoding="utf-8")
     print(f"Wrote {output_path}")
+
+    if args.pdf_output is not None:
+        pdf_slides = build_pdf_slides(
+            review_year=review_year,
+            boundary_date=boundary_date,
+            reference_date=reference_date,
+            included_articles=included_articles,
+            member_insights=member_insights,
+            received=received,
+            given=given,
+            kinderlicht_events=kinderlicht_events,
+            external_events=external_events,
+            include_organe_voting=include_organe_voting,
+        )
+        export_slides_pdf(
+            pdf_slides,
+            args.pdf_output,
+            auto_install_deps=args.install_pdf_deps,
+        )
+        print(f"Wrote {args.pdf_output}")
+
     return 0
 
 

@@ -3,3 +3,7 @@ node_modules/
 public
 src/gatsby-types.d.ts
 .vscode/
+scripts/assets/
+scripts/out
+scripts/__pycache__
+scripts/.venv
