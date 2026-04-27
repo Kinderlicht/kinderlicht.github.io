@@ -1,7 +1,7 @@
 import argparse
 import json
 from dataclasses import dataclass
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -561,14 +561,14 @@ def normalize_movements(transactions: list[dict[str, Any]]) -> list[Movement]:
     return movements
 
 
-def _movement_category(text: str, direction: str) -> str:
+def _income_category(text: str) -> str:
     normalized = text.lower()
 
-    if any(token in normalized for token in ("zins", "interest")) and direction == "income":
-        return "interest"
-
     if any(token in normalized for token in ("spende", "donation", "zuwendung")):
-        return "donations"
+        return "Spenden"
+
+    if any(token in normalized for token in ("mitgliedsbeitrag", "beitrag", "membership")):
+        return "Mitgliedsbeitraege"
 
     if any(
         token in normalized
@@ -581,11 +581,132 @@ def _movement_category(text: str, direction: str) -> str:
             "ferienprogramm",
             "aktion",
             "ball",
+            "ticket",
+            "eintritt",
         )
     ):
-        return "events"
+        return "Veranstaltungen"
 
-    return "other"
+    return "Sonstiges"
+
+
+def _expense_category(text: str) -> str:
+    normalized = text.lower()
+
+    if any(
+        token in normalized
+        for token in (
+            "event",
+            "veranstaltung",
+            "schneeball",
+            "konzert",
+            "fest",
+            "ferienprogramm",
+            "aktion",
+            "ball",
+            "technik",
+            "catering",
+        )
+    ):
+        return "Veranstaltungen"
+
+    if any(
+        token in normalized
+        for token in (
+            "unterstuetz",
+            "unterstutz",
+            "hilfe",
+            "foerder",
+            "spende an",
+            "zuschuss",
+            "sozial",
+            "ukraine",
+            "familie",
+        )
+    ):
+        return "Unterstuetzung"
+
+    if any(
+        token in normalized
+        for token in (
+            "verwaltung",
+            "bankgeb",
+            "kontof",
+            "gebuehr",
+            "gebuhr",
+            "steuer",
+            "versicherung",
+            "beitrag verband",
+            "software",
+            "lizenz",
+            "domain",
+            "hosting",
+            "buero",
+            "porto",
+            "druck",
+        )
+    ):
+        return "Vereinsverwaltung"
+
+    return "Vereinsverwaltung"
+
+
+def _extract_cash_account_id(transaction: dict[str, Any]) -> str | None:
+    direct_id = transaction.get("cashAccountId") or transaction.get("accountId")
+    if isinstance(direct_id, str) and direct_id.strip():
+        return direct_id.strip()
+
+    cash_account = transaction.get("cashAccount")
+    if isinstance(cash_account, str) and cash_account.strip():
+        return cash_account.strip()
+    if isinstance(cash_account, dict):
+        candidate = cash_account.get("id") or cash_account.get("_id")
+        if isinstance(candidate, str) and candidate.strip():
+            return candidate.strip()
+    return None
+
+
+def _extract_account_name(account: dict[str, Any]) -> str:
+    for key in ("name", "title", "cashAccountNumber"):
+        value = account.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    candidate_id = account.get("id") or account.get("_id")
+    return str(candidate_id) if candidate_id else "Unknown account"
+
+
+def _match_account(account_name: str, target: str) -> bool:
+    normalized = account_name.strip().lower()
+    target_normalized = target.strip().lower()
+    if normalized == target_normalized:
+        return True
+    if target == "Kasse":
+        return "kasse" in normalized or normalized == "cash"
+    if target == "Bank (liquide)":
+        return "bank" in normalized and ("liquide" in normalized or "liquid" in normalized)
+    if target == "Bank (Anlage)":
+        return "anlage" in normalized
+    return False
+
+
+def _account_bucket(account: dict[str, Any]) -> str | None:
+    name = _extract_account_name(account).lower()
+    account_type = str(account.get("type") or "").lower()
+    account_number = str(account.get("cashAccountNumber") or "").strip()
+
+    if "kasse" in name or account_type == "cash":
+        return "Kasse"
+
+    if any(token in name for token in ("kuendigung", "kündigung", "anlage", "festgeld", "geschaeftsanteile", "geschäftsanteile")):
+        return "Bank (Anlage)"
+
+    if account_number in {"950", "955"}:
+        return "Bank (Anlage)"
+
+    if "bank" in account_type or account_number in {"940", "945"}:
+        return "Bank (liquide)"
+
+    return None
 
 
 def _extract_balance(entry: dict[str, Any]) -> float | None:
@@ -610,6 +731,12 @@ def build_account_report(
     reference_date: date,
 ) -> dict[str, Any]:
     movements = normalize_movements(transactions)
+    transaction_by_id = {
+        str(item.get("id") or item.get("_id")): item
+        for item in transactions
+        if isinstance(item, dict) and (item.get("id") or item.get("_id"))
+    }
+    founding_date = min((movement.date for movement in movements if movement.date), default=None)
 
     incomes = sorted(
         [movement for movement in movements if movement.direction == "income"],
@@ -639,20 +766,52 @@ def build_account_report(
         for movement in outgoings[:5]
     ]
 
-    income_breakdown = {"interest": 0.0, "donations": 0.0, "other": 0.0}
-    spending_breakdown = {"events": 0.0, "donations": 0.0, "other": 0.0}
+    expense_breakdown_since_founding = {
+        "Vereinsverwaltung": 0.0,
+        "Unterstuetzung": 0.0,
+        "Veranstaltungen": 0.0,
+    }
+    income_breakdown_since_founding = {
+        "Spenden": 0.0,
+        "Veranstaltungen": 0.0,
+        "Mitgliedsbeitraege": 0.0,
+        "Sonstiges": 0.0,
+    }
+
+    total_income_since_founding = 0.0
+    total_expenses_since_founding = 0.0
 
     for movement in movements:
-        category = _movement_category(movement.text, movement.direction)
         if movement.direction == "income":
-            income_key = category if category in income_breakdown else "other"
-            income_breakdown[income_key] += movement.amount
+            income_key = _income_category(movement.text)
+            income_breakdown_since_founding[income_key] += movement.amount
+            total_income_since_founding += movement.amount
         else:
-            spending_key = category if category in spending_breakdown else "other"
-            spending_breakdown[spending_key] += movement.amount
+            spending_key = _expense_category(movement.text)
+            expense_breakdown_since_founding[spending_key] += movement.amount
+            total_expenses_since_founding += movement.amount
 
-    previous_year = reference_date.year - 1
-    previous_year_end = date(previous_year, 12, 31)
+    one_year_ago = reference_date - timedelta(days=365)
+
+    top_expenses_last_year = [
+        {
+            "date": movement.date.isoformat() if movement.date else None,
+            "text": movement.text,
+            "amount": round(movement.amount, 2),
+        }
+        for movement in outgoings
+        if movement.date and one_year_ago <= movement.date <= reference_date
+    ][:3]
+
+    top_income_last_year = [
+        {
+            "date": movement.date.isoformat() if movement.date else None,
+            "text": movement.text,
+            "amount": round(movement.amount, 2),
+        }
+        for movement in incomes
+        if movement.date and one_year_ago <= movement.date <= reference_date
+    ][:3]
 
     current_total_balance = sum(
         _parse_number(account.get("balance")) or 0.0
@@ -660,57 +819,116 @@ def build_account_report(
         if isinstance(account, dict)
     )
 
-    balance_method = "current_balance_backcast"
-    if cash_accounts:
-        signed_movements: list[tuple[date, float]] = []
-        for movement in movements:
-            if movement.date is None:
-                continue
-            signed_amount = movement.amount if movement.direction == "income" else -movement.amount
-            signed_movements.append((movement.date, signed_amount))
+    signed_movements: list[tuple[date, float, str | None]] = []
+    for movement in movements:
+        if movement.date is None or movement.id is None:
+            continue
+        raw_transaction = transaction_by_id.get(movement.id)
+        cash_account_id = _extract_cash_account_id(raw_transaction) if raw_transaction else None
+        signed_amount = movement.amount if movement.direction == "income" else -movement.amount
+        signed_movements.append((movement.date, signed_amount, cash_account_id))
 
-        reference_balance = current_total_balance - sum(
-            amount for movement_date, amount in signed_movements if movement_date > reference_date
+    total_one_year_ago = current_total_balance - sum(
+        amount for movement_date, amount, _ in signed_movements if movement_date > one_year_ago
+    )
+
+    account_snapshots: dict[str, dict[str, float | str | None]] = {}
+    for account in cash_accounts:
+        if not isinstance(account, dict):
+            continue
+        account_id = str(account.get("id") or account.get("_id") or "")
+        if not account_id:
+            continue
+        account_name = _extract_account_name(account)
+        balance_today = _parse_number(account.get("balance")) or 0.0
+        balance_one_year_ago = balance_today - sum(
+            amount
+            for movement_date, amount, movement_account_id in signed_movements
+            if movement_account_id == account_id and movement_date > one_year_ago
         )
-        previous_balance = current_total_balance - sum(
-            amount for movement_date, amount in signed_movements if movement_date > previous_year_end
-        )
-        current_balance = reference_balance
-    else:
-        balance_method = "net_flow_estimate"
-        previous_balance = round(
-            sum(
-                movement.amount if movement.direction == "income" else -movement.amount
-                for movement in movements
-                if movement.date and movement.date.year == previous_year
+        account_snapshots[account_name] = {
+            "one_year_ago": round(balance_one_year_ago, 2),
+            "today": round(balance_today, 2),
+            "difference": round(balance_today - balance_one_year_ago, 2),
+        }
+
+    bucketed_accounts = {
+        "Kasse": {"one_year_ago": 0.0, "today": 0.0, "difference": 0.0, "matched": 0},
+        "Bank (liquide)": {"one_year_ago": 0.0, "today": 0.0, "difference": 0.0, "matched": 0},
+        "Bank (Anlage)": {"one_year_ago": 0.0, "today": 0.0, "difference": 0.0, "matched": 0},
+    }
+    for account in cash_accounts:
+        if not isinstance(account, dict):
+            continue
+        bucket = _account_bucket(account)
+        if not bucket:
+            continue
+        account_name = _extract_account_name(account)
+        snapshot = account_snapshots.get(account_name)
+        if not snapshot:
+            continue
+        bucketed_accounts[bucket]["one_year_ago"] += float(snapshot["one_year_ago"])
+        bucketed_accounts[bucket]["today"] += float(snapshot["today"])
+        bucketed_accounts[bucket]["difference"] += float(snapshot["difference"])
+        bucketed_accounts[bucket]["matched"] += 1
+
+    requested_account_data: dict[str, dict[str, float | str | None]] = {}
+    for target_name in ("Kasse", "Bank (liquide)", "Bank (Anlage)"):
+        matched_account = next(
+            (
+                value
+                for account_name, value in account_snapshots.items()
+                if _match_account(account_name, target_name)
             ),
-            2,
+            None,
         )
-        current_balance = round(
-            sum(
-                movement.amount if movement.direction == "income" else -movement.amount
-                for movement in movements
-                if movement.date and movement.date.year == reference_date.year
-            ),
-            2,
-        )
+        if matched_account:
+            requested_account_data[target_name] = matched_account
+            continue
+
+        bucket = bucketed_accounts.get(target_name)
+        if bucket and bucket["matched"] > 0:
+            requested_account_data[target_name] = {
+                "one_year_ago": round(float(bucket["one_year_ago"]), 2),
+                "today": round(float(bucket["today"]), 2),
+                "difference": round(float(bucket["difference"]), 2),
+                "derived_from_accounts": int(bucket["matched"]),
+            }
+            continue
+
+        requested_account_data[target_name] = {
+            "one_year_ago": None,
+            "today": None,
+            "difference": None,
+        }
+
+    total_difference_since_founding = total_income_since_founding - total_expenses_since_founding
+    total_balance_difference = current_total_balance - total_one_year_ago
 
     return {
         "reference_date": reference_date.isoformat(),
+        "founding_date": founding_date.isoformat() if founding_date else None,
+        "expenses_since_founding": {
+            key: round(value, 2) for key, value in expense_breakdown_since_founding.items()
+        },
+        "income_since_founding": {
+            key: round(value, 2) for key, value in income_breakdown_since_founding.items()
+        },
+        "totals_since_founding": {
+            "expenses": round(total_expenses_since_founding, 2),
+            "income": round(total_income_since_founding, 2),
+            "difference": round(total_difference_since_founding, 2),
+        },
+        "top_3_expenses_last_year": top_expenses_last_year,
+        "top_3_income_last_year": top_income_last_year,
+        "total_money_comparison": {
+            "one_year_ago": round(total_one_year_ago, 2),
+            "today": round(current_total_balance, 2),
+            "difference": round(total_balance_difference, 2),
+        },
+        "requested_accounts": requested_account_data,
         "top_5_income_movements": top_incomes,
         "top_5_outgoing_movements": top_outgoings,
-        "bank_balance_comparison": {
-            "method": balance_method,
-            "last_year": round(previous_balance, 2),
-            "this_year": round(current_balance, 2),
-            "difference": round(current_balance - previous_balance, 2),
-        },
-        "income_sources": {
-            key: round(value, 2) for key, value in income_breakdown.items()
-        },
-        "spending_targets": {
-            key: round(value, 2) for key, value in spending_breakdown.items()
-        },
         "meta": {
             "cash_accounts_total": len(cash_accounts),
             "transactions_total": len(transactions),
@@ -791,32 +1009,48 @@ def main():
     )
 
     print("\n=== Finance Report ===")
-    print("Top 5 income movements:")
-    for idx, movement in enumerate(report["top_5_income_movements"], start=1):
-        print(
-            f"{idx}. {movement['date'] or '-'} | {movement['amount']:.2f} | {movement['text']}"
-        )
+    print("Founding date:", report["founding_date"] or "unknown")
 
-    print("\nTop 5 outgoing movements:")
-    for idx, movement in enumerate(report["top_5_outgoing_movements"], start=1):
-        print(
-            f"{idx}. {movement['date'] or '-'} | {movement['amount']:.2f} | {movement['text']}"
-        )
+    print("\nExpenses since founding:")
+    for key, value in report["expenses_since_founding"].items():
+        print(f"- {key}: {value:.2f}")
 
-    balance = report["bank_balance_comparison"]
-    print("\nBank balance comparison:")
+    print("\nIncome since founding:")
+    for key, value in report["income_since_founding"].items():
+        print(f"- {key}: {value:.2f}")
+
+    totals = report["totals_since_founding"]
+    print("\nTotals since founding:")
     print(
-        f"Method: {balance['method']} | Last year: {balance['last_year']:.2f} | "
-        f"This year: {balance['this_year']:.2f} | Diff: {balance['difference']:.2f}"
+        f"Expenses: {totals['expenses']:.2f} | Income: {totals['income']:.2f} | Difference: {totals['difference']:.2f}"
     )
 
-    print("\nIncome sources:")
-    for key, value in report["income_sources"].items():
-        print(f"- {key}: {value:.2f}")
+    print("\nTop 3 expenses last year:")
+    for idx, movement in enumerate(report["top_3_expenses_last_year"], start=1):
+        print(
+            f"{idx}. {movement['date'] or '-'} | {movement['amount']:.2f} | {movement['text']}"
+        )
 
-    print("\nSpending targets:")
-    for key, value in report["spending_targets"].items():
-        print(f"- {key}: {value:.2f}")
+    print("\nTop 3 income last year:")
+    for idx, movement in enumerate(report["top_3_income_last_year"], start=1):
+        print(
+            f"{idx}. {movement['date'] or '-'} | {movement['amount']:.2f} | {movement['text']}"
+        )
+
+    balance = report["total_money_comparison"]
+    print("\nTotal money comparison (today vs one year ago):")
+    print(
+        f"One year ago: {balance['one_year_ago']:.2f} | Today: {balance['today']:.2f} | Diff: {balance['difference']:.2f}"
+    )
+
+    print("\nRequested account snapshots:")
+    for account_name, data in report["requested_accounts"].items():
+        if data["today"] is None:
+            print(f"- {account_name}: not found")
+            continue
+        print(
+            f"- {account_name}: one year ago {data['one_year_ago']:.2f}, today {data['today']:.2f}, diff {data['difference']:.2f}"
+        )
 
     if args.output_json:
         with open(args.output_json, "w", encoding="utf-8") as output_file:
