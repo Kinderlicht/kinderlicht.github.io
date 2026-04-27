@@ -1536,12 +1536,14 @@ def render_slides_markup(
     )
 
     versammlungsleiter_section = f"""
-        <section class="slide full content-focus">
+        <section class="slide full content-focus vote-section">
             <div class="slide-inner">
-                <div class="hero compact">
+                <div class="hero compact vote-head">
                     <div class="kicker">Abstimmung</div>
                     <h1>Versammlungsleitung & Schriftführer</h1>
                     <p class="lead">Vorschläge für die Leitung und Protokoll dieser Jahreshauptversammlung.</p>
+                </div>
+                <div class="vote-stage vote-stage-stack">
                     <div class="voting-items-grid">
                         <article class="voting-person-item">
                             {versammlungsleiter_img_html}
@@ -1572,22 +1574,38 @@ def render_slides_markup(
         if include_organe_voting
         else ""
     )
-    animation = f"""<div class="voting-animation-panel"><div class="art"><img src="{voting_animation_organs}" alt="Abstimmung Vereinsorgane" /></div></div>"""
-    organe_voting_section = f"""
-    <section class="slide full content-focus">
-        <div class="slide-inner split-layout">
-            <div class="content-pane">
-                <div class="hero compact">
+    if include_organe_voting:
+        animation = f"""<div class="voting-animation-panel"><div class="art"><img src="{voting_animation_organs}" alt="Abstimmung Vereinsorgane" /></div></div>"""
+        organe_voting_section = f"""
+        <section class="slide split content-focus vote-section">
+            <div class="slide-inner split-layout">
+                <div class="content-pane">
+                    <div class="hero compact vote-head">
+                        <div class="kicker">Wahl</div>
+                        <h1>Die aktuelle Vorstandschaft</h1>
+                        <p class="lead">Dieser Tagesordnungspunkt findet gemäß Satzung nur in geraden Jahren statt. {elect}</p>
+                        {board_members_html}
+                    </div>
+                </div>
+                <div class="vote-stage vote-stage-media">
+                    {animation}
+                </div>
+            </div>
+        </section>
+            """.strip()
+    else:
+        organe_voting_section = f"""
+        <section class="slide full content-focus vote-section vote-section-solo">
+            <div class="slide-inner">
+                <div class="hero compact vote-head">
                     <div class="kicker">Wahl</div>
                     <h1>Die aktuelle Vorstandschaft</h1>
-                    <p class="lead">Dieser Tagesordnungspunkt findet gemäß Satzung nur in geraden Jahren statt. {elect}</p>
+                    <p class="lead">Dieser Tagesordnungspunkt findet gemäß Satzung nur in geraden Jahren statt.</p>
                     {board_members_html}
                 </div>
             </div>
-            {animation if include_organe_voting else ""}
-        </div>
-    </section>
-        """.strip()
+        </section>
+            """.strip()
 
     custom_slides_html = "\n".join(
         render_custom_slide_section(
@@ -1831,19 +1849,19 @@ def render_slides_markup(
         </div>
       </section>
 
-            <section class="slide split content-focus">
-                <div class="slide-inner split-layout">
-                    <div class="content-pane">
-                        <div class="hero compact beitragsordnung-hero">
-                            <div class="kicker">Beschluss</div>
-                            <h1>Beitragsordnung</h1>
-                            <p class="lead">Abstimmung über die neuen Beitragssätze für Mitglieder und Familienrabatt.</p>
-                            {beitragsordnung_markup}
-                        </div>
+        <section class="slide split content-focus">
+            <div class="slide-inner split-layout">
+                <div class="content-pane">
+                    <div class="hero compact beitragsordnung-hero">
+                        <div class="kicker">Beschluss</div>
+                        <h1>Beitragsordnung</h1>
+                        <p class="lead">Abstimmung über die neuen Beitragssätze für Mitglieder und Familienrabatt.</p>
+                        {beitragsordnung_markup}
                     </div>
-                    <div class="media-pane subtle"><div class="art"><img src="{beitragsordnung_image}" alt="Abstimmung Beitragsordnung" /></div></div>
                 </div>
-            </section>
+                <div class="media-pane subtle"><div class="art"><img src="{beitragsordnung_image}" alt="Abstimmung Beitragsordnung" /></div></div>
+            </div>
+        </section>
 
             {organe_voting_section}
 
