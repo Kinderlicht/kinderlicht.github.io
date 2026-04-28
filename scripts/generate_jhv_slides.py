@@ -89,6 +89,12 @@ def parse_args() -> argparse.Namespace:
         help="Campai API key. If --metadata is omitted, metadata is collected automatically using this key.",
     )
     parser.add_argument(
+        "--finance-api-key",
+        type=str,
+        default=None,
+        help="Campai Finance API key. If --metadata is omitted, metadata is collected automatically using this key.",
+    )
+    parser.add_argument(
         "--reference-date",
         type=str,
         default=None,
@@ -298,12 +304,14 @@ def load_preview_events(path: Path | None) -> list[PreviewEvent]:
     return events
 
 
-def find_custom_slide(custom_slides: list[CustomSlide], title: str) -> CustomSlide | None:
-        target = title.strip().casefold()
-        for slide in custom_slides:
-                if slide.title.strip().casefold() == target:
-                        return slide
-        return None
+def find_custom_slide(
+    custom_slides: list[CustomSlide], title: str
+) -> CustomSlide | None:
+    target = title.strip().casefold()
+    for slide in custom_slides:
+        if slide.title.strip().casefold() == target:
+            return slide
+    return None
 
 
 def render_custom_slide_section(
@@ -312,29 +320,29 @@ def render_custom_slide_section(
     kicker: str | None = None,
     image_src: str | None = None,
 ) -> str:
-        bullets_html = "".join(f"<li>{escape_html(item)}</li>" for item in slide.bullets)
-        plot_html = "".join(
-                f'<div class="plot-slot" data-plot="{escape_html(slot)}"><span>{escape_html(slot)}</span></div>'
-                for slot in slide.plot_slots
-        )
-        media_html = ""
-        slide_class = "slide full content-focus"
-        resolved_image_src = image_src or slide.image or ""
-        if resolved_image_src and not slide.plot_slots:
-                slide_class = "slide split"
-                media_html = (
-                f'<div class="media-pane subtle"><div class="art"><img src="{escape_html(resolved_image_src)}" alt="{escape_html(slide.title)}" /></div></div>'
-                )
+    bullets_html = "".join(f"<li>{escape_html(item)}</li>" for item in slide.bullets)
+    plot_html = "".join(
+        f'<div class="plot-slot" data-plot="{escape_html(slot)}"><span>{escape_html(slot)}</span></div>'
+        for slot in slide.plot_slots
+    )
+    media_html = ""
+    slide_class = "slide full content-focus"
+    resolved_image_src = image_src or slide.image or ""
+    if resolved_image_src and not slide.plot_slots:
+        slide_class = "slide split"
+        media_html = f'<div class="media-pane subtle"><div class="art"><img src="{escape_html(resolved_image_src)}" alt="{escape_html(slide.title)}" /></div></div>'
 
-        kicker_html = f'<div class="kicker">{escape_html(kicker)}</div>' if kicker else ""
-        subtitle_html = (
-                f'<p class="lead">{escape_html(slide.subtitle)}</p>' if slide.subtitle else ""
-        )
-        body_html = f'<p class="lead">{escape_html(slide.body)}</p>' if slide.body else ""
-        bullets_block = f'<ul class="bullet-list">{bullets_html}</ul>' if bullets_html else ""
-        plot_block = f'<div class="plot-grid">{plot_html}</div>' if plot_html else ""
+    kicker_html = f'<div class="kicker">{escape_html(kicker)}</div>' if kicker else ""
+    subtitle_html = (
+        f'<p class="lead">{escape_html(slide.subtitle)}</p>' if slide.subtitle else ""
+    )
+    body_html = f'<p class="lead">{escape_html(slide.body)}</p>' if slide.body else ""
+    bullets_block = (
+        f'<ul class="bullet-list">{bullets_html}</ul>' if bullets_html else ""
+    )
+    plot_block = f'<div class="plot-grid">{plot_html}</div>' if plot_html else ""
 
-        return f"""
+    return f"""
             <section class="{slide_class}">
                 <div class="slide-inner split-layout">
                     <div class="content-pane">
@@ -368,10 +376,10 @@ def render_preview_events_html(preview_events: list[PreviewEvent]) -> str:
             <article class="preview-event-card">
               <div class="preview-event-toprow">
                 <span class="preview-event-date">{escape_html(event.date)}</span>
-                {f'<div class="preview-event-tags">{tags_html}</div>' if tags_html else ''}
+                {f'<div class="preview-event-tags">{tags_html}</div>' if tags_html else ""}
               </div>
               <h3>{escape_html(event.title)}</h3>
-              {f'<p>{escape_html(event.description)}</p>' if event.description else ''}
+              {f"<p>{escape_html(event.description)}</p>" if event.description else ""}
             </article>
             """.strip()
         )
@@ -410,9 +418,9 @@ def resolve_metadata_path(args: argparse.Namespace) -> Path:
     if args.metadata is not None:
         return args.metadata
 
-    if not args.api_key:
+    if not args.api_key or not args.finance_api_key:
         raise ValueError(
-            "Either --metadata or --api-key must be provided. "
+            "Either --metadata or both --api-key and --finance-api-key must be provided. "
             "With --api-key, metadata will be collected automatically."
         )
 
@@ -432,6 +440,8 @@ def resolve_metadata_path(args: argparse.Namespace) -> Path:
         str(collector_script),
         "--api-key",
         args.api_key,
+        "--finance-api-key",
+        args.finance_api_key,
         "--output",
         str(metadata_path),
     ]
@@ -598,7 +608,7 @@ def make_placeholder_svg(title: str, subtitle: str) -> str:
 
 
 def make_voting_svg(title: str, subtitle: str) -> str:
-        svg = f"""
+    svg = f"""
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="{escape_html(title)}">
             <defs>
                 <linearGradient id="voteBg" x1="0" x2="1" y1="0" y2="1">
@@ -672,9 +682,9 @@ def make_voting_svg(title: str, subtitle: str) -> str:
             </g>
         </svg>
         """.strip()
-        return "data:image/svg+xml;base64," + base64.b64encode(svg.encode("utf-8")).decode(
-                "ascii"
-        )
+    return "data:image/svg+xml;base64," + base64.b64encode(svg.encode("utf-8")).decode(
+        "ascii"
+    )
 
 
 def load_sponsors() -> int:
@@ -1307,7 +1317,10 @@ def agenda_items(review_year: int, include_organe_voting: bool) -> str:
     entries: list[tuple[str, str]] = [
         ("Begrüßung", "Start und kurze Einführung."),
         ("Agenda", "Ablauf und Struktur der Sitzung."),
-        ("Versammlungsleitung", "Bestimmung Versammlungsleiter, Protokoll und Abstimmungsform."),
+        (
+            "Versammlungsleitung",
+            "Bestimmung Versammlungsleiter, Protokoll und Abstimmungsform.",
+        ),
         ("Vereinsdaten", "Kennzahlen und aktuelle Lage."),
         (f"Rückblick {review_year}", "Spenden, Aktionen und Highlights."),
         ("Kassenbericht", "Einnahmen, Ausgaben, Entwicklung."),
@@ -1614,7 +1627,7 @@ def render_slides_markup(
             image_src=custom_image_map.get(idx),
         )
         for idx, slide in enumerate(custom_slides)
-                if slide.title.strip().casefold() != "vorschau"
+        if slide.title.strip().casefold() != "vorschau"
     )
 
     preview_events_html = render_preview_events_html(preview_events)
@@ -1955,17 +1968,23 @@ def render_minutes_text(
         agenda_titles.append("Wahl neuer Vereinsorgane")
     agenda_titles.append("Vorschau")
 
-    board_lines = "\n".join(
-        f"- {member.get('name', '').strip()} ({member.get('role', '').strip()})"
-        for member in board_members
-        if member.get("name") or member.get("role")
-    ) or "- Keine Vorstandsmitglieder verfügbar"
+    board_lines = (
+        "\n".join(
+            f"- {member.get('name', '').strip()} ({member.get('role', '').strip()})"
+            for member in board_members
+            if member.get("name") or member.get("role")
+        )
+        or "- Keine Vorstandsmitglieder verfügbar"
+    )
 
-    article_titles = "\n".join(
-        f"- {str(article.get('title', '')).strip()}"
-        for article in included_articles
-        if str(article.get("title", "")).strip()
-    ) or "- Keine Beiträge vorhanden"
+    article_titles = (
+        "\n".join(
+            f"- {str(article.get('title', '')).strip()}"
+            for article in included_articles
+            if str(article.get("title", "")).strip()
+        )
+        or "- Keine Beiträge vorhanden"
+    )
 
     finance_totals = finance_report.get("totals_since_founding")
     finance_totals = finance_totals if isinstance(finance_totals, dict) else {}
@@ -2028,7 +2047,9 @@ def render_minutes_text(
         reference_date=format_german_date(reference_date),
         article_count=len(included_articles),
         active_member_count=member_insights.active_count,
-        average_age="-" if member_insights.average_age is None else f"{member_insights.average_age:.1f}",
+        average_age="-"
+        if member_insights.average_age is None
+        else f"{member_insights.average_age:.1f}",
         sponsor_count=sponsor_count,
         event_count=len(kinderlicht_events) + len(external_events),
         received_count=len(received),

@@ -12,11 +12,12 @@ from pathlib import Path
 from typing import Iterable
 
 from api_communication import (
+    CAMPAI_FINANCE_ACCOUNTS_ENDPOINT,
+    CAMPAI_FINANCE_TRANSACTIONS_ENDPOINT,
     build_account_report,
     build_members,
-    fetch_campai_cash_account_transactions,
-    fetch_campai_cash_accounts,
     fetch_campai_members,
+    fetch_from_finance_api,
 )
 
 
@@ -67,6 +68,12 @@ def parse_args() -> argparse.Namespace:
         type=str,
         required=True,
         help="Campai API key used to fetch member data.",
+    )
+    parser.add_argument(
+        "--finance-api-key",
+        type=str,
+        required=True,
+        help="Campai Finance API key used to fetch financial data.",
     )
     return parser.parse_args()
 
@@ -307,11 +314,19 @@ def main() -> int:
 
     finance_report: dict[str, object] = {}
     try:
-        cash_accounts = fetch_campai_cash_accounts(args.api_key)
-        transactions = fetch_campai_cash_account_transactions(args.api_key)
+        cash_accounts = fetch_from_finance_api(
+            finance_api_key=args.finance_api_key,
+            url=CAMPAI_FINANCE_ACCOUNTS_ENDPOINT,
+            key="cashAccounts",
+        )
+        transactions = fetch_from_finance_api(
+            args.finance_api_key,
+            url=CAMPAI_FINANCE_TRANSACTIONS_ENDPOINT,
+            key="cashTransactions",
+        )
         finance_report = build_account_report(
-            cash_accounts=cash_accounts,
             transactions=transactions,
+            cash_accounts=cash_accounts,
             reference_date=reference_date,
         )
     except Exception as error:

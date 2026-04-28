@@ -1,5 +1,6 @@
 import argparse
 import json
+import requests
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from typing import Any
@@ -8,10 +9,12 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 CAMPAI_BASE_URL = "https://api.campai.com"
+CAMPAI_CLOUD_BASE_URL = "https://cloud.campai.com"
 CAMPAI_CONTACTS_ENDPOINT = "/contacts"
-CAMPAI_CASH_ACCOUNTS_ENDPOINT = "/cashAccounts"
-CAMPAI_CASH_ACCOUNT_TRANSACTIONS_ENDPOINT = "/cashAccountTransactions"
 DEFAULT_ORGANISATION_ID = "64e88fabfb6cef3375134031"
+DEFAULT_WORKSPACE_ID = "676d50cf06301b8eb8007669"
+CAMPAI_FINANCE_ACCOUNTS_ENDPOINT = f"{CAMPAI_CLOUD_BASE_URL}/api/{DEFAULT_ORGANISATION_ID}/{DEFAULT_WORKSPACE_ID}/finance/cash/accounts/list"
+CAMPAI_FINANCE_TRANSACTIONS_ENDPOINT = f"{CAMPAI_CLOUD_BASE_URL}/api/{DEFAULT_ORGANISATION_ID}/{DEFAULT_WORKSPACE_ID}/finance/cash/transactions/list"
 CAMPAI_CONTACTS_PARAMS = {
     "mode": "query",
     "sort": "createdAt",
@@ -19,16 +22,9 @@ CAMPAI_CONTACTS_PARAMS = {
     "organisation": DEFAULT_ORGANISATION_ID,
 }
 
-CAMPAI_CASH_ACCOUNTS_PARAMS = {
+CAMPAI_FINANCE_ACCOUNTS_PARAMS = {
     "mode": "query",
     "sort": "createdAt",
-    "limit": 100,
-    "organisation": DEFAULT_ORGANISATION_ID,
-}
-
-CAMPAI_CASH_ACCOUNT_TRANSACTIONS_PARAMS = {
-    "mode": "query",
-    "sort": "-date",
     "limit": 100,
     "organisation": DEFAULT_ORGANISATION_ID,
 }
@@ -47,11 +43,12 @@ class Member:
 
 @dataclass(frozen=True)
 class Movement:
-    id: str | None
-    date: date | None
+    id: str
+    date: date
     text: str
     amount: float
     direction: str
+    cash_account: str
     raw: dict[str, Any]
 
 
@@ -128,41 +125,55 @@ def fetch_campai_members(api_key, timeout=10):
     )
 
 
-def fetch_campai_cash_accounts(
-    api_key: str,
-    organisation_id: str = DEFAULT_ORGANISATION_ID,
+def fetch_from_finance_api(
+    finance_api_key: str,
+    key: str,
+    url: str,
     timeout: int = 10,
+    limit: int = 100,
+    offset: int = 0,
 ) -> list[dict[str, Any]]:
-    params = dict(CAMPAI_CASH_ACCOUNTS_PARAMS)
-    params["organisation"] = organisation_id
-    return _campai_paginated_get(
-        endpoint=CAMPAI_CASH_ACCOUNTS_ENDPOINT,
-        api_key=api_key,
-        base_params=params,
-        timeout=timeout,
-    )
+    """
+    Fetch cash transactions from the new Campai finance API using POST request.
+    :param key: The key in the response JSON that contains the list of transactions (e.g. "transactions")
+    :param finance_api_key: Campai Finance API key (separate from main API key)
+    :param organisation_id: Organisation ID
+    :param workspace_id: Workspace ID
+    :param timeout: Request timeout in seconds
+    :param limit: Number of transactions to fetch per request
+    :param offset: Offset for pagination
+    :return: List of cash transactions from response
+    """
+    headers = {
+        "X-API-Key": finance_api_key,
+        "Content-Type": "application/json",
+    }
 
-
-def fetch_campai_cash_account_transactions(
-    api_key: str,
-    organisation_id: str = DEFAULT_ORGANISATION_ID,
-    timeout: int = 10,
-    cash_account_id: str | None = None,
-    from_date: date | None = None,
-    to_date: date | None = None,
-) -> list[dict[str, Any]]:
-    params = dict(CAMPAI_CASH_ACCOUNT_TRANSACTIONS_PARAMS)
-    params["organisation"] = organisation_id
-    if cash_account_id:
-        params["cashAccount"] = cash_account_id
-    if from_date and to_date:
-        params["date"] = f"gte_lte:{from_date.isoformat()};{to_date.isoformat()}"
-    return _campai_paginated_get(
-        endpoint=CAMPAI_CASH_ACCOUNT_TRANSACTIONS_ENDPOINT,
-        api_key=api_key,
-        base_params=params,
-        timeout=timeout,
-    )
+    items = []
+    try:
+        while True:
+            payload = {
+                "sort": {},
+                "limit": limit,
+                "offset": offset,
+            }
+            response = requests.post(
+                url,
+                headers=headers,
+                json=payload,
+                timeout=timeout,
+            )
+            response.raise_for_status()
+            data = response.json()
+            items.extend(data.get(key, []))
+            print(f"Fetched {len(items)} {key} from finance API")
+            offset += limit
+            if len(data.get(key, [])) < limit:
+                break
+        return items
+    except requests.exceptions.RequestException as err:
+        print(f"Finance API request failed: {err}")
+        return []
 
 
 def _parse_date(value):
@@ -427,29 +438,11 @@ def _parse_number(value: Any) -> float | None:
     return None
 
 
-def _pick_first_number(data: dict[str, Any], keys: list[str]) -> float | None:
-    for key in keys:
-        if key in data:
-            parsed = _parse_number(data.get(key))
-            if parsed is not None:
-                return parsed
-    return None
-
-
 def _flatten_text_fields(entry: dict[str, Any]) -> str:
     text_parts = []
     for key in (
-        "text",
-        "description",
-        "reference",
-        "details",
         "purpose",
-        "note",
-        "invoiceNumber",
-        "bookingText",
-        "name",
-        "title",
-        "type",
+        "info",
     ):
         value = entry.get(key)
         if isinstance(value, str) and value.strip():
@@ -465,80 +458,18 @@ def _flatten_text_fields(entry: dict[str, Any]) -> str:
     return " | ".join(text_parts)
 
 
-def _classify_direction(entry: dict[str, Any], amount: float) -> str:
-    for key in ("direction", "flow", "bookingType", "kind", "type"):
-        value = entry.get(key)
-        if not isinstance(value, str):
-            continue
-        normalized = value.strip().lower()
-        if normalized in {
-            "income",
-            "in",
-            "credit",
-            "revenue",
-            "deposit",
-            "incoming",
-            "einzahlung",
-            "eingang",
-            "inflow",
-        }:
-            return "income"
-        if normalized in {
-            "outgoing",
-            "out",
-            "debit",
-            "expense",
-            "withdrawal",
-            "payment",
-            "auszahlung",
-            "ausgang",
-            "outflow",
-        }:
-            return "outgoing"
+def _classify_direction(amount: float) -> str:
     return "income" if amount >= 0 else "outgoing"
 
 
 def _extract_movement_amount(entry: dict[str, Any]) -> float | None:
-    direct_amount = _pick_first_number(
-        entry,
-        [
-            "amount",
-            "grossAmount",
-            "netAmount",
-            "total",
-            "value",
-            "sum",
-        ],
-    )
-    if direct_amount is not None:
-        return direct_amount
-
-    positions = entry.get("positions")
-    if isinstance(positions, list):
-        values = []
-        for item in positions:
-            if not isinstance(item, dict):
-                continue
-            parsed = _pick_first_number(
-                item,
-                ["amount", "grossAmount", "netAmount", "value", "sum"],
-            )
-            if parsed is not None:
-                values.append(parsed)
-
-        if values:
-            signed_sum = sum(values)
-            if abs(signed_sum) > 1e-9:
-                return signed_sum
-            # When positions cancel out (double-entry), fall back to strongest leg.
-            return max(values, key=lambda number: abs(number))
-
-    return None
+    return float(entry.get("amount"))
 
 
 def normalize_movements(transactions: list[dict[str, Any]]) -> list[Movement]:
     movements: list[Movement] = []
     for entry in transactions:
+        print(entry)
         if not isinstance(entry, dict):
             continue
 
@@ -546,15 +477,14 @@ def normalize_movements(transactions: list[dict[str, Any]]) -> list[Movement]:
         if amount is None or abs(amount) < 1e-9:
             continue
 
-        movement_date = _parse_date(entry.get("date") or entry.get("valueDate"))
+        movement_date = _parse_date(entry.get("date"))
         movement = Movement(
-            id=str(entry.get("id") or entry.get("_id"))
-            if entry.get("id") or entry.get("_id")
-            else None,
+            id=str(entry.get("_id")),
             date=movement_date,
             text=_flatten_text_fields(entry) or "Unbenannte Buchung",
-            amount=abs(float(amount)),
-            direction=_classify_direction(entry, float(amount)),
+            amount=abs(float(amount) / 100),
+            direction=_classify_direction(float(amount)),
+            cash_account=entry.get("cashAccount"),
             raw=entry,
         )
         movements.append(movement)
@@ -562,13 +492,15 @@ def normalize_movements(transactions: list[dict[str, Any]]) -> list[Movement]:
 
 
 def _income_category(text: str) -> str:
+    print(text)
     normalized = text.lower()
 
     if any(token in normalized for token in ("spende", "donation", "zuwendung")):
         return "Spenden"
 
     if any(
-        token in normalized for token in ("mitgliedsbeitrag", "beitrag", "membership")
+        token in normalized
+        for token in ("mitgliedsbeitrag", "jahresbeitrag", "membership")
     ):
         return "Mitgliedsbeitraege"
 
@@ -653,332 +585,29 @@ def _expense_category(text: str) -> str:
     return "Vereinsverwaltung"
 
 
-def _extract_cash_account_id(transaction: dict[str, Any]) -> str | None:
-    direct_id = transaction.get("cashAccountId") or transaction.get("accountId")
-    if isinstance(direct_id, str) and direct_id.strip():
-        return direct_id.strip()
-
-    cash_account = transaction.get("cashAccount")
-    if isinstance(cash_account, str) and cash_account.strip():
-        return cash_account.strip()
-    if isinstance(cash_account, dict):
-        candidate = cash_account.get("id") or cash_account.get("_id")
-        if isinstance(candidate, str) and candidate.strip():
-            return candidate.strip()
-    return None
-
-
-def _extract_account_name(account: dict[str, Any]) -> str:
-    for key in ("name", "title", "cashAccountNumber"):
-        value = account.get(key)
-        if isinstance(value, str) and value.strip():
-            return value.strip()
-    candidate_id = account.get("id") or account.get("_id")
-    return str(candidate_id) if candidate_id else "Unknown account"
-
-
-def _match_account(account_name: str, target: str) -> bool:
-    normalized = account_name.strip().lower()
-    target_normalized = target.strip().lower()
-    if normalized == target_normalized:
-        return True
-    if target == "Kasse":
-        return "kasse" in normalized or normalized == "cash"
-    if target == "Bank (liquide)":
-        return "bank" in normalized and (
-            "liquide" in normalized or "liquid" in normalized
-        )
-    if target == "Bank (Anlage)":
-        return "anlage" in normalized
-    return False
-
-
-def _account_bucket(account: dict[str, Any]) -> str | None:
-    name = _extract_account_name(account).lower()
-    account_type = str(account.get("type") or "").lower()
-    account_number = str(account.get("cashAccountNumber") or "").strip()
-
-    if "kasse" in name or account_type == "cash":
-        return "Kasse"
-
-    if any(
-        token in name
-        for token in (
-            "kuendigung",
-            "kündigung",
-            "anlage",
-            "festgeld",
-            "geschaeftsanteile",
-            "geschäftsanteile",
-        )
-    ):
-        return "Bank (Anlage)"
-
-    if account_number in {"950", "955"}:
-        return "Bank (Anlage)"
-
-    if "bank" in account_type or account_number in {"940", "945"}:
-        return "Bank (liquide)"
-
-    return None
-
-
-def _extract_balance(entry: dict[str, Any]) -> float | None:
-    for key in ("balance", "accountBalance", "runningBalance", "newBalance"):
-        parsed = _parse_number(entry.get(key))
-        if parsed is not None:
-            return parsed
-
-    transaction = entry.get("transaction")
-    if isinstance(transaction, dict):
-        for key in ("balance", "accountBalance", "runningBalance", "newBalance"):
-            parsed = _parse_number(transaction.get(key))
-            if parsed is not None:
-                return parsed
-    return None
-
-
 def build_account_report(
     *,
-    cash_accounts: list[dict[str, Any]],
     transactions: list[dict[str, Any]],
+    cash_accounts: list[dict[str, Any]],
     reference_date: date,
 ) -> dict[str, Any]:
     movements = normalize_movements(transactions)
-    transaction_by_id = {
-        str(item.get("id") or item.get("_id")): item
-        for item in transactions
-        if isinstance(item, dict) and (item.get("id") or item.get("_id"))
-    }
     founding_date = min(
         (movement.date for movement in movements if movement.date), default=None
     )
-
-    incomes = sorted(
-        [movement for movement in movements if movement.direction == "income"],
-        key=lambda movement: movement.amount,
-        reverse=True,
-    )
-    outgoings = sorted(
-        [movement for movement in movements if movement.direction == "outgoing"],
-        key=lambda movement: movement.amount,
-        reverse=True,
-    )
-
-    top_incomes = [
-        {
-            "date": movement.date.isoformat() if movement.date else None,
-            "text": movement.text,
-            "amount": round(movement.amount, 2),
-        }
-        for movement in incomes[:5]
-    ]
-    top_outgoings = [
-        {
-            "date": movement.date.isoformat() if movement.date else None,
-            "text": movement.text,
-            "amount": round(movement.amount, 2),
-        }
-        for movement in outgoings[:5]
-    ]
-
-    expense_breakdown_since_founding = {
-        "Vereinsverwaltung": 0.0,
-        "Unterstuetzung": 0.0,
-        "Veranstaltungen": 0.0,
-    }
-    income_breakdown_since_founding = {
-        "Spenden": 0.0,
-        "Veranstaltungen": 0.0,
-        "Mitgliedsbeitraege": 0.0,
-        "Sonstiges": 0.0,
-    }
-
-    total_income_since_founding = 0.0
-    total_expenses_since_founding = 0.0
-
-    for movement in movements:
-        if movement.direction == "income":
-            income_key = _income_category(movement.text)
-            income_breakdown_since_founding[income_key] += movement.amount
-            total_income_since_founding += movement.amount
-        else:
-            spending_key = _expense_category(movement.text)
-            expense_breakdown_since_founding[spending_key] += movement.amount
-            total_expenses_since_founding += movement.amount
-
-    one_year_ago = reference_date - timedelta(days=365)
-
-    top_expenses_last_year = [
-        {
-            "date": movement.date.isoformat() if movement.date else None,
-            "text": movement.text,
-            "amount": round(movement.amount, 2),
-        }
-        for movement in outgoings
-        if movement.date and one_year_ago <= movement.date <= reference_date
-    ][:3]
-
-    top_income_last_year = [
-        {
-            "date": movement.date.isoformat() if movement.date else None,
-            "text": movement.text,
-            "amount": round(movement.amount, 2),
-        }
-        for movement in incomes
-        if movement.date and one_year_ago <= movement.date <= reference_date
-    ][:3]
-
-    current_total_balance = sum(
-        _parse_number(account.get("balance")) or 0.0
-        for account in cash_accounts
-        if isinstance(account, dict)
-    )
-
-    signed_movements: list[tuple[date, float, str | None]] = []
-    for movement in movements:
-        if movement.date is None or movement.id is None:
-            continue
-        raw_transaction = transaction_by_id.get(movement.id)
-        cash_account_id = (
-            _extract_cash_account_id(raw_transaction) if raw_transaction else None
-        )
-        signed_amount = (
-            movement.amount if movement.direction == "income" else -movement.amount
-        )
-        signed_movements.append((movement.date, signed_amount, cash_account_id))
-
-    total_one_year_ago = current_total_balance - sum(
-        amount
-        for movement_date, amount, _ in signed_movements
-        if movement_date > one_year_ago
-    )
-
-    account_snapshots: dict[str, dict[str, float | str | None]] = {}
-    for account in cash_accounts:
-        if not isinstance(account, dict):
-            continue
-        account_id = str(account.get("id") or account.get("_id") or "")
-        if not account_id:
-            continue
-        account_name = _extract_account_name(account)
-        balance_today = _parse_number(account.get("balance")) or 0.0
-        balance_one_year_ago = balance_today - sum(
-            amount
-            for movement_date, amount, movement_account_id in signed_movements
-            if movement_account_id == account_id and movement_date > one_year_ago
-        )
-        account_snapshots[account_name] = {
-            "one_year_ago": round(balance_one_year_ago, 2),
-            "today": round(balance_today, 2),
-            "difference": round(balance_today - balance_one_year_ago, 2),
-        }
-
-    bucketed_accounts = {
-        "Kasse": {"one_year_ago": 0.0, "today": 0.0, "difference": 0.0, "matched": 0},
-        "Bank (liquide)": {
-            "one_year_ago": 0.0,
-            "today": 0.0,
-            "difference": 0.0,
-            "matched": 0,
-        },
-        "Bank (Anlage)": {
-            "one_year_ago": 0.0,
-            "today": 0.0,
-            "difference": 0.0,
-            "matched": 0,
-        },
-    }
-    for account in cash_accounts:
-        if not isinstance(account, dict):
-            continue
-        bucket = _account_bucket(account)
-        if not bucket:
-            continue
-        account_name = _extract_account_name(account)
-        snapshot = account_snapshots.get(account_name)
-        if not snapshot:
-            continue
-        bucketed_accounts[bucket]["one_year_ago"] += float(snapshot["one_year_ago"])
-        bucketed_accounts[bucket]["today"] += float(snapshot["today"])
-        bucketed_accounts[bucket]["difference"] += float(snapshot["difference"])
-        bucketed_accounts[bucket]["matched"] += 1
-
-    requested_account_data: dict[str, dict[str, float | str | None]] = {}
-    for target_name in ("Kasse", "Bank (liquide)", "Bank (Anlage)"):
-        matched_account = next(
-            (
-                value
-                for account_name, value in account_snapshots.items()
-                if _match_account(account_name, target_name)
-            ),
-            None,
-        )
-        if matched_account:
-            requested_account_data[target_name] = matched_account
-            continue
-
-        bucket = bucketed_accounts.get(target_name)
-        if bucket and bucket["matched"] > 0:
-            requested_account_data[target_name] = {
-                "one_year_ago": round(float(bucket["one_year_ago"]), 2),
-                "today": round(float(bucket["today"]), 2),
-                "difference": round(float(bucket["difference"]), 2),
-                "derived_from_accounts": int(bucket["matched"]),
-            }
-            continue
-
-        requested_account_data[target_name] = {
-            "one_year_ago": None,
-            "today": None,
-            "difference": None,
-        }
-
-    total_difference_since_founding = (
-        total_income_since_founding - total_expenses_since_founding
-    )
-    total_balance_difference = current_total_balance - total_one_year_ago
-
-    return {
-        "reference_date": reference_date.isoformat(),
-        "founding_date": founding_date.isoformat() if founding_date else None,
-        "expenses_since_founding": {
-            key: round(value, 2)
-            for key, value in expense_breakdown_since_founding.items()
-        },
-        "income_since_founding": {
-            key: round(value, 2)
-            for key, value in income_breakdown_since_founding.items()
-        },
-        "totals_since_founding": {
-            "expenses": round(total_expenses_since_founding, 2),
-            "income": round(total_income_since_founding, 2),
-            "difference": round(total_difference_since_founding, 2),
-        },
-        "top_3_expenses_last_year": top_expenses_last_year,
-        "top_3_income_last_year": top_income_last_year,
-        "total_money_comparison": {
-            "one_year_ago": round(total_one_year_ago, 2),
-            "today": round(current_total_balance, 2),
-            "difference": round(total_balance_difference, 2),
-        },
-        "requested_accounts": requested_account_data,
-        "top_5_income_movements": top_incomes,
-        "top_5_outgoing_movements": top_outgoings,
-        "meta": {
-            "cash_accounts_total": len(cash_accounts),
-            "transactions_total": len(transactions),
-            "movements_total": len(movements),
-        },
-    }
+    raise NotImplementedError("Report generation not implemented yet")
 
 
 def main():
     parser = argparse.ArgumentParser(
         description="Campai data helper: fetch members or generate account movement reports."
     )
-
     parser.add_argument("--api-key", required=True, help="API key")
+    parser.add_argument(
+        "--finance-api-key",
+        default=None,
+        help="Separate Finance API key for accessing cash transactions. Required for accounts report.",
+    )
     parser.add_argument(
         "--report",
         choices=("members", "accounts"),
@@ -989,11 +618,6 @@ def main():
         "--organisation",
         default=DEFAULT_ORGANISATION_ID,
         help="Organisation ID for Campai queries.",
-    )
-    parser.add_argument(
-        "--cash-account-id",
-        default=None,
-        help="Optional cash account ID to filter transactions.",
     )
     parser.add_argument(
         "--reference-date",
@@ -1028,15 +652,28 @@ def main():
         else date.today()
     )
 
-    cash_accounts = fetch_campai_cash_accounts(
-        api_key=args.api_key,
+    cash_accounts = fetch_from_finance_api(
+        api_key=args.finance_api_key,
         organisation_id=args.organisation,
+        url=CAMPAI_FINANCE_ACCOUNTS_ENDPOINT,
+        key="cashAccounts",
     )
 
-    transactions = fetch_campai_cash_account_transactions(
-        api_key=args.api_key,
+    if not cash_accounts:
+        print(
+            "Error: No cash accounts found. Please check your Finance API key and organisation ID."
+        )
+        return
+
+    if not args.finance_api_key:
+        print("Error: --finance-api-key is required for accounts report.")
+        return
+
+    transactions = fetch_from_finance_api(
+        api_key=args.finance_api_key,
         organisation_id=args.organisation,
-        cash_account_id=args.cash_account_id,
+        url=CAMPAI_FINANCE_TRANSACTIONS_ENDPOINT,
+        key="cashTransactions",
     )
     report = build_account_report(
         cash_accounts=cash_accounts,
