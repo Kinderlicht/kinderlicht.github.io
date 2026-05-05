@@ -49,9 +49,33 @@ export default function ContactForm() {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm<Message>({ mode: "onChange" });
   let [success, setSuccess] = React.useState(-1);
   let [recover, setRecover] = React.useState("");
+
+  const [hint, setHint] = React.useState("");
+
+  const subjectValue = watch("subject") || "";
+  const textValue = watch("text") || "";
+
+  React.useEffect(() => {
+    const keywords = ["spendenquittung", "quittung", "spendenbeleg"];
+    const content = (subjectValue + " " + textValue).toLowerCase();
+
+    const containsKeyword = keywords.some((keyword) =>
+      content.includes(keyword)
+    );
+
+    if (containsKeyword) {
+      setHint(
+        "Für eine Spendenquittung kannst du auch direkt den Pfad /spendenquittung verwenden."
+      );
+    } else {
+      setHint("");
+    }
+  }, [subjectValue, textValue]);
+
   const onSubmit: SubmitHandler<Message> = (data) => {
     fetch("https://api.campai.com/formSubmissions/65228c088027e5517c174547", {
       method: "POST",
@@ -235,6 +259,14 @@ export default function ContactForm() {
                     </div>
                   </div>
                 </section>
+
+                {hint && (
+                    <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 text-amber-800 rounded-xl p-4 mb-6 shadow-sm flex items-start gap-3">
+                      <span className="text-xl">💡</span>
+                      <p className="text-sm leading-relaxed">{hint}</p>
+                    </div>
+                  )
+                }
 
                 {/* Submit Button */}
                 <div className="text-center pt-8">
