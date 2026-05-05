@@ -1,6 +1,7 @@
 import argparse
 import json
 import requests
+from collections import defaultdict
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from typing import Any
@@ -28,6 +29,7 @@ CAMPAI_FINANCE_ACCOUNTS_PARAMS = {
     "limit": 100,
     "organisation": DEFAULT_ORGANISATION_ID,
 }
+FORBIDDEN_TOKENS = {"umbuchung", "intern", "enrico", "koch", "payment", "teilkündigung", "kündigung"}
 
 
 @dataclass(frozen=True)
@@ -44,11 +46,11 @@ class Member:
 @dataclass(frozen=True)
 class Movement:
     id: str
-    date: date
+    date: date | None
     text: str
     amount: float
     direction: str
-    cash_account: str
+    cash_account: str | None
     raw: dict[str, Any]
 
 
@@ -312,6 +314,61 @@ def _extract_gender(record):
     return None
 
 
+def _extract_cash_account_id(record: dict[str, Any]) -> str | None:
+    # For account records, prefer the MongoDB _id because that is the stable key.
+    object_id = record.get("_id")
+    if object_id not in (None, ""):
+        return str(object_id)
+
+    # Then try nested _id in various account-related fields.
+    for key in (
+        "cashAccount",
+        "cashAccountId",
+        "cash_account",
+        "account",
+        "accountId",
+    ):
+        value = record.get(key)
+        if isinstance(value, dict):
+            nested_value = value.get("_id")
+            if nested_value not in (None, ""):
+                return str(nested_value)
+        elif value not in (None, ""):
+            return str(value)
+    return None
+
+
+def _extract_movement_cash_account_id(record: dict[str, Any]) -> str | None:
+    # For movements, prefer the linked cash-account field, not the transaction _id.
+    for key in (
+        "cashAccount",
+        "cashAccountId",
+        "cash_account",
+        "account",
+        "accountId",
+    ):
+        value = record.get(key)
+        if isinstance(value, dict):
+            nested_value = value.get("_id") or value.get("id")
+            if nested_value not in (None, ""):
+                return str(nested_value)
+        elif value not in (None, ""):
+            return str(value)
+
+    object_id = record.get("_id")
+    if object_id not in (None, ""):
+        return str(object_id)
+    return None
+
+def _extract_cash_account_name(record: dict[str, Any]) -> str | None:
+    # Try multiple possible name fields
+    for field in ("name", "displayName", "title", "accountName"):
+        value = record.get(field)
+        if value and isinstance(value, str) and value.strip():
+            return value.strip()
+    return None
+
+
 def _extract_joined_at(record):
     membership = _get_membership(record)
 
@@ -469,7 +526,6 @@ def _extract_movement_amount(entry: dict[str, Any]) -> float | None:
 def normalize_movements(transactions: list[dict[str, Any]]) -> list[Movement]:
     movements: list[Movement] = []
     for entry in transactions:
-        print(entry)
         if not isinstance(entry, dict):
             continue
 
@@ -479,12 +535,12 @@ def normalize_movements(transactions: list[dict[str, Any]]) -> list[Movement]:
 
         movement_date = _parse_date(entry.get("date"))
         movement = Movement(
-            id=str(entry.get("_id")),
+            id=str(entry.get("_id") or entry.get("id") or entry.get("cashAccount") or ""),
             date=movement_date,
             text=_flatten_text_fields(entry) or "Unbenannte Buchung",
             amount=abs(float(amount) / 100),
             direction=_classify_direction(float(amount)),
-            cash_account=entry.get("cashAccount"),
+            cash_account=_extract_movement_cash_account_id(entry),
             raw=entry,
         )
         movements.append(movement)
@@ -492,7 +548,6 @@ def normalize_movements(transactions: list[dict[str, Any]]) -> list[Movement]:
 
 
 def _income_category(text: str) -> str:
-    print(text)
     normalized = text.lower()
 
     if any(token in normalized for token in ("spende", "donation", "zuwendung")):
@@ -595,7 +650,179 @@ def build_account_report(
     founding_date = min(
         (movement.date for movement in movements if movement.date), default=None
     )
-    raise NotImplementedError("Report generation not implemented yet")
+    one_year_ago = reference_date - timedelta(days=365)
+
+    account_order: list[str] = []
+    account_name_by_id: dict[str, str] = {}
+    for account in cash_accounts:
+        if not isinstance(account, dict):
+            continue
+        account_id = _extract_cash_account_id(account)
+        if account_id is None:
+            continue
+        account_name = (
+            _extract_cash_account_name(account)
+            or account.get("displayName")
+            or account.get("title")
+            or str(account_id)
+        )
+        account_name_by_id[account_id] = account_name
+        account_order.append(account_id)
+
+    movements_by_account: dict[str, list[Movement]] = defaultdict(list)
+    for movement in movements:
+        if movement.cash_account:
+            movements_by_account[movement.cash_account].append(movement)
+
+    def signed_amount(movement: Movement) -> float | None:
+        raw_amount = _parse_number(movement.raw.get("amount"))
+        if raw_amount is None:
+            return None
+        return raw_amount / 100.0
+
+    overall_income_since_founding: dict[str, float] = defaultdict(float)
+    overall_expenses_since_founding: dict[str, float] = defaultdict(float)
+    overall_income_total = 0.0
+    overall_expense_total = 0.0
+    top_income_last_year: list[dict[str, Any]] = []
+    top_expenses_last_year: list[dict[str, Any]] = []
+
+    for movement in movements:
+        if movement.date is None or movement.date > reference_date:
+            continue
+
+        raw_amount = signed_amount(movement)
+        if raw_amount is None:
+            continue
+
+        absolute_amount = abs(raw_amount)
+        report_item = {
+            "id": movement.id,
+            "date": movement.date.isoformat() if movement.date else None,
+            "text": movement.text,
+            "amount": absolute_amount,
+            "signed_amount": raw_amount,
+            "direction": movement.direction,
+            "cash_account": movement.cash_account,
+            "cash_account_name": account_name_by_id.get(
+                movement.cash_account or "", "Unbekanntes Konto"
+            ),
+        }
+
+        if raw_amount >= 0:
+            overall_income_total += absolute_amount
+            overall_income_since_founding[_income_category(movement.text)] += absolute_amount
+        else:
+            overall_expense_total += absolute_amount
+            overall_expenses_since_founding[_expense_category(movement.text)] += absolute_amount
+
+        if movement.date >= one_year_ago:
+            if raw_amount >= 0:
+                top_income_last_year.append(report_item)
+            else:
+                top_expenses_last_year.append(report_item)
+
+    def _sort_report_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        return sorted(
+            [i for i in items if all(forbidden not in str(i).lower() for forbidden in FORBIDDEN_TOKENS)],
+            key=lambda item: abs(float(item.get("signed_amount", 0.0))),
+            reverse=True,
+        )[:3]
+
+    requested_accounts: dict[str, dict[str, Any]] = {}
+    total_today = 0.0
+    total_one_year_ago = 0.0
+
+    for account_id in account_order:
+        account_movements = [
+            movement
+            for movement in movements_by_account.get(account_id, [])
+            if movement.date is not None and movement.date <= reference_date
+        ]
+
+        if not account_movements:
+            continue
+
+        income_since_founding = 0.0
+        expenses_since_founding = 0.0
+        today_balance = 0.0
+        one_year_ago_balance = 0.0
+        recent_items: list[dict[str, Any]] = []
+
+        for movement in account_movements:
+            raw_amount = signed_amount(movement)
+            if raw_amount is None:
+                continue
+
+            absolute_amount = abs(raw_amount)
+            if raw_amount >= 0:
+                income_since_founding += absolute_amount
+            else:
+                expenses_since_founding += absolute_amount
+
+            if movement.date <= reference_date:
+                today_balance += raw_amount
+            if movement.date <= one_year_ago:
+                one_year_ago_balance += raw_amount
+            if one_year_ago <= movement.date <= reference_date:
+                recent_items.append(
+                    {
+                        "id": movement.id,
+                        "date": movement.date.isoformat(),
+                        "text": movement.text,
+                        "amount": absolute_amount,
+                        "signed_amount": raw_amount,
+                        "direction": movement.direction,
+                        "cash_account": account_id,
+                        "cash_account_name": account_name_by_id.get(account_id),
+                    }
+                )
+
+        total_today += today_balance
+        total_one_year_ago += one_year_ago_balance
+
+        requested_accounts[account_id] = {
+            "id": account_id,
+            "name": account_name_by_id.get(account_id),
+            "income_since_founding": income_since_founding,
+            "expenses_since_founding": expenses_since_founding,
+            "net_since_founding": income_since_founding - expenses_since_founding,
+            "one_year_ago": one_year_ago_balance,
+            "today": today_balance,
+            "difference": today_balance - one_year_ago_balance,
+            "top_movements_last_year": sorted(
+                [i for i in recent_items if all(forbidden not in str(i).lower() for forbidden in FORBIDDEN_TOKENS)],
+                key=lambda item: abs(float(item.get("signed_amount", 0.0))),
+                reverse=True,
+            )[:3],
+        }
+
+    top_3_income_last_year = _sort_report_items(top_income_last_year)
+    top_3_expenses_last_year = _sort_report_items(top_expenses_last_year)
+
+    return {
+        "reference_date": reference_date.isoformat(),
+        "founding_date": founding_date.isoformat() if founding_date else None,
+        "cash_accounts": [
+            {"id": account_id, "name": account_name_by_id.get(account_id)}
+            for account_id in account_order
+        ],
+        "expenses_since_founding": dict(overall_expenses_since_founding),
+        "income_since_founding": dict(overall_income_since_founding),
+        "totals_since_founding": {
+            "income": overall_income_total,
+            "expenses": overall_expense_total,
+            "difference": overall_income_total - overall_expense_total,
+        },
+        "top_3_expenses_last_year": top_3_expenses_last_year,
+        "top_3_income_last_year": top_3_income_last_year,
+        "total_money_comparison": {
+            "one_year_ago": total_one_year_ago,
+            "today": total_today,
+            "difference": total_today - total_one_year_ago,
+        },
+        "requested_accounts": requested_accounts,
+    }
 
 
 def main():

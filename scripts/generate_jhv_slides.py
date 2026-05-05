@@ -1043,11 +1043,17 @@ def _finance_movements_list(
             continue
         amount = raw.get("amount")
         parsed_amount = float(amount) if isinstance(amount, (int, float)) else 0.0
+        signed_amount = raw.get("signed_amount")
+        parsed_signed_amount = (
+            float(signed_amount) if isinstance(signed_amount, (int, float)) else parsed_amount
+        )
         items.append(
             {
                 "date": str(raw.get("date") or "-"),
                 "text": str(raw.get("text") or empty_label),
                 "amount": parsed_amount,
+                "signed_amount": parsed_signed_amount,
+                "direction": str(raw.get("direction") or ""),
             }
         )
     return items
@@ -1058,16 +1064,17 @@ def make_finance_balance_chart(finance_report: dict[str, object]) -> str:
     if not isinstance(requested, dict):
         return make_placeholder_svg("Finanzübersicht", "Keine Kontodaten verfügbar")
 
-    labels = ["Kasse", "Bank (liquide)", "Bank (Anlage)"]
     values: list[tuple[str, float, float]] = []
-    for label in labels:
-        row = requested.get(label)
+    for label, row in requested.items():
         if not isinstance(row, dict):
-            values.append((label, 0.0, 0.0))
             continue
+        display_label = str(row.get("name") or label)
         one_year_ago = _finance_value(row, "one_year_ago")
         today = _finance_value(row, "today")
-        values.append((label, one_year_ago, today))
+        values.append((display_label, one_year_ago, today))
+
+    if not values:
+        return make_placeholder_svg("Finanzübersicht", "Keine Kontodaten verfügbar")
 
     max_value = max((max(v1, v2) for _, v1, v2 in values), default=1.0)
     max_value = max(max_value, 1.0)
@@ -1081,6 +1088,7 @@ def make_finance_balance_chart(finance_report: dict[str, object]) -> str:
     group_width = (chart_right - chart_left) / max(group_count, 1)
     bar_width = 72
     gap = 18
+    label_font_size = 15 if group_count <= 4 else 12 if group_count <= 6 else 10
 
     bars: list[str] = []
     x_labels: list[str] = []
@@ -1107,7 +1115,7 @@ def make_finance_balance_chart(finance_report: dict[str, object]) -> str:
             f'<text x="{x2 + bar_width / 2:.1f}" y="{y2 - 10:.1f}" text-anchor="middle" fill="#ffd9b4" font-family="sans-serif" font-size="14">{int(round(today_value))}</text>'
         )
         x_labels.append(
-            f'<text x="{group_center:.1f}" y="458" text-anchor="middle" fill="#c6ced8" font-family="sans-serif" font-size="15">{escape_html(label)}</text>'
+            f'<text x="{group_center:.1f}" y="458" text-anchor="middle" fill="#c6ced8" font-family="sans-serif" font-size="{label_font_size}">{escape_html(label)}</text>'
         )
 
     for step in range(0, 6):
@@ -1187,25 +1195,54 @@ def build_finance_markup(finance_report: dict[str, object]) -> dict[str, str]:
     def movement_html(items: list[dict[str, str | float | None]], empty: str) -> str:
         if not items:
             return f'<div class="empty-state">{escape_html(empty)}</div>'
-        return "".join(
-            f'<article class="finance-movement"><div><span>{escape_html(str(item["date"]))}</span><p>{escape_html(str(item["text"]))}</p></div><strong>{escape_html(format_euro(float(item["amount"])))}</strong></article>'
-            for item in items
-        )
+        rendered: list[str] = []
+        for item in items:
+            signed_amount = float(item.get("signed_amount", item.get("amount", 0.0)))
+            sign = "+" if signed_amount >= 0 else "-"
+            rendered.append(
+                f'<article class="finance-movement"><div><span>{escape_html(str(item["date"]))}</span><p>{escape_html(str(item["text"]))}</p></div><strong>{sign}{escape_html(format_euro(abs(float(item["amount"]))))}</strong></article>'
+            )
+        return "".join(rendered)
 
     top_expenses_html = movement_html(top_expenses, "Keine Ausgaben im letzten Jahr")
     top_income_html = movement_html(top_income, "Keine Einnahmen im letzten Jahr")
 
-    account_rows = []
-    for label in ("Kasse", "Bank (liquide)", "Bank (Anlage)"):
-        row = requested_accounts.get(label)
-        if not isinstance(row, dict):
-            account_rows.append(
-                f'<article class="finance-account-row"><span>{escape_html(label)}</span><span>-</span><span>-</span><span>-</span></article>'
-            )
-            continue
+    account_items = [
+        (str(data.get("name") or label), data)
+        for label, data in requested_accounts.items()
+        if isinstance(data, dict)
+    ]
+
+    account_summary_rows = [
+        '<article class="finance-account-row finance-account-head"><span>Kontotyp</span><span>Einnahmen</span><span>Ausgaben</span><span>Netto</span></article>'
+    ]
+    account_movement_cards: list[str] = []
+    account_rows = [
+        '<article class="finance-account-row finance-account-head"><span>Kontotyp</span><span>Vorjahr</span><span>Heute</span><span>Diff</span></article>'
+    ]
+
+    for label, row in account_items:
+        income_since_founding = _finance_value(row, "income_since_founding")
+        expenses_since_founding = _finance_value(row, "expenses_since_founding")
+        net_since_founding = _finance_value(row, "net_since_founding")
         one_year_ago = _finance_value(row, "one_year_ago")
         today = _finance_value(row, "today")
         diff = _finance_value(row, "difference")
+
+        account_summary_rows.append(
+            f'<article class="finance-account-row"><span>{escape_html(label)}</span><span>{escape_html(format_euro(income_since_founding))}</span><span>{escape_html(format_euro(expenses_since_founding))}</span><span>{escape_html(format_euro(net_since_founding))}</span></article>'
+        )
+
+        top_movements = _finance_movements_list(
+            row.get("top_movements_last_year"), "Bewegung"
+        )
+        movement_entries = movement_html(
+            top_movements, "Keine Bewegungen im letzten Jahr"
+        )
+        account_movement_cards.append(
+            f'<article class="finance-card"><p>{escape_html(label)}</p><strong>Top 3 Bewegungen</strong><div class="finance-movements">{movement_entries}</div></article>'
+        )
+
         account_rows.append(
             f'<article class="finance-account-row"><span>{escape_html(label)}</span><span>{escape_html(format_euro(one_year_ago))}</span><span>{escape_html(format_euro(today))}</span><span>{escape_html(format_euro(diff))}</span></article>'
         )
@@ -1222,6 +1259,8 @@ def build_finance_markup(finance_report: dict[str, object]) -> dict[str, str]:
         "totals_cards": totals_html,
         "top_expenses": top_expenses_html,
         "top_income": top_income_html,
+        "account_summary_rows": "".join(account_summary_rows),
+        "account_movement_cards": "".join(account_movement_cards),
         "account_rows": "".join(account_rows),
         "total_money_cards": total_money_html,
         "balance_chart": make_finance_balance_chart(finance_report),
@@ -1788,42 +1827,27 @@ def render_slides_markup(
       </section>
 
             <section class="slide full content-focus">
-        <div class="slide-inner split-layout">
-          <div class="content-pane">
-            <div class="hero compact">
-              <div class="kicker">Finanzen</div>
-                            <h1>Einnahmen und Ausgaben nach Kategorie</h1>
-                            <div class="finance-columns">
-                                <div>
-                                    <h3 class="finance-heading">Ausgaben seit Gründung</h3>
-                                    <div class="finance-grid">{finance_markup["expenses_cards"]}</div>
-                                </div>
-                                <div>
-                                    <h3 class="finance-heading">Einnahmen seit Gründung</h3>
-                                    <div class="finance-grid">{finance_markup["income_cards"]}</div>
-                                </div>
-              </div>
-                            <div class="finance-totals">{finance_markup["totals_cards"]}</div>
-            </div>
-          </div>
-        </div>
-      </section>
+                <div class="slide-inner split-layout">
+                    <div class="content-pane">
+                        <div class="hero compact">
+                            <div class="kicker">Finanzen</div>
+                            <h1>Einnahmen und Ausgaben je Konto seit Gründung</h1>
+                            <div class="finance-account-table">
+                                {finance_markup["account_summary_rows"]}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <section class="slide full content-focus">
                 <div class="slide-inner split-layout">
                     <div class="content-pane">
                         <div class="hero compact">
                             <div class="kicker">Finanzen</div>
-                            <h1>Top 3 Bewegungen im letzten Jahr</h1>
-                            <div class="finance-columns">
-                                <div>
-                                    <h3 class="finance-heading">Größte Ausgaben</h3>
-                                    <div class="finance-movements">{finance_markup["top_expenses"]}</div>
-                                </div>
-                                <div>
-                                    <h3 class="finance-heading">Größte Einnahmen</h3>
-                                    <div class="finance-movements">{finance_markup["top_income"]}</div>
-                                </div>
+                            <h1>Top 3 Bewegungen je Konto im letzten Jahr</h1>
+                            <div class="finance-grid">
+                                {finance_markup["account_movement_cards"]}
                             </div>
                         </div>
                     </div>
@@ -1838,10 +1862,9 @@ def render_slides_markup(
                             <h1>Vermögensübersicht: Vorjahr vs Heute</h1>
                             <div class="finance-totals">{finance_markup["total_money_cards"]}</div>
                             <article class="member-plot member-plot-wide finance-plot">
-                                <img src="{finance_markup["balance_chart"]}" alt="Kontostände je Kontotyp im Vergleich Vorjahr zu heute" />
+                                <img src="{finance_markup["balance_chart"]}" alt="Kontostände aller Konten im Vergleich Vorjahr zu heute" />
                             </article>
                             <div class="finance-account-table">
-                                <article class="finance-account-row finance-account-head"><span>Kontotyp</span><span>Vorjahr</span><span>Heute</span><span>Diff</span></article>
                                 {finance_markup["account_rows"]}
                             </div>
                         </div>
@@ -2002,21 +2025,13 @@ def render_minutes_text(
         f"- Gesamteinnahmen seit Gründung: {format_euro(_finance_value(finance_totals, 'income'))}",
         f"- Gesamtausgaben seit Gründung: {format_euro(_finance_value(finance_totals, 'expenses'))}",
         f"- Differenz: {format_euro(_finance_value(finance_totals, 'difference'))}",
-        f"- Kassenbestand heute: {format_euro(_finance_value(finance_requested.get('Kasse', {}), 'today') if isinstance(finance_requested.get('Kasse'), dict) else 0)}",
-        f"- Bank (liquide) heute: {format_euro(_finance_value(finance_requested.get('Bank (liquide)', {}), 'today') if isinstance(finance_requested.get('Bank (liquide)'), dict) else 0)}",
-        f"- Bank (Anlage) heute: {format_euro(_finance_value(finance_requested.get('Bank (Anlage)', {}), 'today') if isinstance(finance_requested.get('Bank (Anlage)'), dict) else 0)}",
     ]
-    if top_expenses:
-        finance_summary_lines.append("- Größte Ausgaben des letzten Jahres:")
-        finance_summary_lines.extend(
-            f"  - {item['date']}: {item['text']} ({format_euro(item['amount'])})"
-            for item in top_expenses
-        )
-    if top_income:
-        finance_summary_lines.append("- Größte Einnahmen des letzten Jahres:")
-        finance_summary_lines.extend(
-            f"  - {item['date']}: {item['text']} ({format_euro(item['amount'])})"
-            for item in top_income
+    for account_id, account_data in finance_requested.items():
+        if not isinstance(account_data, dict):
+            continue
+        account_name = str(account_data.get("name") or account_id)
+        finance_summary_lines.append(
+            f"- {account_name}: Einnahmen {format_euro(_finance_value(account_data, 'income_since_founding'))}, Ausgaben {format_euro(_finance_value(account_data, 'expenses_since_founding'))}, Netto {format_euro(_finance_value(account_data, 'net_since_founding'))}, Heute {format_euro(_finance_value(account_data, 'today'))}, Vorjahr {format_euro(_finance_value(account_data, 'one_year_ago'))}"
         )
     finance_summary = "\n".join(finance_summary_lines)
 
