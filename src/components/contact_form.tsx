@@ -69,7 +69,7 @@ export default function ContactForm() {
 
     if (containsKeyword) {
       setHint(
-        "Für eine Spendenquittung kannst du auch direkt den Pfad /spendenquittung verwenden."
+        "Für eine Spendenquittung kannst du auch direkt den Pfad https://www.kinderlicht-wallersdorf.de/quittung/ verwenden oder oben auf Quittung anfordern klicken."
       );
     } else {
       setHint("");

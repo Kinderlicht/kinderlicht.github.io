@@ -48,7 +48,8 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
     `https://www.google.com/maps/search/?api=1&query=${event["geo"]["lat"]},${event["geo"]["lon"]}`;
   let eventDate = ConvertDateObject(event["start"]);
   let currentDate = new Date();
-  let isFinished = eventDate < currentDate;
+  let isAborted = event["status"] === "CANCELLED";
+  let isFinished = eventDate < currentDate || isAborted;
   let isSoon =
     !isFinished && eventDate.getTime() - currentDate.getTime() < eventIsSoon;
 
@@ -101,7 +102,11 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
           {/* Event content */}
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              {isFinished ? (
+              {isAborted ? (
+                  <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-1 rounded-full">
+                    ✗ Abgesagt
+                  </span>
+              ): isFinished ? (
                 <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-1 rounded-full">
                   ✓ Abgeschlossen
                 </span>

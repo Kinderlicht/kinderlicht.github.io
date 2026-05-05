@@ -104,7 +104,7 @@ export const events: Event[] = [
       location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
       geo: { lat: 48.738713, lon: 12.7486027 },
       categories: ["Veranstaltung"],
-      status: "CONFIRMED",
+      status: "CANCELLED",
       busyStatus: "BUSY",
       organizer: {
         name: "Kinderlicht Wallersdorf e.V.",
