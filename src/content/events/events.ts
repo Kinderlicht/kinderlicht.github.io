@@ -1,666 +1,90 @@
-import { EventAttributes } from "ics";
+import type { EventAttributes } from "ics";
 
 export type Event = EventAttributes;
 
-export const events: Event[] = [
-    {
-      start: [2027, 1, 2, 19, 0],
-      duration: { hours: 6, minutes: 0 },
-      startInputType: "local",
-      startOutputType: "local",
-      title: "Schneeball",
-      description:
-        "Der Kinderlicht Wallersdorf läd zum Schneeball ein.",
-      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-      geo: { lat: 48.738713, lon: 12.7486027 },
-      categories: ["Veranstaltung"],
-      status: "CONFIRMED",
-      busyStatus: "BUSY",
-      organizer: {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-      },
-      attendees: [
-        {
-          name: "Kinderlicht Wallersdorf e.V.",
-          email: "info@kinderlicht-wallersdorf.de",
-          rsvp: true,
-          partstat: "ACCEPTED",
-          role: "REQ-PARTICIPANT",
-        },
-      ],
-      htmlContent:
-        "Der Kinderlicht Wallersdorf läd zum Schneeball ein. Wir bitten darum, Reservierungen über den Anmeldebutton oben vorzunehmen (wird im Verlauf des Jahres freigeschaltet).",
-    },
-    {
-      start: [2026, 11, 7, 9, 30],
-      duration: { hours: 3, minutes: 0 },
-      url: "https://form.campai.com/Y2oXlVHpk9mG",
-      startInputType: "local",
-      startOutputType: "local",
-      title: "Frühstücksbuffet",
-      description:
-        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-      geo: { lat: 48.738713, lon: 12.7486027 },
-      categories: ["Veranstaltung"],
-      status: "CONFIRMED",
-      busyStatus: "BUSY",
-      organizer: {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-      },
-      attendees: [
-        {
-          name: "Kinderlicht Wallersdorf e.V.",
-          email: "info@kinderlicht-wallersdorf.de",
-          rsvp: true,
-          partstat: "ACCEPTED",
-          role: "REQ-PARTICIPANT",
-        },
-      ],
-      htmlContent:
-        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-    },
-    {
-      start: [2026, 9, 26, 9, 30],
-      duration: { hours: 3, minutes: 0 },
-      url: "https://form.campai.com/Y2oXlVHpk9mG",
-      startInputType: "local",
-      startOutputType: "local",
-      title: "Frühstücksbuffet",
-      description:
-        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-      geo: { lat: 48.738713, lon: 12.7486027 },
-      categories: ["Veranstaltung"],
-      status: "CONFIRMED",
-      busyStatus: "BUSY",
-      organizer: {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-      },
-      attendees: [
-        {
-          name: "Kinderlicht Wallersdorf e.V.",
-          email: "info@kinderlicht-wallersdorf.de",
-          rsvp: true,
-          partstat: "ACCEPTED",
-          role: "REQ-PARTICIPANT",
-        },
-      ],
-      htmlContent:
-        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-    },
-    {
-      start: [2026, 5, 30, 14, 30],
-      duration: { hours: 3, minutes: 30 },
-      url: "https://form.campai.com/Y2oXlVHpk9mG",
-      startInputType: "local",
-      startOutputType: "local",
-      title: "Tänzchenkaffee",
-      description:
-        "Der Kinderlicht Wallersdorf e.V. läd zum Tänzchenkaffee ein. Hier erwartet euch ein leckeres und günstiges Kuchenbuffet, Kaffee und natürlich Musik zum Tanzen.",
-      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-      geo: { lat: 48.738713, lon: 12.7486027 },
-      categories: ["Veranstaltung"],
-      status: "CANCELLED",
-      busyStatus: "BUSY",
-      organizer: {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-      },
-      attendees: [
-        {
-          name: "Kinderlicht Wallersdorf e.V.",
-          email: "info@kinderlicht-wallersdorf.de",
-          rsvp: true,
-          partstat: "ACCEPTED",
-          role: "REQ-PARTICIPANT",
-        },
-      ],
-      htmlContent:
-        "Der Kinderlicht Wallersdorf e.V. läd zum Tänzchenkaffee ein. Hier erwartet euch ein leckeres und günstiges Kuchenbuffet, Kaffee und natürlich Musik zum Tanzen.",
-    },
-    {
-      start: [2026, 5, 30, 9, 30],
-      duration: { hours: 3, minutes: 0 },
-      url: "https://form.campai.com/Y2oXlVHpk9mG",
-      startInputType: "local",
-      startOutputType: "local",
-      title: "Frühstücksbuffet",
-      description:
-        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-      geo: { lat: 48.738713, lon: 12.7486027 },
-      categories: ["Veranstaltung"],
-      status: "CONFIRMED",
-      busyStatus: "BUSY",
-      organizer: {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-      },
-      attendees: [
-        {
-          name: "Kinderlicht Wallersdorf e.V.",
-          email: "info@kinderlicht-wallersdorf.de",
-          rsvp: true,
-          partstat: "ACCEPTED",
-          role: "REQ-PARTICIPANT",
-        },
-      ],
-      htmlContent:
-        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-    },
-    {
-      start: [2026, 4, 11, 9, 30],
-      duration: { hours: 3, minutes: 0 },
-      url: "https://form.campai.com/Y2oXlVHpk9mG",
-      startInputType: "local",
-      startOutputType: "local",
-      title: "Frühstücksbuffet",
-      description:
-        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-      location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-      geo: { lat: 48.738713, lon: 12.7486027 },
-      categories: ["Veranstaltung"],
-      status: "CONFIRMED",
-      busyStatus: "BUSY",
-      organizer: {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-      },
-      attendees: [
-        {
-          name: "Kinderlicht Wallersdorf e.V.",
-          email: "info@kinderlicht-wallersdorf.de",
-          rsvp: true,
-          partstat: "ACCEPTED",
-          role: "REQ-PARTICIPANT",
-        },
-      ],
-      htmlContent:
-        "Der Kinderlicht Wallersdorf e.V. läd an vier Samstagen im Jahr zum 'Schlemmen für den Guten Zweck' in den Pfarrsaal Wallersdorf ein. Wir stellen ein Frühstückbuffet mit unbegrenzt Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-    },
-    {
-    start: [2025, 12, 27, 19, 0],
-    duration: { hours: 6, minutes: 0 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Schneeball",
-    url: "https://app.campai.com/em/ueqq6/events/693044716ba241a984bee8e3",
-    description:
-      "Der Kinderlicht Wallersdorf läd zum Schneeball ein.",
-    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-    geo: { lat: 48.738713, lon: 12.7486027 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf läd zum Schneeball ein. Wir bitten darum, Reservierungen über den Anmeldebutton oben vorzunehmen. Aufgrund der jüngesten Ergeinisse haben wir uns dazu entschieden, den gesament Erlös des Abends and drei Kinder aus Wallersdorf zu spenden, die unverschuldet in Not geraten sind. Wer direkt spenden möchte, kann dies über PayPal oder Überweisung mit dem Stickwort 'Schnee' tun. Alle Infos dazu findet ihr im Banner direkt oben auf der Seite.",
-  },
-  {
-    start: [2025, 12, 22, 18, 0],
-    duration: { hours: 3, minutes: 30 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Weihnachtsmarkt Wallersdorf",
-    description:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-    location: "Kirche St. Johannes, 94522 Wallersdorf",
-    geo: { lat: 48.7384811, lon: 12.7472498 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-  },
-  {
-    start: [2025, 12, 15, 18, 0],
-    duration: { hours: 3, minutes: 30 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Weihnachtsmarkt Wallersdorf",
-    description:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-    location: "Kirche St. Johannes, 94522 Wallersdorf",
-    geo: { lat: 48.7384811, lon: 12.7472498 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-  },
-  {
-    start: [2025, 12, 1, 18, 0],
-    duration: { hours: 3, minutes: 30 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Weihnachtsmarkt Wallersdorf",
-    description:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-    location: "Kirche St. Johannes, 94522 Wallersdorf",
-    geo: { lat: 48.7384811, lon: 12.7472498 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-  },
-  {
-    start: [2025, 10, 18, 11, 0],
-    duration: { hours: 5, minutes: 0 },
-    startInputType: "local",
-    url: "https://instagram.com/p/DN0azu9WsQt/",
-    startOutputType: "local",
-    title: "Flosar",
-    description:
-      "Der Kinderlicht Wallersdorf e.V., die Jugend Pilsting-Wallersdorf und Kolping laden zum Flosar ein. Bringt eure alten Schätze vorbei und verkauft sie! 10% des Erlöses gehen an den guten Zweck.",
-    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-    geo: { lat: 48.738713, lon: 12.7486027 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf e.V., die Jugend Pilsting-Wallersdorf und Kolping laden zum Flosar ein. Bringt eure alten Schätze vorbei und verkauft sie! 10% des Erlöses gehen an den guten Zweck.",
-  },
-  {
-    start: [2025, 9, 14, 9, 30],
-    duration: { hours: 3, minutes: 0 },
-    url: "https://form.campai.com/Y2oXlVHpk9mG",
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Frühstücksbuffet",
-    description:
-      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-    geo: { lat: 48.738713, lon: 12.7486027 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-  },
-  {
-    start: [2025, 5, 25, 9, 30],
-    duration: { hours: 3, minutes: 0 },
-    url: "https://form.campai.com/Y2oXlVHpk9mG",
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Frühstücksbuffet",
-    description:
-      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-    geo: { lat: 48.738713, lon: 12.7486027 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-  },
-  {
-    start: [2025, 3, 23, 9, 30],
-    duration: { hours: 3, minutes: 0 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Frühstücksbuffet",
-    description:
-      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-    geo: { lat: 48.738713, lon: 12.7486027 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf e.V. läd am verkaufsoffenen Marktsonntag im Pfaarsaal Wallersdorf zum 'Schlemmen für den Guten Zweck' ein. Wir stellen ein Frühstückbuffet mit unlimited Sekt bereit. Der Eintritt erfolgt auf Spendenbasis. Wir empfehlen eine Spende von 16€ pro Person.",
-  },
-  {
-    start: [2025, 3, 14, 18, 30],
-    duration: { hours: 3, minutes: 30 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Jahreshauptversammlung 2025",
-    description:
-      "Der Kinderlicht Wallersdorf e.V. läd zur diesjährigen Jahreshauptversammlung ein.",
-    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-    geo: { lat: 48.738713, lon: 12.7486027 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "In diesem Jahr findet die Jahreshauptversammlung im Keller des Pfarrsaals bei der Kegelbahn statt. Für das leibliche Wohl ist gesorgt. Die Kegelbahn kann im Anschluss an die JHV genutzt werden.",
-  },
-  {
-    start: [2024, 12, 16, 18, 0],
-    duration: { hours: 3, minutes: 30 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Weihnachtsmarkt Wallersdorf",
-    description:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-    location: "Kirche St. Johannes, 94522 Wallersdorf",
-    geo: { lat: 48.7384811, lon: 12.7472498 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-  },
-  {
-    start: [2024, 12, 9, 18, 0],
-    duration: { hours: 3, minutes: 30 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Weihnachtsmarkt Wallersdorf",
-    description:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-    location: "Kirche St. Johannes, 94522 Wallersdorf",
-    geo: { lat: 48.7384811, lon: 12.7472498 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-  },
-  {
-    start: [2024, 12, 2, 18, 0],
-    duration: { hours: 3, minutes: 30 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Weihnachtsmarkt Wallersdorf",
-    description:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-    location: "Kirche St. Johannes, 94522 Wallersdorf",
-    geo: { lat: 48.7384811, lon: 12.7472498 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der Kinderlicht Wallersdorf betreibt den Weihnachtsmarkt vor der Kirche in Wallersdorf.",
-  },
-  {
-    start: [2024, 11, 23, 15, 30],
-    duration: { hours: 4, minutes: 30 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Weihnachtsmarkt Waldwipfelweg",
-    description:
-      "Dieses Jahr laden wir alle Kinderlichter, Gönner und Freunde zu einem gemeinsamen Ausflug in der Weihnachtszeit ein. Vom Verein wird dabei ein Bus organisiert, der Eintritt übernommen und alle Teilnehmer/innen erhalten einen Verzehrgutschein.",
-    location: "Volksfestplatz, 94522 Wallersdorf",
-    url: "https://form.campai.com/sv8KAdBG3LCz",
-    geo: { lat: 48.7337222, lon: 12.7515239 },
-    categories: ["Veranstaltung"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      'Dieses Jahr laden wir alle Kinderlichter, Gönner und Freunde zu einem gemeinsamen Ausflug in der Weihnachtszeit ein. Vom Verein wird dabei ein Bus organisiert, der Eintritt übernommen und alle Teilnehmer/innen erhalten einen Verzehrgutschein. <a href="https://form.campai.com/sv8KAdBG3LCz">Hier klicken um zu reservieren.</a>',
-  },
-  {
-    start: [2024, 7, 13, 19, 30],
-    duration: { hours: 3 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Konzert der Filmmusik 2.0",
-    description:
-      "Das Konzert der Filmmusik geht in die zweite Runde! Wir freuen uns auf einen Abend voller schöner Momente mit ausgezeichneten KünstlerInnen.",
-    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-    url: "https://form.campai.com/2UDVjKg6BbDW",
-    geo: { lat: 48.738713, lon: 12.7486027 },
-    categories: ["Veranstaltung", "Musik", "Tanzen"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      'Das Konzert der Filmmusik geht in die zweite Runde! Wir freuen uns auf einen Abend voller schöner Momente mit ausgezeichneten KünstlerInnen. <a href="https://form.campai.com/2UDVjKg6BbDW">Hier klicken um zu reservieren.</a>',
-  },
-  {
-    start: [2024, 1, 3, 19, 0],
-    duration: { hours: 3 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Klimapuzzle",
-    description:
-      "Lerne den Klimawandeln intuitiv verstehen beim 'Klimapuzzle'! Tauche ein in die faszinierende Welt des Klimaschutzes und sei dabei, wenn am 03.01.2024 in der Eventbar 'Woibadinga' das Klimapuzzle gelöst wird!",
-    location: "Eventbar Woibadinga, Deggendorfer Str. 12, 94522 Wallersdorf",
-    url: "https://association.climatefresk.org/training_sessions/7a6d156b-12ce-4da1-9d45-01ce2a871c47/show_public?language=en&tenant_token=36bd2274d3982262c0021755",
-    geo: { lat: 48.740452, lon: 12.7467539 },
-    categories: ["Veranstaltung", "Klima", "Umwelt"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Lerne den Klimawandeln intuitiv verstehen beim 'Klimapuzzle'! Tauche ein in die faszinierende Welt des Klimaschutzes und sei dabei, wenn am 03.01.2024 in der Eventbar 'Woibadinga' das Klimapuzzle gelöst wird! Reservierung über den Button oben.",
-  },
-  {
-    start: [2023, 11, 18, 19, 0],
-    duration: { hours: 6 },
-    startInputType: "local",
-    startOutputType: "local",
-    title: "Schneeball",
-    description:
-      "Der dritte Schneeball des Kinderlicht Wallersdorf e.V. gemeinsam mit Kolping. Reservierungen per E-Mail an info@kinderlicht-wallersdorf.de",
-    location: "Pfarrsaal, Kirchgasse 15, 94522 Wallersdorf",
-    url: "https://form.campai.com/2UDVjKg6BbDW",
-    geo: { lat: 48.738713, lon: 12.7486027 },
-    categories: ["Veranstaltung", "Ball", "Tanzen"],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {
-      name: "Kinderlicht Wallersdorf e.V.",
-      email: "info@kinderlicht-wallersdorf.de",
-    },
-    attendees: [
-      {
-        name: "Kinderlicht Wallersdorf e.V.",
-        email: "info@kinderlicht-wallersdorf.de",
-        rsvp: true,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-      },
-    ],
-    htmlContent:
-      "Der dritte Schneeball des Kinderlicht Wallersdorf e.V. gemeinsam mit Kolping. Reservierungen bitte über den Anmeldebutton oben.",
-  },
-];
+export const PUBLIC_EVENTS_URL =
+  "https://portal.kinderlicht-wallersdorf.de/api/public-events";
 
-const dateFromArray = (date: number[]) => new Date(date.join("-"));
 export const eventIsSoon = 1000 * 60 * 60 * 24 * 30;
-export const numberOfUpcomingEvents = events.filter(
-  (evt) =>
-    dateFromArray(evt["start"].slice(0, 3)) >= new Date() &&
-    dateFromArray(evt["start"].slice(0, 3)).getTime() - new Date().getTime() <=
-      eventIsSoon
-).length;
+
+type EventDuration = {
+  hours: number;
+  minutes: number;
+};
+
+const hasStringValue = (value: unknown): value is string =>
+  typeof value === "string" && value.length > 0;
+
+const isNumberTupleDate = (value: unknown): value is number[] =>
+  Array.isArray(value) &&
+  value.length >= 5 &&
+  value.every((entry) => typeof entry === "number" && Number.isFinite(entry));
+
+const isDuration = (value: unknown): value is EventDuration => {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const duration = value as Record<string, unknown>;
+
+  return (
+    typeof duration.hours === "number" &&
+    Number.isFinite(duration.hours) &&
+    typeof duration.minutes === "number" &&
+    Number.isFinite(duration.minutes)
+  );
+};
+
+const isPublicEvent = (value: unknown): value is Event => {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const event = value as Record<string, unknown>;
+
+  return (
+    isNumberTupleDate(event.start) &&
+    isDuration(event.duration) &&
+    hasStringValue(event.title)
+  );
+};
+
+export const parsePublicEvents = (data: unknown): Event[] => {
+  if (!Array.isArray(data) || !data.every(isPublicEvent)) {
+    throw new Error("Public events API returned an unexpected response.");
+  }
+
+  return data;
+};
+
+export const fetchPublicEvents = async (
+  fetcher: typeof fetch = fetch
+): Promise<Event[]> => {
+  const response = await fetcher(PUBLIC_EVENTS_URL, {
+    headers: {
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Public events API responded with ${response.status} ${response.statusText}`
+    );
+  }
+
+  return parsePublicEvents(await response.json());
+};
+
+const dateFromArray = (date: number[]) => new Date(date.slice(0, 3).join("-"));
+
+export const countUpcomingEvents = (
+  events: Array<Pick<Event, "start">>
+): number =>
+  events.filter((event) => {
+    const eventDate = dateFromArray(event.start);
+    const now = new Date();
+
+    return (
+      eventDate >= now && eventDate.getTime() - now.getTime() <= eventIsSoon
+    );
+  }).length;

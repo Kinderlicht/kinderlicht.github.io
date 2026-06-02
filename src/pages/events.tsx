@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import { createEvent } from "ics";
-import { ConvertDate, ConvertDateObject } from "../content/events/de_date";
-import { events, Event, eventIsSoon } from "../content/events/events";
-import { HeadFC, Link } from "gatsby";
+import { ConvertDateObject } from "../content/events/de_date";
+import { eventIsSoon, type Event } from "../content/events/events";
+import { graphql, HeadFC, Link, PageProps } from "gatsby";
 import Layout from "../components/layout";
+
+type EventPageData = {
+  allPublicEvent: {
+    nodes: Event[];
+  };
+};
+
+type IndexedEvent = Event & {
+  eventId: number;
+};
 
 // CSS keyframes for highlight animation
 const highlightStyles = `
@@ -35,7 +45,15 @@ function download(filename: string, text: string) {
   URL.revokeObjectURL(url);
 }
 
-function EventCard({ event, index, highlightedId }: { event: Event; index: number; highlightedId: null | number }) {
+function EventCard({
+  event,
+  index,
+  highlightedId,
+}: {
+  event: IndexedEvent;
+  index: number;
+  highlightedId: null | number;
+}) {
   const icsFile = createEvent(event);
   let content: string | undefined = "Ups, da ist etwas schief gelaufen...";
   if (icsFile["error"] == null) {
@@ -209,7 +227,8 @@ function EventCard({ event, index, highlightedId }: { event: Event; index: numbe
   );
 }
 
-export default function EventPage() {
+export default function EventPage({ data }: PageProps<EventPageData>) {
+  const events = data.allPublicEvent.nodes;
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -518,3 +537,42 @@ export default function EventPage() {
 }
 
 export const Head: HeadFC = () => <title>Kinderlicht</title>;
+
+export const query = graphql`
+  query EventsPageQuery {
+    allPublicEvent {
+      nodes {
+        start
+        duration {
+          hours
+          minutes
+        }
+        url
+        startInputType
+        startOutputType
+        title
+        description
+        location
+        geo {
+          lat
+          lon
+        }
+        categories
+        status
+        busyStatus
+        organizer {
+          name
+          email
+        }
+        attendees {
+          name
+          email
+          rsvp
+          partstat
+          role
+        }
+        htmlContent
+      }
+    }
+  }
+`;

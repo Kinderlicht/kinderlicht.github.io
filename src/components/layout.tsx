@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "gatsby";
+import { graphql, Link, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import { numberOfUpcomingEvents } from "../content/events/events";
+import { countUpcomingEvents, type Event } from "../content/events/events";
 import { Navbar } from "flowbite-react";
 
 // import { Helmet } from "react-helmet";
@@ -41,7 +41,24 @@ const GatsbyLinkWrapperIcon = ({
   children: any;
 }) => <Link to={href}>{children}</Link>;
 
+type LayoutEventsData = {
+  allPublicEvent: {
+    nodes: Array<Pick<Event, "start">>;
+  };
+};
+
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const data = useStaticQuery<LayoutEventsData>(graphql`
+    query LayoutEventsQuery {
+      allPublicEvent {
+        nodes {
+          start
+        }
+      }
+    }
+  `);
+  const numberOfUpcomingEvents = countUpcomingEvents(data.allPublicEvent.nodes);
+
   return (
     <>
       <header className="mx-auto bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-100">
