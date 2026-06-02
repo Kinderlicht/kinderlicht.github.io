@@ -6,6 +6,67 @@ import authorsData from './src/content/authors.json' with { type: 'json' };
 import sponsorsData from './src/content/sponsors.json' with { type: 'json' };
 import boardData from './src/content/board.json' with { type: 'json' };
 
+const ACTIVITY_REPORTS_URL =
+	"https://portal.kinderlicht-wallersdorf.de/api/activity-reports";
+const ACTIVITY_REPORTS_CACHE_KEY = "activity-reports";
+
+function isActivityReport(value) {
+	if (!value || typeof value !== "object") {
+		return false;
+	}
+
+	return (
+		typeof value.date === "string" &&
+		typeof value.donation === "number" &&
+		Number.isFinite(value.donation) &&
+		typeof value.title === "string" &&
+		typeof value.description === "string"
+	);
+}
+
+function parseActivityReports(data) {
+	if (!Array.isArray(data) || !data.every(isActivityReport)) {
+		throw new Error("Activity reports API returned an unexpected response.");
+	}
+
+	return data;
+}
+
+async function fetchActivityReports(cache) {
+	try {
+		const response = await fetch(ACTIVITY_REPORTS_URL, {
+			headers: {
+				Accept: "application/json",
+			},
+		});
+
+		if (!response.ok) {
+			throw new Error(
+				`Activity reports API responded with ${response.status} ${response.statusText}`
+			);
+		}
+
+		const reports = parseActivityReports(await response.json());
+		await cache.set(ACTIVITY_REPORTS_CACHE_KEY, reports);
+		return reports;
+	} catch (error) {
+		const cachedReports = await cache.get(ACTIVITY_REPORTS_CACHE_KEY);
+		const message = error instanceof Error ? error.message : String(error);
+
+		if (Array.isArray(cachedReports) && cachedReports.every(isActivityReport)) {
+			reporter.warn(
+				`Could not fetch activity reports. Using cached data instead. Reason: ${message}`
+			);
+			return cachedReports;
+		}
+
+		reporter.warn(
+			`Could not fetch activity reports. The donations timeline will be empty. Reason: ${message}`
+		);
+		return [];
+	}
+}
+
 
 export async function onCreateNode({ node, getNode, actions }) {
 	const { createNodeField } = actions;
@@ -21,7 +82,7 @@ export async function onCreateNode({ node, getNode, actions }) {
 	}
 }
 
-export const sourceNodes = async ({ actions, getNodesByType, createNodeId, createContentDigest }) => {
+export const sourceNodes = async ({ actions, createNodeId, createContentDigest, cache }) => {
 	const { createNode, createTypes } = actions;
 
 	createTypes(`
@@ -54,7 +115,30 @@ export const sourceNodes = async ({ actions, getNodesByType, createNodeId, creat
 		image: File @link(by: "relativePath")
 		role: String!
 	}
+
+	type ActivityReport implements Node {
+		date: String!
+		donation: Float!
+		title: String!
+		description: String!
+	}
   `);
+
+	const activityReports = await fetchActivityReports(cache);
+
+	activityReports.forEach((activityReport, index) => {
+		const nodeId = createNodeId(`ActivityReport-${index}`);
+		createNode({
+			...activityReport,
+			id: nodeId,
+			parent: null,
+			children: [],
+			internal: {
+				type: 'ActivityReport',
+				contentDigest: createContentDigest(activityReport),
+			},
+		});
+	});
 
 	Object.keys(authorsData).forEach(authorId => {
 		const author = authorsData[authorId];

@@ -1,12 +1,27 @@
 import React from "react";
 import "../styles/global.css";
 import Layout from "../components/layout";
-import { HeadFC, Link, graphql } from "gatsby";
+import { HeadFC, Link, PageProps, graphql } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import type { BlogPost } from "../types/";
 import Timeline from "../components/timeline";
-import { Activity } from "../components/horizontal_scroll";
-import { activities } from "../content/donations";
+import type { ActivityReport } from "../content/donations";
+
+type BlogIndexData = {
+  first: {
+    posts: Array<{
+      node: BlogPost;
+    }>;
+  };
+  olderPosts: {
+    posts: Array<{
+      node: BlogPost;
+    }>;
+  };
+  activityReports: {
+    nodes: ActivityReport[];
+  };
+};
 
 const NewsEntry: React.FC<{ post: BlogPost }> = ({ post }) => {
   return (
@@ -37,9 +52,10 @@ const NewsEntry: React.FC<{ post: BlogPost }> = ({ post }) => {
   );
 };
 
-const BlogIndex: React.FC<{ data: any }> = ({ data }) => {
-  const { first: { posts }, olderPosts } = data;
+const BlogIndex: React.FC<PageProps<BlogIndexData>> = ({ data }) => {
+  const { first: { posts }, olderPosts, activityReports } = data;
   const first: BlogPost = posts[0].node;
+  const activities = activityReports.nodes;
 
   const className = "object-cover w-full h-64 rounded sm:h-96 lg:col-span-7 dark:bg-gray-500";
 
@@ -135,6 +151,15 @@ query IndexQuery {
   ) {
     posts: edges {
       ...PostFields
+    }
+  }
+
+  activityReports: allActivityReport(sort: {date: ASC}) {
+    nodes {
+      date
+      donation
+      title
+      description
     }
   }
 }

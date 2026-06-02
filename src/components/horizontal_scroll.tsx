@@ -24,6 +24,12 @@ const ActivityCarousel: React.FC<CarouselProps> = ({ activities, onIndexChange }
     }
   }, [currentIndex, onIndexChange]);
 
+  useEffect(() => {
+    if (activities.length > 0 && currentIndex >= activities.length) {
+      setCurrentIndex(activities.length - 1);
+    }
+  }, [activities.length, currentIndex]);
+
   const handlePrev = useCallback(() => {
     if (currentIndex > 0) {
       setDirection(-1);
@@ -70,6 +76,10 @@ const ActivityCarousel: React.FC<CarouselProps> = ({ activities, onIndexChange }
     if (isLeftSwipe) handleNext();
     if (isRightSwipe) handlePrev();
   };
+
+  if (activities.length === 0) {
+    return null;
+  }
 
   const progressPercentage = ((currentIndex + 1) / activities.length) * 100;
 
