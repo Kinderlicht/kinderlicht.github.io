@@ -264,7 +264,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
             Tätigkeitsbericht
           </p>
           <p className="mt-1 text-sm text-gray-500">
-            Lichtmoment {currentIndex + 1} von {activities.length}
+            Unterstützung {currentIndex + 1} von {activities.length}
           </p>
         </div>
         {currentIndex !== lastIndex && (
@@ -315,7 +315,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
             />
           </div>
           <input
-            aria-label={`Zeitstrahl, Lichtmoment ${currentIndex + 1} von ${activities.length}`}
+            aria-label={`Zeitstrahl, Unterstützung ${currentIndex + 1} von ${activities.length}`}
             className="activity-range relative z-10 block w-full cursor-pointer"
             max={lastIndex}
             min={0}
