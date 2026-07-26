@@ -4,89 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Flame scale container - prevents layout shift */
-.flame-scale-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-}
-
-/* Adjusted flame styles */
-.flame-container {
-  animation-name: flame-flicker;
-  animation-duration: 1000ms;
-  animation-delay: 200ms;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  transform-origin: center center;
-  position: relative;
-  width: 60px;
-  height: 70px;
-}
-
-/* Flame layer base styles - all layers centered using transform */
-.flame-flame {
-  position: absolute;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%;
-  border-top-left-radius: 50%;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%) rotate(-45deg);
-  transform-origin: center center;
-}
-
-.flame-red {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(45deg, #ff4500, #ff6347);
-  box-shadow: 0px 0px 10px 5px rgba(255, 69, 0, 0.7);
-  z-index: 2;
-}
-
-.flame-orange {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(45deg, #ff8c00, #ffa500);
-  box-shadow: 0px 0px 12px 6px rgba(255, 165, 0, 0.7);
-  z-index: 3;
-}
-
-.flame-yellow {
-  width: 30px;
-  height: 30px;
-  background: linear-gradient(45deg, #ffd700, #ffec8b);
-  box-shadow: 0px 0px 14px 7px rgba(255, 215, 0, 0.6);
-  z-index: 4;
-}
-
-.flame-white {
-  width: 18px;
-  height: 18px;
-  background: linear-gradient(45deg, #fff, #fffacd);
-  box-shadow: 0px 0px 15px 8px rgba(255, 255, 255, 0.8);
-  z-index: 5;
-}
-
-/* Flame flicker animation - subtle sway effect */
-@keyframes flame-flicker {
-  0%   { transform: scaleY(1) scaleX(1); }
-  25%  { transform: scaleY(1.03) scaleX(0.98); }
-  50%  { transform: scaleY(0.97) scaleX(1.02); }
-  75%  { transform: scaleY(1.02) scaleX(0.99); }
-  100% { transform: scaleY(0.98) scaleX(1.01); }
-}
-
-/* Flame grow pulse animation - triggered on donation change */
-@keyframes flame-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
-}
-
-
 /* Hide scrollbar in WebKit-based browsers */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
@@ -161,6 +78,92 @@
     transparent 100%
   );
   -webkit-mask-size: 100% 100%;
+}
+
+/* Tätigkeitsbericht timeline */
+.carousel-arrow-button {
+  @apply flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:translate-y-0 disabled:hover:shadow-md;
+}
+
+.carousel-edge-button {
+  @apply flex h-11 flex-shrink-0 items-center justify-center gap-1.5 rounded-full border border-orange-200 bg-white px-3 text-xs font-bold text-orange-700 shadow-sm transition duration-150 hover:border-orange-300 hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-30;
+}
+
+.activity-range {
+  height: 1.75rem;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+.activity-range::-webkit-slider-runnable-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+.activity-range::-webkit-slider-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: -0.375rem;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 3px solid white;
+  border-radius: 9999px;
+  background: #f97316;
+  box-shadow:
+    0 0 0 1px rgba(234, 88, 12, 0.22),
+    0 3px 10px rgba(154, 52, 18, 0.3);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.activity-range::-moz-range-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+.activity-range::-moz-range-progress {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+.activity-range::-moz-range-thumb {
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 3px solid white;
+  border-radius: 9999px;
+  background: #f97316;
+  box-shadow:
+    0 0 0 1px rgba(234, 88, 12, 0.22),
+    0 3px 10px rgba(154, 52, 18, 0.3);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.activity-range:hover::-webkit-slider-thumb,
+.activity-range:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.12);
+  box-shadow:
+    0 0 0 5px rgba(251, 146, 60, 0.2),
+    0 3px 10px rgba(154, 52, 18, 0.3);
+}
+
+.activity-range:hover::-moz-range-thumb,
+.activity-range:focus-visible::-moz-range-thumb {
+  transform: scale(1.12);
+  box-shadow:
+    0 0 0 5px rgba(251, 146, 60, 0.2),
+    0 3px 10px rgba(154, 52, 18, 0.3);
+}
+
+.activity-range:focus-visible {
+  outline: none;
 }
 
 /* ===== Member Form Styles ===== */
