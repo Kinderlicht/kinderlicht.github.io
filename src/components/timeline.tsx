@@ -48,11 +48,11 @@ export default function Timeline({ activities }: TimelineProps) {
           Was wir gemeinsam bewegen
         </p>
         <h2 className="mb-2 text-2xl font-black tracking-tight text-gray-900 md:text-3xl">
-          Jeder Beitrag wird zum Licht
+          Jeder Beitrag trägt dazu bei, unsere Flamme zu entfachen
         </h2>
         <p className="mx-auto max-w-xl text-sm leading-relaxed text-gray-500 md:text-base">
-          Reise durch unseren anonymisierten Tätigkeitsbericht und sieh, wie aus
-          vielen Lichtmomenten ein großes Feuer wird.
+          Reise durch unseren anonymisierten Tätigkeitsbericht und sieh, wie 
+          unsere Flamme durch die Unterstützung unserer Spender:innen wächst. 
         </p>
       </div>
 
