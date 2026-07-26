@@ -1,5 +1,4 @@
-import { e } from "framer-motion/dist/types.d-CdW9auKD";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 
 interface MoneyAdderProps {
   /** The current total balance you want to display. */
@@ -37,6 +36,7 @@ const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
     colorClass: string; // e.g., "text-yellow-400" or "text-red-400"
   };
   const [floatingItems, setFloatingItems] = useState<FloatingItem[]>([]);
+  const nextFloatingItemId = useRef(0);
 
   // Key used to re-mount <span> so CSS animation restarts each time
   const [animationKey, setAnimationKey] = useState<number>(0);
@@ -57,7 +57,9 @@ const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
         const colorClass = diff > 0 ? "text-yellow-400" : "text-red-400";
 
         // 3) Create a floating item to show +X or -X
-        const id = Date.now(); // or any unique ID generator
+        // A monotonic ID remains unique even when several updates land in the
+        // same millisecond during fast carousel navigation.
+        const id = ++nextFloatingItemId.current;
         setFloatingItems((prev) => [
           ...prev,
           { id, diff, colorClass }

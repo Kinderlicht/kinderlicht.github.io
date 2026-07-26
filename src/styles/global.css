@@ -4,6 +4,88 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Original flame visualization */
+.flame-scale-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.flame-container {
+  animation-name: flame-flicker;
+  animation-duration: 1000ms;
+  animation-delay: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transform-origin: center center;
+  position: relative;
+  width: 60px;
+  height: 70px;
+}
+
+.flame-flame {
+  position: absolute;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) rotate(-45deg);
+  transform-origin: center center;
+}
+
+.flame-red {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(45deg, #ff4500, #ff6347);
+  box-shadow: 0px 0px 10px 5px rgba(255, 69, 0, 0.7);
+  z-index: 2;
+}
+
+.flame-orange {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, #ff8c00, #ffa500);
+  box-shadow: 0px 0px 12px 6px rgba(255, 165, 0, 0.7);
+  z-index: 3;
+}
+
+.flame-yellow {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(45deg, #ffd700, #ffec8b);
+  box-shadow: 0px 0px 14px 7px rgba(255, 215, 0, 0.6);
+  z-index: 4;
+}
+
+.flame-white {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(45deg, #fff, #fffacd);
+  box-shadow: 0px 0px 15px 8px rgba(255, 255, 255, 0.8);
+  z-index: 5;
+}
+
+@keyframes flame-flicker {
+  0% {
+    transform: scaleY(1) scaleX(1);
+  }
+  25% {
+    transform: scaleY(1.03) scaleX(0.98);
+  }
+  50% {
+    transform: scaleY(0.97) scaleX(1.02);
+  }
+  75% {
+    transform: scaleY(1.02) scaleX(0.99);
+  }
+  100% {
+    transform: scaleY(0.98) scaleX(1.01);
+  }
+}
+
 /* Hide scrollbar in WebKit-based browsers */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;

@@ -69,13 +69,16 @@ export default function Timeline({ activities }: TimelineProps) {
             />
           </div>
 
-          <div className="order-1 mx-auto flex w-full justify-center lg:order-2">
+          <div className="order-1 mx-auto flex w-full flex-col items-center justify-center lg:order-2">
             <Flame
               currentActivity={safeIndex + 1}
               money={currentTotal}
               totalActivities={sortedActivities.length}
               total_money={total}
             />
+            <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+              Gesamtspenden
+            </p>
           </div>
         </div>
       )}
