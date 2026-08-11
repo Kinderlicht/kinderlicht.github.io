@@ -4,6 +4,7 @@ import { ConvertDateObject } from "../content/events/de_date";
 import { eventIsSoon, type Event } from "../content/events/events";
 import { graphql, HeadFC, PageProps } from "gatsby";
 import Layout from "../components/layout";
+import { PageHeader } from "../components/page";
 
 type EventPageData = {
   allPublicEvent: {
@@ -85,7 +86,7 @@ function EventCard({
   return (
     <article
       key={index}
-      className={`group relative overflow-hidden rounded-2xl border border-gray-200 shadow-lg transition-all duration-300 hover:shadow-2xl ${isFinished ? "bg-gray-50" : "bg-white hover:-translate-y-1"} ${highlightedId !== null && highlightedId === event.eventId ? "ring-4 ring-amber-400 animate-pulse-highlight" : ""}`}
+      className={`site-card relative overflow-hidden ${isFinished ? "bg-slate-50" : "bg-white"} ${highlightedId !== null && highlightedId === event.eventId ? "ring-4 ring-amber-400 animate-pulse-highlight" : ""}`}
       id={`event-${event["eventId"]}`}
       aria-labelledby={`event-title-${event.eventId}`}
       style={
@@ -97,7 +98,7 @@ function EventCard({
       {/* Top accent bar */}
       <div
         aria-hidden="true"
-        className={`h-1.5 w-full ${isFinished ? "bg-gray-300" : isSoon ? "bg-gradient-to-r from-green-400 to-emerald-500" : "bg-gradient-to-r from-gray-300 to-gray-400"}`}
+        className={`h-1 w-full ${isFinished ? "bg-slate-300" : isSoon ? "bg-emerald-600" : "bg-orange-600"}`}
       ></div>
 
       <div className="p-6">
@@ -109,7 +110,7 @@ function EventCard({
               dateStyle: "full",
               timeStyle: "short",
             })}
-            className={`flex-shrink-0 w-20 h-24 rounded-2xl flex flex-col items-center justify-center shadow-md ${isFinished ? "bg-gray-100" : "bg-gradient-to-br from-slate-600 to-slate-700"}`}
+            className={`flex h-24 w-20 flex-shrink-0 flex-col items-center justify-center rounded-xl border ${isFinished ? "border-slate-200 bg-slate-100" : "border-slate-700 bg-slate-700"}`}
           >
             <span
               aria-hidden="true"
@@ -143,7 +144,7 @@ function EventCard({
                   <span aria-hidden="true">✓</span> Abgeschlossen
                 </span>
               ) : isSoon ? (
-                <span className="inline-flex items-center gap-1 bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 text-xs font-semibold px-2.5 py-1 rounded-full animate-pulse">
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800">
                   <span aria-hidden="true">🔥</span> Bevorstehend
                 </span>
               ) : null}
@@ -215,10 +216,7 @@ function EventCard({
         {/* Action buttons */}
         {!isFinished && event["url"] && (
           <div className="mt-5 pt-5 border-t border-gray-100 flex flex-wrap gap-3">
-            <a
-              href={event["url"]}
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-orange-700 px-5 py-2.5 font-semibold text-white shadow-md transition-colors hover:bg-orange-800"
-            >
+            <a href={event["url"]} className="site-button-primary gap-2">
               {!event["url"].includes("gewinnspiel")
                 ? "Anmelden"
                 : "Teilnehmen"}
@@ -359,246 +357,198 @@ export default function EventPage({ data }: PageProps<EventPageData>) {
 
   return (
     <Layout>
-      <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
-        <h1 className="mb-16 text-3xl font-bold text-center">
-          Unsere{" "}
-          <span className="text-orange-700 dark:text-orange-400 no-underline">
-            Events
-          </span>
-        </h1>
-      </div>
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-white relative overflow-hidden">
-        {/* Decorative background elements */}
-        <div
-          aria-hidden="true"
-          className="absolute top-0 left-0 w-96 h-96 bg-orange-200 rounded-full filter blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2"
-        ></div>
-        <div
-          aria-hidden="true"
-          className="absolute top-1/3 right-0 w-80 h-80 bg-amber-200 rounded-full filter blur-3xl opacity-30 translate-x-1/2"
-        ></div>
-        <div
-          aria-hidden="true"
-          className="absolute bottom-0 left-1/4 w-72 h-72 bg-yellow-200 rounded-full filter blur-3xl opacity-20"
-        ></div>
+      <div className="site-page max-w-5xl">
+        <PageHeader
+          eyebrow="Termine"
+          title="Veranstaltungen"
+          description="Entdecke unsere kommenden Veranstaltungen und werde Teil unserer Gemeinschaft."
+        />
 
-        <div className="relative z-10 container max-w-5xl mx-auto px-4 py-8">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 rounded-full mb-6 shadow-xl ring-4 ring-orange-100">
-              <span aria-hidden="true" className="text-4xl">
-                🎉
+        <div className="-mt-4 mb-10 flex flex-wrap justify-center gap-3">
+          <div className="site-stat">
+            <strong className="mr-2 text-xl text-orange-700">
+              {upcomingCount}
+            </strong>
+            Kommende Events
+          </div>
+          <div className="site-stat">
+            <strong className="mr-2 text-xl text-slate-700">{pastCount}</strong>
+            Vergangene Events
+          </div>
+        </div>
+
+        {/* Filters Card */}
+        <section
+          aria-labelledby="event-filter-heading"
+          className="site-card mb-8 p-5 sm:p-6"
+        >
+          <div className="site-form-heading mb-5">
+            <div className="site-form-heading-icon">
+              <span aria-hidden="true" className="text-xl">
+                🔍
               </span>
             </div>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Entdecke unsere kommenden Events und werde Teil unserer
-              Gemeinschaft!
-            </p>
-
-            {/* Stats */}
-            <div className="flex flex-wrap justify-center gap-4 mt-6">
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-md border border-white/50">
-                <span className="text-2xl font-bold text-orange-700">
-                  {upcomingCount}
-                </span>
-                <span className="text-gray-600 ml-2">Kommende Events</span>
-              </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-md border border-white/50">
-                <span className="text-2xl font-bold text-gray-500">
-                  {pastCount}
-                </span>
-                <span className="text-gray-600 ml-2">Vergangene Events</span>
-              </div>
-            </div>
+            <h2 id="event-filter-heading" className="site-form-heading-title">
+              Filter & Suche
+            </h2>
           </div>
 
-          {/* Filters Card */}
-          <section
-            aria-labelledby="event-filter-heading"
-            className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 mb-8 border border-white/50"
-          >
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl flex items-center justify-center shadow-md">
-                <span aria-hidden="true" className="text-xl">
-                  🔍
-                </span>
-              </div>
-              <h2
-                id="event-filter-heading"
-                className="text-xl font-bold text-gray-800"
-              >
-                Filter & Suche
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Search */}
-              <div className="lg:col-span-2">
-                <label
-                  htmlFor="event-search"
-                  className="block text-sm font-medium text-gray-600 mb-2"
-                >
-                  Suche
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                    <svg
-                      aria-hidden="true"
-                      className="w-5 h-5 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    id="event-search"
-                    type="search"
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    value={searchTerm}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 transition-all duration-300 bg-white text-gray-700 placeholder-gray-600 outline-none"
-                    placeholder="Nach Event suchen..."
-                  />
-                </div>
-              </div>
-
-              {/* Start Date */}
-              <div>
-                <label
-                  htmlFor="event-start-date"
-                  className="block text-sm font-medium text-gray-600 mb-2"
-                >
-                  Von
-                </label>
-                <input
-                  id="event-start-date"
-                  type="date"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 transition-all duration-300 bg-white text-gray-700 outline-none"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
-              </div>
-
-              {/* End Date */}
-              <div>
-                <label
-                  htmlFor="event-end-date"
-                  className="block text-sm font-medium text-gray-600 mb-2"
-                >
-                  Bis
-                </label>
-                <input
-                  id="event-end-date"
-                  type="date"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 transition-all duration-300 bg-white text-gray-700 outline-none"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {/* Toggle and Clear */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mt-5 pt-5 border-t border-gray-100">
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  id="show-past-events"
-                  type="checkbox"
-                  checked={showPast}
-                  onChange={(e) => setShowPast(e.target.checked)}
-                  className="sr-only peer"
-                />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-100 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-700"></div>
-                <span className="ms-3 text-sm font-medium text-gray-600">
-                  Vergangene Events anzeigen
-                </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Search */}
+            <div className="lg:col-span-2">
+              <label htmlFor="event-search" className="site-label mb-2">
+                Suche
               </label>
-
-              {(searchTerm || startDate || endDate) && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchTerm("");
-                    setStartDate("");
-                    setEndDate("");
-                  }}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-medium text-gray-700 transition-colors hover:bg-orange-50 hover:text-orange-800"
-                >
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                   <svg
                     aria-hidden="true"
-                    className="w-4 h-4"
+                    className="w-5 h-5 text-gray-400"
                     fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    viewBox="0 0 20 20"
                   >
                     <path
+                      stroke="currentColor"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                     />
                   </svg>
-                  Filter zurücksetzen
-                </button>
-              )}
+                </div>
+                <input
+                  id="event-search"
+                  type="search"
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  value={searchTerm}
+                  className="site-field pl-12 pr-4"
+                  placeholder="Nach Event suchen..."
+                />
+              </div>
             </div>
-          </section>
 
-          {/* Results count */}
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-gray-700" aria-live="polite" aria-atomic="true">
-              <span className="font-semibold text-gray-800">
-                {filtered.length}
-              </span>{" "}
-              {filtered.length === 1 ? "Event" : "Events"} gefunden
-            </p>
+            {/* Start Date */}
+            <div>
+              <label htmlFor="event-start-date" className="site-label mb-2">
+                Von
+              </label>
+              <input
+                id="event-start-date"
+                type="date"
+                className="site-field px-4"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+
+            {/* End Date */}
+            <div>
+              <label htmlFor="event-end-date" className="site-label mb-2">
+                Bis
+              </label>
+              <input
+                id="event-end-date"
+                type="date"
+                className="site-field px-4"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
           </div>
 
-          {/* Events Grid */}
-          {filtered.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6">
-              {filtered.map((e, index) => (
-                <EventCard
-                  key={index}
-                  event={e}
-                  index={index}
-                  highlightedId={highlightedId}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-6">
-                <span aria-hidden="true" className="text-4xl">
-                  📭
-                </span>
-              </div>
-              <h2 className="text-xl font-bold text-gray-700 mb-2">
-                Keine Events gefunden
-              </h2>
-              <p className="text-gray-500 mb-6">
-                Versuche andere Suchbegriffe oder passe die Filter an.
-              </p>
+          {/* Toggle and Clear */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mt-5 pt-5 border-t border-gray-100">
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                id="show-past-events"
+                type="checkbox"
+                checked={showPast}
+                onChange={(e) => setShowPast(e.target.checked)}
+                className="sr-only peer"
+              />
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-100 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-700"></div>
+              <span className="ms-3 text-sm font-medium text-gray-600">
+                Vergangene Events anzeigen
+              </span>
+            </label>
+
+            {(searchTerm || startDate || endDate) && (
               <button
                 type="button"
                 onClick={() => {
                   setSearchTerm("");
                   setStartDate("");
                   setEndDate("");
-                  setShowPast(true);
                 }}
-                className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-orange-100 px-5 py-2.5 font-medium text-orange-800 transition-colors hover:bg-orange-200"
+                className="site-button-secondary gap-2 px-3 py-2 text-sm"
               >
-                Alle Events anzeigen
+                <svg
+                  aria-hidden="true"
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+                Filter zurücksetzen
               </button>
-            </div>
-          )}
+            )}
+          </div>
+        </section>
+
+        {/* Results count */}
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-gray-700" aria-live="polite" aria-atomic="true">
+            <span className="font-semibold text-gray-800">
+              {filtered.length}
+            </span>{" "}
+            {filtered.length === 1 ? "Event" : "Events"} gefunden
+          </p>
         </div>
+
+        {/* Events Grid */}
+        {filtered.length > 0 ? (
+          <div className="grid grid-cols-1 gap-6">
+            {filtered.map((e, index) => (
+              <EventCard
+                key={index}
+                event={e}
+                index={index}
+                highlightedId={highlightedId}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="site-card py-16 text-center">
+            <div className="site-icon mx-auto mb-5 h-14 w-14 text-2xl">
+              <span aria-hidden="true">📭</span>
+            </div>
+            <h2 className="text-xl font-bold text-gray-700 mb-2">
+              Keine Events gefunden
+            </h2>
+            <p className="text-gray-500 mb-6">
+              Versuche andere Suchbegriffe oder passe die Filter an.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setSearchTerm("");
+                setStartDate("");
+                setEndDate("");
+                setShowPast(true);
+              }}
+              className="site-button-secondary gap-2"
+            >
+              Alle Events anzeigen
+            </button>
+          </div>
+        )}
       </div>
     </Layout>
   );

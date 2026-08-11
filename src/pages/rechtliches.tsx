@@ -1,19 +1,19 @@
 import React from "react";
 import Layout from "../components/layout";
 import { HeadFC } from "gatsby";
+import { PageHeader } from "../components/page";
 
 export default function Rechtliches() {
   return (
     <Layout>
-      <div className="container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32 px-6">
-        <h1 className="sr-only">Rechtliche Hinweise und Datenschutz</h1>
-        <section className="legal-content bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-          <h2 className="mb-2 text-3xl font-bold text-center">
-            Unsere{" "}
-            <span className="text-orange-700 dark:text-orange-400 no-underline">
-              Datenschutzbestimmungen
-            </span>
-          </h2>
+      <div className="site-page">
+        <PageHeader
+          eyebrow="Informationen"
+          title="Datenschutz & Impressum"
+          description="Hier findest du unsere Datenschutzhinweise sowie die gesetzlich vorgeschriebenen Angaben zum Verein."
+        />
+        <section className="legal-content site-card p-6 text-gray-900 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100 sm:p-8">
+          <h2 className="site-section-title mb-8">Datenschutzbestimmungen</h2>
 
           <h3 className="mb-2 text-2xl font-bold mt-8">
             <strong>Website / Datenschutzerklärung / Privacy Policy</strong>

@@ -77,12 +77,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <a className="skip-link" href="#main-content">
         Direkt zum Inhalt
       </a>
-      <header className="mx-auto bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-100">
+      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm">
         <Navbar
           fluid
           rounded
           aria-label="Hauptnavigation"
-          className="max-w-screen-2xl mx-auto py-3 flex-nowrap"
+          className="mx-auto max-w-6xl flex-nowrap py-3"
         >
           <Navbar.Brand as={GatsbyLinkWrapperIcon} href="/">
             <div className="flex items-center min-w-0">
@@ -124,28 +124,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Navbar.Collapse>
         </Navbar>
       </header>
-      <div className="sticky top-[60px] z-40 isolate overflow-hidden bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 px-2 py-2 sm:px-4">
-        {/* Decorative blobs */}
-        <div
-          className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
-          aria-hidden="true"
-        >
-          <div className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ffd890] to-[#f8f6ff] opacity-40"></div>
-        </div>
-        <div
-          className="absolute left-[max(45rem,calc(50%+8rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
-          aria-hidden="true"
-        >
-          <div className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ffd890] to-[#f8f6ff] opacity-40"></div>
-        </div>
-
-        {/* Single-line layout - wraps only on very small screens */}
+      <div className="sticky top-[60px] z-40 border-b border-orange-100 bg-orange-50 px-2 py-2 sm:px-4">
         <div className="flex flex-col xs:flex-row items-center justify-center gap-2 sm:gap-3 text-center">
           {/* Bank info pill */}
           <button
             type="button"
             onClick={copyIban}
-            className="hidden min-h-11 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/70 px-3 py-2 text-left shadow-sm transition-colors hover:bg-white focus-visible:bg-white sm:flex sm:gap-2"
+            className="hidden min-h-11 items-center gap-1.5 whitespace-nowrap rounded-full border border-orange-100 bg-white px-3 py-2 text-left transition-colors hover:border-orange-200 focus-visible:bg-white sm:flex sm:gap-2"
             aria-describedby="copy-status"
           >
             <span
@@ -180,7 +165,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Link
               to="/spendenkonto"
               aria-label="Zum Spendenkonto"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/70 shadow-sm transition-colors hover:bg-white sm:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-orange-100 bg-white transition-colors hover:border-orange-200 sm:hidden"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +182,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <a
               href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=B3F4DENU62RRN&ssrt=1693131246739"
               aria-label="Über PayPal spenden"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/70 shadow-sm transition-colors hover:bg-white"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-orange-100 bg-white transition-colors hover:border-orange-200"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -213,17 +198,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </a>
             <Link
               to="/quittung"
-              className="inline-flex min-h-11 items-center rounded-full bg-gray-950 px-3 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-gray-800 sm:text-sm"
+              className="inline-flex min-h-11 items-center rounded-full bg-slate-950 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-slate-800 sm:text-sm"
             >
               Quittung anfordern →
             </Link>
           </div>
         </div>
       </div>
-      <main id="main-content" tabIndex={-1} className="container mx-auto">
+      <main id="main-content" tabIndex={-1} className="min-h-[60vh]">
         {children}
       </main>
-      <footer className="bg-white dark:bg-gray-900">
+      <footer className="border-t border-slate-200 bg-white dark:border-gray-800 dark:bg-gray-900">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="md:flex md:justify-between">
             <div className="mb-6 md:mb-0">

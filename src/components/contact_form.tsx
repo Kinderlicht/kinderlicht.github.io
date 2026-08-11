@@ -37,28 +37,24 @@ interface Message {
 
 // Reusable section header with icon and gradient underline
 const SectionHeader = ({ title, emoji }: { title: string; emoji?: string }) => (
-  <div className="flex items-center gap-3 mb-6">
+  <div className="site-form-heading">
     {emoji && (
-      <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl flex items-center justify-center shadow-md">
+      <div className="site-form-heading-icon">
         <span aria-hidden="true" className="text-xl">
           {emoji}
         </span>
       </div>
     )}
-    <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-      {title}
-    </h3>
+    <h3 className="site-form-heading-title">{title}</h3>
   </div>
 );
 
 // Common styling classes
-const inputClasses =
-  "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 placeholder-gray-600";
+const inputClasses = "site-field";
 
-const labelClasses = "block text-sm font-medium text-gray-600 mb-1";
+const labelClasses = "site-label";
 
-const checkboxClasses =
-  "h-5 w-5 rounded-lg border-2 border-gray-300 cursor-pointer accent-orange-700 transition-all duration-200 hover:border-orange-400";
+const checkboxClasses = "site-checkbox";
 
 export default function ContactForm() {
   const {
@@ -132,14 +128,14 @@ export default function ContactForm() {
         </div>
       )}
       {success != 0 && (
-        <div className="mx-auto max-w-2xl rounded-3xl border border-gray-200 bg-white p-5 shadow-lg sm:p-8">
+        <div className="site-form-card mx-auto max-w-2xl">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-6"
             noValidate
           >
             {/* Deine Nachricht */}
-            <section className="rounded-2xl border border-gray-100 bg-gray-50 p-5 sm:p-6">
+            <section className="site-form-section">
               <SectionHeader title="Deine Nachricht" emoji="✉️" />
               <div className="space-y-5">
                 <div>
@@ -241,9 +237,9 @@ export default function ContactForm() {
             </section>
 
             {/* Datenschutz */}
-            <section className="rounded-2xl border border-gray-100 bg-gray-50 p-5 sm:p-6">
+            <section className="site-form-section">
               <SectionHeader title="Datenschutz" emoji="🔒" />
-              <div className="mb-5 rounded-xl border border-blue-100 bg-blue-50 p-4">
+              <div className="site-note mb-5 border-slate-200 bg-white">
                 <p className="text-sm text-gray-600 leading-relaxed">
                   Deine Angaben werden ausschließlich zur Bearbeitung deiner
                   Nachricht gespeichert und genutzt. Unsere Mehr dazu steht in
@@ -267,7 +263,7 @@ export default function ContactForm() {
                 </p>
               </div>
 
-              <div className="flex items-start gap-4 bg-white rounded-xl p-4 border border-gray-200 overflow-hidden">
+              <div className="flex items-start gap-4 overflow-hidden rounded-xl border border-slate-200 bg-white p-4">
                 <input
                   {...register("confirmDataProtection", { required: true })}
                   id="data-yes"
@@ -303,7 +299,7 @@ export default function ContactForm() {
 
             {hint && (
               <div
-                className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 text-amber-800 rounded-xl p-4 mb-6 shadow-sm flex items-start gap-3"
+                className="site-note mb-6 flex items-start gap-3"
                 role="status"
                 aria-live="polite"
               >
@@ -318,7 +314,7 @@ export default function ContactForm() {
             <div className="pt-4 text-center">
               <button
                 type="submit"
-                className="mx-auto inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-orange-700 px-8 py-3 font-bold text-white shadow-sm transition hover:bg-orange-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 sm:w-auto"
+                className="site-button-primary mx-auto min-h-12 w-full px-8 py-3 sm:w-auto"
               >
                 <span>Nachricht senden</span>
                 <span aria-hidden="true" className="ml-2">

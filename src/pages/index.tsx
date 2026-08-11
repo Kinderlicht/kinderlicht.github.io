@@ -2,6 +2,7 @@ import * as React from "react";
 import { HeadFC, Link } from "gatsby";
 import Layout from "../components/layout";
 import { StaticImage } from "gatsby-plugin-image";
+import { PageSectionHeader } from "../components/page";
 
 // component for links
 function HistoryLink({
@@ -19,9 +20,13 @@ function HistoryLink({
   visual: string | React.ReactNode;
   size: number;
 }) {
-  const width = size === 1 ? "w-full" : size === 2 ? "w-1/2" : "w-1/3";
+  const width = size === 1 ? "md:w-full" : size === 2 ? "md:w-1/2" : "md:w-1/3";
   const card = (
-    <div className="h-full rounded-lg bg-white p-6 transition-colors duration-300 ease-in-out hover:bg-gray-100">
+    <div
+      className={`site-card h-full p-5 ${
+        typeof visual === "string" ? "" : "site-card-interactive"
+      }`}
+    >
       {typeof visual === "string" ? (
         <iframe
           loading="lazy"
@@ -45,10 +50,10 @@ function HistoryLink({
   );
 
   if (typeof visual === "string") {
-    return <article className={`w-full md:${width} p-4`}>{card}</article>;
+    return <article className={`w-full p-3 ${width}`}>{card}</article>;
   }
 
-  const linkClasses = `block w-full md:${width} rounded-lg p-4`;
+  const linkClasses = `block w-full p-3 ${width}`;
   return link.startsWith("http") ? (
     <a href={link} aria-label={title} className={linkClasses}>
       {card}
@@ -62,8 +67,8 @@ function HistoryLink({
 
 function FeatureSection() {
   return (
-    <div className="overflow-hidden bg-white">
-      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+    <div className="overflow-hidden">
+      <div className="mx-auto max-w-6xl">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="lg:pr-8 lg:pt-4">
             <div className="lg:max-w-lg">
@@ -163,12 +168,12 @@ function FeatureSection() {
             <StaticImage
               alt="Unsere Vorstandschaft"
               src="../images/home/all.jpg"
-              className="h-full w-full object-cover object-center rounded-3xl"
+              className="h-full w-full rounded-2xl object-cover object-center"
             />
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap container items-center mt-8">
+      <div className="mt-10 flex flex-wrap items-center">
         <StaticImage
           src="../images/home/motto.svg"
           alt="Weil nix wird eh scho z'oft do."
@@ -190,12 +195,12 @@ export default function IndexPage() {
       />
       <h1 className="sr-only">Kinderlicht Wallersdorf e.V.</h1>
       <div>
-        <section className="text-gray-600 body-font mt-24">
+        <section className="site-page pb-0 pt-12 text-slate-600">
           <h2 className="sr-only">
             Direkt zu Hilfe, Mitgliedschaft und Neuigkeiten
           </h2>
-          <div className="container px-5 mt-16 mx-auto max-w-6xl">
-            <div className="flex flex-wrap -m-4">
+          <div>
+            <div className="-m-3 flex flex-wrap">
               <HistoryLink
                 title="Ich suche Hilfe!"
                 description="Der Kinderlicht Wallersdorf e.V. konnte bereits vielen Familien erfolgreich helfen."
@@ -241,31 +246,24 @@ export default function IndexPage() {
             </div>
           </div>
         </section>
-        <section className="text-gray-600 body-font">
-          <div className="container px-5 mt-24 mx-auto max-w-6xl">
-            <div className="flex flex-wrap w-full mb-4 p-4"></div>
+        <section className="site-page pb-0 pt-20 text-slate-600">
+          <div>
             <FeatureSection></FeatureSection>
           </div>
         </section>
-        <section className="text-gray-600 body-font">
-          <div className="container px-5 py-24 mx-auto max-w-6xl">
-            <div className="flex flex-wrap w-full mb-4 p-4">
-              <div className="w-full mb-6 lg:mb-0">
-                <h2 className="text-3xl font-bold">
-                  Unsere{" "}
-                  <span className="text-orange-700 dark:text-orange-400 no-underline">
-                    Geschichte
-                  </span>
-                </h2>
-                <div className="h-1 w-20 bg-primary rounded"></div>
-              </div>
-            </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+        <section className="site-page pt-20 text-slate-600">
+          <div>
+            <PageSectionHeader
+              eyebrow="Seit 2018"
+              title="Unsere Geschichte"
+              description="Aktionen, Projekte und Momente, die Kinderlicht geprägt haben."
+            />
+            <div className="relative flex items-center py-5">
+              <div className="flex-grow border-t border-slate-300"></div>
+              <span className="mx-4 flex-shrink rounded-full border border-slate-200 bg-white px-4 py-1 text-sm font-bold text-slate-700 shadow-sm">
                 2025
               </span>
-              <div className="flex-grow border-t border-gray-400"></div>
+              <div className="flex-grow border-t border-slate-300"></div>
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
@@ -311,12 +309,12 @@ export default function IndexPage() {
                 size={3}
               />
             </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+            <div className="relative flex items-center py-5">
+              <div className="flex-grow border-t border-slate-300"></div>
+              <span className="mx-4 flex-shrink rounded-full border border-slate-200 bg-white px-4 py-1 text-sm font-bold text-slate-700 shadow-sm">
                 2024
               </span>
-              <div className="flex-grow border-t border-gray-400"></div>
+              <div className="flex-grow border-t border-slate-300"></div>
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
@@ -348,12 +346,12 @@ export default function IndexPage() {
                 size={2}
               />
             </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+            <div className="relative flex items-center py-5">
+              <div className="flex-grow border-t border-slate-300"></div>
+              <span className="mx-4 flex-shrink rounded-full border border-slate-200 bg-white px-4 py-1 text-sm font-bold text-slate-700 shadow-sm">
                 2023
               </span>
-              <div className="flex-grow border-t border-gray-400"></div>
+              <div className="flex-grow border-t border-slate-300"></div>
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
@@ -399,12 +397,12 @@ export default function IndexPage() {
                 size={3}
               />
             </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+            <div className="relative flex items-center py-5">
+              <div className="flex-grow border-t border-slate-300"></div>
+              <span className="mx-4 flex-shrink rounded-full border border-slate-200 bg-white px-4 py-1 text-sm font-bold text-slate-700 shadow-sm">
                 2022
               </span>
-              <div className="flex-grow border-t border-gray-400"></div>
+              <div className="flex-grow border-t border-slate-300"></div>
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
@@ -430,12 +428,12 @@ export default function IndexPage() {
                 size={2}
               />
             </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+            <div className="relative flex items-center py-5">
+              <div className="flex-grow border-t border-slate-300"></div>
+              <span className="mx-4 flex-shrink rounded-full border border-slate-200 bg-white px-4 py-1 text-sm font-bold text-slate-700 shadow-sm">
                 2021
               </span>
-              <div className="flex-grow border-t border-gray-400"></div>
+              <div className="flex-grow border-t border-slate-300"></div>
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
@@ -469,12 +467,12 @@ export default function IndexPage() {
                 size={3}
               />
             </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+            <div className="relative flex items-center py-5">
+              <div className="flex-grow border-t border-slate-300"></div>
+              <span className="mx-4 flex-shrink rounded-full border border-slate-200 bg-white px-4 py-1 text-sm font-bold text-slate-700 shadow-sm">
                 2020
               </span>
-              <div className="flex-grow border-t border-gray-400"></div>
+              <div className="flex-grow border-t border-slate-300"></div>
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
@@ -506,12 +504,12 @@ export default function IndexPage() {
                 size={2}
               />
             </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+            <div className="relative flex items-center py-5">
+              <div className="flex-grow border-t border-slate-300"></div>
+              <span className="mx-4 flex-shrink rounded-full border border-slate-200 bg-white px-4 py-1 text-sm font-bold text-slate-700 shadow-sm">
                 2019
               </span>
-              <div className="flex-grow border-t border-gray-400"></div>
+              <div className="flex-grow border-t border-slate-300"></div>
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink
@@ -551,12 +549,12 @@ export default function IndexPage() {
                 size={3}
               />
             </div>
-            <div className="relative flex py-5 items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+            <div className="relative flex items-center py-5">
+              <div className="flex-grow border-t border-slate-300"></div>
+              <span className="mx-4 flex-shrink rounded-full border border-slate-200 bg-white px-4 py-1 text-sm font-bold text-slate-700 shadow-sm">
                 2018
               </span>
-              <div className="flex-grow border-t border-gray-400"></div>
+              <div className="flex-grow border-t border-slate-300"></div>
             </div>
             <div className="flex flex-wrap -m-4">
               <HistoryLink

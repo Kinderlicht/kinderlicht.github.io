@@ -1,4 +1,3 @@
-import { Link } from "gatsby";
 import React from "react";
 import { useForm, SubmitHandler, FieldError } from "react-hook-form";
 import FormFail from "./form_fail";
@@ -49,33 +48,25 @@ interface Member {
   confirmDataProtection: boolean;
 }
 
-// Reusable section header with icon and gradient underline
 const SectionHeader = ({ title, emoji }: { title: string; emoji?: string }) => (
-  <div className="flex items-center gap-3 mb-6">
+  <div className="site-form-heading">
     {emoji && (
-      <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl flex items-center justify-center shadow-md">
-        <span aria-hidden="true" className="text-xl">
-          {emoji}
-        </span>
+      <div className="site-form-heading-icon" aria-hidden="true">
+        {emoji}
       </div>
     )}
-    <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-      {title}
-    </h2>
+    <h2 className="site-form-heading-title">{title}</h2>
   </div>
 );
 
-// Common styling classes
-const inputClasses =
-  "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 placeholder-gray-600";
+const inputClasses = "site-field";
 
 const selectClasses =
-  "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:1.5em] bg-[right_0.75rem_center] bg-no-repeat pr-10";
+  "site-field cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:1.5em] bg-[right_0.75rem_center] bg-no-repeat pr-10";
 
-const labelClasses = "block text-sm font-medium text-gray-600 mb-1";
+const labelClasses = "site-label";
 
-const checkboxClasses =
-  "h-5 w-5 rounded-lg border-2 border-gray-300 cursor-pointer accent-orange-700 transition-all duration-200 hover:border-orange-400";
+const checkboxClasses = "site-checkbox";
 
 export default function DonationReceipt() {
   const {
@@ -137,38 +128,21 @@ export default function DonationReceipt() {
     <>
       {success == 0 && <FormSuccess />}
       {success != 0 && (
-        <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-white py-8 px-4 relative overflow-hidden">
-          {/* Decorative background elements */}
-          <div
-            aria-hidden="true"
-            className="absolute top-0 left-0 w-96 h-96 bg-orange-200 rounded-full filter blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2"
-          ></div>
-          <div
-            aria-hidden="true"
-            className="absolute top-1/3 right-0 w-80 h-80 bg-amber-200 rounded-full filter blur-3xl opacity-30 translate-x-1/2"
-          ></div>
-          <div
-            aria-hidden="true"
-            className="absolute bottom-0 left-1/4 w-72 h-72 bg-yellow-200 rounded-full filter blur-3xl opacity-20"
-          ></div>
-
-          <div className="max-w-4xl mx-auto relative z-10">
-            {/* Header Card */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 mb-8 border border-white/50">
+        <div className="form-page">
+          <div className="form-page-inner">
+            <div className="form-page-header">
               <div className="text-center">
-                <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 rounded-full mb-6 shadow-xl ring-4 ring-orange-100">
-                  <span aria-hidden="true" className="text-5xl">
-                    🧾
-                  </span>
+                <div className="form-page-icon" aria-hidden="true">
+                  🧾
                 </div>
-                <h1 className="mb-4 text-3xl font-extrabold text-gray-900 md:text-4xl">
+                <h1 className="site-page-title mb-4">
                   Spendenquittung anfordern
                 </h1>
-                <p className="text-gray-600 text-lg mb-6 max-w-2xl mx-auto">
+                <p className="site-page-lead mx-auto mb-6">
                   Vielen Dank für deine Spende! Hier kannst du deine
                   Spendenquittung für die Steuererklärung anfordern.
                 </p>
-                <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-5 text-left max-w-2xl mx-auto border border-orange-100 shadow-inner">
+                <div className="site-note mx-auto max-w-2xl text-left">
                   <div className="flex items-start gap-3">
                     <span aria-hidden="true" className="text-2xl">
                       💡
@@ -188,15 +162,14 @@ export default function DonationReceipt() {
               </div>
             </div>
 
-            {/* Main Form Card */}
-            <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 md:p-10 border border-white/50">
+            <div className="site-form-card">
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="space-y-6"
                 noValidate
               >
                 {/* Persönliche Informationen */}
-                <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+                <section className="site-form-section">
                   <SectionHeader title="Persönliche Informationen" emoji="👤" />
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
@@ -354,7 +327,7 @@ export default function DonationReceipt() {
                 </section>
 
                 {/* Adresse */}
-                <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+                <section className="site-form-section">
                   <SectionHeader title="Adresse" emoji="🏠" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="md:col-span-2">
@@ -482,7 +455,7 @@ export default function DonationReceipt() {
                 </section>
 
                 {/* Spendenabwicklung */}
-                <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+                <section className="site-form-section">
                   <SectionHeader title="Spendenabwicklung" emoji="💰" />
                   <p className="text-gray-500 text-sm mb-5 -mt-2">
                     Wie wurde die Spende getätigt?
@@ -678,9 +651,9 @@ export default function DonationReceipt() {
                 </section>
 
                 {/* Datenschutz */}
-                <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+                <section className="site-form-section">
                   <SectionHeader title="Datenschutz" emoji="🔒" />
-                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 sm:p-4 border border-blue-100 mb-5 overflow-hidden">
+                  <div className="site-note mb-5 overflow-hidden">
                     <p className="text-sm text-gray-600 leading-relaxed break-words">
                       Die angegebenen Daten werden unter Berücksichtigung des
                       BundesDatenschutz-Gesetzes (BDSG) erhoben und
@@ -743,7 +716,7 @@ export default function DonationReceipt() {
                 <div className="text-center pt-8">
                   <button
                     type="submit"
-                    className="mx-auto flex min-h-12 items-center gap-3 rounded-xl bg-orange-700 px-8 py-3 text-lg font-bold text-white shadow-md transition-colors hover:bg-orange-800"
+                    className="site-button-primary mx-auto min-h-12 gap-3 px-8 py-3 text-lg"
                   >
                     <span aria-hidden="true">📨</span>
                     <span>Quittung anfordern</span>

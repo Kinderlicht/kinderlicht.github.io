@@ -6,7 +6,7 @@ import { HeadFC } from "gatsby";
 export default function Home() {
   return (
     <Layout>
-      <div className="container mx-auto mb-8 mt-24 max-w-6xl p-4 sm:mt-32">
+      <div className="site-page">
         <DonationReceipt />
       </div>
     </Layout>

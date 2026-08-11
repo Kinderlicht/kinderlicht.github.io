@@ -1,10 +1,7 @@
 import * as React from "react";
-import { graphql, HeadFC, Link } from "gatsby";
+import { graphql, HeadFC } from "gatsby";
 import { MDXProvider } from "@mdx-js/react";
-import { compileMDX } from "gatsby-plugin-mdx";
-// import mdxComponents from '../mdxComponents'
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import _ from "lodash";
+import { GatsbyImage } from "gatsby-plugin-image";
 import Layout from "../components/layout";
 import type { BlogPost } from "../types/";
 
@@ -14,7 +11,7 @@ const HeroImage = ({ post }: { post: BlogPost }) => {
       {post.frontmatter.youtube ? (
         <iframe
           loading="lazy"
-          className="object-cover w-full mb-8 rounded-lg lg:col-span-7 dark:bg-gray-500 h-96"
+          className="mb-8 h-96 w-full rounded-xl object-cover lg:col-span-7"
           src={post.frontmatter.youtube}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
@@ -26,7 +23,7 @@ const HeroImage = ({ post }: { post: BlogPost }) => {
             post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData
           }
           alt={`Beitragsbild zu „${post.frontmatter.title}“`}
-          className="object-cover mb-8 rounded-lg lg:col-span-7 dark:bg-gray-500 w-full"
+          className="mb-8 w-full rounded-xl object-cover lg:col-span-7"
         />
       )}
     </>
@@ -35,61 +32,55 @@ const HeroImage = ({ post }: { post: BlogPost }) => {
 
 export default function Post({
   data: { mdx: post },
-  pageContext,
   children,
 }: {
   data: { mdx: BlogPost };
-  pageContext: any;
   children: any;
 }) {
   return (
     <Layout>
-      <section className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-12 mt-32">
-        <div className="bg-white dark:bg-gray-900 antialiased">
-          <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
-            <article className="mx-auto w-full container">
-              <div className="mx-auto prose prose-slate dark:prose-invert lg:prose-xl">
-                <h1 className="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
-                  {post.frontmatter.title}
-                </h1>
-                <header className="mb-4 lg:mb-6 not-format">
-                  {post.frontmatter.author && (
-                    <address className="flex items-center rounded-lg bg-gray-100 not-italic dark:bg-gray-800">
-                      <div className="ml-8 inline-flex items-center text-sm text-gray-900 dark:text-white">
-                        <GatsbyImage
-                          className="mr-4 h-16 rounded-full"
-                          image={
-                            post.frontmatter.author.image?.childImageSharp
-                              ?.gatsbyImageData
-                          }
-                          alt={`Porträt von ${post.frontmatter.author.name}`}
-                        />
-                        <p className="container">
-                          <span
-                            rel="author"
-                            className="block text-xl font-bold text-gray-900 dark:text-white"
-                          >
-                            {post.frontmatter.author.name}
-                          </span>
-                          <span className="block text-base text-gray-500 dark:text-gray-400">
-                            {post.frontmatter.author.description}
-                          </span>
-                          <span className="block text-base text-gray-500 dark:text-gray-400">
-                            <time dateTime={post.frontmatter.dateRaw}>
-                              {post.frontmatter.date}
-                            </time>
-                          </span>
-                        </p>
-                      </div>
-                    </address>
-                  )}
-                </header>
-                <HeroImage post={post} />
-                <MDXProvider>{children}</MDXProvider>
-              </div>
-            </article>
+      <section className="site-page max-w-4xl">
+        <article className="site-card p-6 sm:p-10">
+          <div className="prose prose-slate mx-auto max-w-none lg:prose-lg">
+            <h1 className="mb-4 text-3xl font-bold leading-tight text-slate-950 lg:mb-6 lg:text-4xl">
+              {post.frontmatter.title}
+            </h1>
+            <header className="mb-4 lg:mb-6 not-format">
+              {post.frontmatter.author && (
+                <address className="flex items-center rounded-xl border border-slate-200 bg-slate-50 p-4 not-italic">
+                  <div className="inline-flex items-center text-sm text-slate-900">
+                    <GatsbyImage
+                      className="mr-4 h-16 w-16 flex-none rounded-full"
+                      image={
+                        post.frontmatter.author.image?.childImageSharp
+                          ?.gatsbyImageData
+                      }
+                      alt={`Porträt von ${post.frontmatter.author.name}`}
+                    />
+                    <p className="container">
+                      <span
+                        rel="author"
+                        className="block text-lg font-bold text-slate-900"
+                      >
+                        {post.frontmatter.author.name}
+                      </span>
+                      <span className="block text-sm text-slate-600">
+                        {post.frontmatter.author.description}
+                      </span>
+                      <span className="block text-sm text-slate-600">
+                        <time dateTime={post.frontmatter.dateRaw}>
+                          {post.frontmatter.date}
+                        </time>
+                      </span>
+                    </p>
+                  </div>
+                </address>
+              )}
+            </header>
+            <HeroImage post={post} />
+            <MDXProvider>{children}</MDXProvider>
           </div>
-        </div>
+        </article>
       </section>
     </Layout>
   );

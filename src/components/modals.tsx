@@ -16,9 +16,12 @@ function DonationAccount() {
   return (
     <section
       aria-labelledby="donation-account-heading"
-      className="relative p-6"
+      className="site-card relative p-6 sm:p-8"
     >
-      <h2 id="donation-account-heading" className="text-xl font-semibold">
+      <h2
+        id="donation-account-heading"
+        className="text-xl font-bold text-slate-900"
+      >
         Bankverbindung
       </h2>
       <dl className="my-4 grid gap-3 text-lg leading-relaxed sm:grid-cols-[auto_1fr]">
@@ -30,7 +33,7 @@ function DonationAccount() {
         <dd className="font-mono">GENODEF1LND</dd>
       </dl>
       <button
-        className="min-h-11 rounded-xl bg-emerald-800 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-900"
+        className="site-button-primary"
         type="button"
         onClick={copyIban}
         aria-describedby="donation-copy-status"

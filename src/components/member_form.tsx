@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm, useFieldArray, useWatch } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import FormSuccess from "./form_success";
 import FormFail from "./form_fail";
 
@@ -256,36 +256,25 @@ const MemberForm: React.FC = () => {
     });
   };
 
-  // Reusable section header with icon and gradient underline
   const sectionHeader = (title: string, emoji?: string) => (
-    <div className="flex items-center gap-3 mb-6">
+    <div className="site-form-heading">
       {emoji && (
-        <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl flex items-center justify-center shadow-md">
-          <span aria-hidden="true" className="text-xl">
-            {emoji}
-          </span>
+        <div className="site-form-heading-icon" aria-hidden="true">
+          {emoji}
         </div>
       )}
-      <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-        {title}
-      </h2>
+      <h2 className="site-form-heading-title">{title}</h2>
     </div>
   );
 
-  // Common styling for inputs - enhanced with transitions and shadows
-  const inputClasses =
-    "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 placeholder-gray-600";
+  const inputClasses = "site-field";
 
-  // Select styling with custom appearance
   const selectClasses =
-    "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:1.5em] bg-[right_0.75rem_center] bg-no-repeat pr-10";
+    "site-field cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:1.5em] bg-[right_0.75rem_center] bg-no-repeat pr-10";
 
-  // Checkbox styling
-  const checkboxClasses =
-    "h-5 w-5 rounded-lg border-2 border-gray-300 cursor-pointer accent-orange-700 transition-all duration-200 hover:border-orange-400";
+  const checkboxClasses = "site-checkbox";
 
-  // Label styling
-  const labelClasses = "block text-sm font-medium text-gray-600 mb-1";
+  const labelClasses = "site-label";
 
   // Error message styling
   const errorClasses = "text-red-700 text-xs mt-1.5 flex items-center gap-1";
@@ -322,38 +311,21 @@ const MemberForm: React.FC = () => {
   ) : success === 500 ? (
     <FormFail recover={JSON.stringify(getValues())} />
   ) : (
-    <div className="member-form min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-white py-8 px-4 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div
-        aria-hidden="true"
-        className="absolute top-0 left-0 w-96 h-96 bg-orange-200 rounded-full filter blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2"
-      ></div>
-      <div
-        aria-hidden="true"
-        className="absolute top-1/3 right-0 w-80 h-80 bg-amber-200 rounded-full filter blur-3xl opacity-30 translate-x-1/2"
-      ></div>
-      <div
-        aria-hidden="true"
-        className="absolute bottom-0 left-1/4 w-72 h-72 bg-yellow-200 rounded-full filter blur-3xl opacity-20"
-      ></div>
-
-      <div className="max-w-4xl mx-auto relative z-10">
-        {/* Friendly Header Card */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 mb-8 border border-white/50">
+    <div className="member-form form-page">
+      <div className="form-page-inner">
+        <div className="form-page-header">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 rounded-full mb-6 shadow-xl ring-4 ring-orange-100">
-              <span aria-hidden="true" className="text-5xl">
-                🌟
-              </span>
+            <div className="form-page-icon" aria-hidden="true">
+              🌟
             </div>
-            <h1 className="mb-4 text-3xl font-extrabold text-gray-900 md:text-4xl">
+            <h1 className="site-page-title mb-4">
               Willkommen bei Kinderlicht!
             </h1>
-            <p className="text-gray-600 text-lg mb-6 max-w-2xl mx-auto">
+            <p className="site-page-lead mx-auto mb-6">
               Werde Teil unserer Gemeinschaft und hilf uns, Kinderaugen zum
               Leuchten zu bringen.
             </p>
-            <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-5 text-left max-w-2xl mx-auto border border-orange-100 shadow-inner">
+            <div className="site-note mx-auto max-w-2xl text-left">
               <div className="flex items-start gap-3">
                 <span aria-hidden="true" className="text-2xl">
                   💡
@@ -376,8 +348,7 @@ const MemberForm: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Form Card */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 md:p-10 border border-white/50">
+        <div className="site-form-card">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-6"
@@ -390,7 +361,7 @@ const MemberForm: React.FC = () => {
             </p>
             {/* Main Member Form */}
             <div className="space-y-6">
-              <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <section className="site-form-section">
                 {sectionHeader("Persönliche Informationen", "👤")}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   {/* Anrede */}
@@ -535,7 +506,7 @@ const MemberForm: React.FC = () => {
               </section>
 
               {/* Adresse */}
-              <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <section className="site-form-section">
                 {sectionHeader("Adresse", "🏠")}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="md:col-span-2">
@@ -684,7 +655,7 @@ const MemberForm: React.FC = () => {
               </section>
 
               {/* Bankdetails */}
-              <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <section className="site-form-section">
                 {sectionHeader("Bankdetails", "🏦")}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
@@ -773,7 +744,7 @@ const MemberForm: React.FC = () => {
               </section>
 
               {/* Mitgliedschaft */}
-              <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <section className="site-form-section">
                 {sectionHeader("Mitgliedschaft", "🤝")}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
@@ -862,9 +833,9 @@ const MemberForm: React.FC = () => {
               </section>
 
               {/* Kontaktaufnahme */}
-              <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <section className="site-form-section">
                 {sectionHeader("Kontaktaufnahme", "📬")}
-                <div className="text-sm text-gray-600 mb-5 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+                <div className="site-note mb-5 text-sm">
                   <div className="flex items-start gap-3">
                     <span aria-hidden="true" className="text-xl">
                       💌
@@ -902,7 +873,7 @@ const MemberForm: React.FC = () => {
               </section>
 
               {/* Datenschutz */}
-              <section className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <section className="site-form-section">
                 {sectionHeader("Datenschutz", "🔒")}
                 <div className="space-y-5">
                   <div className="text-sm text-gray-600">
@@ -969,7 +940,7 @@ const MemberForm: React.FC = () => {
             {/* Relatives Section */}
 
             {/* Hinweis Section */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200">
+            <div className="site-note p-6">
               <div className="flex items-start gap-3">
                 <span aria-hidden="true" className="text-2xl">
                   👨‍👩‍👧‍👦
@@ -997,7 +968,7 @@ const MemberForm: React.FC = () => {
                 </div>
               </div>
             </div>
-            <section className="bg-white rounded-2xl border-2 border-dashed border-orange-200 p-6">
+            <section className="site-form-section border-orange-200 bg-orange-50/30">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div className="flex items-center gap-3">
                   <span aria-hidden="true" className="text-2xl">
@@ -1010,7 +981,7 @@ const MemberForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={addRelative}
-                  className="flex min-h-11 items-center gap-2 rounded-xl bg-orange-700 px-6 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-orange-800"
+                  className="site-button-primary min-h-11 gap-2 px-6 py-3"
                 >
                   <span aria-hidden="true">👤</span> Angehörige*n hinzufügen
                 </button>
@@ -1023,7 +994,7 @@ const MemberForm: React.FC = () => {
                     key={field.id}
                     role="group"
                     aria-labelledby={`relative-heading-${index}`}
-                    className="border-2 border-orange-200 rounded-2xl p-6 mb-6 relative bg-gradient-to-br from-orange-50 to-amber-50 shadow-md"
+                    className="relative mb-6 rounded-xl border border-orange-200 bg-white p-6"
                   >
                     <button
                       type="button"
@@ -1582,7 +1553,7 @@ const MemberForm: React.FC = () => {
             </section>
 
             {/* Existing Family Members Section */}
-            <section className="bg-white rounded-2xl border-2 border-dashed border-green-200 p-6">
+            <section className="site-form-section border-emerald-200 bg-emerald-50/30">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                 <div className="flex items-center gap-3">
                   <span aria-hidden="true" className="text-2xl">
@@ -1595,7 +1566,7 @@ const MemberForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={addExistingFamilyMember}
-                  className="flex min-h-11 items-center gap-2 rounded-xl bg-green-700 px-6 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-green-800"
+                  className="site-button-secondary min-h-11 gap-2 px-6 py-3"
                 >
                   <span aria-hidden="true">🔍</span> Mitglied suchen
                 </button>
@@ -1611,7 +1582,7 @@ const MemberForm: React.FC = () => {
                     key={field.id}
                     role="group"
                     aria-label={`Bestehendes Familienmitglied ${index + 1}`}
-                    className="border-2 border-green-200 rounded-2xl p-6 mb-6 relative bg-gradient-to-br from-green-50 to-emerald-50 shadow-md"
+                    className="relative mb-6 rounded-xl border border-emerald-200 bg-white p-6"
                   >
                     <button
                       type="button"
@@ -1788,7 +1759,7 @@ const MemberForm: React.FC = () => {
             <div className="text-center pt-8">
               <button
                 type="submit"
-                className="mx-auto flex min-h-12 items-center gap-3 rounded-xl bg-orange-700 px-8 py-3 text-lg font-bold text-white shadow-md transition-colors hover:bg-orange-800"
+                className="site-button-primary mx-auto min-h-12 gap-3 px-8 py-3 text-lg"
               >
                 <span aria-hidden="true">📨</span>
                 <span>Antrag absenden</span>
@@ -1801,7 +1772,7 @@ const MemberForm: React.FC = () => {
           </form>
           {success === 400 && (
             <div
-              className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-200 rounded-2xl p-6 mt-8 flex items-start gap-4 shadow-lg"
+              className="mt-8 flex items-start gap-4 rounded-xl border border-orange-200 bg-orange-50 p-6"
               role="alert"
             >
               <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">

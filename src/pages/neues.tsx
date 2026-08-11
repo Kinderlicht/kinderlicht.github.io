@@ -6,6 +6,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import type { BlogPost } from "../types/";
 import Timeline from "../components/timeline";
 import type { ActivityReport } from "../content/donations";
+import { PageHeader } from "../components/page";
 
 type BlogIndexData = {
   first: {
@@ -25,7 +26,7 @@ type BlogIndexData = {
 
 const NewsEntry: React.FC<{ post: BlogPost }> = ({ post }) => {
   return (
-    <article className="mx-auto w-full max-w-sm overflow-hidden rounded-xl bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <article className="site-card mx-auto w-full max-w-sm overflow-hidden text-gray-900 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100">
       <>
         {post.frontmatter.featuredImage && (
           <GatsbyImage
@@ -84,17 +85,16 @@ const BlogIndex: React.FC<PageProps<BlogIndexData>> = ({ data }) => {
 
   return (
     <Layout>
-      <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
-        <h1 className="mb-16 text-3xl font-bold text-center">
-          Unsere{" "}
-          <span className="text-orange-700 dark:text-orange-400 no-underline">
-            Neuigkeiten
-          </span>
-        </h1>
+      <div className="site-page">
+        <PageHeader
+          eyebrow="Aktuelles"
+          title="Neuigkeiten"
+          description="Einblicke in unsere Hilfsprojekte, Veranstaltungen und die Menschen, die uns unterstützen."
+        />
 
         <Timeline activities={activities} />
 
-        <article className="mx-auto block max-w-sm gap-3 overflow-hidden rounded-xl bg-gray-100 text-gray-900 sm:max-w-full lg:grid lg:grid-cols-12 dark:bg-gray-900 dark:text-gray-100">
+        <article className="site-card site-section mx-auto block max-w-sm gap-3 overflow-hidden text-gray-900 sm:max-w-full lg:grid lg:grid-cols-12 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100">
           <>
             {first.frontmatter.featuredImage && (
               <GatsbyImage
@@ -142,7 +142,7 @@ const BlogIndex: React.FC<PageProps<BlogIndexData>> = ({ data }) => {
           </div>
         </article>
 
-        <div className="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 justify-center gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {olderPosts.posts.map(
             ({ node }: { node: BlogPost }, index: number) => (
               <NewsEntry key={index} post={node} />

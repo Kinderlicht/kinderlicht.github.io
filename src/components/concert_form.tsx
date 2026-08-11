@@ -73,18 +73,19 @@ export default function ConcertForm() {
     <>
       {success == 0 && <FormSuccess />}
       {success != 0 && (
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <div className="space-y-12">
-            <div className="border-b border-gray-900/10 pb-12">
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="site-form-card"
+          noValidate
+        >
+          <div className="space-y-8">
+            <div>
+              <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="col-span-full">
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
+                  <label htmlFor="name" className="site-label">
                     Kompletter Name
                   </label>
-                  <div className="mt-2">
+                  <div>
                     <input
                       {...register("name", { required: true })}
                       type="text"
@@ -95,7 +96,7 @@ export default function ConcertForm() {
                       aria-describedby={
                         errors.name ? "concert-name-error" : undefined
                       }
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="site-field"
                     />
                     <ErrorMessage
                       id="concert-name-error"
@@ -106,13 +107,10 @@ export default function ConcertForm() {
                 </div>
 
                 <div className="col-span-full">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
+                  <label htmlFor="email" className="site-label">
                     E-Mail
                   </label>
-                  <div className="mt-2">
+                  <div>
                     <input
                       {...register("email", {
                         required: true,
@@ -126,7 +124,7 @@ export default function ConcertForm() {
                       aria-describedby={
                         errors.email ? "concert-email-error" : undefined
                       }
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="site-field"
                     />
                     <ErrorMessage
                       id="concert-email-error"
@@ -142,13 +140,10 @@ export default function ConcertForm() {
                 </div>
 
                 <div className="col-span-full">
-                  <label
-                    htmlFor="subject-text"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
+                  <label htmlFor="subject-text" className="site-label">
                     Betreff
                   </label>
-                  <div className="mt-2">
+                  <div>
                     <input
                       {...register("subject", { required: true })}
                       type="text"
@@ -158,7 +153,7 @@ export default function ConcertForm() {
                       aria-describedby={
                         errors.subject ? "concert-subject-error" : undefined
                       }
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="site-field"
                     />
                     <ErrorMessage
                       id="concert-subject-error"
@@ -169,13 +164,10 @@ export default function ConcertForm() {
                 </div>
 
                 <div className="col-span-full">
-                  <label
-                    htmlFor="text"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
+                  <label htmlFor="text" className="site-label">
                     Deine Nachricht an uns.
                   </label>
-                  <div className="mt-2">
+                  <div>
                     <textarea
                       {...register("text", { required: true })}
                       id="text"
@@ -184,7 +176,7 @@ export default function ConcertForm() {
                       aria-describedby={
                         errors.text ? "concert-text-error" : undefined
                       }
-                      className="block w-full h-96 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="site-field h-64 resize-y"
                     />
                     <ErrorMessage
                       id="concert-text-error"
@@ -197,10 +189,7 @@ export default function ConcertForm() {
             </div>
           </div>
           <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="submit"
-              className="min-h-11 rounded-md bg-indigo-700 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800"
-            >
+            <button type="submit" className="site-button-primary">
               Senden
             </button>
           </div>

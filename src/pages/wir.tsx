@@ -4,16 +4,17 @@ import React from "react";
 import { HeadFC, graphql } from "gatsby";
 import Layout from "../components/layout";
 import { GatsbyImage } from "gatsby-plugin-image";
+import { PageHeader, PageSectionHeader } from "../components/page";
 
 function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
   return (
-    <article>
+    <article className="h-full">
       <a
         href={sponsor.link}
         aria-label={`${sponsor.name}: Website öffnen`}
-        className="mb-6 block rounded-lg lg:mb-0"
+        className="block h-full rounded-2xl"
       >
-        <div className="block h-full w-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:bg-gray-100 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600">
+        <div className="site-card site-card-interactive h-full dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600">
           <div className="p-6">
             <div className="flex flex-wrap items-center">
               <div className="flex-basis shrink-0 grow-0 px-3 w-5/12">
@@ -43,8 +44,10 @@ function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
                 )}
               </div>
               <div className="flex-basis shrink-0 grow-0 px-3 w-7/12">
-                <h3 className="mb-4 font-bold">{sponsor.name}</h3>
-                {sponsor.location}
+                <h3 className="mb-1 font-bold">{sponsor.name}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  {sponsor.location}
+                </p>
               </div>
             </div>
           </div>
@@ -54,69 +57,43 @@ function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
   );
 }
 
-function Statistic() {
+function BoardMemberCard({ member }: { member: Board }) {
   return (
-    <div className="md:px-24 lg:px-8 lg:py-20">
-      <div className="flex flex-col lg:items-center lg:flex-row">
-        <div className="flex items-center mb-6 lg:mb-0 container">
-          <div className="flex items-center justify-center w-16 h-16 mr-5 rounded-full bg-primary xl:mr-10">
+    <article className="site-card h-full p-6 text-center dark:border-neutral-600 dark:bg-neutral-700 dark:text-white">
+      <div className="flex justify-center">
+        <div className="flex h-32 w-32 justify-center overflow-hidden rounded-full bg-slate-100">
+          <GatsbyImage
+            className="h-full w-full"
+            image={member.image.childImageSharp.gatsbyImageData}
+            alt={`Porträt von ${member.name}`}
+          />
+        </div>
+      </div>
+      <div className="pt-5">
+        <div className="mb-4 flex items-center justify-center gap-2">
+          <h2 className="text-lg font-bold">{member.name}</h2>
+          <a
+            href={`mailto:${member.email}`}
+            aria-label={`E-Mail an ${member.name} schreiben`}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-orange-700 hover:bg-orange-50 hover:text-orange-800 dark:text-orange-300 dark:hover:bg-neutral-600 dark:hover:text-orange-200"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
+              width="16"
+              height="16"
               fill="currentColor"
-              className="w-8 h-8 bi bi-person-add text-gray-800"
+              className="h-5 w-5"
               viewBox="0 0 16 16"
             >
-              <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
-              <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z" />
+              <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2H2Zm-2 9.8V4.698l5.803 3.546L0 11.801Zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 9.671V4.697l-5.803 3.546.338.208A4.482 4.482 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671Z" />
+              <path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034v.21Zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791Z" />
             </svg>
-          </div>
-          <h3 className="text-2xl text-gray-800 font-extrabold">
-            ... und über 100 weitere Mitglieder.
-          </h3>
+          </a>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function BoardMemberCard({ member }: { member: Board }) {
-  return (
-    <article className="mb-24 md:mb-0">
-      <div className="block h-full w-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 dark:text-white">
-        <div className="flex justify-center">
-          <div className="flex justify-center -mt-[75px]">
-            <GatsbyImage
-              className="rounded-full overflow-hidden w-80 hover:animate-pulse"
-              image={member.image.childImageSharp.gatsbyImageData}
-              alt={`Porträt von ${member.name}`}
-            />
-          </div>
-        </div>
-        <div className="p-6">
-          <div className="mb-4 flex items-center justify-center gap-2">
-            <h2 className="text-lg font-bold">{member.name}</h2>
-            <a
-              href={`mailto:${member.email}`}
-              aria-label={`E-Mail an ${member.name} schreiben`}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-orange-700 hover:bg-orange-50 hover:text-orange-800 dark:text-orange-300 dark:hover:bg-neutral-600 dark:hover:text-orange-200"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="h-5 w-5"
-                viewBox="0 0 16 16"
-              >
-                <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2H2Zm-2 9.8V4.698l5.803 3.546L0 11.801Zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 9.671V4.697l-5.803 3.546.338.208A4.482 4.482 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671Z" />
-                <path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034v.21Zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791Z" />
-              </svg>
-            </a>
-          </div>
-          <p className="mb-6">{member.role}</p>
-        </div>
+        <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">
+          {member.role}
+        </p>
       </div>
     </article>
   );
@@ -129,32 +106,28 @@ export default function Home({
 }) {
   return (
     <Layout>
-      <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
-        <section className="mb-32 text-center">
-          <h1 className="mb-32 text-3xl font-bold">
-            Unsere{" "}
-            <span className="text-orange-700 dark:text-orange-400 no-underline">
-              Vorstandschaft
-            </span>
-          </h1>
+      <div className="site-page">
+        <PageHeader
+          eyebrow="Über uns"
+          title="Unsere Vorstandschaft"
+          description="Die Menschen hinter Kinderlicht, die unsere Projekte organisieren und gemeinsam mit vielen Mitgliedern möglich machen."
+        />
 
-          <div className="grid md:grid-rows-3 md:grid-cols-2 xl:grid-rows-2 xl:grid-cols-3 gap-y-24 gap-x-8">
+        <section>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {boards.nodes.map((member, index) => (
               <BoardMemberCard member={member} key={index} />
             ))}
           </div>
         </section>
 
-        <div className="container my-24 mx-auto md:px-6">
-          <h2 className="mb-2 text-3xl font-bold text-center">
-            Unsere{" "}
-            <span className="text-orange-700 dark:text-orange-400 no-underline">
-              Unterstützer
-            </span>
-          </h2>
-          <p className="mb-16 text-center">
-            Die Sortierung der Unterstützer erfolgt täglich rein zufällig.
-          </p>
+        <section className="site-section">
+          <PageSectionHeader
+            centered
+            eyebrow="Gemeinsam stark"
+            title="Unsere Unterstützer"
+            description="Die Reihenfolge der Unterstützer wird täglich neu gemischt."
+          />
           <div className="grid gap-6 lg:grid-cols-3">
             {/* Sponsors are randomly sorted based on today's date */}
             {[...sponsors.nodes]
@@ -174,7 +147,7 @@ export default function Home({
                 <SponsorCard sponsor={sponsor} key={index} />
               ))}
           </div>
-        </div>
+        </section>
       </div>
     </Layout>
   );

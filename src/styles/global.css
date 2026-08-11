@@ -10,7 +10,131 @@ html {
 }
 
 body {
-  color: #1f2937;
+  @apply bg-slate-50 text-slate-800 antialiased;
+}
+
+@layer components {
+  .site-page {
+    @apply mx-auto w-full max-w-6xl px-4 pb-24 pt-14 sm:px-6 sm:pt-16 lg:px-8;
+  }
+
+  .site-page-narrow {
+    @apply mx-auto w-full max-w-3xl px-4 pb-24 pt-14 sm:px-6 sm:pt-16;
+  }
+
+  .site-page-header {
+    @apply mx-auto mb-12 max-w-2xl text-center;
+  }
+
+  .site-eyebrow {
+    @apply mb-3 text-xs font-bold uppercase tracking-[0.2em] text-orange-700;
+  }
+
+  .site-page-title {
+    @apply text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl;
+  }
+
+  .site-page-lead {
+    @apply mx-auto mt-4 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8;
+  }
+
+  .site-section {
+    @apply mt-20;
+  }
+
+  .site-section-header {
+    @apply mb-8 max-w-2xl;
+  }
+
+  .site-section-header.text-center {
+    @apply mx-auto;
+  }
+
+  .site-section-title {
+    @apply text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl;
+  }
+
+  .site-section-lead {
+    @apply mt-3 leading-7 text-slate-600;
+  }
+
+  .site-card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+  }
+
+  .site-card-interactive {
+    @apply transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md;
+  }
+
+  .site-button-primary {
+    min-height: 2.75rem;
+    @apply inline-flex items-center justify-center rounded-xl bg-orange-700 px-5 py-2.5 font-semibold text-white shadow-sm transition-colors hover:bg-orange-800;
+  }
+
+  .site-button-secondary {
+    min-height: 2.75rem;
+    @apply inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-2.5 font-semibold text-slate-800 shadow-sm transition-colors hover:border-orange-300 hover:bg-orange-50 hover:text-orange-900;
+  }
+
+  .site-icon {
+    @apply inline-flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-orange-100 text-orange-800;
+  }
+
+  .site-stat {
+    @apply rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm text-slate-600 shadow-sm;
+  }
+
+  .site-form-card {
+    @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8;
+  }
+
+  .site-form-section {
+    @apply rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6;
+  }
+
+  .site-form-heading {
+    @apply mb-6 flex items-center gap-3;
+  }
+
+  .site-form-heading-icon {
+    @apply flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-orange-100 text-lg text-orange-800;
+  }
+
+  .site-form-heading-title {
+    @apply text-xl font-bold text-slate-900 sm:text-2xl;
+  }
+
+  .site-field {
+    @apply mt-1 w-full rounded-xl border border-slate-300 bg-white p-3 text-slate-800 shadow-sm outline-none transition placeholder:text-slate-500 hover:border-slate-400 focus:border-orange-600 focus:ring-4 focus:ring-orange-100;
+  }
+
+  .site-label {
+    @apply mb-1 block text-sm font-semibold text-slate-700;
+  }
+
+  .site-checkbox {
+    @apply h-5 w-5 cursor-pointer rounded border-2 border-slate-300 accent-orange-700;
+  }
+
+  .site-note {
+    @apply rounded-xl border border-orange-200 bg-orange-50 p-4 text-sm leading-6 text-slate-700;
+  }
+
+  .form-page {
+    @apply px-0 py-0;
+  }
+
+  .form-page-inner {
+    @apply mx-auto max-w-4xl;
+  }
+
+  .form-page-header {
+    @apply mx-auto mb-10 max-w-2xl text-center;
+  }
+
+  .form-page-icon {
+    @apply mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-100 text-2xl text-orange-800;
+  }
 }
 
 .skip-link {
@@ -47,10 +171,18 @@ main address a {
   color: #b91c1c;
 }
 
-@media (prefers-color-scheme: dark) {
-  .legal-content a {
-    color: #c7d2fe;
-  }
+.legal-content > h3 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: #0f172a;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.legal-content > p {
+  margin-bottom: 2rem;
+  color: #475569;
+  line-height: 1.75;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -241,7 +373,7 @@ main address a {
 
 /* Tätigkeitsbericht timeline */
 .carousel-arrow-button {
-  @apply flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:translate-y-0 disabled:hover:shadow-md;
+  @apply flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-orange-700 text-white shadow-sm transition duration-150 hover:bg-orange-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-30;
 }
 
 .carousel-edge-button {

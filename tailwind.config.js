@@ -1,18 +1,19 @@
 // import type { Config } from 'tailwindcss'
 
 module.exports = {
+  darkMode: "class",
   content: [
     `./src/pages/**/*.{js,jsx,ts,tsx}`,
     `./src/templates/**/*.{js,jsx,ts,tsx}`,
     `./src/components/**/*.{js,jsx,ts,tsx}`,
     "./node_modules/flowbite-react/**/*.js",
   ],
-  safelist: [
-    'h-96',
-    'md:w-1/3',
-    'w-1/2',
+  safelist: ["h-96", "md:w-1/3", "w-1/2"],
+  plugins: [
+    require("flowbite/plugin"),
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
   ],
-  plugins: [require("flowbite/plugin"), require('@tailwindcss/forms'), require('@tailwindcss/typography')],
   theme: {
     fontFamily: {
       sans: ["Inter", "sans-serif"],
@@ -21,7 +22,7 @@ module.exports = {
     },
     extend: {
       screens: {
-        'xs': '400px',
+        xs: "400px",
       },
       colors: {
         primary: "#FFA500", // Orange

@@ -3,7 +3,7 @@ import React from "react";
 export default function FormSuccess() {
   return (
     <div
-      className="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
+      className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-4 text-emerald-950"
       role="status"
       aria-live="polite"
     >
@@ -11,7 +11,7 @@ export default function FormSuccess() {
         <div className="py-1">
           <svg
             aria-hidden="true"
-            className="fill-current h-6 w-6 text-teal-500 mr-4"
+            className="mr-4 h-6 w-6 fill-current text-emerald-700"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >

@@ -248,7 +248,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
     <section
       aria-label="Tätigkeitsbericht durchblättern"
       aria-roledescription="Karussell"
-      className="w-full rounded-[1.75rem] border border-orange-100 bg-white/95 p-4 shadow-[0_24px_70px_-32px_rgba(154,52,18,0.45)] outline-none ring-orange-300 transition-shadow focus-visible:ring-4 md:p-6"
+      className="w-full rounded-2xl border border-slate-200 bg-white p-4 outline-none ring-orange-300 transition-shadow focus-visible:ring-4 md:p-6"
       onKeyDown={handleKeyDown}
       onTouchCancel={() => {
         touchStart.current = null;
@@ -417,13 +417,9 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
   return (
     <article
       aria-label={`Tätigkeit ${index} von ${total}: ${activity.title}`}
-      className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-orange-100 bg-gradient-to-br from-[#fffaf3] via-orange-50 to-amber-100/70 p-4 md:p-5"
+      className="relative flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-4 md:p-5"
     >
-      <div
-        aria-hidden="true"
-        className="absolute -right-8 -top-10 h-32 w-32 rounded-full bg-amber-300/20 blur-2xl"
-      />
-      <div className="relative flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col">
         <div className="mb-3 flex items-start justify-between gap-3">
           <div className="min-w-0">
             <time
@@ -467,7 +463,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
           {activity.description}
         </p>
       </div>
-      <div className="relative mt-3 flex items-center gap-2 border-t border-orange-200/70 pt-3">
+      <div className="mt-3 flex items-center gap-2 border-t border-slate-200 pt-3">
         <span
           aria-hidden="true"
           className="h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_0_4px_rgba(251,146,60,0.14)]"
