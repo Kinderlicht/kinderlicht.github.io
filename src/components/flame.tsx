@@ -32,7 +32,10 @@ export default function Flame({ money, total_money }: FlameProps) {
        * This fixed stage preserves the original flame animation without
        * allowing it to collide with the total or neighboring carousel.
        */}
-      <div className="flex h-60 w-full items-end justify-center">
+      <div
+        aria-hidden="true"
+        className="flex h-60 w-full items-end justify-center"
+      >
         <div
           className="relative"
           style={{
@@ -63,6 +66,11 @@ export default function Flame({ money, total_money }: FlameProps) {
 
       <div className="mt-3 h-1.5 w-24 overflow-hidden rounded-full bg-gray-200">
         <div
+          role="progressbar"
+          aria-label="Anteil der dargestellten Spendensumme"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(progress * 100)}
           className="h-full rounded-full bg-gradient-to-r from-orange-400 to-orange-600"
           style={{
             width: `${progress * 100}%`,

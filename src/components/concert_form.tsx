@@ -4,13 +4,23 @@ import FormFail from "./form_fail";
 import FormSuccess from "./form_success";
 
 function ErrorMessage({
+  id,
   field,
   error,
 }: {
+  id: string;
   field: FieldError | undefined;
   error: string;
 }) {
-  return <>{field && <div className="text-sm text-red-500">{error}</div>}</>;
+  return (
+    <>
+      {field && (
+        <div id={id} className="text-sm text-red-700" role="alert">
+          {error}
+        </div>
+      )}
+    </>
+  );
 }
 
 interface Message {
@@ -36,12 +46,12 @@ export default function ConcertForm() {
       },
       body: JSON.stringify({
         formData: {
-            name: data.name,
-            email: data.email,
-            subject: `2024-07-14 - Konzert der Filmmusik: ${data.subject}`,
-            text: data.text,
+          name: data.name,
+          email: data.email,
+          subject: `2024-07-14 - Konzert der Filmmusik: ${data.subject}`,
+          text: data.text,
         },
-        confirmationMail: data.email
+        confirmationMail: data.email,
       }),
     })
       .then((res) => {
@@ -61,123 +71,142 @@ export default function ConcertForm() {
   };
   return (
     <>
-    {success == 0 && (<FormSuccess/>)}
-    {success != 0 &&
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-12">
-        <div className="border-b border-gray-900/10 pb-12">
+      {success == 0 && <FormSuccess />}
+      {success != 0 && (
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <div className="space-y-12">
+            <div className="border-b border-gray-900/10 pb-12">
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="col-span-full">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Kompletter Name
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      {...register("name", { required: true })}
+                      type="text"
+                      id="name"
+                      autoComplete="name"
+                      required
+                      aria-invalid={Boolean(errors.name)}
+                      aria-describedby={
+                        errors.name ? "concert-name-error" : undefined
+                      }
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    <ErrorMessage
+                      id="concert-name-error"
+                      field={errors.name}
+                      error="Name wird benötigt"
+                    ></ErrorMessage>
+                  </div>
+                </div>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <div className="col-span-full">
-              <label
-                htmlFor="first-name"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Kompletter Name
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("name", { required: true })}
-                  type="text"
-                  id="name"
-                  autoComplete="given-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-                <ErrorMessage
-                  field={errors.name}
-                  error="Name wird benötigt"
-                ></ErrorMessage>
+                <div className="col-span-full">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    E-Mail
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      {...register("email", {
+                        required: true,
+                        pattern: /^\S+@\S+$/i,
+                      })}
+                      id="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      aria-invalid={Boolean(errors.email)}
+                      aria-describedby={
+                        errors.email ? "concert-email-error" : undefined
+                      }
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    <ErrorMessage
+                      id="concert-email-error"
+                      field={errors.email}
+                      error={
+                        errors.email?.ref?.value
+                          ? errors.email.ref.value.toString() +
+                            " ist keine gültige E-Mail"
+                          : "E-Mail wird benötigt"
+                      }
+                    ></ErrorMessage>
+                  </div>
+                </div>
+
+                <div className="col-span-full">
+                  <label
+                    htmlFor="subject-text"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Betreff
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      {...register("subject", { required: true })}
+                      type="text"
+                      id="subject-text"
+                      required
+                      aria-invalid={Boolean(errors.subject)}
+                      aria-describedby={
+                        errors.subject ? "concert-subject-error" : undefined
+                      }
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    <ErrorMessage
+                      id="concert-subject-error"
+                      field={errors.subject}
+                      error="Bitte gib einen Betreff ein."
+                    ></ErrorMessage>
+                  </div>
+                </div>
+
+                <div className="col-span-full">
+                  <label
+                    htmlFor="text"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Deine Nachricht an uns.
+                  </label>
+                  <div className="mt-2">
+                    <textarea
+                      {...register("text", { required: true })}
+                      id="text"
+                      required
+                      aria-invalid={Boolean(errors.text)}
+                      aria-describedby={
+                        errors.text ? "concert-text-error" : undefined
+                      }
+                      className="block w-full h-96 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    <ErrorMessage
+                      id="concert-text-error"
+                      field={errors.text}
+                      error="Bitte gib einen Text ein."
+                    ></ErrorMessage>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div className="col-span-full">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                E-Mail
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("email", {
-                    required: true,
-                    pattern: /^\S+@\S+$/i,
-                  })}
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-                <ErrorMessage
-                  field={errors.email}
-                  error={
-                    errors.email?.ref?.value
-                      ? errors.email.ref.value.toString() +
-                        " ist keine gültige E-Mail"
-                      : "E-Mail wird benötigt"
-                  }
-                ></ErrorMessage>
-              </div>
-            </div>
-
-
-            <div className="col-span-full">
-              <label
-                htmlFor="subject-text"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Betreff
-              </label>
-              <div className="mt-2">
-                <input
-                  {...register("subject", { required: true })}
-                  type="text"
-                  id="subject-text"
-                  autoComplete="family-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-                <ErrorMessage
-                  field={errors.subject}
-                  error="Bitte gib einen Betreff ein."
-                ></ErrorMessage>
-              </div>
-            </div>
-
-
-            <div className="col-span-full">
-              <label
-                htmlFor="subject-text"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Deine Nachricht an uns.
-              </label>
-              <div className="mt-2">
-                <textarea
-                  {...register("text", { required: true })}
-                  id="text"
-                  autoComplete="family-name"
-                  className="block w-full h-96 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-                <ErrorMessage
-                  field={errors.text}
-                  error="Bitte gib einen Text ein."
-                ></ErrorMessage>
-              </div>
-            </div>
-
-            </div>
-        </div>
-      </div>
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button
-          type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Senden
-        </button>
-      </div>
-    </form>}
-    {success == 1 && (<FormFail recover={recover}/>)}
+          </div>
+          <div className="mt-6 flex items-center justify-end gap-x-6">
+            <button
+              type="submit"
+              className="min-h-11 rounded-md bg-indigo-700 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800"
+            >
+              Senden
+            </button>
+          </div>
+        </form>
+      )}
+      {success == 1 && <FormFail recover={recover} />}
     </>
   );
 }

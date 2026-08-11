@@ -1,15 +1,19 @@
 import { Sponsor } from "../content/wir/sponsors";
 import { Board } from "../content/wir/board";
 import React from "react";
-import { HeadFC, Link, graphql } from "gatsby";
+import { HeadFC, graphql } from "gatsby";
 import Layout from "../components/layout";
 import { GatsbyImage } from "gatsby-plugin-image";
 
 function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
   return (
-    <div>
-      <a href={sponsor.link} className="mb-6 lg:mb-0">
-        <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full h-full  dark:bg-neutral-700 hover:bg-gray-100">
+    <article>
+      <a
+        href={sponsor.link}
+        aria-label={`${sponsor.name}: Website öffnen`}
+        className="mb-6 block rounded-lg lg:mb-0"
+      >
+        <div className="block h-full w-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:bg-gray-100 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600">
           <div className="p-6">
             <div className="flex flex-wrap items-center">
               <div className="flex-basis shrink-0 grow-0 px-3 w-5/12">
@@ -17,34 +21,36 @@ function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
                   <GatsbyImage
                     className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
                     image={sponsor.image.childImageSharp.gatsbyImageData}
-                    alt={sponsor.name}
+                    alt=""
                     objectFit="contain"
                   />
                 )}
-                {sponsor.image && sponsor.image.extension === "svg" && sponsor.image.publicURL && (
-                  <img
-                    src={sponsor.image.publicURL}
-                    alt={sponsor.name}
-                    className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
-                  />
-                )}
+                {sponsor.image &&
+                  sponsor.image.extension === "svg" &&
+                  sponsor.image.publicURL && (
+                    <img
+                      src={sponsor.image.publicURL}
+                      alt=""
+                      className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
+                    />
+                  )}
                 {sponsor.externalImage && (
                   <img
                     src={sponsor.externalImage}
-                    alt={sponsor.name}
+                    alt=""
                     className="mb-6 dark:brightness-150 lg:mb-0 h-24 object-contain"
                   />
                 )}
               </div>
               <div className="flex-basis shrink-0 grow-0 px-3 w-7/12">
-                <h5 className="mb-4 font-bold">{sponsor.name}</h5>
+                <h3 className="mb-4 font-bold">{sponsor.name}</h3>
                 {sponsor.location}
               </div>
             </div>
           </div>
         </div>
       </a>
-    </div>
+    </article>
   );
 }
 
@@ -56,6 +62,7 @@ function Statistic() {
           <div className="flex items-center justify-center w-16 h-16 mr-5 rounded-full bg-primary xl:mr-10">
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
               fill="currentColor"
               className="w-8 h-8 bi bi-person-add text-gray-800"
               viewBox="0 0 16 16"
@@ -75,42 +82,43 @@ function Statistic() {
 
 function BoardMemberCard({ member }: { member: Board }) {
   return (
-    <div className="mb-24 md:mb-0">
-      <div className="block h-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] w-full  dark:bg-neutral-700">
+    <article className="mb-24 md:mb-0">
+      <div className="block h-full w-full rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 dark:text-white">
         <div className="flex justify-center">
           <div className="flex justify-center -mt-[75px]">
             <GatsbyImage
               className="rounded-full overflow-hidden w-80 hover:animate-pulse"
               image={member.image.childImageSharp.gatsbyImageData}
-              alt={member.name}
+              alt={`Porträt von ${member.name}`}
             />
           </div>
         </div>
         <div className="p-6">
-          <h5 className="mb-4 text-lg font-bold">
-            {member.name}
-            <Link
-              to={`mailto:${member.email}`}
-              className="px-2"
-              activeClassName="inline-block"
+          <div className="mb-4 flex items-center justify-center gap-2">
+            <h2 className="text-lg font-bold">{member.name}</h2>
+            <a
+              href={`mailto:${member.email}`}
+              aria-label={`E-Mail an ${member.name} schreiben`}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-orange-700 hover:bg-orange-50 hover:text-orange-800 dark:text-orange-300 dark:hover:bg-neutral-600 dark:hover:text-orange-200"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
                 width="16"
                 height="16"
                 fill="currentColor"
-                className="h-4 w-4 text-primary dark:text-primary-400 inline-block hover:animate-bounce"
+                className="h-5 w-5"
                 viewBox="0 0 16 16"
               >
                 <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2H2Zm-2 9.8V4.698l5.803 3.546L0 11.801Zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 9.671V4.697l-5.803 3.546.338.208A4.482 4.482 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671Z" />
                 <path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034v.21Zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791Z" />
               </svg>
-            </Link>
-          </h5>
+            </a>
+          </div>
           <p className="mb-6">{member.role}</p>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -123,12 +131,12 @@ export default function Home({
     <Layout>
       <div className="p-4 container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32">
         <section className="mb-32 text-center">
-          <h2 className="mb-32 text-3xl font-bold">
+          <h1 className="mb-32 text-3xl font-bold">
             Unsere{" "}
-            <span className="text-primary dark:text-primary-400 no-underline">
+            <span className="text-orange-700 dark:text-orange-400 no-underline">
               Vorstandschaft
             </span>
-          </h2>
+          </h1>
 
           <div className="grid md:grid-rows-3 md:grid-cols-2 xl:grid-rows-2 xl:grid-cols-3 gap-y-24 gap-x-8">
             {boards.nodes.map((member, index) => (
@@ -140,7 +148,7 @@ export default function Home({
         <div className="container my-24 mx-auto md:px-6">
           <h2 className="mb-2 text-3xl font-bold text-center">
             Unsere{" "}
-            <span className="text-primary dark:text-primary-400 no-underline">
+            <span className="text-orange-700 dark:text-orange-400 no-underline">
               Unterstützer
             </span>
           </h2>
@@ -151,15 +159,19 @@ export default function Home({
             {/* Sponsors are randomly sorted based on today's date */}
             {[...sponsors.nodes]
               .sort((a, b) => {
-              const today = new Date().toDateString();
-              const seedA = today + a.name;
-              const seedB = today + b.name;
-              const hashA = seedA.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-              const hashB = seedB.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-              return hashA - hashB;
+                const today = new Date().toDateString();
+                const seedA = today + a.name;
+                const seedB = today + b.name;
+                const hashA = seedA
+                  .split("")
+                  .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                const hashB = seedB
+                  .split("")
+                  .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                return hashA - hashB;
               })
               .map((sponsor, index) => (
-              <SponsorCard sponsor={sponsor} key={index} />
+                <SponsorCard sponsor={sponsor} key={index} />
               ))}
           </div>
         </div>
@@ -208,4 +220,6 @@ export const indexQuery = graphql`
   }
 `;
 
-export const Head: HeadFC = () => <title>Kinderlicht</title>;
+export const Head: HeadFC = () => (
+  <title>Über uns | Kinderlicht Wallersdorf</title>
+);

@@ -6,10 +6,11 @@ export default function Rechtliches() {
   return (
     <Layout>
       <div className="container max-w-6xl mx-auto space-y-6 sm:space-y-12 mb-8 mt-32 px-6">
-        <section className="bg-white dark:bg-gray-900">
+        <h1 className="sr-only">Rechtliche Hinweise und Datenschutz</h1>
+        <section className="legal-content bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
           <h2 className="mb-2 text-3xl font-bold text-center">
             Unsere{" "}
-            <span className="text-primary dark:text-primary-400 no-underline">
+            <span className="text-orange-700 dark:text-orange-400 no-underline">
               Datenschutzbestimmungen
             </span>
           </h2>
@@ -20,14 +21,12 @@ export default function Rechtliches() {
           <p className="mb-8  prosa lg:mb-16 text-gray-500 dark:text-gray-400 sm:text-l">
             Der Kinderlicht Wallersdorf e. V. nimmt als Anbieter der Website{" "}
             <a
-              className="text-indigo-500"
-              href="http://www.kinderlicht-wallersdorf.de"
-              target="_blank"
-              rel="noopener noreferrer"
+              className="text-indigo-700 underline underline-offset-2"
+              href="https://www.kinderlicht-wallersdorf.de"
             >
               www.kinderlicht-wallersdorf.de
-            </a>
-            {" "}und verantwortliche Stelle die Verpflichtung zum Datenschutz sehr
+            </a>{" "}
+            und verantwortliche Stelle die Verpflichtung zum Datenschutz sehr
             ernst und gestaltet seine Website so, dass nur so wenige
             personenbezogene Daten wie nötig erhoben, verarbeitet und genutzt
             werden. Unter keinen Umständen werden personenbezogene Daten zu
@@ -60,10 +59,8 @@ export default function Rechtliches() {
             Rahmenbedingungen weiterzuentwickeln. Wir bitten Sie deshalb, die
             Datenschutzerklärung von&nbsp;{" "}
             <a
-              className="text-indigo-500"
-              href="http://www.kinderlicht-wallersdorf.de/"
-              target="_blank"
-              rel="noopener noreferrer"
+              className="text-indigo-700 underline underline-offset-2"
+              href="https://www.kinderlicht-wallersdorf.de/"
             >
               www.kinderlicht-wallersdorf.de
             </a>{" "}
@@ -102,10 +99,8 @@ export default function Rechtliches() {
             die Möglichkeit, der Speicherung ihrer personenbezogenen Daten zu
             widersprechen. Bitte senden Sie dazu eine E-Mail an
             <a
-              className="mailto-link"
+              className="text-indigo-700 underline underline-offset-2"
               href="mailto:Enrico.koch@kinderlicht-wallersdorf.de"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               enrico.koch@kinderlicht-wallersdorf.de
             </a>
@@ -246,15 +241,13 @@ export default function Rechtliches() {
             Datenerhebung und -speicherung kann jederzeit mit Wirkung für die
             Zukunft widersprochen werden. Bitte wenden Sie sich dazu{" "}
             <a
-              className="text-indigo-500"
+              className="text-indigo-700 underline underline-offset-2"
               href="http://tools.google.com/dlpage/gaoptout?hl=de"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               direkt an Google
             </a>
-            . Google gibt seinen Nutzern, wie beispielsweise der verantwortlichen
-            Stelle vor, die nachfolgende Belehrung in ihren
+            . Google gibt seinen Nutzern, wie beispielsweise der
+            verantwortlichen Stelle vor, die nachfolgende Belehrung in ihren
             Datenschutzerklärungen zu verwenden. Dieser Aufforderung kommt
             der&nbsp;Kinderlicht Wallersdorf e. V. &nbsp;mit der Wiedergabe des
             folgenden Textes nach:
@@ -329,20 +322,16 @@ export default function Rechtliches() {
             erhalten. Weitere Informationen hierzu finden Sie in der
             Datenschutzerklärung von Twitter unter:{" "}
             <a
-              className="text-indigo-500"
+              className="text-indigo-700 underline underline-offset-2"
               href="http://www.twitter.com/privacy"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               www.twitter.com/privacy
             </a>
             . Ihre Datenschutzeinstellungen bei Twitter können Sie in den
             Konto-Einstellungen ändern unter:{" "}
             <a
-              className="text-indigo-500"
+              className="text-indigo-700 underline underline-offset-2"
               href="http://www.twitter.com/account/settings"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               www.twitter.com/account/settings
             </a>
@@ -361,10 +350,8 @@ export default function Rechtliches() {
             &quot;Instagram-Kamera&quot; gekennzeichnet. Eine Übersicht über die
             Instagram Plugins und deren Aussehen finden Sie hier:{" "}
             <a
-              className="text-indigo-500"
+              className="text-indigo-700 underline underline-offset-2"
               href="http://blog.instagram.com/post/36222022872/introducing-instagram-badges"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               http://blog.instagram.com/post/36222022872/introducing-instagram-badges
             </a>
@@ -390,10 +377,8 @@ export default function Rechtliches() {
             Ihrer Privatsphäre entnehmen Sie bitte den Datenschutzhinweisen von
             Instagram:{" "}
             <a
-              className="text-indigo-500"
+              className="text-indigo-700 underline underline-offset-2"
               href="https://help.instagram.com/155833707900388/"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               https://help.instagram.com/155833707900388/
             </a>
@@ -403,13 +388,7 @@ export default function Rechtliches() {
             Instagram ausloggen. Sie können das Laden der Instagram Plugins auch
             mit Add-Ons für Ihren Browser komplett verhindern, z.B. mit dem
             Skript-Blocker &quot;NoScript&quot; (
-            <a
-              href="http://noscript.net/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              http://noscript.net/
-            </a>
+            <a href="http://noscript.net/">http://noscript.net/</a>
             ).
           </p>
           <h3 className="mb-2 text-2xl font-bold mt-8">
@@ -437,10 +416,8 @@ export default function Rechtliches() {
             zur Datenverarbeitung und Hinweise zum Datenschutz durch YouTube
             (Google) finden Sie unter{" "}
             <a
-              className="text-indigo-500"
+              className="text-indigo-700 underline underline-offset-2"
               href="http://www.google.de/intl/de/policies/privacy/"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               www.google.de/intl/de/policies/privacy/
             </a>
@@ -460,26 +437,31 @@ export default function Rechtliches() {
           </p>
           <div className="w-full flex justify-center px-4 sm:px-0">
             <div className="w-full max-w-2xl p-4 sm:p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <h5 className="mb-4 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white text-center sm:text-left">
-                Impressum
-              </h5>
-
-              <div
-                className="mb-4 flex flex-col md:flex-row gap-4 md:gap-0 font-normal text-gray-500 dark:text-gray-400"
+              <h2
                 id="impressum"
+                className="mb-4 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white text-center sm:text-left"
               >
+                Impressum
+              </h2>
+
+              <div className="mb-4 flex flex-col md:flex-row gap-4 md:gap-0 font-normal text-gray-500 dark:text-gray-400">
                 <div className="w-full md:w-1/2 p-2 sm:p-4">
-                  <strong className="text-gray-700 dark:text-gray-300">Adresse:</strong>
+                  <strong className="text-gray-700 dark:text-gray-300">
+                    Adresse:
+                  </strong>
                   <br></br>
                   Kinderlicht Wallersdorf e.V.<br></br>
                   Frühlingsstr. 4<br></br>
                   94522 Wallersdorf<br></br>
                   <br></br>
-                  <strong className="text-gray-700 dark:text-gray-300">Kontakt:</strong>
+                  <strong className="text-gray-700 dark:text-gray-300">
+                    Kontakt:
+                  </strong>
                   <br></br>
                   <span className="flex items-center gap-2 mt-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
                       width="16"
                       height="16"
                       fill="currentColor"
@@ -489,11 +471,12 @@ export default function Rechtliches() {
                       <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z" />
                       <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                     </svg>
-                    <span>(09933)&nbsp;6289907</span>
+                    <a href="tel:+4999336289907">(09933)&nbsp;6289907</a>
                   </span>
                   <span className="flex items-center gap-2 mt-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
                       width="16"
                       height="16"
                       fill="currentColor"
@@ -502,17 +485,26 @@ export default function Rechtliches() {
                     >
                       <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                     </svg>
-                    <span className="break-all">info[at]kinderlicht-wallersdorf.de</span>
+                    <a
+                      className="break-all"
+                      href="mailto:info@kinderlicht-wallersdorf.de"
+                    >
+                      info@kinderlicht-wallersdorf.de
+                    </a>
                   </span>
                 </div>
                 <div className="w-full md:w-1/2 p-2 sm:p-4 border-t md:border-t-0 md:border-l border-gray-200 dark:border-gray-600 pt-4 md:pt-2">
-                  <strong className="text-gray-700 dark:text-gray-300">Registereintrag:</strong>
+                  <strong className="text-gray-700 dark:text-gray-300">
+                    Registereintrag:
+                  </strong>
                   <br></br>
                   Eintragung im Vereinsregister<br></br>
                   Registergericht: Landshut<br></br>
                   Registernummer: VR 200931<br></br>
                   <br></br>
-                  <strong className="text-gray-700 dark:text-gray-300">Umsatzsteuer-ID:</strong>
+                  <strong className="text-gray-700 dark:text-gray-300">
+                    Umsatzsteuer-ID:
+                  </strong>
                   <br></br>
                   108/109/50221<br></br>
                   <i>gemäß §27a Umsatzsteuergesetz</i>
@@ -522,7 +514,8 @@ export default function Rechtliches() {
 
               <div className="pt-3 border-t border-gray-200 dark:border-gray-600">
                 <i className="text-gray-500 dark:text-gray-400 text-sm">
-                  Angaben gemäß § 5 TMG; vertreten durch Enrico Koch und Matthias Kettl
+                  Angaben gemäß § 5 TMG; vertreten durch Enrico Koch und
+                  Matthias Kettl
                 </i>
               </div>
             </div>
@@ -533,4 +526,6 @@ export default function Rechtliches() {
   );
 }
 
-export const Head: HeadFC = () => <title>Kinderlicht</title>;
+export const Head: HeadFC = () => (
+  <title>Datenschutz und Impressum | Kinderlicht Wallersdorf</title>
+);

@@ -20,31 +20,42 @@ function HistoryLink({
   size: number;
 }) {
   const width = size === 1 ? "w-full" : size === 2 ? "w-1/2" : "w-1/3";
-  return (
-    <Link to={link} className={`w-full md:${width} p-4`}>
-      <div className="bg-white p-6 rounded-lg hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-        {typeof visual === "string" ? (
-          <iframe
-            loading="lazy"
-            className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-            src={visual}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title={short}
-          />
-        ) : (
-          <>{visual}</>
-          //
-          // />
-        )}
-        <h3 className="tracking-widest text-primary text-xs font-medium title-font">
-          {short}
-        </h3>
-        <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
-          {title}
-        </h2>
-        <p className="leading-relaxed text-base">{description}</p>
-      </div>
+  const card = (
+    <div className="h-full rounded-lg bg-white p-6 transition-colors duration-300 ease-in-out hover:bg-gray-100">
+      {typeof visual === "string" ? (
+        <iframe
+          loading="lazy"
+          className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
+          src={visual}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          title={`Video: ${title}`}
+        />
+      ) : (
+        <>{visual}</>
+      )}
+      <p className="title-font text-xs font-bold tracking-widest text-orange-700">
+        {short}
+      </p>
+      <h3 className="title-font mb-4 text-lg font-medium text-gray-900">
+        {title}
+      </h3>
+      <p className="leading-relaxed text-base">{description}</p>
+    </div>
+  );
+
+  if (typeof visual === "string") {
+    return <article className={`w-full md:${width} p-4`}>{card}</article>;
+  }
+
+  const linkClasses = `block w-full md:${width} rounded-lg p-4`;
+  return link.startsWith("http") ? (
+    <a href={link} aria-label={title} className={linkClasses}>
+      {card}
+    </a>
+  ) : (
+    <Link to={link} aria-label={title} className={linkClasses}>
+      {card}
     </Link>
   );
 }
@@ -58,7 +69,7 @@ function FeatureSection() {
             <div className="lg:max-w-lg">
               <h2 className="text-base font-bold">
                 Wer samma mia,{" "}
-                <span className="text-primary dark:text-primary-400 no-underline">
+                <span className="text-orange-700 dark:text-orange-400 no-underline">
                   wos damma mia?
                 </span>
               </h2>
@@ -80,6 +91,7 @@ function FeatureSection() {
                 <div className="relative pl-9">
                   <dt className="inline font-semibold text-gray-900">
                     <svg
+                      aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
@@ -92,15 +104,16 @@ function FeatureSection() {
                     Effektiv.{" "}
                   </dt>
                   <dd className="inline">
-                    Der Kinderlicht Wallersdorf e.V. setzt sich
-                    leidenschaftlich dafür ein, Kindern und Familien in
-                    schwierigen Situationen zu helfen.
-                    Unser Ziel ist es, unbürokratisch und schnell zu helfen.
+                    Der Kinderlicht Wallersdorf e.V. setzt sich leidenschaftlich
+                    dafür ein, Kindern und Familien in schwierigen Situationen
+                    zu helfen. Unser Ziel ist es, unbürokratisch und schnell zu
+                    helfen.
                   </dd>
                 </div>
                 <div className="relative pl-9">
                   <dt className="inline font-semibold text-gray-900">
                     <svg
+                      aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
@@ -113,16 +126,18 @@ function FeatureSection() {
                     Gemeinschaftlich.{" "}
                   </dt>
                   <dd className="inline">
-                    Bei uns arbeitet ein engagiertes und diverses Team Hand in Hand.
-                    Wir unterstützen überwiegend regional und direkt dort, wo Hilfe
-                    benötigt wird. Dabei arbeiten wir unter anderem eng mit
-                    lokalen sozialen Einrichtungen und Institutionen zusammen.
-                    Innerhalb von 5 Jahren konnten wir so bereits über 55.000€ spenden.
+                    Bei uns arbeitet ein engagiertes und diverses Team Hand in
+                    Hand. Wir unterstützen überwiegend regional und direkt dort,
+                    wo Hilfe benötigt wird. Dabei arbeiten wir unter anderem eng
+                    mit lokalen sozialen Einrichtungen und Institutionen
+                    zusammen. Innerhalb von 5 Jahren konnten wir so bereits über
+                    55.000€ spenden.
                   </dd>
                 </div>
                 <div className="relative pl-9">
                   <dt className="inline font-semibold text-gray-900">
                     <svg
+                      aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
@@ -136,8 +151,8 @@ function FeatureSection() {
                   </dt>
                   <dd className="inline">
                     Wir sind bekannt für unsere verrückten Aktionen, die nicht
-                    nur Spaß machen, sondern auch viel Gutes bewirken.
-                    Ob ein Konzert, ein Kinofilm, eine Lasershow, Bälle, oder ein
+                    nur Spaß machen, sondern auch viel Gutes bewirken. Ob ein
+                    Konzert, ein Kinofilm, eine Lasershow, Bälle, oder ein
                     Weihnachtsstand - bei uns ist immer was los!
                   </dd>
                 </div>
@@ -145,11 +160,11 @@ function FeatureSection() {
             </div>
           </div>
           <div>
-          <StaticImage
-            alt="Unsere Vorstandschaft"
-            src="../images/home/all.jpg"
-            className="h-full w-full object-cover object-center rounded-3xl"
-          />
+            <StaticImage
+              alt="Unsere Vorstandschaft"
+              src="../images/home/all.jpg"
+              className="h-full w-full object-cover object-center rounded-3xl"
+            />
           </div>
         </div>
       </div>
@@ -167,9 +182,18 @@ function FeatureSection() {
 export default function IndexPage() {
   return (
     <Layout>
-      <StaticImage src="../images/home/banner.svg" alt="Kinderlicht Banner" className="my-4" quality={100}/>
+      <StaticImage
+        src="../images/home/banner.svg"
+        alt=""
+        className="my-4"
+        quality={100}
+      />
+      <h1 className="sr-only">Kinderlicht Wallersdorf e.V.</h1>
       <div>
         <section className="text-gray-600 body-font mt-24">
+          <h2 className="sr-only">
+            Direkt zu Hilfe, Mitgliedschaft und Neuigkeiten
+          </h2>
           <div className="container px-5 mt-16 mx-auto max-w-6xl">
             <div className="flex flex-wrap -m-4">
               <HistoryLink
@@ -181,7 +205,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src={"../images/home/help.png"}
-                    alt={"Melde dich bei uns, wir helfen gerne!"}
+                    alt=""
                   />
                 }
                 size={3}
@@ -195,7 +219,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src={"../images/home/donate.png"}
-                    alt={"Spenden oder Beitreten"}
+                    alt=""
                   />
                 }
                 size={3}
@@ -209,7 +233,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/news.png"
-                    alt="Unsere News"
+                    alt=""
                   />
                 }
                 size={3}
@@ -229,7 +253,7 @@ export default function IndexPage() {
               <div className="w-full mb-6 lg:mb-0">
                 <h2 className="text-3xl font-bold">
                   Unsere{" "}
-                  <span className="text-primary dark:text-primary-400 no-underline">
+                  <span className="text-orange-700 dark:text-orange-400 no-underline">
                     Geschichte
                   </span>
                 </h2>
@@ -238,7 +262,9 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2025</span>
+              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+                2025
+              </span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
@@ -251,7 +277,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/news/2025-12-27_schneeball-wallersdorf.jpeg"
-                    alt="Schneeball 2025"
+                    alt=""
                   />
                 }
                 size={3}
@@ -265,7 +291,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/news/2025-06-20_europapark.png"
-                    alt="Europapark Ausflug"
+                    alt=""
                   />
                 }
                 size={3}
@@ -279,7 +305,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/news/2025-10-18_erster-flosar-in-wallersdorf-ein-voller-erfolg.jpg"
-                    alt="Erster Flosar"
+                    alt=""
                   />
                 }
                 size={3}
@@ -287,7 +313,9 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2024</span>
+              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+                2024
+              </span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
@@ -300,21 +328,21 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/kdf2.jpg"
-                    alt="Anpacken!"
+                    alt=""
                   />
                 }
                 size={2}
               />
               <HistoryLink
                 title="Don't Stand Alone"
-                description='In Zusammenarbeit mit der Frauenliste und anderen Vereinen aus Wallersdorf, wurden täglich Getränke und Köstlichkeiten zur Vorweihnachtszeit ausgegeben. Das gesammelte Geld kam den jeweiligen Vereinen zu Gute.'
+                description="In Zusammenarbeit mit der Frauenliste und anderen Vereinen aus Wallersdorf, wurden täglich Getränke und Köstlichkeiten zur Vorweihnachtszeit ausgegeben. Das gesammelte Geld kam den jeweiligen Vereinen zu Gute."
                 short="Gemeinsam stark"
                 link="/ein-unvergesslicher-weihnachtsstand-in-wallersdorf"
                 visual={
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/weihnachtsstand.png"
-                    alt="Anpacken!"
+                    alt=""
                   />
                 }
                 size={2}
@@ -322,7 +350,9 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2023</span>
+              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+                2023
+              </span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
@@ -335,7 +365,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/stammzellenspende.jpg"
-                    alt="Stammzellenspende"
+                    alt=""
                   />
                 }
                 size={3}
@@ -349,7 +379,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/news/jubilaeum-2023.jpg"
-                    alt="5 Jahre Kinderlicht - Gruppenbild"
+                    alt=""
                   />
                 }
                 size={3}
@@ -363,7 +393,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/news/schneeball-2023.jpg"
-                    alt="Schneeball 2023"
+                    alt=""
                   />
                 }
                 size={3}
@@ -371,7 +401,9 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2022</span>
+              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+                2022
+              </span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
@@ -384,7 +416,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/hochbeet.jpg"
-                    alt="Anpacken!"
+                    alt=""
                   />
                 }
                 size={2}
@@ -400,7 +432,9 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2021</span>
+              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+                2021
+              </span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
@@ -413,7 +447,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/corona.jpg"
-                    alt="Corona Krise"
+                    alt=""
                   />
                 }
                 size={3}
@@ -437,7 +471,9 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2020</span>
+              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+                2020
+              </span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
@@ -450,7 +486,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/music.jpg"
-                    alt="Unterhaltung"
+                    alt=""
                   />
                 }
                 size={2}
@@ -464,7 +500,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/car.jpg"
-                    alt="Hohe Spenden"
+                    alt=""
                   />
                 }
                 size={2}
@@ -472,7 +508,9 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2019</span>
+              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+                2019
+              </span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
@@ -485,7 +523,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/umbrella.jpg"
-                    alt="Schirmherrschaft"
+                    alt=""
                   />
                 }
                 size={3}
@@ -507,7 +545,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/fireworks.jpg"
-                    alt="Lasershow"
+                    alt=""
                   />
                 }
                 size={3}
@@ -515,7 +553,9 @@ export default function IndexPage() {
             </div>
             <div className="relative flex py-5 items-center">
               <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink mx-4 text-gray-400">2018</span>
+              <span className="flex-shrink mx-4 font-semibold text-gray-700">
+                2018
+              </span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <div className="flex flex-wrap -m-4">
@@ -528,7 +568,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/start.jpg"
-                    alt="Wie alles begann"
+                    alt=""
                   />
                 }
                 size={2}
@@ -542,7 +582,7 @@ export default function IndexPage() {
                   <StaticImage
                     className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
                     src="../images/home/founding.jpg"
-                    alt="Die Gründung"
+                    alt=""
                   />
                 }
                 size={2}
@@ -555,4 +595,6 @@ export default function IndexPage() {
   );
 }
 
-export const Head: HeadFC = () => <title>Kinderlicht</title>;
+export const Head: HeadFC = () => (
+  <title>Kinderlicht Wallersdorf e.V. | Gemeinsam helfen</title>
+);

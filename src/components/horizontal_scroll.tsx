@@ -260,7 +260,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
     >
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <p className="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-orange-500">
+          <p className="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-orange-700">
             Tätigkeitsbericht
           </p>
           <p className="mt-1 text-sm text-gray-500">
@@ -325,7 +325,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
             value={currentIndex}
           />
         </div>
-        <div className="mt-1 flex justify-between text-[0.65rem] font-semibold uppercase tracking-wider text-gray-400">
+        <div className="mt-1 flex justify-between text-[0.65rem] font-semibold uppercase tracking-wider text-gray-600">
           <span>{years.first || "Anfang"}</span>
           <span>{years.last || "Heute"}</span>
         </div>
@@ -426,10 +426,17 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
       <div className="relative flex min-h-0 flex-1 flex-col">
         <div className="mb-3 flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white/75 px-2.5 py-1 text-[0.68rem] font-semibold text-gray-500 shadow-sm ring-1 ring-orange-100">
+            <time
+              dateTime={
+                Number.isNaN(date.getTime())
+                  ? undefined
+                  : date.toISOString().slice(0, 10)
+              }
+              className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white/75 px-2.5 py-1 text-[0.68rem] font-semibold text-gray-500 shadow-sm ring-1 ring-orange-100"
+            >
               <svg
                 aria-hidden="true"
-                className="h-3.5 w-3.5 text-orange-500"
+                className="h-3.5 w-3.5 text-orange-700"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -442,16 +449,16 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
                 />
               </svg>
               {formattedDate}
-            </div>
+            </time>
             <h3 className="line-clamp-2 text-base font-bold leading-snug text-gray-900 md:text-lg">
               {activity.title}
             </h3>
           </div>
           <div className="flex-shrink-0 rounded-xl bg-white/90 px-3 py-2 text-right shadow-sm ring-1 ring-orange-100">
-            <span className="block text-[0.58rem] font-bold uppercase tracking-wider text-gray-400">
+            <span className="block text-[0.58rem] font-bold uppercase tracking-wider text-gray-600">
               Spende
             </span>
-            <strong className="block text-base font-black tabular-nums text-orange-600 md:text-lg">
+            <strong className="block text-base font-black tabular-nums text-orange-700 md:text-lg">
               {formatCurrency(activity.donation)}
             </strong>
           </div>
@@ -461,8 +468,11 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
         </p>
       </div>
       <div className="relative mt-3 flex items-center gap-2 border-t border-orange-200/70 pt-3">
-        <span className="h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_0_4px_rgba(251,146,60,0.14)]" />
-        <span className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-orange-600">
+        <span
+          aria-hidden="true"
+          className="h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_0_4px_rgba(251,146,60,0.14)]"
+        />
+        <span className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-orange-700">
           Gemeinsam wirkt mehr
         </span>
       </div>

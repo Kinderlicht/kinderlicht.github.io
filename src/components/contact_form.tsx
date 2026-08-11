@@ -53,12 +53,12 @@ const SectionHeader = ({ title, emoji }: { title: string; emoji?: string }) => (
 
 // Common styling classes
 const inputClasses =
-  "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 placeholder-gray-400";
+  "mt-1 w-full rounded-xl border-2 border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-3 transition-all duration-300 bg-white hover:border-gray-300 hover:shadow-sm focus:shadow-md outline-none text-gray-700 placeholder-gray-600";
 
 const labelClasses = "block text-sm font-medium text-gray-600 mb-1";
 
 const checkboxClasses =
-  "h-5 w-5 rounded-lg border-2 border-gray-300 cursor-pointer accent-orange-500 transition-all duration-200 hover:border-orange-400";
+  "h-5 w-5 rounded-lg border-2 border-gray-300 cursor-pointer accent-orange-700 transition-all duration-200 hover:border-orange-400";
 
 export default function ContactForm() {
   const {
@@ -246,23 +246,22 @@ export default function ContactForm() {
               <div className="mb-5 rounded-xl border border-blue-100 bg-blue-50 p-4">
                 <p className="text-sm text-gray-600 leading-relaxed">
                   Deine Angaben werden ausschließlich zur Bearbeitung deiner
-                  Nachricht gespeichert und genutzt. Unsere
-                  Datenschutzbestimmungen findest du{" "}
+                  Nachricht gespeichert und genutzt. Unsere Mehr dazu steht in
+                  unserer{" "}
                   <a
                     className="font-medium text-orange-700 underline decoration-orange-300 underline-offset-2 hover:text-orange-800"
                     href="/rechtliches"
                   >
-                    hier
+                    Datenschutzerklärung
                   </a>
                   . Du erklärst dich damit einverstanden, dass alle Inhalte im
                   Formular an unsere Vereinsverwaltungssoftware Campai
-                  übermittelt werden. Die Datenschutzbestimmungen von Campai
-                  findest du{" "}
+                  übermittelt werden. Informationen dazu findest du in der{" "}
                   <a
                     className="font-medium text-orange-700 underline decoration-orange-300 underline-offset-2 hover:text-orange-800"
                     href="https://www.campai.com/datenschutz"
                   >
-                    hier
+                    Datenschutzerklärung von Campai
                   </a>
                   .
                 </p>
@@ -303,7 +302,11 @@ export default function ContactForm() {
             </section>
 
             {hint && (
-              <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 text-amber-800 rounded-xl p-4 mb-6 shadow-sm flex items-start gap-3">
+              <div
+                className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 text-amber-800 rounded-xl p-4 mb-6 shadow-sm flex items-start gap-3"
+                role="status"
+                aria-live="polite"
+              >
                 <span aria-hidden="true" className="text-xl">
                   💡
                 </span>

@@ -16,7 +16,14 @@ export const formatCurrency = (cents: number): string => {
   } else if (euros >= 10000) {
     return `${(euros / 1000).toFixed(1)}T€`;
   } else if (euros >= 1000) {
-    return euros.toFixed(0).charAt(0) + "." + euros.toFixed(0).slice(1) + "," + euros.toFixed(2).split(".")[1] + "€";
+    return (
+      euros.toFixed(0).charAt(0) +
+      "." +
+      euros.toFixed(0).slice(1) +
+      "," +
+      euros.toFixed(2).split(".")[1] +
+      "€"
+    );
   } else {
     return `${euros.toFixed(2).replace(".", ",")}€`;
   }
@@ -60,10 +67,7 @@ const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
         // A monotonic ID remains unique even when several updates land in the
         // same millisecond during fast carousel navigation.
         const id = ++nextFloatingItemId.current;
-        setFloatingItems((prev) => [
-          ...prev,
-          { id, diff, colorClass }
-        ]);
+        setFloatingItems((prev) => [...prev, { id, diff, colorClass }]);
       }
 
       // Update oldAmount to the new value
@@ -79,6 +83,8 @@ const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
   return (
     <div className="relative text-2xl text-center">
       <span
+        aria-live="polite"
+        aria-atomic="true"
         key={animationKey}
         className="inline-block font-bold text-3xl money-added"
       >
@@ -88,12 +94,15 @@ const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
       {/* Render each floating amount as absolutely positioned within this container */}
       {floatingItems.map((item) => (
         <span
+          aria-hidden="true"
           key={item.id}
           className={`absolute left-1/2 -translate-x-1/2 font-bold ${item.colorClass} float-up-animation`}
           onAnimationEnd={() => handleAnimationEnd(item.id)}
         >
           {/* Show + sign only if diff > 0 */}
-          {item.diff > 0 ? `+${formatCurrency(item.diff)}` : `${formatCurrency(item.diff)}`}
+          {item.diff > 0
+            ? `+${formatCurrency(item.diff)}`
+            : `${formatCurrency(item.diff)}`}
         </span>
       ))}
     </div>

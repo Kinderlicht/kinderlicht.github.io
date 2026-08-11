@@ -44,15 +44,15 @@ export default function Timeline({ activities }: TimelineProps) {
       />
 
       <div className="relative mb-8 text-center">
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.24em] text-orange-500">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.24em] text-orange-700">
           Was wir gemeinsam bewegen
         </p>
         <h2 className="mb-2 text-2xl font-black tracking-tight text-gray-900 md:text-3xl">
           Jeder Beitrag trägt dazu bei, unsere Flamme zu entfachen
         </h2>
         <p className="mx-auto max-w-xl text-sm leading-relaxed text-gray-500 md:text-base">
-          Reise durch unseren anonymisierten Tätigkeitsbericht und sieh, wie 
-          unsere Flamme durch die Unterstützung unserer Spender:innen wächst. 
+          Reise durch unseren anonymisierten Tätigkeitsbericht und sieh, wie
+          unsere Flamme durch die Unterstützung unserer Spender:innen wächst.
         </p>
       </div>
 
@@ -76,7 +76,7 @@ export default function Timeline({ activities }: TimelineProps) {
               totalActivities={sortedActivities.length}
               total_money={total}
             />
-            <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+            <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-gray-600">
               Gesamtspenden
             </p>
           </div>

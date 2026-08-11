@@ -1,28 +1,51 @@
 import React from "react";
 
-function DonationAccountModal() {
+function DonationAccount() {
   const iban = "DE04 7419 1000 0007 7243 14";
+  const [copyStatus, setCopyStatus] = React.useState("");
+
+  const copyIban = async () => {
+    try {
+      await navigator.clipboard.writeText(iban);
+      setCopyStatus("IBAN wurde kopiert.");
+    } catch {
+      setCopyStatus("IBAN konnte nicht kopiert werden.");
+    }
+  };
 
   return (
-    <div className="relative p-6 flex-auto">
-      <div className="my-4 text-blueGray-500 text-lg leading-relaxed">
-        <strong className="font-semibold">Unser Spendenkonto: </strong>
-
-        <div title="Bank">VR Bank Landau-Mengkofen eG </div>
-
-        <div title="IBAN">{iban} </div>
-
-        <div title="BIC">GENODEF1LND </div>
-      </div>
+    <section
+      aria-labelledby="donation-account-heading"
+      className="relative p-6"
+    >
+      <h2 id="donation-account-heading" className="text-xl font-semibold">
+        Bankverbindung
+      </h2>
+      <dl className="my-4 grid gap-3 text-lg leading-relaxed sm:grid-cols-[auto_1fr]">
+        <dt className="font-semibold">Bank</dt>
+        <dd>VR Bank Landau-Mengkofen eG</dd>
+        <dt className="font-semibold">IBAN</dt>
+        <dd className="break-all font-mono">{iban}</dd>
+        <dt className="font-semibold">BIC</dt>
+        <dd className="font-mono">GENODEF1LND</dd>
+      </dl>
       <button
-        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        className="min-h-11 rounded-xl bg-emerald-800 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-900"
         type="button"
-        onClick={() => navigator.clipboard.writeText(iban)}
+        onClick={copyIban}
+        aria-describedby="donation-copy-status"
       >
-        Kopieren
+        IBAN kopieren
       </button>
-    </div>
+      <p
+        id="donation-copy-status"
+        className="mt-3 text-sm text-gray-700"
+        aria-live="polite"
+      >
+        {copyStatus}
+      </p>
+    </section>
   );
 }
 
-export default DonationAccountModal;
+export default DonationAccount;

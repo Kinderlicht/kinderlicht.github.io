@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "gatsby";
 
 export default function FormFail({ recover }: { recover: string }) {
   return (
@@ -14,12 +13,12 @@ export default function FormFail({ recover }: { recover: string }) {
           noch einmal. Damit du nicht alles erneut ausfüllen musst, kannst du
           den folgenden Link anklicken.
         </p>
-        <Link
-          className="block hover:underline text-red-900 mt-2 italic"
-          to={`mailto:info@kinderlicht-wallersdorf.de?subject=Nachricht wiederherstellen.&body=Bitte diese E-Mail so abschicken: ${recover}`}
+        <a
+          className="mt-2 block text-red-900 underline underline-offset-2 hover:text-red-950"
+          href={`mailto:info@kinderlicht-wallersdorf.de?subject=Nachricht wiederherstellen.&body=Bitte diese E-Mail so abschicken: ${recover}`}
         >
-          Klicke hier, um deine eingegebenen Daten per E-Mail an uns zu senden.
-        </Link>
+          Eingegebene Daten per E-Mail an uns senden
+        </a>
       </div>
     </>
   );

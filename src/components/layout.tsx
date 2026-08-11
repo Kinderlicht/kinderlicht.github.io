@@ -10,9 +10,12 @@ function ShowNotifications({ notifications }: { notifications: number }) {
   return (
     <>
       {notifications > 0 && (
-        <div className="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">
+        <span
+          className="inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-700 text-xs font-bold text-white dark:border-gray-900"
+          aria-label={`${notifications} kommende ${notifications === 1 ? "Veranstaltung" : "Veranstaltungen"}`}
+        >
           {notifications.toString()}
-        </div>
+        </span>
       )}
     </>
   );
@@ -26,8 +29,8 @@ const GatsbyLinkWrapper = ({
   children: any;
 }) => (
   <Link
-    className="block py-2.5 px-4 mb-2 md:mb-0 rounded-xl text-gray-700 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-orange-100 hover:to-amber-100 hover:text-orange-600 md:hover:bg-gradient-to-r md:hover:from-orange-50 md:hover:to-amber-50 md:rounded-full md:px-4 md:py-2 border-b border-gray-100 md:border-0"
-    activeClassName="bg-gradient-to-r from-orange-400 to-amber-500 text-white md:from-orange-100 md:to-amber-100 md:text-orange-600"
+    className="mb-2 block min-h-11 rounded-xl border-b border-gray-100 px-4 py-2.5 font-medium text-gray-700 transition-colors duration-200 hover:bg-orange-50 hover:text-orange-800 md:mb-0 md:rounded-full md:border-0 md:px-4 md:py-2"
+    activeClassName="bg-orange-700 text-white md:bg-orange-100 md:text-orange-800"
     to={href}
   >
     {children}
@@ -48,6 +51,7 @@ type LayoutEventsData = {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const [copyStatus, setCopyStatus] = React.useState("");
   const data = useStaticQuery<LayoutEventsData>(graphql`
     query LayoutEventsQuery {
       allPublicEvent {
@@ -59,16 +63,33 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   `);
   const numberOfUpcomingEvents = countUpcomingEvents(data.allPublicEvent.nodes);
 
+  const copyIban = async () => {
+    try {
+      await navigator.clipboard.writeText("DE04 7419 1000 0007 7243 14");
+      setCopyStatus("IBAN wurde kopiert.");
+    } catch {
+      setCopyStatus("IBAN konnte nicht kopiert werden.");
+    }
+  };
+
   return (
     <>
+      <a className="skip-link" href="#main-content">
+        Direkt zum Inhalt
+      </a>
       <header className="mx-auto bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-100">
-        <Navbar fluid rounded className="max-w-screen-2xl mx-auto py-3 flex-nowrap">
+        <Navbar
+          fluid
+          rounded
+          aria-label="Hauptnavigation"
+          className="max-w-screen-2xl mx-auto py-3 flex-nowrap"
+        >
           <Navbar.Brand as={GatsbyLinkWrapperIcon} href="/">
             <div className="flex items-center min-w-0">
               <StaticImage
                 src="../images/quadratic.png"
                 className="mr-3 h-6 sm:h-9 w-4"
-                alt="Kinderlicht Logo"
+                alt=""
               />
               <span className="self-center text-sm sm:text-xl font-semibold whitespace-nowrap dark:text-white">
                 Kinderlicht Wallersdorf e.V.
@@ -77,30 +98,33 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Navbar.Brand>
 
           <div className="flex lg:order-2">
-            <Navbar.Toggle className="p-2 rounded-xl hover:bg-orange-50 transition-colors" />
+            <Navbar.Toggle
+              aria-label="Hauptnavigation öffnen oder schließen"
+              className="min-h-11 min-w-11 rounded-xl p-2 transition-colors hover:bg-orange-50"
+            />
           </div>
 
           <Navbar.Collapse className="lg:flex lg:items-center lg:gap-1">
             <Navbar.Link href="/beitreten" as={GatsbyLinkWrapper}>
-              ❤️ Beitreten
+              <span aria-hidden="true">❤️</span> Beitreten
             </Navbar.Link>
             <Navbar.Link href="/anfrage" as={GatsbyLinkWrapper}>
-              📩 Kontakt &amp; Hilfe
+              <span aria-hidden="true">📩</span> Kontakt &amp; Hilfe
             </Navbar.Link>
             <Navbar.Link href="/neues" as={GatsbyLinkWrapper}>
-              📰 Neues
+              <span aria-hidden="true">📰</span> Neues
             </Navbar.Link>
             <Navbar.Link href="/events" as={GatsbyLinkWrapper}>
-              🎉 Events{" "}
+              <span aria-hidden="true">🎉</span> Events{" "}
               <ShowNotifications notifications={numberOfUpcomingEvents} />
             </Navbar.Link>
             <Navbar.Link href="/wir" as={GatsbyLinkWrapper}>
-              👥 Wir
+              <span aria-hidden="true">👥</span> Wir
             </Navbar.Link>
           </Navbar.Collapse>
         </Navbar>
       </header>
-      <div className="sticky top-[60px] z-40 isolate overflow-hidden bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 px-2 py-2 sm:px-4"> 
+      <div className="sticky top-[60px] z-40 isolate overflow-hidden bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 px-2 py-2 sm:px-4">
         {/* Decorative blobs */}
         <div
           className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
@@ -118,27 +142,53 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Single-line layout - wraps only on very small screens */}
         <div className="flex flex-col xs:flex-row items-center justify-center gap-2 sm:gap-3 text-center">
           {/* Bank info pill */}
-          <div className="hidden sm:flex items-center gap-1.5 sm:gap-2 bg-white/60 backdrop-blur-sm rounded-full px-2 sm:px-3 py-1 shadow-sm whitespace-nowrap cursor-pointer hover:bg-white/80 transition-colors" onClick={() => navigator.clipboard.writeText("DE04 7419 1000 0007 7243 14")} title="IBAN kopieren">
-            <span className="text-orange-500 font-semibold text-xs sm:text-sm">🏦</span>
-            <span className="hidden sm:inline text-gray-700 text-xs sm:text-sm">VR Bank Landau</span>
-            <span className="text-gray-400 hidden sm:inline">|</span>
-            <span title="IBAN" className="font-mono text-[10px] sm:text-xs text-gray-700">DE04 7419 1000 0007 7243 14</span>
-            <span className="text-gray-400 hidden sm:inline">|</span>
-            <span title="BIC" className="font-mono text-[10px] sm:text-xs text-gray-700">GENODEF1LND</span>
-          </div>
+          <button
+            type="button"
+            onClick={copyIban}
+            className="hidden min-h-11 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/70 px-3 py-2 text-left shadow-sm transition-colors hover:bg-white focus-visible:bg-white sm:flex sm:gap-2"
+            aria-describedby="copy-status"
+          >
+            <span
+              aria-hidden="true"
+              className="text-orange-700 font-semibold text-xs sm:text-sm"
+            >
+              🏦
+            </span>
+            <span className="hidden sm:inline text-gray-700 text-xs sm:text-sm">
+              VR Bank Landau
+            </span>
+            <span aria-hidden="true" className="text-gray-400 hidden sm:inline">
+              |
+            </span>
+            <span className="font-mono text-[10px] sm:text-xs text-gray-700">
+              IBAN: DE04 7419 1000 0007 7243 14
+            </span>
+            <span aria-hidden="true" className="text-gray-400 hidden sm:inline">
+              |
+            </span>
+            <span className="font-mono text-[10px] sm:text-xs text-gray-700">
+              BIC: GENODEF1LND
+            </span>
+            <span className="sr-only">In die Zwischenablage kopieren</span>
+          </button>
+          <span id="copy-status" className="sr-only" aria-live="polite">
+            {copyStatus}
+          </span>
 
           {/* Action buttons */}
           <div className="flex items-center gap-2">
             <Link
               to="/spendenkonto"
-              className="sm:hidden p-1.5 sm:p-2 rounded-full bg-white/50 hover:bg-white transition-colors shadow-sm hover:shadow-md"
+              aria-label="Zum Spendenkonto"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/70 shadow-sm transition-colors hover:bg-white sm:hidden"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
                 fill="currentColor"
-                className="inline-block text-pink-400"
+                aria-hidden="true"
+                className="inline-block text-pink-700"
                 viewBox="0 0 16 16"
               >
                 <path d="M7.964 1.527c-2.977 0-5.571 1.704-6.32 4.125h-.55A1 1 0 0 0 .11 6.824l.254 1.46a1.5 1.5 0 0 0 1.478 1.243h.263c.3.513.688.978 1.145 1.382l-.729 2.477a.5.5 0 0 0 .48.641h2a.5.5 0 0 0 .471-.332l.482-1.351c.635.173 1.31.267 2.011.267.707 0 1.388-.095 2.028-.272l.543 1.372a.5.5 0 0 0 .465.316h2a.5.5 0 0 0 .478-.645l-.761-2.506C13.81 9.895 14.5 8.559 14.5 7.069c0-.145-.007-.29-.02-.431.261-.11.508-.266.705-.444.315.306.815.306.815-.417 0 .223-.5.223-.461-.026a.95.95 0 0 0 .09-.255.7.7 0 0 0-.202-.645.58.58 0 0 0-.707-.098.735.735 0 0 0-.375.562c-.024.243.082.48.32.654a2.112 2.112 0 0 1-.259.153c-.534-2.664-3.284-4.595-6.442-4.595Zm7.173 3.876a.565.565 0 0 1-.098.21.704.704 0 0 1-.044-.025c-.146-.09-.157-.175-.152-.223a.236.236 0 0 1 .117-.173c.049-.027.08-.021.113.012a.202.202 0 0 1 .064.199Zm-8.999-.65a.5.5 0 1 1-.276-.96A7.613 7.613 0 0 1 7.964 3.5c.763 0 1.497.11 2.18.315a.5.5 0 1 1-.287.958A6.602 6.602 0 0 0 7.964 4.5c-.64 0-1.255.09-1.826.254ZM5 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
@@ -146,15 +196,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Link>
             <a
               href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=B3F4DENU62RRN&ssrt=1693131246739"
-              className="p-1.5 sm:p-2 rounded-full bg-white/50 hover:bg-white transition-colors shadow-sm hover:shadow-md"
-              title="PayPal Spende"
+              aria-label="Über PayPal spenden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/70 shadow-sm transition-colors hover:bg-white"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
                 fill="currentColor"
-                className="text-blue-600"
+                aria-hidden="true"
+                className="text-blue-700"
                 viewBox="0 0 16 16"
               >
                 <path d="M14.06 3.713c.12-1.071-.093-1.832-.702-2.526C12.628.356 11.312 0 9.626 0H4.734a.7.7 0 0 0-.691.59L2.005 13.509a.42.42 0 0 0 .415.486h2.756l-.202 1.28a.628.628 0 0 0 .62.726H8.14c.429 0 .793-.31.862-.731l.025-.13.48-3.043.03-.164.001-.007a.351.351 0 0 1 .348-.297h.38c1.266 0 2.425-.256 3.345-.91.379-.27.712-.603.993-1.005a4.942 4.942 0 0 0 .88-2.195c.242-1.246.13-2.356-.57-3.154a2.687 2.687 0 0 0-.76-.59l-.094-.061ZM6.543 8.82a.695.695 0 0 1 .321-.079H8.3c2.82 0 5.027-1.144 5.672-4.456l.003-.016c.217.124.4.27.548.438.546.623.679 1.535.45 2.71-.272 1.397-.866 2.307-1.663 2.874-.802.57-1.842.815-3.043.815h-.38a.873.873 0 0 0-.863.734l-.03.164-.48 3.043-.024.13-.001.004a.352.352 0 0 1-.348.296H5.595a.106.106 0 0 1-.105-.123l.208-1.32.845-5.214Z" />
@@ -162,24 +213,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </a>
             <Link
               to="/quittung"
-              className="rounded-full bg-black hover:from-orange-600 hover:to-amber-600 px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap"
+              className="inline-flex min-h-11 items-center rounded-full bg-gray-950 px-3 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-gray-800 sm:text-sm"
             >
               Quittung anfordern →
             </Link>
           </div>
         </div>
       </div>
-      <main className="container mx-auto">{children}</main>
+      <main id="main-content" tabIndex={-1} className="container mx-auto">
+        {children}
+      </main>
       <footer className="bg-white dark:bg-gray-900">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="md:flex md:justify-between">
-            
             <div className="mb-6 md:mb-0">
               <Link to="/" className="flex items-center">
                 <StaticImage
                   src="../images/quadratic.png"
                   className="h-8 w-4 mr-3"
-                  alt="Kinderlicht Logo"
+                  alt=""
                 />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                   Kinderlicht Wallersdorf e.V.
@@ -252,17 +304,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Link>{" "}
               Alle Rechte vorbehalten.
             </span>
-            <p className="text-sm text-gray-500">
-              Created with ❤️ by{" "}
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Erstellt mit{" "}
+              <span role="img" aria-label="Liebe">
+                ❤️
+              </span>{" "}
+              von{" "}
               <a href="https://de.linkedin.com/in/matthias-kettl-42a300213">
                 Matthias Kettl
               </a>{" "}
-              and <a href="https://fschoenberger.dev">Frederic Schönberger</a>
+              und <a href="https://fschoenberger.dev">Frederic Schönberger</a>
             </p>
-            <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
+            <div className="mt-4 flex gap-2 sm:mt-0 sm:justify-center">
               <a
                 href="https://www.facebook.com/KinderlichtWallersdorf/"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 hover:text-gray-950 dark:hover:text-white"
               >
                 <svg
                   className="w-4 h-4"
@@ -281,13 +337,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </a>
               <a
                 href="https://www.instagram.com/kinderlichtwallersdorf/"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 hover:text-gray-950 dark:hover:text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
                   fill="currentColor"
+                  aria-hidden="true"
                   className="bi bi-instagram"
                   viewBox="0 0 16 16"
                 >
@@ -297,13 +354,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </a>
               <a
                 href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=B3F4DENU62RRN&ssrt=1693131246739"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 hover:text-gray-950 dark:hover:text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
                   fill="currentColor"
+                  aria-hidden="true"
                   className="bi bi-paypal"
                   viewBox="0 0 16 16"
                 >
@@ -313,13 +371,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </a>
               <a
                 href="https://www.youtube.com/@kinderlichtwallersdorfe.v.4906"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 hover:text-gray-950 dark:hover:text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
                   fill="currentColor"
+                  aria-hidden="true"
                   className="bi bi-youtube"
                   viewBox="0 0 16 16"
                 >
