@@ -10,13 +10,13 @@ export default function FormFail({ recover }: { recover: string }) {
       >
         <p className="font-bold">Ups...</p>
         <p>
-          Leider konnten wir deinen Antrag nicht bearbeiten, versuche es später
-          nochmal. Damit du nicht nochmal alles ausfüllen musst, kannst du den
-          folgenden Link anklicken.
+          Leider konnten wir deine Nachricht nicht senden. Versuche es später
+          noch einmal. Damit du nicht alles erneut ausfüllen musst, kannst du
+          den folgenden Link anklicken.
         </p>
         <Link
           className="block hover:underline text-red-900 mt-2 italic"
-          to={`mailto:info@kinderlicht-wallersdorf.de?subject=Antrag wiederherstellen.&body=Bitte diese E-Mail so abschicken: ${recover}`}
+          to={`mailto:info@kinderlicht-wallersdorf.de?subject=Nachricht wiederherstellen.&body=Bitte diese E-Mail so abschicken: ${recover}`}
         >
           Klicke hier, um deine eingegebenen Daten per E-Mail an uns zu senden.
         </Link>

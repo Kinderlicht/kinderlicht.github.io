@@ -79,13 +79,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex lg:order-2">
             <Navbar.Toggle className="p-2 rounded-xl hover:bg-orange-50 transition-colors" />
           </div>
-          
+
           <Navbar.Collapse className="lg:flex lg:items-center lg:gap-1">
             <Navbar.Link href="/beitreten" as={GatsbyLinkWrapper}>
               ❤️ Beitreten
             </Navbar.Link>
             <Navbar.Link href="/anfrage" as={GatsbyLinkWrapper}>
-              📩 Anfrage
+              📩 Kontakt &amp; Hilfe
             </Navbar.Link>
             <Navbar.Link href="/neues" as={GatsbyLinkWrapper}>
               📰 Neues
@@ -114,7 +114,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         >
           <div className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ffd890] to-[#f8f6ff] opacity-40"></div>
         </div>
-        
+
         {/* Single-line layout - wraps only on very small screens */}
         <div className="flex flex-col xs:flex-row items-center justify-center gap-2 sm:gap-3 text-center">
           {/* Bank info pill */}
@@ -126,7 +126,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <span className="text-gray-400 hidden sm:inline">|</span>
             <span title="BIC" className="font-mono text-[10px] sm:text-xs text-gray-700">GENODEF1LND</span>
           </div>
-          
+
           {/* Action buttons */}
           <div className="flex items-center gap-2">
             <Link
@@ -194,7 +194,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li className="mb-4">
                     <Link to="/anfrage" className="hover:underline">
-                      Helft mir!
+                      Kontakt &amp; Hilfe
                     </Link>
                   </li>
                   <li>
