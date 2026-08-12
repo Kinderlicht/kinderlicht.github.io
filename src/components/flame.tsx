@@ -41,7 +41,7 @@ export default function Flame({
        */}
       <div
         aria-hidden="true"
-        className={`flex justify-center ${compact ? "h-20 w-20 items-center rounded-full border border-orange-100 bg-orange-50/70" : "h-60 w-full items-end"}`}
+        className={`flex justify-center ${compact ? "h-20 w-20 items-center overflow-hidden rounded-full border border-orange-100 bg-orange-50/70" : "h-60 w-full items-end"}`}
       >
         <div
           className="relative"
@@ -52,8 +52,9 @@ export default function Flame({
           <div
             className="flame-scale-container"
             style={{
+              padding: compact ? 0 : undefined,
               transform: `scale(${scale})`,
-              transformOrigin: "center bottom",
+              transformOrigin: compact ? "center center" : "center bottom",
               transition: "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
             }}
           >

@@ -94,7 +94,7 @@ export default function Timeline({ activities }: TimelineProps) {
           </p>
 
           <div>
-            <h3 className="text-base font-bold leading-snug text-slate-950 sm:text-lg">
+            <h3 className="min-h-11 text-base font-bold leading-snug text-slate-950 sm:min-h-0 sm:text-lg">
               {currentActivity.title}
             </h3>
             <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-slate-500">
@@ -112,7 +112,7 @@ export default function Timeline({ activities }: TimelineProps) {
                 Betrag: {formatCurrency(currentActivity.donation)}
               </span>
             </div>
-            <p className="mt-2 text-sm leading-5 text-slate-600">
+            <p className="mt-2 min-h-10 text-sm leading-5 text-slate-600 sm:min-h-0">
               {currentActivity.description}
             </p>
           </div>
