@@ -3,6 +3,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 interface MoneyAdderProps {
   /** The current total balance you want to display. */
   amount: number;
+  compact?: boolean;
 }
 
 export const formatCurrency = (cents: number): string => {
@@ -29,7 +30,7 @@ export const formatCurrency = (cents: number): string => {
   }
 };
 
-const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
+const MoneyAdder: FC<MoneyAdderProps> = ({ amount, compact = false }) => {
   // Keep track of the previous amount so we can detect increments/decrements
   const [oldAmount, setOldAmount] = useState<number>(amount);
 
@@ -81,12 +82,12 @@ const MoneyAdder: FC<MoneyAdderProps> = ({ amount }) => {
   }
 
   return (
-    <div className="relative text-2xl text-center">
+    <div className="relative text-center">
       <span
         aria-live="polite"
         aria-atomic="true"
         key={animationKey}
-        className="inline-block font-bold text-3xl money-added"
+        className={`money-added inline-block font-bold tabular-nums ${compact ? "text-xl sm:text-2xl" : "text-3xl"}`}
       >
         {formatCurrency(displayAmount)}
       </span>

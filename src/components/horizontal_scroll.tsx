@@ -17,6 +17,7 @@ export interface Activity {
 
 interface CarouselProps {
   activities: Activity[];
+  initialIndex?: number;
   onIndexChange?: (index: number) => void;
 }
 
@@ -68,10 +69,14 @@ const EdgeIcon = ({ direction }: { direction: "left" | "right" }) => (
 
 const ActivityCarousel: React.FC<CarouselProps> = ({
   activities,
+  initialIndex = 0,
   onIndexChange,
 }) => {
   const [{ index: currentIndex, direction }, setNavigation] =
-    useState<NavigationState>({ index: 0, direction: 0 });
+    useState<NavigationState>({
+      index: clamp(initialIndex, 0, Math.max(activities.length - 1, 0)),
+      direction: 0,
+    });
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const prefersReducedMotion = useReducedMotion();
   const lastIndex = Math.max(activities.length - 1, 0);
@@ -248,7 +253,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
     <section
       aria-label="Tätigkeitsbericht durchblättern"
       aria-roledescription="Karussell"
-      className="w-full rounded-2xl border border-slate-200 bg-white p-4 outline-none ring-orange-300 transition-shadow focus-visible:ring-4 md:p-6"
+      className="w-full rounded-xl border border-slate-200 bg-white p-3 outline-none ring-orange-300 transition-shadow focus-visible:ring-4 sm:p-4"
       onKeyDown={handleKeyDown}
       onTouchCancel={() => {
         touchStart.current = null;
@@ -258,7 +263,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
       style={{ touchAction: "pan-y" }}
       tabIndex={0}
     >
-      <div className="mb-4 flex items-center justify-between gap-3">
+      <div className="mb-3 flex items-center justify-between gap-3">
         <div>
           <p className="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-orange-700">
             Tätigkeitsbericht
@@ -279,7 +284,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
         )}
       </div>
 
-      <div className="relative h-[13.5rem] overflow-hidden rounded-2xl md:h-52">
+      <div className="relative h-[11.5rem] overflow-hidden rounded-xl sm:h-44">
         <AnimatePresence custom={direction} initial={false}>
           <motion.div
             animate="center"
@@ -299,7 +304,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
         </AnimatePresence>
       </div>
 
-      <div className="mt-5 rounded-2xl bg-stone-50 px-3 pb-3 pt-4 md:px-4">
+      <div className="mt-3 rounded-xl bg-stone-50 px-3 pb-2 pt-3">
         <div className="relative">
           <div
             aria-hidden="true"
@@ -331,19 +336,8 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-3 sm:grid sm:grid-cols-[1fr_auto_1fr]">
-        <div className="flex justify-start gap-2">
-          <button
-            aria-label="Zur ersten Tätigkeit"
-            className="carousel-edge-button"
-            disabled={currentIndex === 0}
-            onClick={() => goTo(0)}
-            title="Zum Anfang"
-            type="button"
-          >
-            <EdgeIcon direction="left" />
-            <span className="hidden sm:inline">Anfang</span>
-          </button>
+      <div className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+        <div className="flex justify-start">
           <button
             aria-label="Vorherige Tätigkeit"
             className="carousel-arrow-button"
@@ -357,12 +351,12 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
 
         <output
           aria-live="polite"
-          className="hidden min-w-[4.25rem] text-center text-xs font-bold tabular-nums text-gray-500 sm:block"
+          className="min-w-[4.25rem] text-center text-xs font-bold tabular-nums text-gray-500"
         >
           {currentIndex + 1} / {activities.length}
         </output>
 
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end">
           <button
             aria-label="Nächste Tätigkeit"
             className="carousel-arrow-button"
@@ -371,17 +365,6 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
             type="button"
           >
             <ArrowIcon direction="right" />
-          </button>
-          <button
-            aria-label="Zur neuesten Tätigkeit"
-            className="carousel-edge-button"
-            disabled={currentIndex === lastIndex}
-            onClick={() => goTo(lastIndex)}
-            title="Zur neuesten Tätigkeit"
-            type="button"
-          >
-            <span className="hidden sm:inline">Aktuell</span>
-            <EdgeIcon direction="right" />
           </button>
         </div>
       </div>
@@ -417,10 +400,10 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
   return (
     <article
       aria-label={`Tätigkeit ${index} von ${total}: ${activity.title}`}
-      className="relative flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-4 md:p-5"
+      className="relative flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-3 sm:p-4"
     >
       <div className="flex min-h-0 flex-1 flex-col">
-        <div className="mb-3 flex items-start justify-between gap-3">
+        <div className="mb-2 flex items-start justify-between gap-3">
           <div className="min-w-0">
             <time
               dateTime={
@@ -428,7 +411,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
                   ? undefined
                   : date.toISOString().slice(0, 10)
               }
-              className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white/75 px-2.5 py-1 text-[0.68rem] font-semibold text-gray-500 shadow-sm ring-1 ring-orange-100"
+              className="mb-1 inline-flex items-center gap-1.5 rounded-full bg-white/75 px-2.5 py-1 text-[0.68rem] font-semibold text-gray-500 shadow-sm ring-1 ring-orange-100"
             >
               <svg
                 aria-hidden="true"
@@ -446,24 +429,24 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
               </svg>
               {formattedDate}
             </time>
-            <h3 className="line-clamp-2 text-base font-bold leading-snug text-gray-900 md:text-lg">
+            <h3 className="line-clamp-2 text-base font-bold leading-snug text-gray-900">
               {activity.title}
             </h3>
           </div>
-          <div className="flex-shrink-0 rounded-xl bg-white/90 px-3 py-2 text-right shadow-sm ring-1 ring-orange-100">
+          <div className="flex-shrink-0 rounded-lg bg-white/90 px-2.5 py-1.5 text-right shadow-sm ring-1 ring-orange-100">
             <span className="block text-[0.58rem] font-bold uppercase tracking-wider text-gray-600">
               Spende
             </span>
-            <strong className="block text-base font-black tabular-nums text-orange-700 md:text-lg">
+            <strong className="block text-base font-black tabular-nums text-orange-700">
               {formatCurrency(activity.donation)}
             </strong>
           </div>
         </div>
-        <p className="line-clamp-3 text-sm leading-relaxed text-gray-600">
+        <p className="line-clamp-2 text-sm leading-relaxed text-gray-600">
           {activity.description}
         </p>
       </div>
-      <div className="mt-3 flex items-center gap-2 border-t border-slate-200 pt-3">
+      <div className="mt-2 hidden items-center gap-2 border-t border-slate-200 pt-2 sm:flex">
         <span
           aria-hidden="true"
           className="h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_0_4px_rgba(251,146,60,0.14)]"

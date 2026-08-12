@@ -6,6 +6,7 @@ interface FlameProps {
   total_money: number;
   currentActivity?: number;
   totalActivities?: number;
+  compact?: boolean;
 }
 
 const clampProgress = (value: number) => {
@@ -16,16 +17,22 @@ const clampProgress = (value: number) => {
   return Math.min(Math.max(value, 0), 1);
 };
 
-export default function Flame({ money, total_money }: FlameProps) {
+export default function Flame({
+  money,
+  total_money,
+  compact = false,
+}: FlameProps) {
   const progress = clampProgress(total_money > 0 ? money / total_money : 0);
-  const scale = 1 + progress * 0.8;
-  const glowIntensity = Math.min(30 + progress * 40, 70);
+  const scale = compact ? 0.66 + progress * 0.34 : 1 + progress * 0.8;
+  const glowIntensity = compact
+    ? Math.min(16 + progress * 18, 34)
+    : Math.min(30 + progress * 40, 70);
   const glowOpacity = 0.3 + progress * 0.4;
 
   return (
     <section
       aria-label="Gesammelte Spenden"
-      className="flex w-full max-w-[17rem] flex-col items-center"
+      className={`flex w-full flex-col items-center ${compact ? "max-w-[9rem]" : "max-w-[17rem]"}`}
     >
       {/*
        * Scaling with transform does not reserve space in the document flow.
@@ -34,7 +41,7 @@ export default function Flame({ money, total_money }: FlameProps) {
        */}
       <div
         aria-hidden="true"
-        className="flex h-60 w-full items-end justify-center"
+        className={`flex justify-center ${compact ? "h-28 w-28 items-center rounded-full border border-orange-100 bg-orange-50/70" : "h-60 w-full items-end"}`}
       >
         <div
           className="relative"
@@ -60,11 +67,13 @@ export default function Flame({ money, total_money }: FlameProps) {
         </div>
       </div>
 
-      <div className="relative z-10 mt-6">
-        <MoneyAdder amount={money} />
+      <div className={`relative z-10 ${compact ? "mt-2" : "mt-6"}`}>
+        <MoneyAdder amount={money} compact={compact} />
       </div>
 
-      <div className="mt-3 h-1.5 w-24 overflow-hidden rounded-full bg-gray-200">
+      <div
+        className={`${compact ? "mt-2 h-1 w-16" : "mt-3 h-1.5 w-24"} overflow-hidden rounded-full bg-gray-200`}
+      >
         <div
           role="progressbar"
           aria-label="Anteil der dargestellten Spendensumme"

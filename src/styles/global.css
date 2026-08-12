@@ -376,10 +376,6 @@ main address a {
   @apply flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-orange-700 text-white shadow-sm transition duration-150 hover:bg-orange-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-30;
 }
 
-.carousel-edge-button {
-  @apply flex h-11 flex-shrink-0 items-center justify-center gap-1.5 rounded-full border border-orange-200 bg-white px-3 text-xs font-bold text-orange-700 shadow-sm transition duration-150 hover:border-orange-300 hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-30;
-}
-
 .activity-range {
   height: 1.75rem;
   margin: 0;
