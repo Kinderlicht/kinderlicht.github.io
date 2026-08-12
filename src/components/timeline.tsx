@@ -84,9 +84,14 @@ export default function Timeline({ activities }: TimelineProps) {
               Tätigkeitsbericht
             </h2>
             <span className="text-xs font-semibold tabular-nums text-slate-500">
-              {safeIndex + 1} / {sortedActivities.length}
+              Unterstützung {safeIndex + 1} von {sortedActivities.length}
             </span>
           </div>
+
+          <p className="mb-2 text-xs leading-4 text-slate-500">
+            Jede Unterstützung lässt unsere Flamme wachsen – genauso wie die
+            Spendensumme.
+          </p>
 
           <div>
             <h3 className="text-base font-bold leading-snug text-slate-950 sm:text-lg">
@@ -104,7 +109,7 @@ export default function Timeline({ activities }: TimelineProps) {
               </time>
               <span aria-hidden="true">·</span>
               <span className="text-orange-700">
-                {formatCurrency(currentActivity.donation)}
+                Betrag: {formatCurrency(currentActivity.donation)}
               </span>
             </div>
             <p className="mt-2 text-sm leading-5 text-slate-600">
@@ -126,8 +131,8 @@ export default function Timeline({ activities }: TimelineProps) {
             />
           </div>
           <input
-            aria-label="Eintrag im Tätigkeitsbericht auswählen"
-            aria-valuetext={`${safeIndex + 1} von ${sortedActivities.length}: ${currentActivity.title}`}
+            aria-label="Unterstützung im Tätigkeitsbericht auswählen"
+            aria-valuetext={`Unterstützung ${safeIndex + 1} von ${sortedActivities.length}: ${currentActivity.title}`}
             className="activity-range relative z-10 block w-full cursor-pointer"
             disabled={sortedActivities.length === 1}
             max={lastIndex}

@@ -73,7 +73,7 @@ export default function Flame({
 
       {compact && (
         <span className="mt-0.5 text-[0.55rem] font-bold uppercase tracking-wider text-slate-500">
-          bis hierhin
+          Spendensumme
         </span>
       )}
 
@@ -82,7 +82,7 @@ export default function Flame({
       >
         <div
           role="progressbar"
-          aria-label="Anteil der dargestellten Spendensumme"
+          aria-label="Anteil der Spendensumme bis zur ausgewählten Unterstützung"
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={Math.round(progress * 100)}
