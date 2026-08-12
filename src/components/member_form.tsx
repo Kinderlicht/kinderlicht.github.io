@@ -382,7 +382,7 @@ const MemberForm: React.FC = () => {
                       <option value="">Bitte wählen</option>
                       <option value="Herr">Herr</option>
                       <option value="Frau">Frau</option>
-                      <option value="ohne">ohne</option>
+                      <option value="ohne">Keine Angabe</option>
                     </select>
                     {errors.gender && (
                       <p id="member-gender-error" className={errorClasses}>
@@ -402,7 +402,7 @@ const MemberForm: React.FC = () => {
                         required: "Vorname ist erforderlich",
                       })}
                       type="text"
-                      placeholder="Max"
+                      placeholder="Kim"
                       required
                       {...errorAttributes(
                         errors.firstName,
@@ -428,7 +428,7 @@ const MemberForm: React.FC = () => {
                         required: "Nachname ist erforderlich",
                       })}
                       type="text"
-                      placeholder="Mustermann"
+                      placeholder="Muster"
                       required
                       {...errorAttributes(
                         errors.lastName,
@@ -491,7 +491,7 @@ const MemberForm: React.FC = () => {
                         },
                       })}
                       type="email"
-                      placeholder="max.mustermann@email.de"
+                      placeholder="kim.muster@beispiel.de"
                       required
                       {...errorAttributes(errors.email, "member-email-error")}
                       className={inputClasses}
@@ -1042,7 +1042,7 @@ const MemberForm: React.FC = () => {
                               <option value="">Bitte wählen</option>
                               <option value="Herr">Herr</option>
                               <option value="Frau">Frau</option>
-                              <option value="ohne">ohne</option>
+                              <option value="ohne">Keine Angabe</option>
                             </select>
                             {errors.relatives?.[index]?.gender && (
                               <p className="text-orange-500 text-xs mt-1">

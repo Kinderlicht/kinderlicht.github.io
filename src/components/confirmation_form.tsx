@@ -190,7 +190,7 @@ export default function DonationReceipt() {
                         <option value="">Bitte wählen</option>
                         <option>Frau</option>
                         <option>Herr</option>
-                        <option>ohne</option>
+                        <option value="ohne">Keine Angabe</option>
                         <option>Firma</option>
                       </select>
                       <ErrorMessage
@@ -209,7 +209,7 @@ export default function DonationReceipt() {
                         type="text"
                         id="first-name"
                         placeholder={
-                          watch().gender === "Firma" ? "Muster GmbH" : "Max"
+                          watch().gender === "Firma" ? "Muster GmbH" : "Kim"
                         }
                         autoComplete="given-name"
                         required
@@ -241,9 +241,7 @@ export default function DonationReceipt() {
                         type="text"
                         id="last-name"
                         placeholder={
-                          watch().gender === "Firma"
-                            ? "(optional)"
-                            : "Mustermann"
+                          watch().gender === "Firma" ? "(optional)" : "Muster"
                         }
                         autoComplete="family-name"
                         required={watch().gender !== "Firma"}
@@ -275,7 +273,7 @@ export default function DonationReceipt() {
                         })}
                         id="email"
                         type="email"
-                        placeholder="max@beispiel.de"
+                        placeholder="kim@beispiel.de"
                         autoComplete="email"
                         required
                         aria-invalid={Boolean(errors.email)}
@@ -585,7 +583,7 @@ export default function DonationReceipt() {
                           defaultValue={watch().email || ""}
                           id="paypal-mail"
                           type="email"
-                          placeholder="paypal@beispiel.de"
+                          placeholder="kim@beispiel.de"
                           autoComplete="email"
                           required
                           aria-invalid={Boolean(errors.paypalMail)}

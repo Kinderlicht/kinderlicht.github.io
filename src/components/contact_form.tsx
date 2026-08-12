@@ -146,7 +146,7 @@ export default function ContactForm() {
                     {...register("name", { required: true })}
                     type="text"
                     id="name"
-                    placeholder="Max Mustermann"
+                    placeholder="Kim Muster"
                     autoComplete="name"
                     required
                     aria-invalid={Boolean(errors.name)}
@@ -171,7 +171,7 @@ export default function ContactForm() {
                     })}
                     id="email"
                     type="email"
-                    placeholder="max@beispiel.de"
+                    placeholder="kim@beispiel.de"
                     autoComplete="email"
                     required
                     aria-invalid={Boolean(errors.email)}
