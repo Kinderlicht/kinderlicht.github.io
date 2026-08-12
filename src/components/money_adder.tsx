@@ -87,7 +87,7 @@ const MoneyAdder: FC<MoneyAdderProps> = ({ amount, compact = false }) => {
         aria-live="polite"
         aria-atomic="true"
         key={animationKey}
-        className={`money-added inline-block font-bold tabular-nums ${compact ? "text-xl sm:text-2xl" : "text-3xl"}`}
+        className={`money-added inline-block font-bold tabular-nums ${compact ? "text-lg sm:text-xl" : "text-3xl"}`}
       >
         {formatCurrency(displayAmount)}
       </span>

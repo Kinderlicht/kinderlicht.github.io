@@ -23,16 +23,16 @@ export default function Flame({
   compact = false,
 }: FlameProps) {
   const progress = clampProgress(total_money > 0 ? money / total_money : 0);
-  const scale = compact ? 0.66 + progress * 0.34 : 1 + progress * 0.8;
+  const scale = compact ? 0.48 + progress * 0.26 : 1 + progress * 0.8;
   const glowIntensity = compact
-    ? Math.min(16 + progress * 18, 34)
+    ? Math.min(12 + progress * 13, 25)
     : Math.min(30 + progress * 40, 70);
   const glowOpacity = 0.3 + progress * 0.4;
 
   return (
     <section
       aria-label="Gesammelte Spenden"
-      className={`flex w-full flex-col items-center ${compact ? "max-w-[9rem]" : "max-w-[17rem]"}`}
+      className={`flex w-full flex-col items-center ${compact ? "max-w-[6.5rem]" : "max-w-[17rem]"}`}
     >
       {/*
        * Scaling with transform does not reserve space in the document flow.
@@ -41,7 +41,7 @@ export default function Flame({
        */}
       <div
         aria-hidden="true"
-        className={`flex justify-center ${compact ? "h-28 w-28 items-center rounded-full border border-orange-100 bg-orange-50/70" : "h-60 w-full items-end"}`}
+        className={`flex justify-center ${compact ? "h-20 w-20 items-center rounded-full border border-orange-100 bg-orange-50/70" : "h-60 w-full items-end"}`}
       >
         <div
           className="relative"
@@ -71,8 +71,14 @@ export default function Flame({
         <MoneyAdder amount={money} compact={compact} />
       </div>
 
+      {compact && (
+        <span className="mt-0.5 text-[0.55rem] font-bold uppercase tracking-wider text-slate-500">
+          bis hierhin
+        </span>
+      )}
+
       <div
-        className={`${compact ? "mt-2 h-1 w-16" : "mt-3 h-1.5 w-24"} overflow-hidden rounded-full bg-gray-200`}
+        className={`${compact ? "mt-1.5 h-1 w-12" : "mt-3 h-1.5 w-24"} overflow-hidden rounded-full bg-gray-200`}
       >
         <div
           role="progressbar"

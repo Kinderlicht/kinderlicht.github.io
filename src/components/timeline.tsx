@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
+import type { ActivityReport } from "../content/donations";
 import Flame from "./flame";
-import ActivityCarousel, { Activity } from "./horizontal_scroll";
+import { formatCurrency } from "./money_adder";
 
 interface TimelineProps {
-  activities: Activity[];
+  activities: ActivityReport[];
 }
 
 export default function Timeline({ activities }: TimelineProps) {
@@ -25,6 +26,7 @@ export default function Timeline({ activities }: TimelineProps) {
   const lastIndex = Math.max(sortedActivities.length - 1, 0);
   const [currentIndex, setCurrentIndex] = useState(lastIndex);
   const safeIndex = Math.min(currentIndex, lastIndex);
+  const currentActivity = sortedActivities[safeIndex];
   const currentTotal = cumulativeTotals[safeIndex] ?? 0;
   const total = cumulativeTotals.at(-1) ?? 0;
 
@@ -32,82 +34,115 @@ export default function Timeline({ activities }: TimelineProps) {
     setCurrentIndex((index) => Math.min(index, lastIndex));
   }, [lastIndex]);
 
-  return (
-    <section className="site-card mx-auto w-full max-w-6xl overflow-hidden">
-      {sortedActivities.length === 0 ? (
-        <div className="px-5 py-8 text-center text-sm text-gray-600">
-          Aktuell sind keine Spendendaten verfügbar.
-        </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-[7.5rem_minmax(0,1fr)] items-center gap-4 p-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-6 sm:p-6">
-            <Flame
-              compact
-              currentActivity={safeIndex + 1}
-              money={currentTotal}
-              totalActivities={sortedActivities.length}
-              total_money={total}
-            />
+  if (!currentActivity) {
+    return (
+      <section className="site-card mx-auto w-full max-w-6xl px-5 py-8 text-center text-sm text-gray-600">
+        Aktuell sind keine Spendendaten verfügbar.
+      </section>
+    );
+  }
 
-            <div className="min-w-0">
-              <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-orange-700">
-                Tätigkeitsbericht
-              </p>
-              <h2 className="text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
-                Hilfe, die sichtbar wird
-              </h2>
-              <p className="mt-2 text-sm leading-6 text-slate-600">
-                Unsere Flamme steht für {sortedActivities.length} anonymisierte
-                Unterstützungen. Im Bericht kannst du ihre Wirkung Schritt für
-                Schritt entdecken.
-              </p>
-              <p
-                aria-live="polite"
-                className="mt-3 text-xs font-semibold text-slate-500"
-              >
-                {safeIndex === lastIndex
-                  ? "Gesamtsumme aller Einträge"
-                  : "Stand nach Eintrag " +
-                    (safeIndex + 1) +
-                    " von " +
-                    sortedActivities.length}
-              </p>
-            </div>
+  const currentDate = new Date(currentActivity.date);
+  const formattedDate = Number.isNaN(currentDate.getTime())
+    ? currentActivity.date
+    : currentDate.toLocaleDateString("de-DE", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+  const firstDate = new Date(sortedActivities[0].date);
+  const lastDate = new Date(sortedActivities[lastIndex].date);
+  const firstYear = Number.isNaN(firstDate.getTime())
+    ? "Anfang"
+    : firstDate.getFullYear().toString();
+  const lastYear = Number.isNaN(lastDate.getTime())
+    ? "Heute"
+    : lastDate.getFullYear().toString();
+  const progressPercentage =
+    sortedActivities.length === 1 ? 100 : (safeIndex / lastIndex) * 100;
+
+  return (
+    <section
+      aria-labelledby="activity-report-heading"
+      className="site-card mx-auto w-full max-w-6xl p-4 sm:p-5"
+    >
+      <div className="grid grid-cols-[6rem_minmax(0,1fr)] items-center gap-4 sm:grid-cols-[6.5rem_minmax(0,1fr)] sm:gap-5">
+        <Flame
+          compact
+          currentActivity={safeIndex + 1}
+          money={currentTotal}
+          totalActivities={sortedActivities.length}
+          total_money={total}
+        />
+
+        <div className="min-w-0">
+          <div className="mb-1.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+            <h2
+              id="activity-report-heading"
+              className="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-orange-700"
+            >
+              Tätigkeitsbericht
+            </h2>
+            <span className="text-xs font-semibold tabular-nums text-slate-500">
+              {safeIndex + 1} / {sortedActivities.length}
+            </span>
           </div>
 
-          <details className="group border-t border-slate-200">
-            <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 px-5 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-orange-50 hover:text-orange-900 focus-visible:outline-none sm:px-6 [&::-webkit-details-marker]:hidden">
-              <span>
-                <span className="group-open:hidden">Einträge ansehen</span>
-                <span className="hidden group-open:inline">
-                  Einträge ausblenden
-                </span>
-              </span>
-              <svg
-                aria-hidden="true"
-                className="h-5 w-5 flex-none text-orange-700 transition-transform group-open:rotate-180"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+          <div>
+            <h3 className="text-base font-bold leading-snug text-slate-950 sm:text-lg">
+              {currentActivity.title}
+            </h3>
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-slate-500">
+              <time
+                dateTime={
+                  Number.isNaN(currentDate.getTime())
+                    ? undefined
+                    : currentDate.toISOString().slice(0, 10)
+                }
               >
-                <path
-                  d="m6 9 6 6 6-6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                />
-              </svg>
-            </summary>
-            <div className="border-t border-slate-200 bg-slate-50 p-3 sm:p-5">
-              <ActivityCarousel
-                activities={sortedActivities}
-                initialIndex={lastIndex}
-                onIndexChange={setCurrentIndex}
-              />
+                {formattedDate}
+              </time>
+              <span aria-hidden="true">·</span>
+              <span className="text-orange-700">
+                {formatCurrency(currentActivity.donation)}
+              </span>
             </div>
-          </details>
-        </>
-      )}
+            <p className="mt-2 text-sm leading-5 text-slate-600">
+              {currentActivity.description}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 border-t border-slate-200 pt-3">
+        <div className="relative">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 right-0 top-1/2 h-2 -translate-y-1/2 overflow-hidden rounded-full bg-orange-100"
+          >
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400 transition-[width] duration-200"
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
+          <input
+            aria-label="Eintrag im Tätigkeitsbericht auswählen"
+            aria-valuetext={`${safeIndex + 1} von ${sortedActivities.length}: ${currentActivity.title}`}
+            className="activity-range relative z-10 block w-full cursor-pointer"
+            disabled={sortedActivities.length === 1}
+            max={lastIndex}
+            min={0}
+            onChange={(event) => setCurrentIndex(Number(event.target.value))}
+            step={1}
+            type="range"
+            value={safeIndex}
+          />
+        </div>
+        <div className="mt-0.5 flex justify-between text-[0.65rem] font-semibold uppercase tracking-wider text-slate-500">
+          <span>{firstYear}</span>
+          <span>{lastYear}</span>
+        </div>
+      </div>
     </section>
   );
 }
