@@ -218,7 +218,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   className="h-8 w-4 mr-3"
                   alt=""
                 />
-                <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                <span className="self-center text-2xl font-semibold sm:whitespace-nowrap dark:text-white">
                   Kinderlicht Wallersdorf e.V.
                 </span>
               </Link>

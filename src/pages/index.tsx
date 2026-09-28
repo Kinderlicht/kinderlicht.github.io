@@ -3,6 +3,7 @@ import { HeadFC, Link } from "gatsby";
 import Layout from "../components/layout";
 import { StaticImage } from "gatsby-plugin-image";
 import { PageSectionHeader } from "../components/page";
+import * as styles from "../styles/home.module.css";
 
 // component for links
 function HistoryLink({
@@ -65,192 +66,183 @@ function HistoryLink({
   );
 }
 
+type ActionIconName = "help" | "heart" | "news";
+
+function ActionIcon({ name }: { name: ActionIconName }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {name === "help" && (
+        <>
+          <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-1 1v-9.5a8.5 8.5 0 0 1 17 0Z" />
+          <path d="M8 11h8M8 15h5" />
+        </>
+      )}
+      {name === "heart" && (
+        <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
+      )}
+      {name === "news" && (
+        <>
+          <rect x="3" y="4" width="18" height="16" rx="2" />
+          <path d="M7 8h10M7 12h4M7 16h4M15 12h2v4h-2z" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+function Arrow() {
+  return <span aria-hidden="true">↗</span>;
+}
+
+const actions: {
+  icon: ActionIconName;
+  title: string;
+  description: string;
+  label: string;
+  to: string;
+}[] = [
+  {
+    icon: "help",
+    title: "Ich suche Hilfe.",
+    description:
+      "Manchmal braucht es Unterstützung. Erzähl uns, was dich und deine Familie bewegt – wir helfen gerne.",
+    label: "Kontakt aufnehmen",
+    to: "/anfrage",
+  },
+  {
+    icon: "heart",
+    title: "Ich möchte helfen.",
+    description:
+      "Mit einer Spende, als Mitglied oder mit deiner Zeit: Gemeinsam können wir junge Menschen und ihre Familien unterstützen.",
+    label: "Teil von Kinderlicht werden",
+    to: "/beitreten",
+  },
+  {
+    icon: "news",
+    title: "Was gibt’s Neues?",
+    description:
+      "Kleine Lichtblicke und große gemeinsame Momente. Entdecke unsere Aktionen, Projekte und Geschichten.",
+    label: "Neuigkeiten entdecken",
+    to: "/neues",
+  },
+];
+
 function FeatureSection() {
   return (
-    <div className="overflow-hidden">
-      <div className="mx-auto max-w-6xl">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-          <div className="lg:pr-8 lg:pt-4">
-            <div className="lg:max-w-lg">
-              <h2 className="text-base font-bold">
-                Wer samma mia,{" "}
-                <span className="text-orange-700 dark:text-orange-400 no-underline">
-                  wos damma mia?
-                </span>
-              </h2>
-              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Gemeinsam weiter!
-              </p>
-              <p className="mt-6 text-lg leading-8 text-gray-600">
-                Wir, der Kinderlicht Wallersdorf e. V., sind eine bunte Truppe,
-                die bereits seit einigen Jahre durch Veranstaltungen und
-                Projekte Spendengelder für sozial benachteiligte (Armut,
-                Krankheit, Behinderung, etc.) Kinder und Jugendliche sammelt und
-                regional gezielt unterstützt, dort wo Hilfe benötigt wird.
-                Unsere Projekte sind dabei so vielfältig wie wir selbst. Dabei
-                steht bei uns die Freude an der Zusammenarbeit und der
-                Gemeinschaftssinn im Vordergrund, mit dem Ziel zu helfen und zu
-                unterstützen!
-              </p>
-              <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
-                <div className="relative pl-9">
-                  <dt className="inline font-semibold text-gray-900">
-                    <svg
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="absolute left-1 top-1 h-5 w-5 text-primary bi bi-stars"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z" />
-                    </svg>
-                    Effektiv.{" "}
-                  </dt>
-                  <dd className="inline">
-                    Der Kinderlicht Wallersdorf e.V. setzt sich leidenschaftlich
-                    dafür ein, Kindern und Familien in schwierigen Situationen
-                    zu helfen. Unser Ziel ist es, unbürokratisch und schnell zu
-                    helfen.
-                  </dd>
-                </div>
-                <div className="relative pl-9">
-                  <dt className="inline font-semibold text-gray-900">
-                    <svg
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="text-primary absolute left-1 top-1 h-5 w-5 bi bi-people-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                    </svg>
-                    Gemeinschaftlich.{" "}
-                  </dt>
-                  <dd className="inline">
-                    Bei uns arbeitet ein engagiertes und diverses Team Hand in
-                    Hand. Wir unterstützen überwiegend regional und direkt dort,
-                    wo Hilfe benötigt wird. Dabei arbeiten wir unter anderem eng
-                    mit lokalen sozialen Einrichtungen und Institutionen
-                    zusammen. Innerhalb von 5 Jahren konnten wir so bereits über
-                    55.000€ spenden.
-                  </dd>
-                </div>
-                <div className="relative pl-9">
-                  <dt className="inline font-semibold text-gray-900">
-                    <svg
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="text-primary absolute left-1 top-1 h-5 w-5 bi bi-brush-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.118 8.118 0 0 1-3.078.132 3.659 3.659 0 0 1-.562-.135 1.382 1.382 0 0 1-.466-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.394-.197.625-.453.867-.826.095-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.201-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.176-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z" />
-                    </svg>
-                    Kreativ.{" "}
-                  </dt>
-                  <dd className="inline">
-                    Wir sind bekannt für unsere verrückten Aktionen, die nicht
-                    nur Spaß machen, sondern auch viel Gutes bewirken. Ob ein
-                    Konzert, ein Kinofilm, eine Lasershow, Bälle, oder ein
-                    Weihnachtsstand - bei uns ist immer was los!
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-          <div>
-            <StaticImage
-              alt="Unsere Vorstandschaft"
-              src="../images/home/all.jpg"
-              className="h-full w-full rounded-2xl object-cover object-center"
-            />
-          </div>
+    <section className={styles.about} aria-labelledby="about-title">
+      <div>
+        <p className="site-eyebrow">Wer samma mia, wos damma mia?</p>
+        <h2 id="about-title" className={styles.sectionTitle}>
+          Viele Ideen.
+          <br />
+          Ein gemeinsames Herz.
+        </h2>
+        <p className={styles.aboutCopy}>
+          Wir sind Kinderlicht Wallersdorf e. V. – eine bunte Truppe, die seit
+          2018 gemeinsam anpackt. Mit Veranstaltungen und Projekten sammeln wir
+          Spenden für Kinder, Jugendliche und junge Erwachsene, die von Armut,
+          Krankheit oder Behinderung betroffen sind. Wir helfen vor allem in
+          unserer Region, dort, wo Unterstützung gebraucht wird.
+        </p>
+        <Link to="/wir" className={styles.textLink}>
+          Lerne uns kennen <Arrow />
+        </Link>
+      </div>
+      <dl className={styles.values}>
+        <div>
+          <dt>
+            <span aria-hidden="true">01</span> Direkt helfen.
+          </dt>
+          <dd>
+            Schnell und unbürokratisch unterstützen wir junge Menschen und ihre
+            Familien in schwierigen Situationen.
+          </dd>
         </div>
+        <div>
+          <dt>
+            <span aria-hidden="true">02</span> Gemeinsam anpacken.
+          </dt>
+          <dd>
+            Wir bringen Menschen zusammen und arbeiten eng mit sozialen
+            Einrichtungen vor Ort. Miteinander erreichen wir mehr.
+          </dd>
+        </div>
+        <div>
+          <dt>
+            <span aria-hidden="true">03</span> Mit Freude etwas bewegen.
+          </dt>
+          <dd>
+            Ob Konzert, Kino, Lasershow oder Weihnachtsstand: Unsere Ideen sind
+            vielfältig. Die Freude am Helfen verbindet uns.
+          </dd>
+        </div>
+      </dl>
+      <div className={styles.motto}>
+        <span className={styles.mottoMark} aria-hidden="true">
+          ✳
+        </span>
+        <p>Weil nix wird eh scho z’oft do.</p>
+        <span className={styles.mottoCaption}>Unser Antrieb. Seit 2018.</span>
       </div>
-      <div className="mt-10 flex flex-wrap items-center">
-        <StaticImage
-          src="../images/home/motto.svg"
-          alt="Weil nix wird eh scho z'oft do."
-          className="m-auto w-full aspect-[3755/227]"
-        />
-      </div>
-    </div>
+    </section>
   );
 }
 
 export default function IndexPage() {
   return (
     <Layout>
-      <StaticImage
-        src="../images/home/banner.svg"
-        alt=""
-        className="my-4"
-        quality={100}
-      />
-      <h1 className="sr-only">Kinderlicht Wallersdorf e.V.</h1>
-      <div>
-        <section className="site-page pb-0 pt-12 text-slate-600">
-          <h2 className="sr-only">
-            Direkt zu Hilfe, Mitgliedschaft und Neuigkeiten
-          </h2>
-          <div>
-            <div className="-m-3 flex flex-wrap">
-              <HistoryLink
-                title="Ich suche Hilfe!"
-                description="Der Kinderlicht Wallersdorf e.V. konnte bereits vielen Familien erfolgreich helfen."
-                short="Melde dich bei uns, wir helfen gerne!"
-                link="/anfrage"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src={"../images/home/help.png"}
-                    alt=""
-                  />
-                }
-                size={3}
-              />
-              <HistoryLink
-                title="Ich möchte helfen!"
-                description="Für Menschen, die sich engagieren oder uns einfach finanziell unterstützen wollen!"
-                short="Spenden oder Beitreten"
-                link="/beitreten"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src={"../images/home/donate.png"}
-                    alt=""
-                  />
-                }
-                size={3}
-              />
-              <HistoryLink
-                title="Ankündigungen und Neuigkeiten"
-                description="Hier kannst du jeden unserer Schritte verfolgen!"
-                short="Unsere News"
-                link="/neues"
-                visual={
-                  <StaticImage
-                    className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6"
-                    src="../images/home/news.png"
-                    alt=""
-                  />
-                }
-                size={3}
-              />
-            </div>
+      <div className={styles.home}>
+        <section className={styles.welcome} aria-labelledby="home-title">
+          <div className={styles.container}>
+            <header className={styles.hero}>
+              <p className="site-eyebrow">Kinderlicht Wallersdorf e. V.</p>
+              <h1 id="home-title" className={styles.title}>
+                Hilfe für junge Menschen
+                <br />
+                <span>und ihre Familien.</span>
+              </h1>
+              <p className={styles.lead}>
+                Wir unterstützen Kinder, Jugendliche und junge Erwachsene bis
+                einschließlich 27 Jahre sowie ihre Familien in schwierigen
+                Lebenssituationen.
+              </p>
+              <a href="#mitmachen" className={styles.heroLink}>
+                Hilfe finden oder mitmachen <span aria-hidden="true">↓</span>
+              </a>
+            </header>
+            <nav
+              id="mitmachen"
+              className={styles.actions}
+              aria-label="Hilfe, Mitmachen und Neuigkeiten"
+            >
+              {actions.map((action) => (
+                <Link key={action.to} to={action.to} className={styles.action}>
+                  <span className={styles.actionIcon}>
+                    <ActionIcon name={action.icon} />
+                  </span>
+                  <h2>{action.title}</h2>
+                  <p>{action.description}</p>
+                  <span className={styles.actionLabel}>
+                    {action.label}
+                    <Arrow />
+                  </span>
+                </Link>
+              ))}
+            </nav>
           </div>
         </section>
-        <section className="site-page pb-0 pt-20 text-slate-600">
-          <div>
-            <FeatureSection></FeatureSection>
-          </div>
-        </section>
+        <div className={styles.container}>
+          <FeatureSection />
+        </div>
         <section className="site-page pt-20 text-slate-600">
           <div>
             <PageSectionHeader
@@ -594,5 +586,11 @@ export default function IndexPage() {
 }
 
 export const Head: HeadFC = () => (
-  <title>Kinderlicht Wallersdorf e.V. | Gemeinsam helfen</title>
+  <>
+    <title>Kinderlicht Wallersdorf e.V. | Gemeinsam helfen</title>
+    <meta
+      name="description"
+      content="Kinderlicht Wallersdorf e. V. unterstützt Kinder, Jugendliche und junge Erwachsene bis einschließlich 27 Jahre sowie ihre Familien in schwierigen Lebenssituationen."
+    />
+  </>
 );

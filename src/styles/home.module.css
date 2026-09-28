@@ -1,0 +1,287 @@
+.home {
+  background: #fff;
+}
+
+.container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
+.welcome {
+  padding-bottom: 4rem;
+  background: #fcf7f0;
+  border-bottom: 1px solid #eee5d9;
+}
+
+.hero {
+  padding: 4.75rem 0 3.5rem;
+  text-align: center;
+}
+
+.title {
+  margin: 1.25rem 0 1.5rem;
+  color: #252b2a;
+  font-size: clamp(3.25rem, 7vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.065em;
+}
+
+.title span {
+  color: #b94716;
+}
+
+.lead {
+  max-width: 39rem;
+  margin-inline: auto;
+  color: #575e5a;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.heroLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  border-radius: 0.25rem;
+  color: #8f3917;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.heroLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.75rem;
+  border: 1px solid #e6e0d7;
+  border-radius: 1rem;
+  background: #fff;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.action:hover {
+  border-color: #b94716;
+  transform: translateY(-4px);
+}
+
+.actionIcon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1.75rem;
+  place-items: center;
+  border-radius: 50%;
+  background: #fbede2;
+  color: #a74014;
+}
+
+.action:nth-child(2) .actionIcon {
+  background: #edf2e9;
+  color: #526747;
+}
+
+.action:nth-child(3) .actionIcon {
+  background: #eef0f7;
+  color: #535f86;
+}
+
+.actionIcon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.action h2 {
+  margin-bottom: 0.75rem;
+  color: #252b2a;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+.action p {
+  margin-bottom: 1.75rem;
+  color: #575e5a;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.actionLabel {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee9e2;
+  color: #8f3917;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.actionLabel > span,
+.textLink > span {
+  font-size: 1.25rem;
+}
+
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem 5rem;
+  padding-top: 5.5rem;
+}
+
+.sectionTitle {
+  color: #252b2a;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+
+.aboutCopy {
+  margin-top: 1.5rem;
+  color: #575e5a;
+  line-height: 1.85;
+}
+
+.textLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  border-radius: 0.25rem;
+  color: #8f3917;
+  font-weight: 700;
+}
+
+.textLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.values > div {
+  padding-block: 1.5rem;
+  border-top: 1px solid #e6e0d7;
+}
+
+.values > div:first-child {
+  padding-top: 0.5rem;
+  border-top: 0;
+}
+
+.values dt {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  color: #252b2a;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.values dt span {
+  color: #a74014;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.values dd {
+  margin-top: 0.625rem;
+  padding-left: 2rem;
+  color: #575e5a;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+
+.motto {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.75rem 2rem;
+  border-radius: 1rem;
+  background: #f7f4ee;
+}
+
+.mottoMark {
+  color: #b94716;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.motto p {
+  color: #252b2a;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+.mottoCaption {
+  margin-left: auto;
+  color: #575e5a;
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding-inline: 1.25rem;
+  }
+
+  .hero {
+    padding: 3.25rem 0 2.5rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  .actions,
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .action {
+    padding: 1.5rem;
+  }
+
+  .actionIcon {
+    margin-bottom: 1.25rem;
+  }
+
+  .about {
+    gap: 2rem;
+    padding-top: 3.5rem;
+  }
+
+  .motto {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .mottoCaption {
+    width: 100%;
+    margin-left: 0;
+  }
+}
