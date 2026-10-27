@@ -89,7 +89,6 @@ const config = {
       },
       __key: "blog",
     },
-"gatsby-plugin-netlify",
   ],
 };
 

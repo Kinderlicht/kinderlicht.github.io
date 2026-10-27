@@ -1,6 +1,6 @@
-import type { EventAttributes } from "ics";
+import type { DateArray, EventAttributes } from "ics";
 
-export type Event = EventAttributes;
+export type Event = EventAttributes & { start: DateArray };
 
 export const PUBLIC_EVENTS_URL =
   "https://portal.kinderlicht-wallersdorf.de/api/public-events";
@@ -58,7 +58,7 @@ export const parsePublicEvents = (data: unknown): Event[] => {
 };
 
 export const fetchPublicEvents = async (
-  fetcher: typeof fetch = fetch
+  fetcher: typeof fetch = fetch,
 ): Promise<Event[]> => {
   const response = await fetcher(PUBLIC_EVENTS_URL, {
     headers: {
@@ -68,7 +68,7 @@ export const fetchPublicEvents = async (
 
   if (!response.ok) {
     throw new Error(
-      `Public events API responded with ${response.status} ${response.statusText}`
+      `Public events API responded with ${response.status} ${response.statusText}`,
     );
   }
 
@@ -78,7 +78,7 @@ export const fetchPublicEvents = async (
 const dateFromArray = (date: number[]) => new Date(date.slice(0, 3).join("-"));
 
 export const countUpcomingEvents = (
-  events: Array<Pick<Event, "start">>
+  events: Array<Pick<Event, "start">>,
 ): number =>
   events.filter((event) => {
     const eventDate = dateFromArray(event.start);

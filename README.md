@@ -48,6 +48,32 @@ Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
 
 [<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-minimal-ts)
 
+## Development and security checks
+
+Use Node.js 22 (`nvm install` once, then `nvm use`) and install with `npm ci`. Run `npm run typecheck`,
+`npm test`, `npm audit`, and `npm run build` before publishing dependency updates.
+The test suite uses a temporary server on `127.0.0.1` to check image downloads.
+
+Gatsby is kept on version 5 with React 18. The dependency overrides select patched
+versions of libraries that Gatsby or its plugins still pin to older releases.
+Parcel's compiler, cache, and plugins must stay on the same release. Image
+processing uses Sharp 0.35, while file detection uses file-type 21.
+
+`npm ci` automatically applies the three patches in `patches/`. They adapt
+Gatsby's buffer/download helpers to file-type's renamed methods and adapt
+query-string to decode-uri-component's ES module export. Installation fails if a
+patch cannot be applied. Review these patches when upgrading their owning
+packages; do not remove the overrides without checking the audit and tests.
+
+The development server binds to `127.0.0.1`. Do not expose it to untrusted networks;
+Gatsby's [development-server advisory](https://github.com/gatsbyjs/gatsby/security/advisories/GHSA-58f7-w355-p5h3)
+has no upstream patch and does not affect the static production build.
+
+Dependabot checks npm packages and GitHub Actions weekly. Pull requests run the
+type checks, regression tests, and production build with read-only repository
+permissions. Deployment permissions are limited to the deployment job. Action
+versions are pinned to commit IDs and can be updated by Dependabot.
+
 ## JHV Slide Pipeline
 
 The JHV slideshow tooling is now split into two clear steps:

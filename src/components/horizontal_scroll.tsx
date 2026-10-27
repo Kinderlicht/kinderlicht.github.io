@@ -5,7 +5,12 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
 import { formatCurrency } from "./money_adder";
 
 export interface Activity {
@@ -226,7 +231,7 @@ const ActivityCarousel: React.FC<CarouselProps> = ({
 
   const progressPercentage =
     activities.length === 1 ? 100 : (currentIndex / lastIndex) * 100;
-  const cardVariants = {
+  const cardVariants: Variants = {
     enter: (travelDirection: number) => ({
       x: prefersReducedMotion ? 0 : travelDirection >= 0 ? 56 : -56,
       opacity: prefersReducedMotion ? 1 : 0,

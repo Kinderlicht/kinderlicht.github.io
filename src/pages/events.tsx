@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { createEvent } from "ics";
+import { createCalendarEvent } from "../content/events/calendar";
 import { ConvertDateObject } from "../content/events/de_date";
 import { eventIsSoon, type Event } from "../content/events/events";
 import { graphql, HeadFC, PageProps } from "gatsby";
 import Layout from "../components/layout";
 import { PageHeader } from "../components/page";
 import EventDescription from "../components/event-description";
+import { safeWebUrl } from "../utils/safe-url";
 
 type EventPageData = {
   allPublicEvent: {
@@ -56,10 +57,11 @@ function EventCard({
   index: number;
   highlightedId: null | number;
 }) {
-  const icsFile = createEvent(event);
+  const icsFile = createCalendarEvent(event);
+  const registrationUrl = safeWebUrl(event.url);
   let content: string | undefined = "Ups, da ist etwas schief gelaufen...";
   if (icsFile["error"] == null) {
-    content = icsFile["value"];
+    content = icsFile["value"] ?? undefined;
   } else {
     console.log(icsFile["error"]);
   }
@@ -88,7 +90,7 @@ function EventCard({
     <article
       key={index}
       className={`site-card relative overflow-hidden ${isFinished ? "bg-slate-50" : "bg-white"} ${highlightedId !== null && highlightedId === event.eventId ? "ring-4 ring-amber-400 animate-pulse-highlight" : ""}`}
-      id={`event-${event["eventId"]}`}
+      id={`event-${event.eventId}`}
       aria-labelledby={`event-title-${event.eventId}`}
       style={
         highlightedId !== null && highlightedId === event.eventId
@@ -211,10 +213,10 @@ function EventCard({
         </div>
 
         {/* Action buttons */}
-        {!isFinished && event["url"] && (
+        {!isFinished && registrationUrl && (
           <div className="mt-5 pt-5 border-t border-gray-100 flex flex-wrap gap-3">
-            <a href={event["url"]} className="site-button-primary gap-2">
-              {!event["url"].includes("gewinnspiel")
+            <a href={registrationUrl} className="site-button-primary gap-2">
+              {!registrationUrl.includes("gewinnspiel")
                 ? "Anmelden"
                 : "Teilnehmen"}
               <svg

@@ -7,6 +7,7 @@ import type { BlogPost } from "../types/";
 import Timeline from "../components/timeline";
 import type { ActivityReport } from "../content/donations";
 import { PageHeader } from "../components/page";
+import RichText from "../components/rich-text";
 
 type BlogIndexData = {
   first: {
@@ -65,7 +66,7 @@ const NewsEntry: React.FC<{ post: BlogPost }> = ({ post }) => {
         >
           {post.frontmatter.date}
         </time>
-        <p dangerouslySetInnerHTML={{ __html: post.frontmatter.short }} />
+        <RichText>{post.frontmatter.short}</RichText>
       </div>
     </article>
   );
@@ -135,7 +136,7 @@ const BlogIndex: React.FC<PageProps<BlogIndexData>> = ({ data }) => {
               {first.frontmatter.date}
             </time>
             {/* {isNew && <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Neu</span>} */}
-            <p dangerouslySetInnerHTML={{ __html: first.frontmatter.short }} />
+            <RichText>{first.frontmatter.short}</RichText>
             <p className="text-justify text-ellipsis overflow-hidden">
               {first.excerpt}
             </p>
