@@ -5,6 +5,7 @@ import { eventIsSoon, type Event } from "../content/events/events";
 import { graphql, HeadFC, PageProps } from "gatsby";
 import Layout from "../components/layout";
 import { PageHeader } from "../components/page";
+import EventDescription from "../components/event-description";
 
 type EventPageData = {
   allPublicEvent: {
@@ -199,18 +200,14 @@ function EventCard({
                 </a>
               )}
             </div>
-
-            <p className="text-sm leading-relaxed text-gray-700">
-              <span
-                dangerouslySetInnerHTML={{
-                  __html:
-                    event["htmlContent"] ||
-                    event["description"] ||
-                    "Es liegt keine Beschreibung vor.",
-                }}
-              />
-            </p>
           </div>
+        </div>
+
+        <div className="mt-4 sm:pl-[6.25rem]">
+          <EventDescription
+            description={event.description}
+            htmlContent={event.htmlContent}
+          />
         </div>
 
         {/* Action buttons */}
