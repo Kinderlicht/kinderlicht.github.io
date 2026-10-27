@@ -1,3 +1,4 @@
+import { fetchPublicEvents } from "./src/content/events/source.mjs";
 import path from "path"
 import _ from "lodash";
 import { createFilePath } from "gatsby-source-filesystem";
@@ -9,9 +10,6 @@ import boardData from './src/content/board.json' with { type: 'json' };
 const ACTIVITY_REPORTS_URL =
 	"https://portal.kinderlicht-wallersdorf.de/api/activity-reports";
 const ACTIVITY_REPORTS_CACHE_KEY = "activity-reports";
-const PUBLIC_EVENTS_URL =
-	"https://portal.kinderlicht-wallersdorf.de/api/public-events";
-const PUBLIC_EVENTS_CACHE_KEY = "public-events";
 
 function isActivityReport(value) {
 	if (!value || typeof value !== "object") {
@@ -69,84 +67,6 @@ async function fetchActivityReports(cache) {
 		return [];
 	}
 }
-
-function isNumberTupleDate(value) {
-	return (
-		Array.isArray(value) &&
-		value.length >= 5 &&
-		value.every((entry) => typeof entry === "number" && Number.isFinite(entry))
-	);
-}
-
-function isDuration(value) {
-	if (!value || typeof value !== "object") {
-		return false;
-	}
-
-	return (
-		typeof value.hours === "number" &&
-		Number.isFinite(value.hours) &&
-		typeof value.minutes === "number" &&
-		Number.isFinite(value.minutes)
-	);
-}
-
-function isPublicEvent(value) {
-	if (!value || typeof value !== "object") {
-		return false;
-	}
-
-	return (
-		isNumberTupleDate(value.start) &&
-		isDuration(value.duration) &&
-		typeof value.title === "string" &&
-		value.title.length > 0
-	);
-}
-
-function parsePublicEvents(data) {
-	if (!Array.isArray(data) || !data.every(isPublicEvent)) {
-		throw new Error("Public events API returned an unexpected response.");
-	}
-
-	return data;
-}
-
-async function fetchPublicEvents(cache) {
-	try {
-		const response = await fetch(PUBLIC_EVENTS_URL, {
-			headers: {
-				Accept: "application/json",
-			},
-		});
-
-		if (!response.ok) {
-			throw new Error(
-				`Public events API responded with ${response.status} ${response.statusText}`
-			);
-		}
-
-		const events = parsePublicEvents(await response.json());
-		await cache.set(PUBLIC_EVENTS_CACHE_KEY, events);
-		return events;
-	} catch (error) {
-		const cachedEvents = await cache.get(PUBLIC_EVENTS_CACHE_KEY);
-		const message = error instanceof Error ? error.message : String(error);
-
-		if (Array.isArray(cachedEvents) && cachedEvents.every(isPublicEvent)) {
-			reporter.warn(
-				`Could not fetch public events. Using cached data instead. Reason: ${message}`
-			);
-			return cachedEvents;
-		}
-
-		reporter.warn(
-			`Could not fetch public events. The events page will be empty. Reason: ${message}`
-		);
-		return [];
-	}
-}
-
 
 export async function onCreateNode({ node, getNode, actions }) {
 	const { createNodeField } = actions;
@@ -246,7 +166,7 @@ export const sourceNodes = async ({ actions, createNodeId, createContentDigest, 
   `);
 
 	const activityReports = await fetchActivityReports(cache);
-	const publicEvents = await fetchPublicEvents(cache);
+	const publicEvents = await fetchPublicEvents({ cache, reporter });
 
 	activityReports.forEach((activityReport, index) => {
 		const nodeId = createNodeId(`ActivityReport-${index}`);

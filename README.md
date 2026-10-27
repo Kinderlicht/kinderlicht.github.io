@@ -74,6 +74,13 @@ type checks, regression tests, and production build with read-only repository
 permissions. Deployment permissions are limited to the deployment job. Action
 versions are pinned to commit IDs and can be updated by Dependabot.
 
+The portal starts a fresh `gatsby.yml` workflow on `developer` after event updates.
+Each run saves a new Gatsby cache, even when the source commit is unchanged.
+Event imports retry transient errors three times with a 30-second request timeout.
+If the portal remains unavailable, the build uses a validated cached feed; without
+one it fails and preserves the published website instead of deploying an empty
+calendar. A successful empty feed still removes events normally.
+
 ## JHV Slide Pipeline
 
 The JHV slideshow tooling is now split into two clear steps:

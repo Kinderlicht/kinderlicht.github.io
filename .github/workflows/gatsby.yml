@@ -72,9 +72,9 @@ jobs:
           path: |
             public
             .cache
-          key: ${{ runner.os }}-node22-gatsby-${{ hashFiles('package-lock.json', 'gatsby-config.mjs', 'gatsby-node.mjs') }}-${{ github.sha }}
+          key: ${{ runner.os }}-node22-gatsby-${{ hashFiles('package-lock.json', 'gatsby-config.mjs', 'gatsby-node.mjs', 'src/content/events/source.mjs') }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
-            ${{ runner.os }}-node22-gatsby-${{ hashFiles('package-lock.json', 'gatsby-config.mjs', 'gatsby-node.mjs') }}-
+            ${{ runner.os }}-node22-gatsby-${{ hashFiles('package-lock.json', 'gatsby-config.mjs', 'gatsby-node.mjs', 'src/content/events/source.mjs') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Check types and security regressions
