@@ -24,7 +24,7 @@
     "autoprefixer": "^10.6.2",
     "caniuse-lite": "^1.0.30001819",
     "flowbite": "^2.5.2",
-    "flowbite-react": "^0.6.4",
+    "flowbite-react": "^0.12.17",
     "framer-motion": "^12.43.0",
     "gatsby": "^5.16.1",
     "gatsby-plugin-image": "^3.16.0",
