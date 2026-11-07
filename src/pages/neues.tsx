@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/global.css";
 import Layout from "../components/layout";
 import { HeadFC, Link, PageProps, graphql } from "gatsby";
-import { GatsbyImage } from "gatsby-plugin-image";
+import NewsThumbnail from "../components/news-thumbnail";
 import type { BlogPost } from "../types/";
 import Timeline from "../components/timeline";
 import type { ActivityReport } from "../content/donations";
@@ -30,12 +30,12 @@ const NewsEntry: React.FC<{ post: BlogPost }> = ({ post }) => {
     <article className="site-card mx-auto w-full max-w-sm overflow-hidden text-gray-900 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100">
       <>
         {post.frontmatter.featuredImage && (
-          <GatsbyImage
+          <NewsThumbnail
             image={
               post.frontmatter.featuredImage.childImageSharp.gatsbyImageData
             }
-            alt=""
-            className="object-cover w-full h-44 dark:bg-gray-500"
+            positionX={post.frontmatter.thumbnailPositionX}
+            positionY={post.frontmatter.thumbnailPositionY}
           />
         )}
       </>
@@ -98,13 +98,14 @@ const BlogIndex: React.FC<PageProps<BlogIndexData>> = ({ data }) => {
         <article className="site-card site-section mx-auto block max-w-sm gap-3 overflow-hidden text-gray-900 sm:max-w-full lg:grid lg:grid-cols-12 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100">
           <>
             {first.frontmatter.featuredImage && (
-              <GatsbyImage
+              <NewsThumbnail
                 image={
                   first.frontmatter.featuredImage.childImageSharp
                     .gatsbyImageData
                 }
-                alt=""
-                className={className}
+                positionX={first.frontmatter.thumbnailPositionX}
+                positionY={first.frontmatter.thumbnailPositionY}
+                className="rounded lg:col-span-7"
               />
             )}
           </>
@@ -168,6 +169,8 @@ export const indexQuery = graphql`
         short
         title
         youtube
+        thumbnailPositionX
+        thumbnailPositionY
         date(formatString: "DD. MMMM YYYY", locale: "de")
         dateRaw: date(formatString: "YYYY-MM-DD")
         featuredImage {

@@ -92,6 +92,8 @@ export const sourceNodes = async ({ actions, createNodeId, createContentDigest, 
 
     type Frontmatter {
       author: Author @link(from: "author", by: "id")
+      thumbnailPositionX: Float
+      thumbnailPositionY: Float
     }
 
     type Author implements Node {

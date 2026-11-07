@@ -12,6 +12,8 @@ export type BlogPost = {
     short: string;
 
     featuredImage?: any;
+    thumbnailPositionX?: number | null;
+    thumbnailPositionY?: number | null;
     youtube?: string;
 
     tags: [string];
