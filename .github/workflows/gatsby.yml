@@ -81,7 +81,7 @@ jobs:
         run: |
           npm run typecheck
           npm test
-          npm audit
+          npm run audit
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: "true"

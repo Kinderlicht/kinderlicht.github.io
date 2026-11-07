@@ -51,8 +51,18 @@ Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
 ## Development and security checks
 
 Use Node.js 22 (`nvm install` once, then `nvm use`) and install with `npm ci`. Run `npm run typecheck`,
-`npm test`, `npm audit`, and `npm run build` before publishing dependency updates.
+`npm test`, `npm run audit`, and `npm run build` before publishing dependency updates.
 The test suite uses a temporary server on `127.0.0.1` to check image downloads.
+
+`npm run audit` fails on findings of any severity, except the low-severity
+deepmerge advisory [GHSA-gcqx-w48m-w2h4](https://github.com/advisories/GHSA-gcqx-w48m-w2h4)
+and packages affected only through that advisory. Its
+[official CVE record](https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/93xxx/CVE-2026-93753.json)
+was rejected on November 2, 2026 because it does not describe a security
+vulnerability, but npm still reports it. The script reports the exception and
+fails on audit errors or any other advisory, including new deepmerge findings.
+Remove the exception once npm stops reporting the rejected advisory. Plain
+`npm audit` remains available to inspect the unfiltered report.
 
 Gatsby is kept on version 5 with React 18. The dependency overrides select patched
 versions of libraries that Gatsby or its plugins still pin to older releases.
