@@ -84,6 +84,14 @@ type checks, regression tests, and production build with read-only repository
 permissions. Deployment permissions are limited to the deployment job. Action
 versions are pinned to commit IDs and can be updated by Dependabot.
 
+Publishing to GitHub Pages makes up to three attempts using the same uploaded
+artifact. Each attempt has a three-minute polling timeout, then the deployment
+action requests cancellation before the next attempt, with a 30-second pause
+between attempts. The deployment job is capped at 12 minutes and fails if the
+final attempt fails. This handles intermittent Pages publishing timeouts without
+rebuilding the site; persistent GitHub service failures still require a later
+rerun of the failed deployment job.
+
 The portal starts a fresh `gatsby.yml` workflow on `developer` after event updates.
 Each run saves a new Gatsby cache, even when the source commit is unchanged.
 Event imports retry transient errors three times with a 30-second request timeout.

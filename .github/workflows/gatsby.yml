@@ -65,7 +65,6 @@ jobs:
         if: github.event_name != 'pull_request'
         id: pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-        with: {}
       - name: Restore cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -100,10 +99,40 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment_final.outputs.page_url || steps.deployment_retry.outputs.page_url || steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      # Pages can stall after accepting an artifact even when the build succeeds.
+      # Use the action's timeout so it requests cancellation before retrying the
+      # same artifact, with a pause to allow Pages to process that cancellation.
+      - name: Deploy to GitHub Pages (attempt 1 of 3)
         id: deployment
+        continue-on-error: true
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          timeout: 180000
+      - name: Wait before second deployment attempt
+        if: steps.deployment.outcome == 'failure'
+        run: |
+          echo "::warning::GitHub Pages deployment failed. Retrying the existing artifact in 30 seconds."
+          sleep 30
+      - name: Deploy to GitHub Pages (attempt 2 of 3)
+        if: steps.deployment.outcome == 'failure'
+        id: deployment_retry
+        continue-on-error: true
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          timeout: 180000
+      - name: Wait before final deployment attempt
+        if: steps.deployment_retry.outcome == 'failure'
+        run: |
+          echo "::warning::GitHub Pages deployment failed again. Making one final attempt in 30 seconds."
+          sleep 30
+      - name: Deploy to GitHub Pages (attempt 3 of 3)
+        if: steps.deployment_retry.outcome == 'failure'
+        id: deployment_final
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          timeout: 180000
