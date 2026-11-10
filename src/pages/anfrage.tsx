@@ -64,11 +64,7 @@ export default function RequestPage() {
               Du brauchst konkrete Hilfe?
             </h2>
             <p className="mt-3 flex-1 leading-7 text-gray-600">
-              Wir unterstützen junge Menschen bis einschließlich 27 Jahre und
-              ihre Familien. Dazu zählen Kinder, Jugendliche und junge Erwachsene.
-              Für finanzielle Unterstützung, Sachleistungen oder andere direkte
-              Hilfe nutze bitte unser Hilfe-Portal – für dich selbst oder deine
-              Familie.
+              Wir unterstützen junge Menschen bis 27 Jahre und ihre Familien. Für finanzielle Hilfe, Sachleistungen oder andere Unterstützung nutze unser Hilfe-Portal.
             </p>
             <a
               href={helpPortalUrl}
