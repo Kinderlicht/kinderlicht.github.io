@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { createCalendarEvent } from "../content/events/calendar";
 import { ConvertDateObject } from "../content/events/de_date";
-import { eventIsSoon, type Event } from "../content/events/events";
+import { getEventTiming, type Event } from "../content/events/events";
+import useEventTime from "../hooks/use-event-time";
 import { graphql, HeadFC, PageProps } from "gatsby";
 import Layout from "../components/layout";
 import { PageHeader } from "../components/page";
@@ -52,10 +53,12 @@ function EventCard({
   event,
   index,
   highlightedId,
+  now,
 }: {
   event: IndexedEvent;
   index: number;
   highlightedId: null | number;
+  now: Date;
 }) {
   const icsFile = createCalendarEvent(event);
   const registrationUrl = safeWebUrl(event.url);
@@ -68,12 +71,11 @@ function EventCard({
   const loc =
     event["geo"] &&
     `https://www.google.com/maps/search/?api=1&query=${event["geo"]["lat"]},${event["geo"]["lon"]}`;
-  const eventDate = ConvertDateObject(event["start"]);
-  const currentDate = new Date();
+  const timing = getEventTiming(event, now);
+  const eventDate = timing.start;
   const isAborted = event["status"] === "CANCELLED";
-  const isFinished = eventDate < currentDate || isAborted;
-  const isSoon =
-    !isFinished && eventDate.getTime() - currentDate.getTime() < eventIsSoon;
+  const isFinished = timing.isFinished || isAborted;
+  const { isOngoing, isSoon } = timing;
 
   // Format date parts for display
   const day = eventDate.getDate();
@@ -101,7 +103,7 @@ function EventCard({
       {/* Top accent bar */}
       <div
         aria-hidden="true"
-        className={`h-1 w-full ${isFinished ? "bg-slate-300" : isSoon ? "bg-emerald-600" : "bg-orange-600"}`}
+        className={`h-1 w-full ${isFinished ? "bg-slate-300" : isOngoing || isSoon ? "bg-emerald-600" : "bg-orange-600"}`}
       ></div>
 
       <div className="p-6">
@@ -145,6 +147,10 @@ function EventCard({
               ) : isFinished ? (
                 <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-1 rounded-full">
                   <span aria-hidden="true">✓</span> Abgeschlossen
+                </span>
+              ) : isOngoing ? (
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800">
+                  <span aria-hidden="true">●</span> Findet gerade statt
                 </span>
               ) : isSoon ? (
                 <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800">
@@ -245,6 +251,7 @@ function EventCard({
 
 export default function EventPage({ data }: PageProps<EventPageData>) {
   const events = data.allPublicEvent.nodes;
+  const now = useEventTime(events);
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -267,10 +274,8 @@ export default function EventPage({ data }: PageProps<EventPageData>) {
     const targetEvent = indexedEvents.find((e) => e.eventId === targetId);
     if (!targetEvent) return;
 
-    const eventDate = ConvertDateObject(targetEvent.start);
-
     // Ensure past events are visible
-    if (eventDate < new Date() && !showPast) {
+    if (getEventTiming(targetEvent).isFinished && !showPast) {
       setShowPast(true);
     }
 
@@ -318,20 +323,18 @@ export default function EventPage({ data }: PageProps<EventPageData>) {
 
     // Filter past events if showPast is false
     if (!showPast) {
-      const eventDate = ConvertDateObject(e.start);
-      if (eventDate < new Date()) return false;
+      if (getEventTiming(e, now).isFinished) return false;
     }
 
     return true;
   });
 
-  // Sort events: upcoming first (ascending by date), then past events (descending by date)
+  // Keep ongoing and upcoming events first, then completed events.
   filtered.sort((a, b) => {
     const dateA = ConvertDateObject(a.start);
     const dateB = ConvertDateObject(b.start);
-    const now = new Date();
-    const aIsUpcoming = dateA >= now;
-    const bIsUpcoming = dateB >= now;
+    const aIsUpcoming = !getEventTiming(a, now).isFinished;
+    const bIsUpcoming = !getEventTiming(b, now).isFinished;
 
     // If both are upcoming or both are past, sort accordingly
     if (aIsUpcoming && bIsUpcoming) {
@@ -346,13 +349,11 @@ export default function EventPage({ data }: PageProps<EventPageData>) {
     }
   });
 
-  // Count upcoming events
+  // Count ongoing events alongside upcoming events until their duration is over.
   const upcomingCount = events.filter(
-    (e) => ConvertDateObject(e.start) >= new Date(),
+    (e) => !getEventTiming(e, now).isFinished,
   ).length;
-  const pastCount = events.filter(
-    (e) => ConvertDateObject(e.start) < new Date(),
-  ).length;
+  const pastCount = events.length - upcomingCount;
 
   return (
     <Layout>
@@ -360,7 +361,7 @@ export default function EventPage({ data }: PageProps<EventPageData>) {
         <PageHeader
           eyebrow="Termine"
           title="Veranstaltungen"
-          description="Entdecke unsere kommenden Veranstaltungen und werde Teil unserer Gemeinschaft."
+          description="Entdecke unsere laufenden und kommenden Veranstaltungen und werde Teil unserer Gemeinschaft."
         />
 
         <div className="-mt-4 mb-10 flex flex-wrap justify-center gap-3">
@@ -368,7 +369,7 @@ export default function EventPage({ data }: PageProps<EventPageData>) {
             <strong className="mr-2 text-xl text-orange-700">
               {upcomingCount}
             </strong>
-            Kommende Events
+            Laufende & kommende Events
           </div>
           <div className="site-stat">
             <strong className="mr-2 text-xl text-slate-700">{pastCount}</strong>
@@ -520,6 +521,7 @@ export default function EventPage({ data }: PageProps<EventPageData>) {
                 event={e}
                 index={index}
                 highlightedId={highlightedId}
+                now={now}
               />
             ))}
           </div>

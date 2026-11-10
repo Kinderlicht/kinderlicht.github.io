@@ -1,7 +1,11 @@
 import React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import { countUpcomingEvents, type Event } from "../content/events/events";
+import {
+  countUpcomingEvents,
+  type EventSchedule,
+} from "../content/events/events";
+import useEventTime from "../hooks/use-event-time";
 import { Navbar } from "flowbite-react";
 
 // import { Helmet } from "react-helmet";
@@ -12,7 +16,7 @@ function ShowNotifications({ notifications }: { notifications: number }) {
       {notifications > 0 && (
         <span
           className="inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-700 text-xs font-bold text-white dark:border-gray-900"
-          aria-label={`${notifications} kommende ${notifications === 1 ? "Veranstaltung" : "Veranstaltungen"}`}
+          aria-label={`${notifications} laufende oder bald stattfindende ${notifications === 1 ? "Veranstaltung" : "Veranstaltungen"}`}
         >
           {notifications.toString()}
         </span>
@@ -46,7 +50,7 @@ const GatsbyLinkWrapperIcon = ({
 
 type LayoutEventsData = {
   allPublicEvent: {
-    nodes: Array<Pick<Event, "start">>;
+    nodes: EventSchedule[];
   };
 };
 
@@ -57,11 +61,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       allPublicEvent {
         nodes {
           start
+          duration {
+            hours
+            minutes
+          }
         }
       }
     }
   `);
-  const numberOfUpcomingEvents = countUpcomingEvents(data.allPublicEvent.nodes);
+  const now = useEventTime(data.allPublicEvent.nodes);
+  const numberOfUpcomingEvents = countUpcomingEvents(
+    data.allPublicEvent.nodes,
+    now,
+  );
 
   const copyIban = async () => {
     try {

@@ -64,8 +64,11 @@ export default function RequestPage() {
               Du brauchst konkrete Hilfe?
             </h2>
             <p className="mt-3 flex-1 leading-7 text-gray-600">
+              Wir unterstützen junge Menschen bis einschließlich 27 Jahre und
+              ihre Familien. Dazu zählen Kinder, Jugendliche und junge Erwachsene.
               Für finanzielle Unterstützung, Sachleistungen oder andere direkte
-              Hilfe nutze bitte unser Hilfe-Portal.
+              Hilfe nutze bitte unser Hilfe-Portal – für dich selbst oder deine
+              Familie.
             </p>
             <a
               href={helpPortalUrl}
@@ -127,7 +130,7 @@ export const Head: HeadFC = () => (
     <title>Kontakt &amp; Hilfe | Kinderlicht Wallersdorf</title>
     <meta
       name="description"
-      content="Kontaktiere Kinderlicht Wallersdorf oder stelle eine konkrete Hilfsanfrage über unser Hilfe-Portal."
+      content="Kinderlicht Wallersdorf unterstützt junge Menschen bis einschließlich 27 Jahre und ihre Familien. Stelle eine Hilfsanfrage über unser Hilfe-Portal oder kontaktiere uns."
     />
   </>
 );

@@ -114,7 +114,7 @@ const actions: {
     icon: "help",
     title: "Ich suche Hilfe.",
     description:
-      "Manchmal braucht es Unterstützung. Erzähl uns, was dich und deine Familie bewegt – wir helfen gerne.",
+      "Für junge Menschen bis einschließlich 27 Jahre und ihre Familien. Erzähl uns, wobei du Unterstützung brauchst – wir helfen gerne.",
     label: "Kontakt aufnehmen",
     to: "/anfrage",
   },

@@ -1,6 +1,12 @@
 import type { DateArray, EventAttributes } from "ics";
+import { ConvertDateObject } from "./de_date";
 
-export type Event = EventAttributes & { start: DateArray };
+export type Event = EventAttributes & {
+  start: DateArray;
+  duration: EventDuration;
+};
+
+export type EventSchedule = Pick<Event, "start" | "duration">;
 
 export const PUBLIC_EVENTS_URL =
   "https://portal.kinderlicht-wallersdorf.de/api/public-events";
@@ -75,16 +81,30 @@ export const fetchPublicEvents = async (
   return parsePublicEvents(await response.json());
 };
 
-const dateFromArray = (date: number[]) => new Date(date.slice(0, 3).join("-"));
+export const getEventTiming = (
+  event: EventSchedule,
+  now: Date = new Date(),
+) => {
+  const start = ConvertDateObject(event.start);
+  const duration =
+    (event.duration.hours * 60 + event.duration.minutes) * 60_000;
+  const end = new Date(start.getTime() + duration);
+
+  return {
+    start,
+    end,
+    isFinished: now >= end,
+    isOngoing: now >= start && now < end,
+    isSoon: now < start && start.getTime() - now.getTime() <= eventIsSoon,
+  };
+};
 
 export const countUpcomingEvents = (
-  events: Array<Pick<Event, "start">>,
+  events: EventSchedule[],
+  now: Date = new Date(),
 ): number =>
   events.filter((event) => {
-    const eventDate = dateFromArray(event.start);
-    const now = new Date();
+    const { isOngoing, isSoon } = getEventTiming(event, now);
 
-    return (
-      eventDate >= now && eventDate.getTime() - now.getTime() <= eventIsSoon
-    );
+    return isOngoing || isSoon;
   }).length;
